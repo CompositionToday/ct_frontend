@@ -1,6 +1,10 @@
 export const navItems = {
   links: [
     {
+      link: "/",
+      label: "Home",
+    },
+    {
       link: "/jobs",
       label: "Jobs",
     },

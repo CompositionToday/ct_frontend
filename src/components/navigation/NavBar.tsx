@@ -1,6 +1,5 @@
 import {
   createStyles,
-  Title,
   Header,
   Container,
   Group,
@@ -60,6 +59,13 @@ const useStyles = createStyles((theme) => ({
     marginRight: 5,
   },
 
+  title: {
+    color: "#2F2F2F",
+    fontSize: 18,
+    textDecoration: "none",
+    fontWeight: 600,
+  },
+
   grayText: {
     color: "#2F2F2F",
   },
@@ -91,7 +97,7 @@ export function NavBar({ links }: HeaderActionProps) {
         key={link.label}
         href={link.link}
         className={classes.link}
-        onClick={(event) => event.preventDefault()}
+        onClick={() => navigate(link.link)}
       >
         {link.label}
       </a>
@@ -109,9 +115,16 @@ export function NavBar({ links }: HeaderActionProps) {
             size="sm"
           />
           <Group spacing="xs">
-            <Title order={5} className={classes.grayText}>
+            <a
+              href={"/about"}
+              className={classes.title}
+              onClick={() => navigate("/about")}
+            >
               COMPOSITION:<span className={classes.blueText}>TODAY</span>
-            </Title>
+            </a>
+            {/* <Title order={5} className={classes.grayText}>
+              COMPOSITION:<span className={classes.blueText}>TODAY</span>
+            </Title> */}
             <Image src={String(musicNoteIcon)} className={classes.image} />
           </Group>
         </Group>
