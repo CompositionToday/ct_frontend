@@ -10,7 +10,7 @@ import {
 
 const jobIcon = require("../../images/JobIcon.png");
 const ticketIcon = require("../../images/TicketIcon.png");
-const trophyIcon = require("../../images/MusicNote.png");
+const trophyIcon = require("../../images/TrophyIcon.png");
 
 const mockdata = [
   {
