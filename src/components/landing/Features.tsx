@@ -1,3 +1,5 @@
+import { AnimateIn } from "../animations/AnimateOnScroll";
+
 import {
   createStyles,
   Title,
@@ -102,19 +104,22 @@ export function Features() {
       py="xl"
       style={{ paddingTop: 100, paddingBottom: 100 }}
     >
-      <Title order={2} className={classes.title} align="center" mt="xl">
-        Explore Opportunities on <br />{" "}
-        <span style={{ color: "#90CAF9" }}>Composition Today</span>
-      </Title>
-
-      <SimpleGrid
-        cols={3}
-        spacing="xl"
-        mt={50}
-        breakpoints={[{ maxWidth: "md", cols: 1 }]}
-      >
-        {features}
-      </SimpleGrid>
+      <AnimateIn>
+        <Title order={2} className={classes.title} align="center" mt="xl">
+          Explore Opportunities on <br />{" "}
+          <span style={{ color: "#90CAF9" }}>Composition Today</span>
+        </Title>
+      </AnimateIn>
+      <AnimateIn>
+        <SimpleGrid
+          cols={3}
+          spacing="xl"
+          mt={50}
+          breakpoints={[{ maxWidth: "md", cols: 1 }]}
+        >
+          {features}
+        </SimpleGrid>
+      </AnimateIn>
     </Container>
   );
 }
