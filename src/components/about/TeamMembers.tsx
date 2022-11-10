@@ -1,3 +1,5 @@
+import { AnimateIn } from "../animations/AnimateOnScroll";
+
 import {
   createStyles,
   Image,
@@ -72,18 +74,20 @@ export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
 
     return (
       <div>
-        <Group noWrap spacing={60} mt={100}>
-          <Image src={String(photo)} radius="md" className={classes.image} />
-          <div>
-            <Text weight={500} className={classes.name} mb="xl">
-              {member.name}
-            </Text>
+        <AnimateIn>
+          <Group noWrap spacing={60} mt={100}>
+            <Image src={String(photo)} radius="md" className={classes.image} />
+            <div>
+              <Text weight={500} className={classes.name} mb="xl">
+                {member.name}
+              </Text>
 
-            <Text weight={500} className={classes.role} color="dimmed">
-              {member.role}
-            </Text>
-          </div>
-        </Group>
+              <Text weight={500} className={classes.role} color="dimmed">
+                {member.role}
+              </Text>
+            </div>
+          </Group>
+        </AnimateIn>
       </div>
     );
   });
