@@ -1,4 +1,5 @@
 import { createStyles, Container, Title, Text, Image } from "@mantine/core";
+import { Teeter } from "../animations/AnimateOnHover";
 
 const heroLogo = require("../../images/HeroLogo.png");
 
@@ -91,7 +92,9 @@ export function Hero() {
               and concerts.
             </Text>
           </div>
-          <Image src={String(heroLogo)} className={classes.image} />
+          <Teeter rotation={5} timing={120}>
+            <Image src={String(heroLogo)} className={classes.image} />
+          </Teeter>
         </div>
       </Container>
     </div>
