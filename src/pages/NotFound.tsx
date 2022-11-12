@@ -7,7 +7,7 @@ import {
     Button,
     SimpleGrid,
 } from "@mantine/core";
-import image from "../images/NotFound.svg";
+import image from "../images/404.png";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
@@ -40,6 +40,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     desktopImage: {
+        maxWidth: 400,
         [theme.fn.smallerThan("sm")]: {
             display: "none",
         },

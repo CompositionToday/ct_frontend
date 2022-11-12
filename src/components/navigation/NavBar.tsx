@@ -63,7 +63,7 @@ const useStyles = createStyles((theme) => ({
     color: "#2F2F2F",
     fontSize: 18,
     textDecoration: "none",
-    fontWeight: 600,
+    fontWeight: 700,
   },
 
   grayText: {
@@ -116,15 +116,12 @@ export function NavBar({ links }: HeaderActionProps) {
           />
           <Group spacing="xs">
             <a
-              href={"/about"}
+              href={"/"}
               className={classes.title}
-              onClick={() => navigate("/about")}
+              onClick={() => navigate("/")}
             >
               COMPOSITION:<span className={classes.blueText}>TODAY</span>
             </a>
-            {/* <Title order={5} className={classes.grayText}>
-              COMPOSITION:<span className={classes.blueText}>TODAY</span>
-            </Title> */}
             <Image src={String(musicNoteIcon)} className={classes.image} />
           </Group>
         </Group>

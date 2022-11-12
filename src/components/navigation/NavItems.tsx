@@ -1,8 +1,8 @@
 export const navItems = {
   links: [
     {
-      link: "/",
-      label: "Home",
+      link: "/about",
+      label: "About Us",
     },
     {
       link: "/jobs",

@@ -3,6 +3,7 @@ import { navItems } from "../components/navigation/NavItems";
 import { Container } from "@mantine/core";
 import { Hero } from "../components/landing/Hero";
 import { Features } from "../components/landing/Features";
+import { RegisterCTA } from "../components/landing/RegisterCTA";
 
 export function Landing() {
   return (
@@ -12,6 +13,7 @@ export function Landing() {
       <Container fluid style={{ backgroundColor: "#001E3C" }}>
         <Features />
       </Container>
+      <RegisterCTA />
     </Container>
   );
 }
