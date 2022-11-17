@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import { auth } from "../Firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
   TextInput,
   PasswordInput,
@@ -14,6 +17,41 @@ import { useNavigate } from "react-router-dom";
 
 export function Register() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }
+
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  }
+
+  const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+  }
+
+  const handleRegister = async () => {
+    try {
+      console.log("Trying to login");
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log("Registered user");
+      navigate("/");
+    }
+    catch (err: unknown) {
+      console.log(err);
+    }
+    
+  }
+
+  useEffect(() => {
+    console.log(`Email: ${email}`);
+    console.log(`Password: ${password}`);
+    console.log(`confirmPassowrd: ${confirmPassword}`);
+  }, [email, password, confirmPassword]);
+
 
   return (
     <Center style={{ width: "100vw", height: "100vh" }}>
@@ -45,20 +83,26 @@ export function Register() {
             placeholder="example@gmail.com"
             required
             mt="md"
+            value={email}
+            onChange={handleEmail}
           />
           <PasswordInput
             label="Password"
             placeholder="Enter a password"
             required
             mt="md"
+            value={password}
+            onChange={handlePassword}
           />
           <PasswordInput
             label="Confirm Password"
             placeholder="Retype your password"
             required
             mt="md"
+            value={confirmPassword}
+            onChange={handleConfirmPassword}
           />
-          <Button fullWidth mt="xl">
+          <Button fullWidth mt="xl" onClick={handleRegister}>
             Register
           </Button>
         </Paper>
