@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { auth } from "../Firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 import {
   TextInput,
   PasswordInput,
@@ -23,15 +26,15 @@ export function Register() {
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-  }
+  };
 
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-  }
+  };
 
   const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
-  }
+  };
 
   const handleRegister = async () => {
     try {
@@ -39,12 +42,10 @@ export function Register() {
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("Registered user");
       navigate("/");
-    }
-    catch (err: unknown) {
+    } catch (err: unknown) {
       console.log(err);
     }
-    
-  }
+  };
 
   useEffect(() => {
     console.log(`Email: ${email}`);
@@ -52,6 +53,13 @@ export function Register() {
     console.log(`confirmPassowrd: ${confirmPassword}`);
   }, [email, password, confirmPassword]);
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/");
+      }
+    });
+  });
 
   return (
     <Center style={{ width: "100vw", height: "100vh" }}>

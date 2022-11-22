@@ -73,13 +73,13 @@ const useStyles = createStyles((theme) => ({
     height: 225,
     border: `6px solid #FFFFFF`,
 
-    '&:hover': {
+    "&:hover": {
       border: `6px solid #90CAF9`,
     },
   },
 
   cardTitle: {
-    width: '100%',
+    width: "100%",
     fontSize: 23,
     fontWeight: 500,
     color: "#2F2F2F",
@@ -113,7 +113,13 @@ export function Features() {
 
   const features = mockdata.map((feature) => (
     <Container>
-      <Card key={feature.title} shadow="md" className={classes.card} p="xl" onClick={() => navigate(feature.link)}>
+      <Card
+        key={feature.title}
+        shadow="md"
+        className={classes.card}
+        p="xl"
+        onClick={() => navigate(feature.link)}
+      >
         <Container className={classes.featureCards}>
           <Image src={String(feature.icon)} className={classes.image} />
           <Text className={classes.cardTitle} mt="md">
@@ -125,7 +131,7 @@ export function Features() {
   ));
   return (
     <Container
-      size='lg'
+      size="lg"
       py="xl"
       style={{ paddingTop: 100, paddingBottom: 100 }}
     >
