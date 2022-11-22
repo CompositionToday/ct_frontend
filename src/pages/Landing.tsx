@@ -9,15 +9,15 @@ import { auth } from "../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 export function Landing() {
-  
-  useEffect(() => {
-  onAuthStateChanged(auth, (user) => {
-    if (!user)
-      return;
 
-    console.log(user?.email);
-  })
-})
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user)
+        return;
+
+      console.log(user?.email);
+    })
+});
 
   return (
     <Container fluid style={{ padding: 0 }}>
