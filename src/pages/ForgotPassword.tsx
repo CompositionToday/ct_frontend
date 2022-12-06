@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { auth } from "../Firebase";
+import {
+  authErrorList,
+  ErrorMessage,
+  defaultErrorMessage,
+} from "../components/login/profile";
 import { sendPasswordResetEmail, onAuthStateChanged } from "firebase/auth";
+import { FirebaseError } from "@firebase/util";
 import {
   createStyles,
   Paper,
@@ -42,6 +48,7 @@ export function ForgotPassword() {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -49,10 +56,29 @@ export function ForgotPassword() {
 
   const handlePasswordReset = async () => {
     try {
+      if (email === "") {
+        throw "Please input an email";
+      }
+
       await sendPasswordResetEmail(auth, email);
-      console.log("Password reset email sent");
-    } catch (err) {
-      console.log(err);
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        if (authErrorList[err.code as keyof typeof authErrorList]) {
+          setErrorMessage(
+            authErrorList[err.code as keyof typeof authErrorList]
+          );
+        } else {
+          setErrorMessage(defaultErrorMessage);
+        }
+      } else if (typeof err === "string") {
+        if (authErrorList[err as keyof typeof authErrorList]) {
+          setErrorMessage(authErrorList[err as keyof typeof authErrorList]);
+        } else {
+          setErrorMessage(defaultErrorMessage);
+        }
+      } else {
+        setErrorMessage(defaultErrorMessage);
+      }
     }
   };
 
@@ -81,6 +107,7 @@ export function ForgotPassword() {
           value={email}
           onChange={handleEmail}
         />
+        <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
         <Group position="apart" mt="lg" className={classes.controls}>
           <Anchor
             color="dimmed"
