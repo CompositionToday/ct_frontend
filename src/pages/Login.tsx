@@ -70,11 +70,6 @@ export function Login() {
   };
 
   useEffect(() => {
-    console.log(`Email: ${email}`);
-    console.log(`Password: ${password}`);
-  }, [email, password]);
-
-  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         navigate("/");
@@ -104,7 +99,7 @@ export function Login() {
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <TextInput
             label="Email"
-            placeholder="you@mantine.dev"
+            placeholder="Your email"
             required
             value={email}
             onChange={handleEmail}
@@ -118,7 +113,7 @@ export function Login() {
             onChange={handlePassword}
           />
           <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
-          <Group position="apart" mt="md">
+          <Group position="center" mt="md">
             <Anchor<"a">
               onClick={() => navigate("/forgotpassword")}
               href="#"

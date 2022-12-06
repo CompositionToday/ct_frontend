@@ -82,22 +82,16 @@ export function Register() {
   };
 
   useEffect(() => {
-    console.log(`Email: ${email}`);
-    console.log(`Password: ${password}`);
-    console.log(`confirmPassowrd: ${confirmPassword}`);
-  }, [email, password, confirmPassword]);
-
-  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         navigate("/");
       }
     });
-  });
+  }, []);
 
   return (
     <Center style={{ width: "100vw", height: "100vh" }}>
-      <Container size={420} my={40}>
+      <Container size={420} my={40} style={{ minWidth: 420 }}>
         <Title
           align="center"
           sx={(theme) => ({
@@ -115,16 +109,10 @@ export function Register() {
         </Text>
 
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <Group position="apart" noWrap>
-            <TextInput label="First Name" placeholder="John" required />
-            <TextInput label="Last Name" placeholder="Doe" required />
-          </Group>
-
           <TextInput
             label="Email"
-            placeholder="example@gmail.com"
+            placeholder="Enter an email"
             required
-            mt="md"
             value={email}
             onChange={handleEmail}
           />
