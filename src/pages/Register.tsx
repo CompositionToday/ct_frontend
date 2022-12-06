@@ -1,5 +1,11 @@
+import {
+  ErrorMessage,
+  defaultErrorMessage,
+  authErrorList,
+} from "../components/login/profile";
 import { useState, useEffect } from "react";
 import { auth } from "../Firebase";
+import { FirebaseError } from "@firebase/util";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -23,6 +29,7 @@ export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -38,12 +45,39 @@ export function Register() {
 
   const handleRegister = async () => {
     try {
-      console.log("Trying to login");
+      if (email === "") {
+        throw "Please input an email";
+      }
+
+      if (password === "" || confirmPassword === "") {
+        throw "Please input a password";
+      }
+
+      if (password !== confirmPassword) {
+        throw "Passwords do not match";
+      }
+
       await createUserWithEmailAndPassword(auth, email, password);
-      console.log("Registered user");
+
       navigate("/");
     } catch (err: unknown) {
-      console.log(err);
+      if (err instanceof FirebaseError) {
+        if (authErrorList[err.code as keyof typeof authErrorList]) {
+          setErrorMessage(
+            authErrorList[err.code as keyof typeof authErrorList]
+          );
+        } else {
+          setErrorMessage(defaultErrorMessage);
+        }
+      } else if (typeof err === "string") {
+        if (authErrorList[err as keyof typeof authErrorList]) {
+          setErrorMessage(authErrorList[err as keyof typeof authErrorList]);
+        } else {
+          setErrorMessage(defaultErrorMessage);
+        }
+      } else {
+        setErrorMessage(defaultErrorMessage);
+      }
     }
   };
 
@@ -110,6 +144,7 @@ export function Register() {
             value={confirmPassword}
             onChange={handleConfirmPassword}
           />
+          <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
           <Button fullWidth mt="xl" onClick={handleRegister}>
             Register
           </Button>
