@@ -26,3 +26,5 @@ export const ErrorMessage = styled.div<ErrorMessageProp>`
   margin: 15px 0px;
   display: ${(props) => (props.error ? "block" : "none")};
 `;
+
+export const ForgetPasswordNotificaton = styled.p``;

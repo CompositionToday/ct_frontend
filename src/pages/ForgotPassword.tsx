@@ -49,6 +49,7 @@ export function ForgotPassword() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [validInput, setValidInput] = useState(false);
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -61,12 +62,20 @@ export function ForgotPassword() {
       }
 
       await sendPasswordResetEmail(auth, email);
+      setErrorMessage("");
+      setValidInput(true);
     } catch (err: unknown) {
+      console.log(err);
       if (err instanceof FirebaseError) {
         if (authErrorList[err.code as keyof typeof authErrorList]) {
           setErrorMessage(
             authErrorList[err.code as keyof typeof authErrorList]
           );
+        } else if (err.code === "auth/user-not-found") {
+          console.log("here");
+          setValidInput(true);
+          setErrorMessage("");
+          return;
         } else {
           setErrorMessage(defaultErrorMessage);
         }
@@ -79,6 +88,7 @@ export function ForgotPassword() {
       } else {
         setErrorMessage(defaultErrorMessage);
       }
+      setValidInput(false);
     }
   };
 
@@ -108,6 +118,12 @@ export function ForgotPassword() {
           onChange={handleEmail}
         />
         <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
+        {validInput && (
+          <p>
+            If this email is registered, an email to reset your password has
+            been sent. Please make sure to also check your spam box!
+          </p>
+        )}
         <Group position="apart" mt="lg" className={classes.controls}>
           <Anchor
             color="dimmed"
@@ -121,7 +137,7 @@ export function ForgotPassword() {
             </Center>
           </Anchor>
           <Button className={classes.control} onClick={handlePasswordReset}>
-            Reset password
+            Reset password ✓
           </Button>
         </Group>
       </Paper>
