@@ -92,6 +92,10 @@ export function ForgotPassword() {
     }
   };
 
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -120,8 +124,8 @@ export function ForgotPassword() {
         <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
         {validInput && (
           <p>
-            If this email is registered, an email to reset your password has
-            been sent. Please make sure to also check your spam box!
+            If this email is registered, an email has been sent to reset your
+            password. Please make sure to also check your spam box!
           </p>
         )}
         <Group position="apart" mt="lg" className={classes.controls}>
@@ -136,8 +140,15 @@ export function ForgotPassword() {
               <Box ml={5}>Back to login page</Box>
             </Center>
           </Anchor>
-          <Button className={classes.control} onClick={handlePasswordReset}>
-            Reset password ✓
+          {validInput && (
+            <Anchor onClick={refreshPage}>Send to a different email?</Anchor>
+          )}
+          <Button
+            className={classes.control}
+            onClick={handlePasswordReset}
+            disabled={validInput}
+          >
+            {validInput ? "✓" : "Reset password"}
           </Button>
         </Group>
       </Paper>
