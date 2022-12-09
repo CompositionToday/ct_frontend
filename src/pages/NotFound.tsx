@@ -71,7 +71,7 @@ export function NotFound() {
             size="md"
             mt="xl"
             className={classes.control}
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/")}
           >
             Get back to home page
           </Button>
