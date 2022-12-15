@@ -166,11 +166,8 @@ export function NavBar({ links }: HeaderActionProps) {
             className={classes.burger}
             size="sm"
           />
-          <Group spacing="xs" className={classes.logoGroup} >
-            <a
-              className={classes.title}
-              onClick={() => navigate("/")}
-            >
+          <Group spacing="xs" className={classes.logoGroup}>
+            <a className={classes.title} onClick={() => navigate("/")}>
               COMPOSITION:
               <span className={classes.blueText}>TODAY</span>
             </a>

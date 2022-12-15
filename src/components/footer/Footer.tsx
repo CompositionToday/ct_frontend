@@ -1,4 +1,11 @@
-import { createStyles, Text, Container, Group, Image, Title } from '@mantine/core';
+import {
+  createStyles,
+  Text,
+  Container,
+  Group,
+  Image,
+  Title,
+} from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 
 const musicNoteIcon = require("../../images/BigMusicNote.png");
@@ -9,48 +16,51 @@ const useStyles = createStyles((theme) => ({
     marginTop: 120,
     paddingTop: theme.spacing.xl * 2,
     paddingBottom: theme.spacing.xl * 2,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    backgroundColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
     borderTop: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
   },
 
   logo: {
     maxWidth: 400,
 
-    [theme.fn.smallerThan('sm')]: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+    [theme.fn.smallerThan("sm")]: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
     },
   },
 
   description: {
     marginTop: 5,
 
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan("sm")]: {
       marginTop: theme.spacing.xs,
-      textAlign: 'center',
+      textAlign: "center",
     },
   },
 
   inner: {
-    display: 'flex',
-    justifyContent: 'space-between',
+    display: "flex",
+    justifyContent: "space-between",
 
-    [theme.fn.smallerThan('sm')]: {
-      flexDirection: 'column',
-      alignItems: 'center',
+    [theme.fn.smallerThan("sm")]: {
+      flexDirection: "column",
+      alignItems: "center",
     },
   },
 
   groups: {
-    display: 'flex',
-    alignContent: 'center',
-    flexWrap: 'wrap',
+    display: "flex",
+    alignContent: "center",
+    flexWrap: "wrap",
 
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
+    [theme.fn.smallerThan("sm")]: {
+      display: "none",
     },
   },
 
@@ -59,14 +69,17 @@ const useStyles = createStyles((theme) => ({
   },
 
   link: {
-    display: 'block',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
+    display: "block",
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[1]
+        : theme.colors.gray[6],
     fontSize: theme.fontSizes.sm,
     paddingTop: 3,
     paddingBottom: 3,
 
-    '&:hover': {
-      textDecoration: 'underline',
+    "&:hover": {
+      textDecoration: "underline",
     },
   },
 
@@ -76,27 +89,27 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 700,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     marginBottom: theme.spacing.xs / 2,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    color: theme.colorScheme === "dark" ? theme.white : theme.black,
   },
 
   afterFooter: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginTop: theme.spacing.xl,
     paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.xl,
     borderTop: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
 
-    [theme.fn.smallerThan('sm')]: {
-      flexDirection: 'column',
+    [theme.fn.smallerThan("sm")]: {
+      flexDirection: "column",
     },
   },
 
   social: {
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan("sm")]: {
       marginTop: theme.spacing.xs,
     },
   },
@@ -116,7 +129,6 @@ const useStyles = createStyles((theme) => ({
   emailIcon: {
     maxWidth: 20,
   },
-
 }));
 
 interface FooterLinksProps {
@@ -153,18 +165,19 @@ export function Footer({ data }: FooterLinksProps) {
     <footer className={classes.footer}>
       <Container className={classes.inner}>
         <div className={classes.logo}>
-            <Group className={classes.logoGroup}>
-              <Title className={classes.title} mt="xl">
-                COMPOSITION:<span className={classes.blueText}>TODAY</span>
-              </Title>
-              <Image
-                src={String(musicNoteIcon)}
-                className={classes.image}
-                mt="xl"
-              />
-            </Group>
+          <Group className={classes.logoGroup}>
+            <Title className={classes.title} mt="xl">
+              COMPOSITION:<span className={classes.blueText}>TODAY</span>
+            </Title>
+            <Image
+              src={String(musicNoteIcon)}
+              className={classes.image}
+              mt="xl"
+            />
+          </Group>
           <Text size="sm" color="dimmed" className={classes.description}>
-            An online hub for musicians to find jobs, competitions, festivals, and concerts.
+            An online hub for musicians to find jobs, competitions, festivals,
+            and concerts.
           </Text>
         </div>
         <div className={classes.groups}>{groups}</div>
@@ -175,10 +188,7 @@ export function Footer({ data }: FooterLinksProps) {
         </Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
-            <Image
-                src={String(emailIcon)}
-                className={classes.emailIcon}
-            />
+          <Image src={String(emailIcon)} className={classes.emailIcon} />
         </Group>
       </Container>
     </footer>

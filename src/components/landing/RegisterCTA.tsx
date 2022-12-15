@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     paddingTop: 100,
     paddingBottom: 40,
     maxWidth: 1080,
-},
+  },
 
   title: {
     fontWeight: 900,
