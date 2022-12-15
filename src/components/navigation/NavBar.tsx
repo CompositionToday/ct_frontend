@@ -170,7 +170,7 @@ export function NavBar({ links }: HeaderActionProps) {
               onClick={() => navigate("/")}
             >
               COMPOSITION:
-              <span className={classes.blueText}>TODAY</span>
+              <span className={classes.blueText}>TODAY testyo</span>
             </a>
             <Image src={String(musicNoteIcon)} className={classes.image} />
           </Group>
