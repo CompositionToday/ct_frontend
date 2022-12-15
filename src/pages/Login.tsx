@@ -91,7 +91,7 @@ export function Login() {
         </Title>
         <Text color="dimmed" size="sm" align="center" mt={5}>
           Don't have an account yet?{" "}
-          <Anchor<"a"> href="#" size="sm" onClick={() => navigate("/register")}>
+          <Anchor<"a"> size="sm" onClick={() => navigate("/register")}>
             Create account
           </Anchor>
         </Text>
@@ -114,11 +114,7 @@ export function Login() {
           />
           <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
           <Group position="center" mt="md">
-            <Anchor<"a">
-              onClick={() => navigate("/forgotpassword")}
-              href="#"
-              size="sm"
-            >
+            <Anchor<"a"> onClick={() => navigate("/forgotpassword")} size="sm">
               Forgot password?
             </Anchor>
           </Group>

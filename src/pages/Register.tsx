@@ -103,7 +103,7 @@ export function Register() {
         </Title>
         <Text color="dimmed" size="sm" align="center" mt={5}>
           Already have an account?{" "}
-          <Anchor<"a"> href="#" size="sm" onClick={() => navigate("/login")}>
+          <Anchor<"a"> size="sm" onClick={() => navigate("/login")}>
             Login
           </Anchor>
         </Text>
