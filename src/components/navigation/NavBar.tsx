@@ -104,7 +104,6 @@ export function NavBar({ links }: HeaderActionProps) {
     return (
       <a
         key={link.label}
-        href={link.link}
         className={classes.link}
         onClick={() => navigate(link.link)}
       >
