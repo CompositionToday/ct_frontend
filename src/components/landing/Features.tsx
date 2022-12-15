@@ -75,6 +75,7 @@ const useStyles = createStyles((theme) => ({
 
     "&:hover": {
       border: `6px solid #90CAF9`,
+      cursor: `pointer`,
     },
   },
 

@@ -84,6 +84,10 @@ const useStyles = createStyles((theme) => ({
 
   logoGroup: {
     gap: 5,
+
+    "&:hover": {
+      cursor: `pointer`,
+    },
   },
 }));
 

@@ -80,6 +80,7 @@ const useStyles = createStyles((theme) => ({
 
     "&:hover": {
       textDecoration: "underline",
+      cursor: `pointer`,
     },
   },
 
