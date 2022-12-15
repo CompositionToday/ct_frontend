@@ -14,10 +14,10 @@ import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   root: {
-    paddingTop: 150,
-    paddingBottom: 150,
+    paddingTop: 100,
+    paddingBottom: 40,
     maxWidth: 1080,
-  },
+},
 
   title: {
     fontWeight: 900,

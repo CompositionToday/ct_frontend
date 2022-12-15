@@ -1,10 +1,6 @@
 export const navItems = {
   links: [
     {
-      link: "/about",
-      label: "About Us",
-    },
-    {
       link: "/jobs",
       label: "Jobs",
     },

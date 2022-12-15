@@ -81,6 +81,10 @@ const useStyles = createStyles((theme) => ({
   image: {
     maxWidth: 30,
   },
+
+  logoGroup: {
+    gap: 5,
+  },
 }));
 
 interface HeaderActionProps {
@@ -163,9 +167,8 @@ export function NavBar({ links }: HeaderActionProps) {
             className={classes.burger}
             size="sm"
           />
-          <Group spacing="xs">
+          <Group spacing="xs" className={classes.logoGroup} >
             <a
-              href={"/"}
               className={classes.title}
               onClick={() => navigate("/")}
             >

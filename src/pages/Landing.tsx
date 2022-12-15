@@ -7,6 +7,8 @@ import { Features } from "../components/landing/Features";
 import { RegisterCTA } from "../components/landing/RegisterCTA";
 import { auth } from "../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { footerInfo } from "../components/footer/FooterInfo";
+import { Footer } from "../components/footer/Footer";
 
 export function Landing() {
   useEffect(() => {
@@ -25,6 +27,7 @@ export function Landing() {
         <Features />
       </Container>
       <RegisterCTA />
+      <Footer data={ footerInfo.data }/>
     </Container>
   );
 }
