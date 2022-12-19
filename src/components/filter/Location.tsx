@@ -1,28 +1,43 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Autocomplete, Loader, Select } from "@mantine/core";
+import { Autocomplete, AutocompleteItem, Loader, Select } from "@mantine/core";
 
 export interface LocationProp {
-  citySetter: React.Dispatch<React.SetStateAction<string | undefined>>;
-  stateSetter: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setCity: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setState: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-export function Location({ citySetter, stateSetter }: LocationProp) {
+interface LocationData {
+  value: string;
+  city: string;
+  state: string;
+}
+
+export function Location({ setCity, setState }: LocationProp) {
   const timeoutRef = useRef<number>(-1);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<string[]>([]);
+  const [data, setData] = useState<LocationData[]>([]);
   const [userLocation, setUserLocation] = useState<string>("");
 
   const handleChange = async (val: string) => {
+    console.log("I am triggered");
     setLoading(true);
     setValue(val);
     setData([]);
+    setCity("");
+    setState("");
+  };
+
+  const handleDropdownSelect = (item: AutocompleteItem) => {
+    setCity(item.city);
+    setState(item.state);
   };
 
   useEffect(() => {
     console.log(value);
     if (value === "") {
       setLoading(false);
+      return;
     }
 
     const delayDebounceFn = setTimeout(async () => {
@@ -43,18 +58,26 @@ export function Location({ citySetter, stateSetter }: LocationProp) {
           console.log(response);
           setData(
             response.data.map((city: any) => {
-              return `${city.name}, ${city.region}`;
+              // return `${city.name}, ${city.region}`;
+              return {
+                value: `${city.name}, ${city.region}`,
+                city: city.name,
+                state: city.region,
+              };
             })
           );
+          console.log("data", data);
         })
         .then(() => setLoading(false))
         .catch((err) => err);
-
-      console.log(data);
     }, 1500);
 
     return () => clearTimeout(delayDebounceFn);
   }, [value]);
+
+  useEffect(() => {
+    console.log("data", data);
+  }, [data]);
 
   return (
     <div style={{ margin: "10px" }}>
@@ -65,17 +88,9 @@ export function Location({ citySetter, stateSetter }: LocationProp) {
         rightSection={loading ? <Loader size={16} /> : null}
         label="Location"
         placeholder="Enter a city"
+        onItemSubmit={handleDropdownSelect}
         limit={10}
       />
-      <Select
-        data={data}
-        searchable
-        label="Location"
-        placeholder="Enter a city"
-      />
-      <p>{value}</p>
-      <p>testying a push</p>
-      <p>testing another push</p>
     </div>
   );
 }
