@@ -74,6 +74,7 @@ export function Location({ citySetter, stateSetter }: LocationProp) {
         placeholder="Enter a city"
       />
       <p>{value}</p>
+      <p>testying a push</p>
     </div>
   );
 }
