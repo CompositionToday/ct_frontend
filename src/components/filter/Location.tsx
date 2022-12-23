@@ -41,35 +41,59 @@ export function Location({ setCity, setState }: LocationProp) {
     }
 
     const delayDebounceFn = setTimeout(async () => {
-      console.log(value);
-      // Send Axios request here
-      let locations = await fetch(
-        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&countryIds=US&namePrefix=${value}`,
-        {
-          method: "GET",
-          headers: {
-            "X-RapidAPI-Key": `${process.env.REACT_APP_GEO_API_KEY}`, // enter your rapid api key here
-            "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response);
-          setData(
-            response.data.map((city: any) => {
-              // return `${city.name}, ${city.region}`;
-              return {
-                value: `${city.name}, ${city.region}`,
-                city: city.name,
-                state: city.region,
-              };
-            })
-          );
-          console.log("data", data);
-        })
-        .then(() => setLoading(false))
-        .catch((err) => err);
+      try {
+        console.log(value);
+        // Send Axios request here
+        let temp = await fetch(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${value}.json?country=us&limit=10&types=place&autocomplete=true&access_token=${process.env.REACT_APP_MAPBOX_API_KEY}`
+        );
+
+        let tmp = await temp.json();
+        console.log(tmp);
+        setData(
+          tmp.features.map((city: any) => {
+            let arr = city.place_name.split(", ");
+            return {
+              value: `${arr[0]}, ${arr[1]}`,
+              city: arr[0],
+              state: arr[1],
+            };
+          })
+        );
+
+        // Code that got the cities using the old API
+        // let locations = await fetch(
+        //   `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&countryIds=US&minPopulation=1000&namePrefix=${value}`,
+        //   {
+        //     method: "GET",
+        //     headers: {
+        //       "X-RapidAPI-Key": `${process.env.REACT_APP_GEO_API_KEY}`, // enter your rapid api key here
+        //       "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+        //     },
+        //   }
+        // )
+        //   .then((response) => response.json())
+        //   .then((response) => {
+        //     console.log(response);
+        //     setData(
+        //       response.data.map((city: any) => {
+        //         // return `${city.name}, ${city.region}`;
+        //         return {
+        //           value: `${city.name}, ${city.region}`,
+        //           city: city.name,
+        //           state: city.region,
+        //         };
+        //       })
+        //     );
+        //     console.log("data", data);
+        //   })
+        //   .then(() => setLoading(false))
+        //   .catch((err) => err);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
     }, 1500);
 
     return () => clearTimeout(delayDebounceFn);
@@ -89,7 +113,7 @@ export function Location({ setCity, setState }: LocationProp) {
         label="Location"
         placeholder="Enter a city"
         onItemSubmit={handleDropdownSelect}
-        limit={10}
+        limit={15}
       />
     </div>
   );
