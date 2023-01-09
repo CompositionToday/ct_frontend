@@ -6,6 +6,7 @@ import { About } from "./pages/AboutUs";
 import { NotFound } from "./pages/NotFound";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { Jobs } from "./pages/Jobs";
+import { Competitions } from "./pages/Competitions";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/jobs" element={<Jobs />} />
+        <Route path="/competitions" element={<Competitions />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
