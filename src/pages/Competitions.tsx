@@ -7,24 +7,21 @@ export function Competitions() {
       <div
         style={{
           border: "2px solid red",
-          padding: "10px",
+          padding: "10px 10px 10px 10px",
+          paddingBottom: "0px",
           margin: "1% 5%",
           position: "absolute",
-          width: "90vw",
-          height: "85vh",
+          width: "75vw",
+          height: "75vh",
           overflow: "hidden",
         }}
       >
         <Grid
           justify="center"
-          align="stretch"
           grow
-          style={{ height: "100%", overflow: "hidden" }}
+          style={{ position: "relative", height: "100%", width: "100%" }}
         >
-          <Grid.Col
-            style={{ border: "1px solid blue", height: "100%" }}
-            span={3}
-          >
+          <Grid.Col style={{ border: "1px solid blue" }} span={3}>
             <p>1</p>
             <p>testyo</p>
             <p>testyo</p>
