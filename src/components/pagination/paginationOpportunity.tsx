@@ -44,23 +44,6 @@ export function PaginationOpportunity() {
     setPaginationDisplayPost(temp);
   }, [currentPage, exampleDB]);
 
-  const getCurrentPageContent = () => {
-    let firstElement = (currentPage - 1) * 4;
-    let lastElement = currentPage * 4 - 1;
-
-    if (lastElement > exampleDB.length - 1) {
-      lastElement = exampleDB.length - 1;
-    }
-
-    let temp: exampleItem[] = [];
-
-    for (let i = firstElement; i <= lastElement; i++) {
-      temp.push(exampleDB[i]);
-    }
-
-    setPaginationDisplayPost(temp);
-  };
-
   const handlePostClick = (post: exampleItem) => {
     setCurrentPost(post);
   };
