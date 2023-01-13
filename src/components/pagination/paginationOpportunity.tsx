@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import { Grid, MediaQuery, Pagination } from "@mantine/core";
+import { Grid, MediaQuery, Pagination, Modal } from "@mantine/core";
 import { PageContainer, PageGrid, PageFlex } from "./paginationHelper";
 
 interface exampleItem {
@@ -15,6 +15,7 @@ export function PaginationOpportunity() {
   const [paginationDisplayPost, setPaginationDisplayPost] = useState<
     exampleItem[]
   >([]);
+  const [displayModal, setDisplayModal] = useState(false);
 
   useEffect(() => {
     let temp: exampleItem[] = [];
@@ -46,6 +47,11 @@ export function PaginationOpportunity() {
 
   const handlePostClick = (post: exampleItem) => {
     setCurrentPost(post);
+    setDisplayModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setDisplayModal(false);
   };
 
   // const renderCurrentPagePost: FC = () => {
@@ -88,6 +94,13 @@ export function PaginationOpportunity() {
           </MediaQuery>
         </PageGrid>
       </PageContainer>
+      <MediaQuery largerThan="md" styles={{ display: "none" }}>
+        <Modal opened={displayModal} onClose={handleCloseModal} fullScreen>
+          <h1>This is the current page you are on {currentPage}</h1>
+          <h2>This is the current item number you are on {currentPost?.id}</h2>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+        </Modal>
+      </MediaQuery>
     </div>
   );
 }
