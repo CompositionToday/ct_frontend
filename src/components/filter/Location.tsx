@@ -1,9 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Autocomplete, AutocompleteItem, Loader, Select } from "@mantine/core";
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Loader,
+  createStyles,
+} from "@mantine/core";
 
 export interface LocationProp {
-  setCity: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setState: React.Dispatch<React.SetStateAction<string | undefined>>;
+  city?: string | undefined;
+  state?: string | undefined;
+  setCity: React.Dispatch<React.SetStateAction<string>>;
+  setState: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface LocationData {
@@ -12,12 +19,19 @@ interface LocationData {
   state: string;
 }
 
-export function Location({ setCity, setState }: LocationProp) {
+export function Location({ setCity, setState, city, state }: LocationProp) {
   const timeoutRef = useRef<number>(-1);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<LocationData[]>([]);
   const [userLocation, setUserLocation] = useState<string>("");
+
+  const useStyles = createStyles((theme) => ({
+    input: {
+      borderColor: value !== "" && (city === "" || state === "") ? "red" : "",
+    },
+  }));
+  const { classes } = useStyles();
 
   const handleChange = async (val: string) => {
     console.log("I am triggered");
@@ -31,6 +45,7 @@ export function Location({ setCity, setState }: LocationProp) {
   const handleDropdownSelect = (item: AutocompleteItem) => {
     setCity(item.city);
     setState(item.state);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -94,7 +109,7 @@ export function Location({ setCity, setState }: LocationProp) {
       } finally {
         setLoading(false);
       }
-    }, 1500);
+    }, 100);
 
     return () => clearTimeout(delayDebounceFn);
   }, [value]);
@@ -114,6 +129,9 @@ export function Location({ setCity, setState }: LocationProp) {
         placeholder="Enter a city"
         onItemSubmit={handleDropdownSelect}
         limit={15}
+        classNames={{
+          input: classes.input,
+        }}
       />
     </div>
   );
