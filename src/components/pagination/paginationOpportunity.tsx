@@ -50,6 +50,17 @@ export function PaginationOpportunity() {
     setPaginationDisplayPost(temp);
   }, [currentPage, exampleDB]);
 
+  const foo = () => {
+    try {
+      fetch(
+        "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/concerts/count",
+        { mode: "no-cors" }
+      ).then((res) => console.log(res.json()));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handlePostClick = (post: exampleItem) => {
     setCurrentPost(post);
     setDisplayModal(true);
@@ -111,6 +122,7 @@ export function PaginationOpportunity() {
               }}
               span={7}
             >
+              <button onClick={foo}>clicky</button>
               <h1>This is the current page you are on {currentPage}</h1>
               <h2>
                 This is the current item number you are on {currentPost?.id}
