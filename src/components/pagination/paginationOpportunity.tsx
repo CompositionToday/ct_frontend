@@ -1,6 +1,11 @@
 import React, { FC, useState, useEffect } from "react";
-import { Grid, MediaQuery, Pagination, Modal } from "@mantine/core";
-import { PageContainer, PageGrid, PageFlex } from "./paginationHelper";
+import { Grid, MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
+import {
+  GridContainer,
+  PageGrid,
+  PageFlex,
+  PageContainer,
+} from "./paginationHelper";
 
 interface exampleItem {
   id: number;
@@ -64,43 +69,127 @@ export function PaginationOpportunity() {
   // };
 
   return (
-    <div>
-      <PageContainer>
+    <PageContainer justify="center" align="center">
+      <GridContainer>
         <PageGrid justify="center" grow>
-          <Grid.Col style={{ border: "1px solid blue" }} span={5}>
+          <Grid.Col
+            style={{ border: "1px solid blue", height: "100%" }}
+            span={5}
+          >
             <PageFlex justify="space-around" direction="column">
               {paginationDisplayPost.map((post: exampleItem) => (
                 <div onClick={() => handlePostClick(post)}>
                   <h1>Number: {post.id}</h1>
                 </div>
               ))}
-
-              <Pagination
-                page={currentPage}
-                onChange={setCurrentPage}
-                total={Math.ceil(itemCount / 4)}
-                size="sm"
-              />
+              <Flex justify="center">
+                <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+                  <Pagination
+                    page={currentPage}
+                    onChange={setCurrentPage}
+                    total={Math.ceil(itemCount / 4)}
+                    size="lg"
+                  />
+                </MediaQuery>
+                <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+                  <Pagination
+                    page={currentPage}
+                    onChange={setCurrentPage}
+                    total={Math.ceil(itemCount / 4)}
+                    size="xs"
+                  />
+                </MediaQuery>
+              </Flex>
             </PageFlex>
           </Grid.Col>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-            <Grid.Col style={{ border: "1px solid green" }} span={7}>
+            <Grid.Col
+              style={{
+                border: "1px solid green",
+                overflowY: "scroll",
+                height: "100%",
+              }}
+              span={7}
+            >
               <h1>This is the current page you are on {currentPage}</h1>
               <h2>
                 This is the current item number you are on {currentPost?.id}
               </h2>
               <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h3>This is the value of the item: {currentPost?.value}</h3>
             </Grid.Col>
           </MediaQuery>
         </PageGrid>
-      </PageContainer>
+      </GridContainer>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
         <Modal opened={displayModal} onClose={handleCloseModal} fullScreen>
           <h1>This is the current page you are on {currentPage}</h1>
           <h2>This is the current item number you are on {currentPost?.id}</h2>
           <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h1>This is the current page you are on {currentPage}</h1>
+          <h2>This is the current item number you are on {currentPost?.id}</h2>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h1>This is the current page you are on {currentPage}</h1>
+          <h2>This is the current item number you are on {currentPost?.id}</h2>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
+          <h3>This is the value of the item: {currentPost?.value}</h3>
         </Modal>
       </MediaQuery>
-    </div>
+    </PageContainer>
   );
 }

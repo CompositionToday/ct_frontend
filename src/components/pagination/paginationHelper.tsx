@@ -1,14 +1,19 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Grid, Flex, MediaQuery } from "@mantine/core";
+import { Grid, Flex, MediaQuery, createStyles } from "@mantine/core";
 
-export const PageContainer = styled.div`
+export const PageContainer = styled(Flex)`
+  height: 100vh;
+  width: 100vw;
+`;
+
+export const GridContainer = styled.div`
   border: 2px solid red;
   padding: 10px;
-  margin: 1% 5%;
+  margin-top: 100px;
   position: absolute;
-  width: 75vw;
-  height: 80vh;
+  width: 90%;
+  height: 75%;
   overflow: hidden;
 `;
 
@@ -17,9 +22,10 @@ export const PageGrid = styled(Grid)`
   height: 100%;
   width: 100%;
   margin: 0 auto;
+  overflow: visible;
 `;
 
 export const PageFlex = styled(Flex)`
   height: 100%;
-  paddingleft: 10px;
+  padding-left: 10px;
 `;
