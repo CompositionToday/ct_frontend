@@ -50,12 +50,13 @@ export function PaginationOpportunity() {
     setPaginationDisplayPost(temp);
   }, [currentPage, exampleDB]);
 
-  const foo = () => {
+  const foo = async () => {
     try {
-      fetch(
-        "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/concerts/count",
-        { mode: "no-cors" }
-      ).then((res) => console.log(res.json()));
+      let foo = await fetch(
+        "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1"
+      );
+      let foobar = await foo.json();
+      console.log(foobar);
     } catch (err) {
       console.log(err);
     }
