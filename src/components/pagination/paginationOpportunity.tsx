@@ -6,12 +6,7 @@ import {
   PageContainer,
 } from "./paginationHelper";
 import { Grid, MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
-import { useMatch } from "react-router-dom";
-
-interface exampleItem {
-  id: number;
-  value: string;
-}
+import { useLocation } from "react-router-dom";
 
 declare enum jobType {
   teacher,
@@ -40,6 +35,9 @@ interface opportunityItem {
 }
 
 export function PaginationOpportunity() {
+  const [opportunityType, setOpportunityType] = useState(
+    useLocation().pathname.slice(1)
+  );
   const [pageCount, setPageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPost, setCurrentPost] = useState<opportunityItem | null>(null);
@@ -47,12 +45,11 @@ export function PaginationOpportunity() {
     opportunityItem[]
   >([]);
   const [displayModal, setDisplayModal] = useState(false);
-
   useEffect(() => {
     const getPageCount = async () => {
       try {
         let responseCount = await fetch(
-          "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs/count"
+          `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}/count`
         );
 
         let responseCountJson = await responseCount.json();
@@ -77,11 +74,12 @@ export function PaginationOpportunity() {
   useEffect(() => {
     const getCurrentPostPage = async () => {
       let responsePost = await fetch(
-        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=${currentPage}`
+        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}?page_number=${currentPage}`
       );
 
       let responsePostJson = await responsePost.json();
-      setPaginationDisplayPost(responsePostJson.listOfJobs);
+      // FIXME: Need to update the key here to be generic when the backend people changes the APIs
+      setPaginationDisplayPost(responsePostJson.listOfCompetitions);
       setCurrentPost(responsePostJson.listOfJobs[0]);
     };
 
@@ -91,7 +89,7 @@ export function PaginationOpportunity() {
   const foo = async () => {
     try {
       let foo = await fetch(
-        "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1"
+        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}?page_number=1`
       );
       let foobar = await foo.json();
       console.log(foobar);
