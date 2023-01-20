@@ -126,7 +126,6 @@ export function PaginationOpportunity() {
   return (
     <OpportunityPageContainer>
       {/* <NavBar links={navItems.links} /> */}
-
       <GridContainer>
         <PageGrid justify="center" grow>
           <Grid.Col

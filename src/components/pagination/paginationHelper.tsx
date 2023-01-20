@@ -9,20 +9,17 @@ export const PageContainer = styled(Flex)`
 `;
 
 export const OpportunityPageContainer = styled.div`
-  padding-bottom: 20px;
   margin-top: 30px;
 `;
 
 export const GridContainer = styled.div`
   border: 2px solid red;
   padding: 10px;
-  margin-top: -100px;
-  // padding-bottom: 20px;
-  // position: absolute;
   width: 90vw;
   height: 75vh;
   overflow: hidden;
   margin: auto;
+  margin-top: 20px;
 `;
 
 export const PageGrid = styled(Grid)`
