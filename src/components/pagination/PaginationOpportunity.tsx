@@ -1,41 +1,16 @@
 import React, { FC, useState, useEffect } from "react";
 import {
   GridContainer,
-  PageGrid,
-  PageFlex,
-  PageContainer,
+  PaginationGrid,
   OpportunityPageContainer,
-} from "./paginationHelper";
-import { NavBar } from "../navigation/NavBar";
-import { navItems } from "../navigation/NavItems";
-import { Grid, MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
+  opportunityItem,
+  PaginationLeftColumnContent,
+  PaginationLeftColumnContainer,
+  PaginationRightColumnContainer,
+} from "./PaginationHelper";
+import { PaginationOpportunityInfo } from "./PaginationOpportunityInfo";
+import { MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
 import { useLocation } from "react-router-dom";
-
-declare enum jobType {
-  teacher,
-  tutor,
-  professor,
-  composor,
-}
-
-interface opportunityItem {
-  UID: string;
-  idposts: number;
-  title: string;
-  description: string;
-  link: string;
-  date_posted: Date;
-  city: string;
-  state: string;
-  organization: string;
-  end_date: Date;
-  salary?: string;
-  job_type?: jobType | any;
-  winner?: string | null;
-  category?: string;
-  address?: string;
-  start_date?: Date;
-}
 
 export function PaginationOpportunity() {
   const [opportunityType, setOpportunityType] = useState(
@@ -82,8 +57,8 @@ export function PaginationOpportunity() {
 
       let responsePostJson = await responsePost.json();
       // FIXME: Need to update the key here to be generic when the backend people changes the APIs
-      setPaginationDisplayPost(responsePostJson.listOfCompetitions);
-      setCurrentPost(responsePostJson.listOfJobs[0]);
+      setPaginationDisplayPost(responsePostJson.listOfObjects);
+      setCurrentPost(responsePostJson.listOfObjects[0]);
     };
 
     getCurrentPostPage();
@@ -127,12 +102,12 @@ export function PaginationOpportunity() {
     <OpportunityPageContainer>
       {/* <NavBar links={navItems.links} /> */}
       <GridContainer>
-        <PageGrid justify="center" grow>
-          <Grid.Col
-            style={{ border: "1px solid blue", height: "100%" }}
-            span={5}
-          >
-            <PageFlex justify="space-around" direction="column">
+        <PaginationGrid justify="center" grow>
+          <PaginationLeftColumnContainer span={5}>
+            <PaginationLeftColumnContent
+              justify="space-around"
+              direction="column"
+            >
               {paginationDisplayPost?.map((post: opportunityItem) => {
                 return (
                   <div onClick={() => handlePostClick(post)}>
@@ -158,27 +133,18 @@ export function PaginationOpportunity() {
                   />
                 </MediaQuery>
               </Flex>
-            </PageFlex>
-          </Grid.Col>
+            </PaginationLeftColumnContent>
+          </PaginationLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-            <Grid.Col
-              style={{
-                border: "1px solid green",
-                overflowY: "auto",
-                height: "100%",
-              }}
-              span={7}
-            >
-              <button onClick={foo}>clicky</button>
-              <h1>This is the current page you are on {currentPage}</h1>
-              <h1>Title: {currentPost?.title}</h1>
-            </Grid.Col>
+            <PaginationRightColumnContainer span={7}>
+              <PaginationOpportunityInfo />
+            </PaginationRightColumnContainer>
           </MediaQuery>
-        </PageGrid>
+        </PaginationGrid>
       </GridContainer>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
         <Modal opened={displayModal} onClose={handleCloseModal} fullScreen>
-          <h1>This is the current page you are on {currentPage}</h1>
+          <PaginationOpportunityInfo />
         </Modal>
       </MediaQuery>
     </OpportunityPageContainer>
