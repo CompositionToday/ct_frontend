@@ -63,7 +63,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   greenText: {
-    color: "#45A861",
+    color: "#40C057",
   },
 
   image: {

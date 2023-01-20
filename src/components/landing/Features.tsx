@@ -74,7 +74,7 @@ const useStyles = createStyles((theme) => ({
     border: `6px solid #FFFFFF`,
 
     "&:hover": {
-      border: `6px solid #90CAF9`,
+      border: `6px solid #40C057`,
       cursor: `pointer`,
     },
   },
@@ -83,7 +83,7 @@ const useStyles = createStyles((theme) => ({
     width: "100%",
     fontSize: 23,
     fontWeight: 500,
-    color: "#2F2F2F",
+    color: "#454545",
     textAlign: "center",
   },
 

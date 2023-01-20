@@ -20,10 +20,11 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    fontWeight: 900,
+    fontWeight: 800,
     fontSize: 44,
     marginBottom: theme.spacing.md,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    color: "#454545",
 
     [theme.fn.smallerThan("sm")]: {
       fontSize: 32,
