@@ -162,7 +162,7 @@ export function NavBar({ links }: HeaderActionProps) {
   }, []);
 
   return (
-    <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }} mt={10} mb={120}>
+    <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }} mt={10}>
       <Container className={classes.inner} fluid>
         <Group style={{ paddingLeft: 25 }}>
           <Burger

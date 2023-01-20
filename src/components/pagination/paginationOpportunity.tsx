@@ -4,7 +4,10 @@ import {
   PageGrid,
   PageFlex,
   PageContainer,
+  OpportunityPageContainer,
 } from "./paginationHelper";
+import { NavBar } from "../navigation/NavBar";
+import { navItems } from "../navigation/NavItems";
 import { Grid, MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
 import { useLocation } from "react-router-dom";
 
@@ -86,6 +89,10 @@ export function PaginationOpportunity() {
     getCurrentPostPage();
   }, [currentPage, pageCount]);
 
+  useEffect(() => {
+    setCurrentPost(paginationDisplayPost[0]);
+  }, [paginationDisplayPost]);
+
   const foo = async () => {
     try {
       let foo = await fetch(
@@ -117,7 +124,9 @@ export function PaginationOpportunity() {
   // };
 
   return (
-    <PageContainer justify="center" align="center">
+    <OpportunityPageContainer>
+      {/* <NavBar links={navItems.links} /> */}
+
       <GridContainer>
         <PageGrid justify="center" grow>
           <Grid.Col
@@ -156,7 +165,7 @@ export function PaginationOpportunity() {
             <Grid.Col
               style={{
                 border: "1px solid green",
-                overflowY: "scroll",
+                overflowY: "auto",
                 height: "100%",
               }}
               span={7}
@@ -173,6 +182,6 @@ export function PaginationOpportunity() {
           <h1>This is the current page you are on {currentPage}</h1>
         </Modal>
       </MediaQuery>
-    </PageContainer>
+    </OpportunityPageContainer>
   );
 }

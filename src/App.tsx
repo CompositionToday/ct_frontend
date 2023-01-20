@@ -7,10 +7,13 @@ import { NotFound } from "./pages/NotFound";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { Jobs } from "./pages/Jobs";
 import { Competitions } from "./pages/Competitions";
+import { NavBar } from "./components/navigation/NavBar";
+import { navItems } from "./components/navigation/NavItems";
 
 export default function App() {
   return (
     <HashRouter>
+      <NavBar links={navItems.links} />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
