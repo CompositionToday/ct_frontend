@@ -1,59 +1,102 @@
 import React, { FC, useState, useEffect } from "react";
-import { Grid, MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
 import {
   GridContainer,
   PageGrid,
   PageFlex,
   PageContainer,
+  OpportunityPageContainer,
 } from "./paginationHelper";
+import { NavBar } from "../navigation/NavBar";
+import { navItems } from "../navigation/NavItems";
+import { Grid, MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
+import { useLocation } from "react-router-dom";
 
-interface exampleItem {
-  id: number;
-  value: string;
+declare enum jobType {
+  teacher,
+  tutor,
+  professor,
+  composor,
+}
+
+interface opportunityItem {
+  UID: string;
+  idposts: number;
+  title: string;
+  description: string;
+  link: string;
+  date_posted: Date;
+  city: string;
+  state: string;
+  organization: string;
+  end_date: Date;
+  salary?: string;
+  job_type?: jobType | any;
+  winner?: string | null;
+  category?: string;
+  address?: string;
+  start_date?: Date;
 }
 
 export function PaginationOpportunity() {
-  const itemCount = 82;
+  const [opportunityType, setOpportunityType] = useState(
+    useLocation().pathname.slice(1)
+  );
+  const [pageCount, setPageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [exampleDB, setExampleDB] = useState<exampleItem[]>([]);
-  const [currentPost, setCurrentPost] = useState<exampleItem | null>(null);
+  const [currentPost, setCurrentPost] = useState<opportunityItem | null>(null);
   const [paginationDisplayPost, setPaginationDisplayPost] = useState<
-    exampleItem[]
+    opportunityItem[]
   >([]);
   const [displayModal, setDisplayModal] = useState(false);
-
   useEffect(() => {
-    let temp: exampleItem[] = [];
+    const getPageCount = async () => {
+      try {
+        let responseCount = await fetch(
+          `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}/count`
+        );
 
-    for (let i = 0; i < itemCount; i++) {
-      temp.push({ id: i, value: `This is some example text with value ${i}` });
-    }
+        let responseCountJson = await responseCount.json();
+        console.log("API COUNT: ", responseCountJson.count);
+        let numberOfPage = Math.ceil(responseCountJson.count / 4);
+        setPageCount(numberOfPage);
 
-    setExampleDB(temp);
-    setCurrentPost(temp[0]);
+        // let responsePost = await fetch(
+        //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1`
+        // );
+
+        // let responsePostJson = await responsePost.json();
+        // console.log(responsePostJson);
+        // setPaginationDisplayPost(responsePostJson.listOfJobs);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getPageCount();
   }, []);
 
   useEffect(() => {
-    let firstElement = (currentPage - 1) * 4;
-    let lastElement = currentPage * 4 - 1;
+    const getCurrentPostPage = async () => {
+      let responsePost = await fetch(
+        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}?page_number=${currentPage}`
+      );
 
-    if (lastElement > exampleDB.length - 1) {
-      lastElement = exampleDB.length - 1;
-    }
+      let responsePostJson = await responsePost.json();
+      // FIXME: Need to update the key here to be generic when the backend people changes the APIs
+      setPaginationDisplayPost(responsePostJson.listOfCompetitions);
+      setCurrentPost(responsePostJson.listOfJobs[0]);
+    };
 
-    let temp: exampleItem[] = [];
+    getCurrentPostPage();
+  }, [currentPage, pageCount]);
 
-    for (let i = firstElement; i <= lastElement; i++) {
-      temp.push(exampleDB[i]);
-    }
-
-    setPaginationDisplayPost(temp);
-  }, [currentPage, exampleDB]);
+  useEffect(() => {
+    setCurrentPost(paginationDisplayPost[0]);
+  }, [paginationDisplayPost]);
 
   const foo = async () => {
     try {
       let foo = await fetch(
-        "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1"
+        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}?page_number=1`
       );
       let foobar = await foo.json();
       console.log(foobar);
@@ -62,7 +105,7 @@ export function PaginationOpportunity() {
     }
   };
 
-  const handlePostClick = (post: exampleItem) => {
+  const handlePostClick = (post: opportunityItem) => {
     setCurrentPost(post);
     setDisplayModal(true);
   };
@@ -81,7 +124,8 @@ export function PaginationOpportunity() {
   // };
 
   return (
-    <PageContainer justify="center" align="center">
+    <OpportunityPageContainer>
+      {/* <NavBar links={navItems.links} /> */}
       <GridContainer>
         <PageGrid justify="center" grow>
           <Grid.Col
@@ -89,17 +133,19 @@ export function PaginationOpportunity() {
             span={5}
           >
             <PageFlex justify="space-around" direction="column">
-              {paginationDisplayPost.map((post: exampleItem) => (
-                <div onClick={() => handlePostClick(post)}>
-                  <h1>Number: {post.id}</h1>
-                </div>
-              ))}
+              {paginationDisplayPost?.map((post: opportunityItem) => {
+                return (
+                  <div onClick={() => handlePostClick(post)}>
+                    <h1>{post.title}</h1>
+                  </div>
+                );
+              })}
               <Flex justify="center">
                 <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
                   <Pagination
                     page={currentPage}
                     onChange={setCurrentPage}
-                    total={Math.ceil(itemCount / 4)}
+                    total={pageCount}
                     size="lg"
                   />
                 </MediaQuery>
@@ -107,7 +153,7 @@ export function PaginationOpportunity() {
                   <Pagination
                     page={currentPage}
                     onChange={setCurrentPage}
-                    total={Math.ceil(itemCount / 4)}
+                    total={pageCount}
                     size="xs"
                   />
                 </MediaQuery>
@@ -118,47 +164,14 @@ export function PaginationOpportunity() {
             <Grid.Col
               style={{
                 border: "1px solid green",
-                overflowY: "scroll",
+                overflowY: "auto",
                 height: "100%",
               }}
               span={7}
             >
               <button onClick={foo}>clicky</button>
               <h1>This is the current page you are on {currentPage}</h1>
-              <h2>
-                This is the current item number you are on {currentPost?.id}
-              </h2>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
-              <h3>This is the value of the item: {currentPost?.value}</h3>
+              <h1>Title: {currentPost?.title}</h1>
             </Grid.Col>
           </MediaQuery>
         </PageGrid>
@@ -166,43 +179,8 @@ export function PaginationOpportunity() {
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
         <Modal opened={displayModal} onClose={handleCloseModal} fullScreen>
           <h1>This is the current page you are on {currentPage}</h1>
-          <h2>This is the current item number you are on {currentPost?.id}</h2>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h1>This is the current page you are on {currentPage}</h1>
-          <h2>This is the current item number you are on {currentPost?.id}</h2>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h1>This is the current page you are on {currentPage}</h1>
-          <h2>This is the current item number you are on {currentPost?.id}</h2>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
-          <h3>This is the value of the item: {currentPost?.value}</h3>
         </Modal>
       </MediaQuery>
-    </PageContainer>
+    </OpportunityPageContainer>
   );
 }

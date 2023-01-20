@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { NavBar } from "../components/navigation/NavBar";
 import { navItems } from "../components/navigation/NavItems";
 import { teamMemberInfo } from "../components/about/TeamMemberInfo";
@@ -69,13 +70,22 @@ const useStyles = createStyles((theme) => ({
     paddingTop: 8,
     maxWidth: 70,
   },
+
+  container: {
+    marginTop: 120,
+  },
 }));
 
 export function About() {
   const { classes } = useStyles();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div>
-      <NavBar links={navItems.links} />
+    <div className={classes.container}>
+      {/* <NavBar links={navItems.links} /> */}
       <Container>
         <div className={classes.inner}>
           <div className={classes.content}>
