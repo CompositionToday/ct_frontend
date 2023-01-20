@@ -78,7 +78,7 @@ export function Login() {
   }, []);
 
   return (
-    <Center style={{ width: "100vw", height: "100vh" }}>
+    <Center style={{ height: "100%" }}>
       <Container size={420} my={40} style={{ minWidth: 420 }}>
         <Title
           align="center"

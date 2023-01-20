@@ -10,6 +10,7 @@ export const PageContainer = styled(Flex)`
 
 export const OpportunityPageContainer = styled.div`
   padding-bottom: 20px;
+  margin-top: 30px;
 `;
 
 export const GridContainer = styled.div`
