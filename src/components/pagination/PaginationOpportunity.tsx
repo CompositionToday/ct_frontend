@@ -3,7 +3,7 @@ import {
   GridContainer,
   PaginationGrid,
   OpportunityPageContainer,
-  opportunityItem,
+  OpportunityItem,
   PaginationLeftColumnContent,
   PaginationLeftColumnContainer,
   PaginationRightColumnContainer,
@@ -18,11 +18,12 @@ export function PaginationOpportunity() {
   );
   const [pageCount, setPageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentPost, setCurrentPost] = useState<opportunityItem | null>(null);
-  const [paginationDisplayPost, setPaginationDisplayPost] = useState<
-    opportunityItem[]
-  >([]);
+  const [currentOpportunity, setCurrentOpportunity] =
+    useState<OpportunityItem | null>(null);
+  const [paginationDisplayOpportunity, setPaginationDisplayOpportunity] =
+    useState<OpportunityItem[]>([]);
   const [displayModal, setDisplayModal] = useState(false);
+
   useEffect(() => {
     const getPageCount = async () => {
       try {
@@ -35,13 +36,13 @@ export function PaginationOpportunity() {
         let numberOfPage = Math.ceil(responseCountJson.count / 4);
         setPageCount(numberOfPage);
 
-        // let responsePost = await fetch(
+        // let responseOpportunity = await fetch(
         //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1`
         // );
 
-        // let responsePostJson = await responsePost.json();
-        // console.log(responsePostJson);
-        // setPaginationDisplayPost(responsePostJson.listOfJobs);
+        // let responseOpportunityJson = await responseOpportunity.json();
+        // console.log(responseOpportunityJson);
+        // setPaginationDisplayOpportunity(responseOpportunityJson.listOfJobs);
       } catch (err) {
         console.log(err);
       }
@@ -50,23 +51,22 @@ export function PaginationOpportunity() {
   }, []);
 
   useEffect(() => {
-    const getCurrentPostPage = async () => {
-      let responsePost = await fetch(
+    const getCurrentOpportunityPage = async () => {
+      let responseOpportunity = await fetch(
         `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}?page_number=${currentPage}`
       );
 
-      let responsePostJson = await responsePost.json();
-      // FIXME: Need to update the key here to be generic when the backend people changes the APIs
-      setPaginationDisplayPost(responsePostJson.listOfObjects);
-      setCurrentPost(responsePostJson.listOfObjects[0]);
+      let responseOpportunityJson = await responseOpportunity.json();
+      setPaginationDisplayOpportunity(responseOpportunityJson.listOfObjects);
+      setCurrentOpportunity(responseOpportunityJson.listOfObjects[0]);
     };
 
-    getCurrentPostPage();
+    getCurrentOpportunityPage();
   }, [currentPage, pageCount]);
 
   useEffect(() => {
-    setCurrentPost(paginationDisplayPost[0]);
-  }, [paginationDisplayPost]);
+    setCurrentOpportunity(paginationDisplayOpportunity[0]);
+  }, [paginationDisplayOpportunity]);
 
   const foo = async () => {
     try {
@@ -80,8 +80,8 @@ export function PaginationOpportunity() {
     }
   };
 
-  const handlePostClick = (post: opportunityItem) => {
-    setCurrentPost(post);
+  const handleOpportunityClick = (opportunity: OpportunityItem) => {
+    setCurrentOpportunity(opportunity);
     setDisplayModal(true);
   };
 
@@ -89,11 +89,11 @@ export function PaginationOpportunity() {
     setDisplayModal(false);
   };
 
-  // const renderCurrentPagePost: FC = () => {
-  //   return paginationDisplayPost.map((post: exampleItem) => (
-  //     <div onClick={() => handlePostClick(post)}>
-  //       <h1>Number: {post.id}</h1>
-  //       <p>{post.value}</p>
+  // const renderCurrentPageOpportunity: FC = () => {
+  //   return paginationDisplayOpportunity.map((opportunity: exampleItem) => (
+  //     <div onClick={() => handleOpportunityClick(opportunity)}>
+  //       <h1>Number: {opportunity.id}</h1>
+  //       <p>{opportunity.value}</p>
   //     </div>
   //   ));
   // };
@@ -108,13 +108,15 @@ export function PaginationOpportunity() {
               justify="space-around"
               direction="column"
             >
-              {paginationDisplayPost?.map((post: opportunityItem) => {
-                return (
-                  <div onClick={() => handlePostClick(post)}>
-                    <h1>{post.title}</h1>
-                  </div>
-                );
-              })}
+              {paginationDisplayOpportunity?.map(
+                (opportunity: OpportunityItem) => {
+                  return (
+                    <div onClick={() => handleOpportunityClick(opportunity)}>
+                      <h1>{opportunity.title}</h1>
+                    </div>
+                  );
+                }
+              )}
               <Flex justify="center">
                 <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
                   <Pagination
@@ -137,14 +139,14 @@ export function PaginationOpportunity() {
           </PaginationLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <PaginationRightColumnContainer span={7}>
-              <PaginationOpportunityInfo />
+              <PaginationOpportunityInfo opportunity={currentOpportunity} />
             </PaginationRightColumnContainer>
           </MediaQuery>
         </PaginationGrid>
       </GridContainer>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
         <Modal opened={displayModal} onClose={handleCloseModal} fullScreen>
-          <PaginationOpportunityInfo />
+          <PaginationOpportunityInfo opportunity={currentOpportunity} />
         </Modal>
       </MediaQuery>
     </OpportunityPageContainer>

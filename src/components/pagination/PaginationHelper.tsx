@@ -9,7 +9,7 @@ export declare enum jobType {
   composor,
 }
 
-export interface opportunityItem {
+export interface OpportunityItem {
   UID: string;
   idposts: number;
   title: string;
