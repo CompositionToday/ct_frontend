@@ -78,51 +78,49 @@ export function Login() {
   }, []);
 
   return (
-    <Center style={{ height: "100%" }}>
-      <Container size={420} my={40} style={{ minWidth: 420 }}>
-        <Title
-          align="center"
-          sx={(theme) => ({
-            fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-            fontWeight: 900,
-          })}
-        >
-          Welcome back!
-        </Title>
-        <Text color="dimmed" size="sm" align="center" mt={5}>
-          Don't have an account yet?{" "}
-          <Anchor<"a"> size="sm" onClick={() => navigate("/register")}>
-            Create account
-          </Anchor>
-        </Text>
+    <Container size={420} my={40}>
+      <Title
+        align="center"
+        sx={(theme) => ({
+          fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+          fontWeight: 900,
+        })}
+      >
+        Welcome back!
+      </Title>
+      <Text color="dimmed" size="sm" align="center" mt={5}>
+        Don't have an account yet?{" "}
+        <Anchor<"a"> size="sm" onClick={() => navigate("/register")}>
+          Create account
+        </Anchor>
+      </Text>
 
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput
-            label="Email"
-            placeholder="Your email"
-            required
-            value={email}
-            onChange={handleEmail}
-          />
-          <PasswordInput
-            label="Password"
-            placeholder="Your password"
-            required
-            mt="md"
-            value={password}
-            onChange={handlePassword}
-          />
-          <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
-          <Group position="center" mt="md">
-            <Anchor<"a"> onClick={() => navigate("/forgotpassword")} size="sm">
-              Forgot password?
-            </Anchor>
-          </Group>
-          <Button fullWidth mt="xl" onClick={handleLogin}>
-            Sign in
-          </Button>
-        </Paper>
-      </Container>
-    </Center>
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <TextInput
+          label="Email"
+          placeholder="Your email"
+          required
+          value={email}
+          onChange={handleEmail}
+        />
+        <PasswordInput
+          label="Password"
+          placeholder="Your password"
+          required
+          mt="md"
+          value={password}
+          onChange={handlePassword}
+        />
+        <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
+        <Group position="center" mt="md">
+          <Anchor<"a"> onClick={() => navigate("/forgotpassword")} size="sm">
+            Forgot password?
+          </Anchor>
+        </Group>
+        <Button fullWidth mt="xl" onClick={handleLogin}>
+          Sign in
+        </Button>
+      </Paper>
+    </Container>
   );
 }

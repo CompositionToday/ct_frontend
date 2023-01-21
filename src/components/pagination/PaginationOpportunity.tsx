@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   GridContainer,
   PaginationGrid,
@@ -59,6 +59,7 @@ export function PaginationOpportunity() {
       let responseOpportunityJson = await responseOpportunity.json();
       setPaginationDisplayOpportunity(responseOpportunityJson.listOfObjects);
       setCurrentOpportunity(responseOpportunityJson.listOfObjects[0]);
+      console.log(typeof responseOpportunityJson.listOfObjects[0].end_date);
     };
 
     getCurrentOpportunityPage();
@@ -68,18 +69,6 @@ export function PaginationOpportunity() {
     setCurrentOpportunity(paginationDisplayOpportunity[0]);
   }, [paginationDisplayOpportunity]);
 
-  const foo = async () => {
-    try {
-      let foo = await fetch(
-        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}?page_number=1`
-      );
-      let foobar = await foo.json();
-      console.log(foobar);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
     setDisplayModal(true);
@@ -88,15 +77,6 @@ export function PaginationOpportunity() {
   const handleCloseModal = () => {
     setDisplayModal(false);
   };
-
-  // const renderCurrentPageOpportunity: FC = () => {
-  //   return paginationDisplayOpportunity.map((opportunity: exampleItem) => (
-  //     <div onClick={() => handleOpportunityClick(opportunity)}>
-  //       <h1>Number: {opportunity.id}</h1>
-  //       <p>{opportunity.value}</p>
-  //     </div>
-  //   ));
-  // };
 
   return (
     <OpportunityPageContainer>
@@ -139,14 +119,20 @@ export function PaginationOpportunity() {
           </PaginationLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <PaginationRightColumnContainer span={7}>
-              <PaginationOpportunityInfo opportunity={currentOpportunity} />
+              <PaginationOpportunityInfo
+                opportunity={currentOpportunity}
+                opportunityType={opportunityType}
+              />
             </PaginationRightColumnContainer>
           </MediaQuery>
         </PaginationGrid>
       </GridContainer>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
         <Modal opened={displayModal} onClose={handleCloseModal} fullScreen>
-          <PaginationOpportunityInfo opportunity={currentOpportunity} />
+          <PaginationOpportunityInfo
+            opportunity={currentOpportunity}
+            opportunityType={opportunityType}
+          />
         </Modal>
       </MediaQuery>
     </OpportunityPageContainer>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Grid, Flex, MediaQuery, createStyles } from "@mantine/core";
+import { Grid, Flex, Button } from "@mantine/core";
 
 export declare enum jobType {
   teacher,
@@ -19,13 +19,13 @@ export interface OpportunityItem {
   city: string;
   state: string;
   organization: string;
-  end_date: Date;
+  end_date: Date | string;
   salary?: string;
   job_type?: jobType | any;
   winner?: string | null;
   category?: string;
   address?: string;
-  start_date?: Date;
+  start_date?: Date | string;
 }
 
 export const PageContainer = styled(Flex)`
@@ -42,7 +42,7 @@ export const GridContainer = styled.div`
   border: 1px solid #2f2f2f;
   border-radius: 10px;
   padding: 10px;
-  width: 90vw;
+  width: 75vw;
   height: 75vh;
   overflow: hidden;
   margin: auto;
