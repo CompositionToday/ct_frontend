@@ -135,7 +135,7 @@ export function PaginationOpportunityInfo({
       </PaginationButtonsContainer>
       <SpecificOpportunityInfo />
       <DescriptionContainer>
-        <Label>Description</Label>
+        <Label>Description:</Label>
         <p>{opportunity.description}</p>
       </DescriptionContainer>
     </PaginationOpportunityInfoContainer>
