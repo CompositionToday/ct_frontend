@@ -19,9 +19,22 @@ import {
   IconArrowBigDownLine,
   IconDots,
 } from "@tabler/icons";
+import { User } from "firebase/auth";
+import { useEffect, useState } from "react";
 
-interface UsersTableProps {
-  data: { name: string; type: string; email: string }[];
+interface UserTableData {
+  name: string;
+  type: string;
+  email: string;
+}
+
+interface RawUserData {
+  UID: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  is_admin: number;
+  is_banned: number;
 }
 
 const typeColors: Record<string, string> = {
@@ -43,9 +56,51 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function UsersList({ data }: UsersTableProps) {
+export function UsersList() {
   const theme = useMantineTheme();
   const { classes } = useStyles();
+  const [rawUserList, setRawUserList] = useState<RawUserData[]>([]);
+  const [userList, setUserList] = useState<UserTableData[]>([]);
+
+  useEffect(() => {
+    const getCurrentUsersPage = async () => {
+      try {
+        let res = await fetch(
+          `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/users?page_number=1`
+        );
+
+        let resJSON = await res.json();
+        setRawUserList(resJSON.listOfObjects);
+        console.log("userList", rawUserList);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getCurrentUsersPage();
+    convertRawUserDataToTableData();
+  });
+
+  const convertRawUserDataToTableData = () => {
+    let newUserList: UserTableData[] = [];
+    rawUserList.forEach((user) => {
+      console.log("user:", user);
+
+      let formattedUserData: UserTableData = {
+        name: "",
+        type: "Regular",
+        email: user.email,
+      };
+
+      formattedUserData.name = user.first_name.concat(" ", user.last_name);
+
+      if (user.is_admin === 1) formattedUserData.type = "Admin";
+      if (user.is_banned === 1) formattedUserData.type = "Banned";
+
+      newUserList.push(formattedUserData);
+    });
+    setUserList(newUserList);
+  };
 
   const openDeleteModal = (name: string) =>
     openConfirmModal({
@@ -100,7 +155,41 @@ export function UsersList({ data }: UsersTableProps) {
       onConfirm: () => console.log("Confirmed"),
     });
 
-  const rows = data.map((item) => (
+  const openMakeAdminModal = (name: string) =>
+    openConfirmModal({
+      title: "Make Admin",
+      centered: true,
+      children: (
+        <Text size="sm">
+          Are you sure you want to make{" "}
+          <span className={classes.bold}>{name}</span> an admin? This action
+          will grant this user admin abilities.
+        </Text>
+      ),
+      labels: { confirm: "Make admin", cancel: "Nevermind" },
+      confirmProps: { color: "red" },
+      onCancel: () => console.log("Cancel"),
+      onConfirm: () => console.log("Confirmed"),
+    });
+
+  const openRemoveAdminModal = (name: string) =>
+    openConfirmModal({
+      title: "Remove Admin",
+      centered: true,
+      children: (
+        <Text size="sm">
+          Are you sure you want to remove{" "}
+          <span className={classes.bold}>{name}</span> as an admin? This action
+          will remove admin abilities from this user.
+        </Text>
+      ),
+      labels: { confirm: "Remove admin", cancel: "Nevermind" },
+      confirmProps: { color: "red" },
+      onCancel: () => console.log("Cancel"),
+      onConfirm: () => console.log("Confirmed"),
+    });
+
+  const rows = userList.map((item) => (
     <tr key={item.name}>
       <td>
         <Text size="sm" weight={500}>
@@ -136,6 +225,11 @@ export function UsersList({ data }: UsersTableProps) {
                 ) : (
                   <IconArrowBigUpLine size={16} stroke={1.5} />
                 )
+              }
+              onClick={
+                item.type === "Admin"
+                  ? () => openRemoveAdminModal(item.name)
+                  : () => openMakeAdminModal(item.name)
               }
             >
               {item.type === "Admin" ? "Remove Admin" : "Make Admin"}

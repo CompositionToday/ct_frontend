@@ -7,13 +7,11 @@ import { onAuthStateChanged } from "firebase/auth";
 import { footerInfo } from "../../components/footer/FooterInfo";
 import { Footer } from "../../components/footer/Footer";
 import { UsersList } from "../../components/adminView/UsersList";
-import { usersListSampleData } from "../../components/adminView/UsersListSampleData";
 
 export function Users() {
   return (
     <Container fluid style={{ padding: 0 }}>
-      <NavBar links={navItems.links} />
-      <UsersList data={usersListSampleData.usersList} />
+      <UsersList />
       <Footer data={footerInfo.data} />
     </Container>
   );
