@@ -41,7 +41,7 @@ export const OpportunityPageContainer = styled.div`
 export const GridContainer = styled.div`
   border: 1px solid #2f2f2f;
   border-radius: 10px;
-  padding: 10px;
+  // padding: 10px;
   width: 75vw;
   height: 75vh;
   overflow: hidden;
@@ -58,16 +58,30 @@ export const PaginationGrid = styled(Grid)`
 
 export const PaginationLeftColumnContent = styled(Flex)`
   height: 100%;
-  padding-left: 10px;
+  // padding-left: 10px;
+  // padding-right: 10px;
   overflow-y: auto;
 `;
 
 export const PaginationLeftColumnContainer = styled(Grid.Col)`
   height: 100%;
+  padding: 0;
 `;
 
 export const PaginationRightColumnContainer = styled(Grid.Col)`
   border-left: 1px solid #a1a1a1;
   overflow-y: auto;
   height: 100%;
+`;
+
+export const PaginationCard = styled.div`
+  border-bottom: 1px solid #a1a1a1;
+  padding-left: 10px;
+  padding-right: 10px;
+  // background-color: red;
+`;
+
+export const PaginationNavbarContainer = styled(Flex)`
+  padding-top: 30px;
+  padding-bottom: 30px;
 `;

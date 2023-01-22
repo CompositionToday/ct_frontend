@@ -7,7 +7,10 @@ import {
   PaginationLeftColumnContent,
   PaginationLeftColumnContainer,
   PaginationRightColumnContainer,
+  PaginationCard,
+  PaginationNavbarContainer,
 } from "./PaginationHelper";
+import { OpportunityTitle } from "./PaginationOpportunityInfoHelper";
 import { PaginationOpportunityInfo } from "./PaginationOpportunityInfo";
 import { MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
 import { useLocation } from "react-router-dom";
@@ -85,19 +88,27 @@ export function PaginationOpportunity() {
         <PaginationGrid justify="center" grow>
           <PaginationLeftColumnContainer span={5}>
             <PaginationLeftColumnContent
-              justify="space-around"
+              // justify="space-around"
               direction="column"
+              gap={0}
+              columnGap={0}
             >
               {paginationDisplayOpportunity?.map(
                 (opportunity: OpportunityItem) => {
                   return (
-                    <div onClick={() => handleOpportunityClick(opportunity)}>
-                      <h1>{opportunity.title}</h1>
-                    </div>
+                    <PaginationCard
+                      onClick={() => handleOpportunityClick(opportunity)}
+                    >
+                      <OpportunityTitle>{opportunity.title}</OpportunityTitle>
+                      <p>{opportunity.organization}</p>
+                      <p>
+                        {opportunity.city}, {opportunity.state}
+                      </p>
+                    </PaginationCard>
                   );
                 }
               )}
-              <Flex justify="center">
+              <PaginationNavbarContainer justify="center" align="center">
                 <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
                   <Pagination
                     page={currentPage}
@@ -114,7 +125,7 @@ export function PaginationOpportunity() {
                     size="xs"
                   />
                 </MediaQuery>
-              </Flex>
+              </PaginationNavbarContainer>
             </PaginationLeftColumnContent>
           </PaginationLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
