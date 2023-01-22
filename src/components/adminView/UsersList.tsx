@@ -10,7 +10,7 @@ import {
   createStyles,
   MantineProvider,
 } from "@mantine/core";
-import { openConfirmModal, ModalsProvider } from "@mantine/modals";
+import { ModalsProvider } from "@mantine/modals";
 import {
   IconBan,
   IconTrash,
@@ -21,6 +21,9 @@ import {
 } from "@tabler/icons";
 import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { openMakeAdminModal, openRemoveAdminModal } from "./AdminModal";
+import { openDeleteModal } from "./DeleteModal";
+import { openBanModal, openUnbanModal } from "./BanModal";
 
 interface UserTableData {
   name: string;
@@ -101,93 +104,6 @@ export function UsersList() {
     });
     setUserList(newUserList);
   };
-
-  const openDeleteModal = (name: string) =>
-    openConfirmModal({
-      title: "Delete User",
-      centered: true,
-      children: (
-        <Text size="sm">
-          Are you sure you want to delete{" "}
-          <span className={classes.bold}>{name}</span>? This action will{" "}
-          <span className={classes.bold}>permanently delete </span>
-          this user from the database.
-        </Text>
-      ),
-      labels: { confirm: "Delete user", cancel: "Nevermind" },
-      confirmProps: { color: "red" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
-    });
-
-  const openBanModal = (name: string) =>
-    openConfirmModal({
-      title: "Ban User",
-      centered: true,
-      children: (
-        <Text size="sm">
-          Are you sure you want to ban{" "}
-          <span className={classes.bold}>{name}</span>? This action will prevent
-          this user from logging in. All posts they have created will be soft
-          deleted.
-        </Text>
-      ),
-      labels: { confirm: "Ban user", cancel: "Nevermind" },
-      confirmProps: { color: "red" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
-    });
-
-  const openUnbanModal = (name: string) =>
-    openConfirmModal({
-      title: "Unban User",
-      centered: true,
-      children: (
-        <Text size="sm">
-          Are you sure you want to unban{" "}
-          <span className={classes.bold}>{name}</span>? This action will allow
-          this user to login again.
-        </Text>
-      ),
-      labels: { confirm: "Unban user", cancel: "Nevermind" },
-      confirmProps: { color: "red" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
-    });
-
-  const openMakeAdminModal = (name: string) =>
-    openConfirmModal({
-      title: "Make Admin",
-      centered: true,
-      children: (
-        <Text size="sm">
-          Are you sure you want to make{" "}
-          <span className={classes.bold}>{name}</span> an admin? This action
-          will grant this user admin abilities.
-        </Text>
-      ),
-      labels: { confirm: "Make admin", cancel: "Nevermind" },
-      confirmProps: { color: "red" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
-    });
-
-  const openRemoveAdminModal = (name: string) =>
-    openConfirmModal({
-      title: "Remove Admin",
-      centered: true,
-      children: (
-        <Text size="sm">
-          Are you sure you want to remove{" "}
-          <span className={classes.bold}>{name}</span> as an admin? This action
-          will remove admin abilities from this user.
-        </Text>
-      ),
-      labels: { confirm: "Remove admin", cancel: "Nevermind" },
-      confirmProps: { color: "red" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
-    });
 
   const rows = userList.map((item) => (
     <tr key={item.name}>
