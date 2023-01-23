@@ -9,11 +9,14 @@ import {
   PaginationRightColumnContainer,
   PaginationCard,
   PaginationNavbarContainer,
+  CityStateContainer,
 } from "./PaginationHelper";
 import { OpportunityTitle } from "./PaginationOpportunityInfoHelper";
 import { PaginationOpportunityInfo } from "./PaginationOpportunityInfo";
 import { PaginationNavbar } from "./PaginationNavbar";
+import LocationIcon from "./LocationIcon.svg";
 import { MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { useLocation } from "react-router-dom";
 
 export function PaginationOpportunity() {
@@ -27,6 +30,7 @@ export function PaginationOpportunity() {
   const [paginationDisplayOpportunity, setPaginationDisplayOpportunity] =
     useState<OpportunityItem[]>([]);
   const [displayModal, setDisplayModal] = useState(false);
+  const medianScreen = useMediaQuery("(max-width: 992px)");
 
   // useEffect(() => {
   //   const getPageCount = async () => {
@@ -85,7 +89,7 @@ export function PaginationOpportunity() {
   return (
     <OpportunityPageContainer>
       {/* <NavBar links={navItems.links} /> */}
-      <GridContainer>
+      <GridContainer medianScreen={medianScreen}>
         <PaginationGrid justify="center" grow>
           <PaginationLeftColumnContainer span={5}>
             <PaginationLeftColumnContent
@@ -98,13 +102,22 @@ export function PaginationOpportunity() {
                 (opportunity: OpportunityItem) => {
                   return (
                     <PaginationCard
+                      selected={
+                        currentOpportunity?.idposts === opportunity.idposts &&
+                        !medianScreen
+                      }
                       onClick={() => handleOpportunityClick(opportunity)}
                     >
                       <OpportunityTitle>{opportunity.title}</OpportunityTitle>
                       <p>{opportunity.organization}</p>
-                      <p>
-                        {opportunity.city}, {opportunity.state}
-                      </p>
+                      <CityStateContainer>
+                        <Flex justify="center" align="center" gap="xs">
+                          <img src={LocationIcon} style={{ height: "27px" }} />
+                          <span>
+                            {opportunity.city}, {opportunity.state}
+                          </span>
+                        </Flex>
+                      </CityStateContainer>
                     </PaginationCard>
                   );
                 }

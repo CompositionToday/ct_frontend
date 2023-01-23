@@ -6,6 +6,7 @@ import {
 import { RawUserData } from "../adminView/UsersList";
 import React, { useState, useEffect } from "react";
 import { MediaQuery, Pagination } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 
 export interface PaginationNavbarProp {
   apiEndpointExtension: string;
@@ -53,6 +54,7 @@ export function PaginationNavbar({
 }: PaginationNavbarProp) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
+  const medianScreen = useMediaQuery("(max-width: 992px)");
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 
   useEffect(() => {
@@ -117,22 +119,12 @@ export function PaginationNavbar({
 
   return (
     <PaginationNavbarContainer justify="center" align="center">
-      <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
-        <Pagination
-          page={currentPage}
-          onChange={setCurrentPage}
-          total={pageCount}
-          size="lg"
-        />
-      </MediaQuery>
-      <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-        <Pagination
-          page={currentPage}
-          onChange={setCurrentPage}
-          total={pageCount}
-          size="xs"
-        />
-      </MediaQuery>
+      <Pagination
+        page={currentPage}
+        onChange={setCurrentPage}
+        total={pageCount}
+        size={medianScreen ? "md" : "lg"}
+      />
     </PaginationNavbarContainer>
   );
 }
