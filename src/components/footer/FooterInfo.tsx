@@ -14,7 +14,7 @@ export const footerInfo = {
       links: [
         {
           label: "GitHub",
-          link: "#",
+          link: "/admin/users",
         },
       ],
     },

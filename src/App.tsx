@@ -9,6 +9,7 @@ import { Jobs } from "./pages/Jobs";
 import { Competitions } from "./pages/Competitions";
 import { NavBar } from "./components/navigation/NavBar";
 import { navItems } from "./components/navigation/NavItems";
+import { Users } from "./pages/adminView/Users";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/competitions" element={<Competitions />} />
+        <Route path="/admin/users" element={<Users />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
