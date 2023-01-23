@@ -10,6 +10,7 @@ import { Competitions } from "./pages/Competitions";
 import { NavBar } from "./components/navigation/NavBar";
 import { navItems } from "./components/navigation/NavItems";
 import { Users } from "./pages/adminView/Users";
+import { JustinNavbar } from "./pages/JustinNavbar";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/admin/users" element={<Users />} />
+        <Route path="/navbar-mobile" element={<JustinNavbar />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
