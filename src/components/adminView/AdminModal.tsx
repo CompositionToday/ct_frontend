@@ -1,27 +1,24 @@
 import { Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
 
-const makeAdmin = async(email: string) => {
+const makeOrRemoveAdmin = async(email: string, isAdmin: boolean) => {
     try {
-      let requestBody = {
-        is_admin: "1"
+      let requestInfo = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ is_admin: isAdmin? "0" : "1"} )
       }
 
       let res = await fetch(
-        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/users?${email}`, 
-        {
-          body: JSON.stringify(requestBody)
-        }
+        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/users/${email}`, requestInfo
       );
 
       let resJSON = await res.json();
-      console.log("User promoted to admin");
       console.log(resJSON);
     } catch (err) {
       console.log(err);
     }
 };
- 
 
 export const openMakeAdminModal = (name: string, email: string) =>
   openConfirmModal({
@@ -37,7 +34,7 @@ export const openMakeAdminModal = (name: string, email: string) =>
     labels: { confirm: "Make admin", cancel: "Nevermind" },
     confirmProps: { color: "red" },
     onCancel: () => console.log("Cancel"),
-    onConfirm: () => makeAdmin(email),
+    onConfirm: () => makeOrRemoveAdmin(email, false),
   });
 
 export const openRemoveAdminModal = (name: string, email: string) =>
@@ -54,5 +51,5 @@ export const openRemoveAdminModal = (name: string, email: string) =>
     labels: { confirm: "Remove admin", cancel: "Nevermind" },
     confirmProps: { color: "red" },
     onCancel: () => console.log("Cancel"),
-    onConfirm: () => console.log("Confirmed"),
+    onConfirm: () => makeOrRemoveAdmin(email, true),
   });

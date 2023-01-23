@@ -64,26 +64,6 @@ export function UsersList() {
   const { classes } = useStyles();
   const [rawUserList, setRawUserList] = useState<RawUserData[]>([]);
   const [userList, setUserList] = useState<UserTableData[]>([]);
-  // const [pageCount, setPageCount] = useState(1);
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // useEffect(() => {
-  //   const getPageCount = async () => {
-  //     try {
-  //       // let responseCount = await fetch(
-  //       //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}/count`
-  //       // );
-
-  //       // let responseCountJson = await responseCount.json();
-  //       // console.log("API COUNT: ", responseCountJson.count);
-  //       // let numberOfPage = Math.ceil(responseCountJson.count / 4);
-  //       setPageCount(2);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   getPageCount();
-  // }, []);
 
   useEffect(() => {
     const getCurrentUsersPage = async () => {
@@ -94,15 +74,17 @@ export function UsersList() {
 
         let resJSON = await res.json();
         setRawUserList(resJSON.listOfObjects);
-        // console.log("userList", rawUserList);
       } catch (err) {
         console.log(err);
       }
     };
 
     getCurrentUsersPage();
+  }, []);
+
+  useEffect(() => {
     convertRawUserDataToTableData();
-  });
+  }, [rawUserList]);
 
   const convertRawUserDataToTableData = () => {
     let newUserList: UserTableData[] = [];
@@ -124,7 +106,7 @@ export function UsersList() {
   };
 
   const rows = userList.map((item) => (
-    <tr key={item.name}>
+    <tr key={item.email}>
       <td>
         <Text size="sm" weight={500}>
           {item.name}
@@ -153,6 +135,7 @@ export function UsersList() {
 
           <Menu.Dropdown>
             <Menu.Item
+              disabled={item.type === "Banned" ? true : false}
               icon={
                 item.type === "Admin" ? (
                   <IconArrowBigDownLine size={16} stroke={1.5} />
@@ -179,8 +162,8 @@ export function UsersList() {
               }
               onClick={
                 item.type === "Banned"
-                  ? () => openUnbanModal(item.name)
-                  : () => openBanModal(item.name)
+                  ? () => openUnbanModal(item.name, item.email)
+                  : () => openBanModal(item.name, item.email)
               }
             >
               {item.type === "Banned" ? "Unban" : "Ban"} User
