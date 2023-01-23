@@ -12,6 +12,7 @@ import {
 } from "./PaginationHelper";
 import { OpportunityTitle } from "./PaginationOpportunityInfoHelper";
 import { PaginationOpportunityInfo } from "./PaginationOpportunityInfo";
+import { PaginationNavbar } from "./PaginationNavbar";
 import { MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
 import { useLocation } from "react-router-dom";
 
@@ -27,46 +28,46 @@ export function PaginationOpportunity() {
     useState<OpportunityItem[]>([]);
   const [displayModal, setDisplayModal] = useState(false);
 
-  useEffect(() => {
-    const getPageCount = async () => {
-      try {
-        let responseCount = await fetch(
-          `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}/count`
-        );
+  // useEffect(() => {
+  //   const getPageCount = async () => {
+  //     try {
+  //       let responseCount = await fetch(
+  //         `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}/count`
+  //       );
 
-        let responseCountJson = await responseCount.json();
-        console.log("API COUNT: ", responseCountJson.count);
-        let numberOfPage = Math.ceil(responseCountJson.count / 4);
-        setPageCount(numberOfPage);
+  //       let responseCountJson = await responseCount.json();
+  //       console.log("API COUNT: ", responseCountJson.count);
+  //       let numberOfPage = Math.ceil(responseCountJson.count / 4);
+  //       setPageCount(numberOfPage);
 
-        // let responseOpportunity = await fetch(
-        //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1`
-        // );
+  //       // let responseOpportunity = await fetch(
+  //       //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1`
+  //       // );
 
-        // let responseOpportunityJson = await responseOpportunity.json();
-        // console.log(responseOpportunityJson);
-        // setPaginationDisplayOpportunity(responseOpportunityJson.listOfJobs);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getPageCount();
-  }, []);
+  //       // let responseOpportunityJson = await responseOpportunity.json();
+  //       // console.log(responseOpportunityJson);
+  //       // setPaginationDisplayOpportunity(responseOpportunityJson.listOfJobs);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getPageCount();
+  // }, []);
 
-  useEffect(() => {
-    const getCurrentOpportunityPage = async () => {
-      let responseOpportunity = await fetch(
-        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}?page_number=${currentPage}`
-      );
+  // useEffect(() => {
+  //   const getCurrentOpportunityPage = async () => {
+  //     let responseOpportunity = await fetch(
+  //       `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}?page_number=${currentPage}`
+  //     );
 
-      let responseOpportunityJson = await responseOpportunity.json();
-      setPaginationDisplayOpportunity(responseOpportunityJson.listOfObjects);
-      setCurrentOpportunity(responseOpportunityJson.listOfObjects[0]);
-      console.log(typeof responseOpportunityJson.listOfObjects[0].end_date);
-    };
+  //     let responseOpportunityJson = await responseOpportunity.json();
+  //     setPaginationDisplayOpportunity(responseOpportunityJson.listOfObjects);
+  //     setCurrentOpportunity(responseOpportunityJson.listOfObjects[0]);
+  //     console.log(typeof responseOpportunityJson.listOfObjects[0].end_date);
+  //   };
 
-    getCurrentOpportunityPage();
-  }, [currentPage, pageCount]);
+  //   getCurrentOpportunityPage();
+  // }, [currentPage, pageCount]);
 
   useEffect(() => {
     setCurrentOpportunity(paginationDisplayOpportunity[0]);
@@ -108,7 +109,7 @@ export function PaginationOpportunity() {
                   );
                 }
               )}
-              <PaginationNavbarContainer justify="center" align="center">
+              {/* <PaginationNavbarContainer justify="center" align="center">
                 <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
                   <Pagination
                     page={currentPage}
@@ -125,7 +126,12 @@ export function PaginationOpportunity() {
                     size="xs"
                   />
                 </MediaQuery>
-              </PaginationNavbarContainer>
+              </PaginationNavbarContainer> */}
+              <PaginationNavbar
+                apiEndpointExtension={opportunityType}
+                numberOfItemsPerPage={4}
+                setListOfObjects={setPaginationDisplayOpportunity}
+              />
             </PaginationLeftColumnContent>
           </PaginationLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>

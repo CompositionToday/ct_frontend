@@ -31,7 +31,7 @@ interface UserTableData {
   email: string;
 }
 
-interface RawUserData {
+export interface RawUserData {
   UID: string;
   first_name: string;
   last_name: string;
