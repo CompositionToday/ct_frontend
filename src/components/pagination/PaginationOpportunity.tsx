@@ -91,7 +91,7 @@ export function PaginationOpportunity() {
       {/* <NavBar links={navItems.links} /> */}
       <GridContainer medianScreen={medianScreen}>
         <PaginationGrid justify="center" grow>
-          <PaginationLeftColumnContainer span={5}>
+          <PaginationLeftColumnContainer span={4}>
             <PaginationLeftColumnContent
               // justify="space-around"
               direction="column"
@@ -148,7 +148,7 @@ export function PaginationOpportunity() {
             </PaginationLeftColumnContent>
           </PaginationLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-            <PaginationRightColumnContainer span={7}>
+            <PaginationRightColumnContainer span={8}>
               <PaginationOpportunityInfo
                 opportunity={currentOpportunity}
                 opportunityType={opportunityType}

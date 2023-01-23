@@ -122,8 +122,8 @@ export function PaginationNavbar({
       <Pagination
         page={currentPage}
         onChange={setCurrentPage}
-        total={pageCount}
-        size={medianScreen ? "md" : "lg"}
+        total={20}
+        size={medianScreen ? "sm" : "md"}
       />
     </PaginationNavbarContainer>
   );
