@@ -64,6 +64,26 @@ export function UsersList() {
   const { classes } = useStyles();
   const [rawUserList, setRawUserList] = useState<RawUserData[]>([]);
   const [userList, setUserList] = useState<UserTableData[]>([]);
+  // const [pageCount, setPageCount] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
+
+  // useEffect(() => {
+  //   const getPageCount = async () => {
+  //     try {
+  //       // let responseCount = await fetch(
+  //       //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}/count`
+  //       // );
+
+  //       // let responseCountJson = await responseCount.json();
+  //       // console.log("API COUNT: ", responseCountJson.count);
+  //       // let numberOfPage = Math.ceil(responseCountJson.count / 4);
+  //       setPageCount(2);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getPageCount();
+  // }, []);
 
   useEffect(() => {
     const getCurrentUsersPage = async () => {
@@ -74,7 +94,7 @@ export function UsersList() {
 
         let resJSON = await res.json();
         setRawUserList(resJSON.listOfObjects);
-        console.log("userList", rawUserList);
+        // console.log("userList", rawUserList);
       } catch (err) {
         console.log(err);
       }
@@ -87,8 +107,6 @@ export function UsersList() {
   const convertRawUserDataToTableData = () => {
     let newUserList: UserTableData[] = [];
     rawUserList.forEach((user) => {
-      console.log("user:", user);
-
       let formattedUserData: UserTableData = {
         name: "",
         type: "Regular",
@@ -144,8 +162,8 @@ export function UsersList() {
               }
               onClick={
                 item.type === "Admin"
-                  ? () => openRemoveAdminModal(item.name)
-                  : () => openMakeAdminModal(item.name)
+                  ? () => openRemoveAdminModal(item.name, item.email)
+                  : () => openMakeAdminModal(item.name, item.email)
               }
             >
               {item.type === "Admin" ? "Remove Admin" : "Make Admin"}
