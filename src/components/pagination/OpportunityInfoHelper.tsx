@@ -1,19 +1,19 @@
-import { OpportunityItem } from "./PaginationHelper";
+import { OpportunityItem } from "./OpportunityHelper";
 import styled from "@emotion/styled";
 import { Flex } from "@mantine/core";
 
-export interface PaginationOpportunityInfoProp {
+export interface OpportunityInfoProp {
   opportunity: OpportunityItem | null;
   opportunityType: string;
 }
 
-export const PaginationOpportunityInfoContainer = styled.div`
+export const OpportunityInfoContainer = styled.div`
   padding: 10px;
 `;
 
 export const OpportunityTitle = styled.h1`
   color: #228be6;
-  font-size: 27px;
+  font-size: 25px;
 `;
 
 export const CityState = styled.p`
@@ -21,7 +21,7 @@ export const CityState = styled.p`
   font-size: 15px;
 `;
 
-export const PaginationButtonsContainer = styled(Flex)`
+export const ButtonsContainer = styled(Flex)`
   margin-top: 15px;
 `;
 

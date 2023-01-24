@@ -1,23 +1,24 @@
 import {
-  PaginationOpportunityInfoProp,
-  PaginationOpportunityInfoContainer,
+  OpportunityInfoProp,
+  OpportunityInfoContainer,
   OpportunityTitle,
   CityState,
-  PaginationButtonsContainer,
+  ButtonsContainer,
   DescriptionContainer,
   Label,
   SpecificOpportunityInfoContainer,
-} from "./PaginationOpportunityInfoHelper";
+} from "./OpportunityInfoHelper";
 import LocationIcon from "./LocationIcon.svg";
+import ApplyIcon from "./ApplyIcon.svg";
 import React, { useState, useEffect } from "react";
 import { Flex, Button, MediaQuery } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 
-export function PaginationOpportunityInfo({
+export function OpportunityInfo({
   opportunity,
   opportunityType,
-}: PaginationOpportunityInfoProp) {
-  const largeScreen = useMediaQuery("(min-width: 992px");
+}: OpportunityInfoProp) {
+  const largeScreen = useMediaQuery("(min-width: 992px)");
 
   const SpecificOpportunityInfo = () => {
     if (opportunityType === "competitions") {
@@ -93,7 +94,7 @@ export function PaginationOpportunityInfo({
   }
 
   return (
-    <PaginationOpportunityInfoContainer>
+    <OpportunityInfoContainer>
       <OpportunityTitle>{opportunity.title}</OpportunityTitle>
       <Flex align="center">
         <img src={LocationIcon} style={{ height: "40px" }} />
@@ -101,7 +102,7 @@ export function PaginationOpportunityInfo({
           style={{ display: "inline" }}
         >{`${opportunity.city}, ${opportunity.state}`}</CityState>
       </Flex>
-      <PaginationButtonsContainer
+      <ButtonsContainer
         justify=""
         gap="xl"
         wrap="wrap"
@@ -113,6 +114,7 @@ export function PaginationOpportunityInfo({
           size="md"
         >
           Apply
+          <img src={ApplyIcon} style={{ height: "20px", marginLeft: "7px" }} />
         </Button>
         <Button
           radius="md"
@@ -132,12 +134,12 @@ export function PaginationOpportunityInfo({
         >
           Delete Post & Ban Account
         </Button>
-      </PaginationButtonsContainer>
+      </ButtonsContainer>
       <SpecificOpportunityInfo />
       <DescriptionContainer>
         <Label>Description:</Label>
         <p>{opportunity.description}</p>
       </DescriptionContainer>
-    </PaginationOpportunityInfoContainer>
+    </OpportunityInfoContainer>
   );
 }

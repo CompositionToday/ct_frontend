@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import {
   GridContainer,
-  PaginationGrid,
+  OpportunityGrid,
   OpportunityPageContainer,
   OpportunityItem,
-  PaginationLeftColumnContent,
-  PaginationLeftColumnContainer,
-  PaginationRightColumnContainer,
-  PaginationCard,
+  OpportunityLeftColumnContent,
+  OpportunityLeftColumnContainer,
+  OpportunityRightColumnContainer,
+  OpportunityCard,
   PaginationNavbarContainer,
   CityStateContainer,
-} from "./PaginationHelper";
-import { OpportunityTitle } from "./PaginationOpportunityInfoHelper";
-import { PaginationOpportunityInfo } from "./PaginationOpportunityInfo";
+} from "./OpportunityHelper";
+import { OpportunityTitle } from "./OpportunityInfoHelper";
+import { OpportunityInfo } from "./OpportunityInfo";
 import { PaginationNavbar } from "./PaginationNavbar";
 import LocationIcon from "./LocationIcon.svg";
-import { MediaQuery, Pagination, Modal, Flex } from "@mantine/core";
+import { MediaQuery, Pagination, Modal, Flex, Badge } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useLocation } from "react-router-dom";
 
-export function PaginationOpportunity() {
+export function Opportunity() {
   const [opportunityType, setOpportunityType] = useState(
     useLocation().pathname.slice(1)
   );
@@ -27,8 +27,9 @@ export function PaginationOpportunity() {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentOpportunity, setCurrentOpportunity] =
     useState<OpportunityItem | null>(null);
-  const [paginationDisplayOpportunity, setPaginationDisplayOpportunity] =
-    useState<OpportunityItem[]>([]);
+  const [displayOpportunityArray, setDisplayOpportunityArray] = useState<
+    OpportunityItem[]
+  >([]);
   const [displayModal, setDisplayModal] = useState(false);
   const medianScreen = useMediaQuery("(max-width: 992px)");
 
@@ -50,7 +51,7 @@ export function PaginationOpportunity() {
 
   //       // let responseOpportunityJson = await responseOpportunity.json();
   //       // console.log(responseOpportunityJson);
-  //       // setPaginationDisplayOpportunity(responseOpportunityJson.listOfJobs);
+  //       // setDisplayOpportunityArray(responseOpportunityJson.listOfJobs);
   //     } catch (err) {
   //       console.log(err);
   //     }
@@ -65,7 +66,7 @@ export function PaginationOpportunity() {
   //     );
 
   //     let responseOpportunityJson = await responseOpportunity.json();
-  //     setPaginationDisplayOpportunity(responseOpportunityJson.listOfObjects);
+  //     setDisplayOpportunityArray(responseOpportunityJson.listOfObjects);
   //     setCurrentOpportunity(responseOpportunityJson.listOfObjects[0]);
   //     console.log(typeof responseOpportunityJson.listOfObjects[0].end_date);
   //   };
@@ -74,8 +75,12 @@ export function PaginationOpportunity() {
   // }, [currentPage, pageCount]);
 
   useEffect(() => {
-    setCurrentOpportunity(paginationDisplayOpportunity[0]);
-  }, [paginationDisplayOpportunity]);
+    if (displayOpportunityArray.length >= 0) {
+      setCurrentOpportunity(displayOpportunityArray[0]);
+    } else {
+      setCurrentOpportunity(null);
+    }
+  }, [displayOpportunityArray]);
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
@@ -88,40 +93,47 @@ export function PaginationOpportunity() {
 
   return (
     <OpportunityPageContainer>
-      {/* <NavBar links={navItems.links} /> */}
       <GridContainer medianScreen={medianScreen}>
-        <PaginationGrid justify="center" grow>
-          <PaginationLeftColumnContainer span={4}>
-            <PaginationLeftColumnContent
-              // justify="space-around"
+        <OpportunityGrid justify="center" grow>
+          <OpportunityLeftColumnContainer span={4}>
+            <OpportunityLeftColumnContent
               direction="column"
               gap={0}
               columnGap={0}
             >
-              {paginationDisplayOpportunity?.map(
-                (opportunity: OpportunityItem) => {
-                  return (
-                    <PaginationCard
-                      selected={
-                        currentOpportunity?.idposts === opportunity.idposts &&
-                        !medianScreen
+              {displayOpportunityArray?.map((opportunity: OpportunityItem) => {
+                return (
+                  <OpportunityCard
+                    selected={
+                      currentOpportunity?.idposts === opportunity.idposts &&
+                      !medianScreen
+                    }
+                    onClick={() => handleOpportunityClick(opportunity)}
+                  >
+                    <OpportunityTitle>{opportunity.title}</OpportunityTitle>
+                    <p>{opportunity.organization}</p>
+                    <CityStateContainer>
+                      <Flex justify="center" align="center" gap="xs">
+                        <img src={LocationIcon} style={{ height: "27px" }} />
+                        <span>
+                          {opportunity.city}, {opportunity.state}
+                        </span>
+                      </Flex>
+                    </CityStateContainer>
+                    {/* <Badge
+                      leftSection={
+                        <img
+                          src={SmallLocationPic}
+                          style={{ height: "20px" }}
+                        />
                       }
-                      onClick={() => handleOpportunityClick(opportunity)}
+                      sx={{ marginBottom: "15px" }}
                     >
-                      <OpportunityTitle>{opportunity.title}</OpportunityTitle>
-                      <p>{opportunity.organization}</p>
-                      <CityStateContainer>
-                        <Flex justify="center" align="center" gap="xs">
-                          <img src={LocationIcon} style={{ height: "27px" }} />
-                          <span>
-                            {opportunity.city}, {opportunity.state}
-                          </span>
-                        </Flex>
-                      </CityStateContainer>
-                    </PaginationCard>
-                  );
-                }
-              )}
+                      {opportunity.city}, {opportunity.state}
+                    </Badge> */}
+                  </OpportunityCard>
+                );
+              })}
               {/* <PaginationNavbarContainer justify="center" align="center">
                 <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
                   <Pagination
@@ -143,23 +155,23 @@ export function PaginationOpportunity() {
               <PaginationNavbar
                 apiEndpointExtension={opportunityType}
                 numberOfItemsPerPage={4}
-                setListOfObjects={setPaginationDisplayOpportunity}
+                setListOfObjects={setDisplayOpportunityArray}
               />
-            </PaginationLeftColumnContent>
-          </PaginationLeftColumnContainer>
+            </OpportunityLeftColumnContent>
+          </OpportunityLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-            <PaginationRightColumnContainer span={8}>
-              <PaginationOpportunityInfo
+            <OpportunityRightColumnContainer span={8}>
+              <OpportunityInfo
                 opportunity={currentOpportunity}
                 opportunityType={opportunityType}
               />
-            </PaginationRightColumnContainer>
+            </OpportunityRightColumnContainer>
           </MediaQuery>
-        </PaginationGrid>
+        </OpportunityGrid>
       </GridContainer>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
         <Modal opened={displayModal} onClose={handleCloseModal} fullScreen>
-          <PaginationOpportunityInfo
+          <OpportunityInfo
             opportunity={currentOpportunity}
             opportunityType={opportunityType}
           />

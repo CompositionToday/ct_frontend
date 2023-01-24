@@ -58,32 +58,32 @@ export const GridContainer = styled.div<GridContainer>`
   margin-top: 20px;
 `;
 
-export const PaginationGrid = styled(Grid)`
+export const OpportunityGrid = styled(Grid)`
   position: relative;
   height: 100%;
   width: 100%;
   margin: 0 auto;
 `;
 
-export const PaginationLeftColumnContent = styled(Flex)`
+export const OpportunityLeftColumnContent = styled(Flex)`
   height: 100%;
   // padding-left: 10px;
   // padding-right: 10px;
   overflow-y: auto;
 `;
 
-export const PaginationLeftColumnContainer = styled(Grid.Col)`
+export const OpportunityLeftColumnContainer = styled(Grid.Col)`
   height: 100%;
   padding: 0;
 `;
 
-export const PaginationRightColumnContainer = styled(Grid.Col)`
+export const OpportunityRightColumnContainer = styled(Grid.Col)`
   border-left: 1px solid #a1a1a1;
   overflow-y: auto;
   height: 100%;
 `;
 
-export const PaginationCard = styled.div<PaginationCard>`
+export const OpportunityCard = styled.div<PaginationCard>`
   border-bottom: 1px solid;
   padding-left: 10px;
   padding-right: 10px;
@@ -96,7 +96,7 @@ export const PaginationNavbarContainer = styled(Flex)`
 `;
 
 export const CityStateContainer = styled.p`
-  // background-color: #efefef;
+  background-color: rgba(231, 245, 255, 255);
   display: inline-block;
   margin: 0;
   margin-bottom: 15px;

@@ -2,7 +2,7 @@ import {
   OpportunityItem,
   PaginationNavbarContainer,
   jobType,
-} from "./PaginationHelper";
+} from "./OpportunityHelper";
 import { RawUserData } from "../adminView/UsersList";
 import React, { useState, useEffect } from "react";
 import { MediaQuery, Pagination } from "@mantine/core";
@@ -122,7 +122,7 @@ export function PaginationNavbar({
       <Pagination
         page={currentPage}
         onChange={setCurrentPage}
-        total={20}
+        total={pageCount}
         size={medianScreen ? "sm" : "md"}
       />
     </PaginationNavbarContainer>
