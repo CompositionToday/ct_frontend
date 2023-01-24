@@ -1,7 +1,9 @@
 import { Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
+import React from "react";
+import { RawUserData } from "../adminView/UsersList";
 
-const makeOrRemoveAdmin = async(email: string, isAdmin: boolean) => {
+const makeOrRemoveAdmin = async(email: string, isAdmin: boolean, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) => {
     try {
       let requestInfo = {
         method: 'PUT',
@@ -15,12 +17,16 @@ const makeOrRemoveAdmin = async(email: string, isAdmin: boolean) => {
 
       let resJSON = await res.json();
       console.log(resJSON);
+
+      setRawUserList(existingData => {
+        return[...existingData.slice(0, index), resJSON[0], ...existingData.slice(index + 1)]
+      });
     } catch (err) {
       console.log(err);
     }
 };
 
-export const openMakeAdminModal = (name: string, email: string) =>
+export const openMakeAdminModal = (name: string, email: string, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) =>
   openConfirmModal({
     title: "Make Admin",
     centered: true,
@@ -34,10 +40,10 @@ export const openMakeAdminModal = (name: string, email: string) =>
     labels: { confirm: "Make admin", cancel: "Nevermind" },
     confirmProps: { color: "red" },
     onCancel: () => console.log("Cancel"),
-    onConfirm: () => makeOrRemoveAdmin(email, false),
+    onConfirm: () => makeOrRemoveAdmin(email, false, index, setRawUserList),
   });
 
-export const openRemoveAdminModal = (name: string, email: string) =>
+export const openRemoveAdminModal = (name: string, email: string, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) =>
   openConfirmModal({
     title: "Remove Admin",
     centered: true,
@@ -51,5 +57,5 @@ export const openRemoveAdminModal = (name: string, email: string) =>
     labels: { confirm: "Remove admin", cancel: "Nevermind" },
     confirmProps: { color: "red" },
     onCancel: () => console.log("Cancel"),
-    onConfirm: () => makeOrRemoveAdmin(email, true),
+    onConfirm: () => makeOrRemoveAdmin(email, true, index, setRawUserList),
   });
