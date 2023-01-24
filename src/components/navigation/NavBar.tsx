@@ -65,14 +65,14 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    color: "#2F2F2F",
+    color: "#454545",
     fontSize: 18,
     textDecoration: "none",
-    fontWeight: 700,
+    fontWeight: 600,
   },
 
   grayText: {
-    color: "#2F2F2F",
+    color: "#454545",
   },
 
   blueText: {
@@ -135,6 +135,7 @@ export function NavBar({ links }: HeaderActionProps) {
           variant="subtle"
           sx={{ height: 30 }}
           size="md"
+          color="blue"
           onClick={() => navigate("/login")}
         >
           Login
@@ -143,6 +144,8 @@ export function NavBar({ links }: HeaderActionProps) {
           radius="md"
           sx={{ height: 30 }}
           size="md"
+          // variant="gradient"
+          // gradient={{ from: 'green', to: 'blue', deg: 60 }}
           onClick={() => navigate("/register")}
         >
           Register
