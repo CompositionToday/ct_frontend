@@ -3,30 +3,45 @@ import { openConfirmModal } from "@mantine/modals";
 import React from "react";
 import { RawUserData } from "../adminView/UsersList";
 
-const banOrUnbanAdmin = async(email: string, isBanned: boolean, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) => {
-    try {
-      let requestInfo = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ is_banned: isBanned? "0" : "1"} )
-      }
+const banOrUnbanAdmin = async (
+  email: string,
+  isBanned: boolean,
+  index: number,
+  setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>
+) => {
+  try {
+    let requestInfo = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ is_banned: isBanned ? "0" : "1" }),
+    };
 
-      let res = await fetch(
-        `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/users/${email}`, requestInfo
-      );
+    let res = await fetch(
+      `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/users/${email}`,
+      requestInfo
+    );
 
-      let resJSON = await res.json();
-      console.log(resJSON);
+    let resJSON = await res.json();
+    console.log(resJSON);
 
-      setRawUserList(existingData => {
-        return[...existingData.slice(0, index), resJSON[0], ...existingData.slice(index + 1)]
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    setRawUserList((existingData) => {
+      return [
+        ...existingData.slice(0, index),
+        resJSON[0],
+        ...existingData.slice(index + 1),
+      ];
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-export const openBanModal = (name: string, email: string, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) =>
+export const openBanModal = (
+  name: string,
+  email: string,
+  index: number,
+  setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>
+) =>
   openConfirmModal({
     title: "Ban User",
     centered: true,
@@ -44,7 +59,12 @@ export const openBanModal = (name: string, email: string, index: number, setRawU
     onConfirm: () => banOrUnbanAdmin(email, false, index, setRawUserList),
   });
 
-export const openUnbanModal = (name: string, email: string, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) =>
+export const openUnbanModal = (
+  name: string,
+  email: string,
+  index: number,
+  setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>
+) =>
   openConfirmModal({
     title: "Unban User",
     centered: true,
