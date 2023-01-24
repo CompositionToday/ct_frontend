@@ -1,7 +1,9 @@
 import { Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
+import React from "react";
+import { RawUserData } from "../adminView/UsersList";
 
-const banOrUnbanAdmin = async(email: string, isBanned: boolean) => {
+const banOrUnbanAdmin = async(email: string, isBanned: boolean, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) => {
     try {
       let requestInfo = {
         method: 'PUT',
@@ -15,12 +17,16 @@ const banOrUnbanAdmin = async(email: string, isBanned: boolean) => {
 
       let resJSON = await res.json();
       console.log(resJSON);
+
+      setRawUserList(existingData => {
+        return[...existingData.slice(0, index), resJSON[0], ...existingData.slice(index + 1)]
+      });
     } catch (err) {
       console.log(err);
     }
 };
 
-export const openBanModal = (name: string, email: string) =>
+export const openBanModal = (name: string, email: string, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) =>
   openConfirmModal({
     title: "Ban User",
     centered: true,
@@ -35,10 +41,10 @@ export const openBanModal = (name: string, email: string) =>
     labels: { confirm: "Ban user", cancel: "Nevermind" },
     confirmProps: { color: "red" },
     onCancel: () => console.log("Cancel"),
-    onConfirm: () => banOrUnbanAdmin(email, false),
+    onConfirm: () => banOrUnbanAdmin(email, false, index, setRawUserList),
   });
 
-export const openUnbanModal = (name: string, email: string) =>
+export const openUnbanModal = (name: string, email: string, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) =>
   openConfirmModal({
     title: "Unban User",
     centered: true,
@@ -52,5 +58,5 @@ export const openUnbanModal = (name: string, email: string) =>
     labels: { confirm: "Unban user", cancel: "Nevermind" },
     confirmProps: { color: "red" },
     onCancel: () => console.log("Cancel"),
-    onConfirm: () => banOrUnbanAdmin(email, true),
+    onConfirm: () => banOrUnbanAdmin(email, true, index, setRawUserList),
   });
