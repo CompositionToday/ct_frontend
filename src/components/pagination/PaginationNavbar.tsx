@@ -116,7 +116,7 @@ export function PaginationNavbar({
   }, [currentPage, pageCount]);
 
   return (
-    <PaginationNavbarContainer justify="center" align="center">
+    <PaginationNavbarContainer justify="center" align="flex-end">
       <Pagination
         page={currentPage}
         onChange={setCurrentPage}
