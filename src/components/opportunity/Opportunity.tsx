@@ -10,10 +10,11 @@ import {
   OpportunityCard,
   PaginationNavbarContainer,
   CityStateContainer,
+  SearchBar,
 } from "./OpportunityHelper";
 import { OpportunityTitle } from "./OpportunityInfoHelper";
 import { OpportunityInfo } from "./OpportunityInfo";
-import { PaginationNavbar } from "./PaginationNavbar";
+import { PaginationNavbar } from "../pagination/PaginationNavbar";
 import LocationIcon from "./LocationIcon.svg";
 import {
   MediaQuery,
@@ -22,6 +23,7 @@ import {
   Flex,
   Badge,
   ActionIcon,
+  TextInput,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useLocation } from "react-router-dom";
@@ -40,47 +42,6 @@ export function Opportunity() {
   >([]);
   const [displayModal, setDisplayModal] = useState(false);
   const medianScreen = useMediaQuery("(max-width: 992px)");
-
-  // useEffect(() => {
-  //   const getPageCount = async () => {
-  //     try {
-  //       let responseCount = await fetch(
-  //         `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}/count`
-  //       );
-
-  //       let responseCountJson = await responseCount.json();
-  //       console.log("API COUNT: ", responseCountJson.count);
-  //       let numberOfPage = Math.ceil(responseCountJson.count / 4);
-  //       setPageCount(numberOfPage);
-
-  //       // let responseOpportunity = await fetch(
-  //       //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1`
-  //       // );
-
-  //       // let responseOpportunityJson = await responseOpportunity.json();
-  //       // console.log(responseOpportunityJson);
-  //       // setDisplayOpportunityArray(responseOpportunityJson.listOfJobs);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   getPageCount();
-  // }, []);
-
-  // useEffect(() => {
-  //   const getCurrentOpportunityPage = async () => {
-  //     let responseOpportunity = await fetch(
-  //       `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/${opportunityType}?page_number=${currentPage}`
-  //     );
-
-  //     let responseOpportunityJson = await responseOpportunity.json();
-  //     setDisplayOpportunityArray(responseOpportunityJson.listOfObjects);
-  //     setCurrentOpportunity(responseOpportunityJson.listOfObjects[0]);
-  //     console.log(typeof responseOpportunityJson.listOfObjects[0].end_date);
-  //   };
-
-  //   getCurrentOpportunityPage();
-  // }, [currentPage, pageCount]);
 
   useEffect(() => {
     if (displayOpportunityArray.length >= 0) {
@@ -102,7 +63,8 @@ export function Opportunity() {
   return (
     <OpportunityPageContainer>
       <GridContainer medianScreen={medianScreen}>
-        <OpportunityGrid justify="center" grow>
+        <SearchBar />
+        <OpportunityGrid justify="center" medianScreen={medianScreen} grow>
           <OpportunityLeftColumnContainer span={4}>
             <OpportunityLeftColumnContent
               direction="column"
@@ -136,31 +98,12 @@ export function Opportunity() {
                         </ActionIcon>
                       }
                       color="gray"
-                      sx={{ marginBottom: "15px" }}
                     >
                       {opportunity.city}, {opportunity.state}
                     </Badge>
                   </OpportunityCard>
                 );
               })}
-              {/* <PaginationNavbarContainer justify="center" align="center">
-                <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
-                  <Pagination
-                    page={currentPage}
-                    onChange={setCurrentPage}
-                    total={pageCount}
-                    size="lg"
-                  />
-                </MediaQuery>
-                <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-                  <Pagination
-                    page={currentPage}
-                    onChange={setCurrentPage}
-                    total={pageCount}
-                    size="xs"
-                  />
-                </MediaQuery>
-              </PaginationNavbarContainer> */}
               <PaginationNavbar
                 apiEndpointExtension={opportunityType}
                 numberOfItemsPerPage={4}

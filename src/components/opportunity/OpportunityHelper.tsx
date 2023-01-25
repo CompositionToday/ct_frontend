@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Grid, Flex, Button } from "@mantine/core";
+import { Grid, Flex, Button, TextInput } from "@mantine/core";
 
 export declare enum jobType {
   teacher,
@@ -44,27 +44,29 @@ export const PageContainer = styled(Flex)`
 
 export const OpportunityPageContainer = styled.div`
   margin-top: 30px;
+  height: 84vh;
 `;
 
 export const GridContainer = styled.div<GridContainer>`
+  // padding: 10px;
+  width: ${(props) => (props.medianScreen ? "100vw" : "90vw")};
+  height: ${(props) => (props.medianScreen ? "85vh" : "75vh")};
+  // min-height: 100vh;
+  overflow: visible;
+  margin: auto;
+  // margin-top: 20px;
+`;
+
+export const OpportunityGrid = styled(Grid)<GridContainer>`
+  position: relative;
+  height: 93%;
+  width: ${(props) => (props.medianScreen ? "100%" : "98%")};
+  text-align: left;
+  margin: 0 auto;
   border: 1px solid #2f2f2f;
   border-bottom: ${(props) =>
     props.medianScreen ? "1px solid white" : "1px solid #2f2f2f"};
   border-radius: ${(props) => (props.medianScreen ? "auto" : "10px")};
-  // padding: 10px;
-  width: ${(props) => (props.medianScreen ? "100vw" : "85vw")};
-  height: ${(props) => (props.medianScreen ? "85vh" : "75vh")};
-  // min-height: 100vh;
-  overflow: hidden;
-  margin: auto;
-  margin-top: 20px;
-`;
-
-export const OpportunityGrid = styled(Grid)`
-  position: relative;
-  height: 100%;
-  width: 100%;
-  margin: 0 auto;
 `;
 
 export const OpportunityLeftColumnContent = styled(Flex)`
@@ -89,7 +91,9 @@ export const OpportunityCard = styled.div<PaginationCard>`
   border-bottom: 1px solid;
   padding-left: 10px;
   padding-right: 10px;
+  padding-bottom: 15px;
   background-color: ${(props) => (props.selected ? "#e2f0fe" : "auto")};
+  border-top-left-radius: 8px;
 `;
 
 export const PaginationNavbarContainer = styled(Flex)`
@@ -105,4 +109,10 @@ export const CityStateContainer = styled.p`
   margin-bottom: 15px;
   border-radius: 10px;
   padding: 5px;
+`;
+
+export const SearchBar = styled(TextInput)`
+  width: 35%;
+  margin-left: 12px;
+  margin-bottom: 10px;
 `;

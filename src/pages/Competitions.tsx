@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, MediaQuery, Pagination, Flex } from "@mantine/core";
-import { Opportunity } from "../components/pagination/Opportunity";
+import { Opportunity } from "../components/opportunity/Opportunity";
 
 export function Competitions() {
   return (

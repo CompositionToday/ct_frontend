@@ -2,7 +2,7 @@ import {
   OpportunityItem,
   PaginationNavbarContainer,
   jobType,
-} from "./OpportunityHelper";
+} from "../opportunity/OpportunityHelper";
 import { RawUserData } from "../adminView/UsersList";
 import React, { useState, useEffect } from "react";
 import { MediaQuery, Pagination } from "@mantine/core";
