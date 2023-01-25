@@ -11,8 +11,9 @@ import {
 import LocationIcon from "./LocationIcon.svg";
 import ApplyIcon from "./ApplyIcon.svg";
 import React, { useState, useEffect } from "react";
-import { Flex, Button, MediaQuery } from "@mantine/core";
+import { Flex, Button, MediaQuery, ActionIcon } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import { IconMapPin, IconExternalLink } from "@tabler/icons";
 
 export function OpportunityInfo({
   opportunity,
@@ -97,7 +98,11 @@ export function OpportunityInfo({
     <OpportunityInfoContainer>
       <OpportunityTitle>{opportunity.title}</OpportunityTitle>
       <Flex align="center">
-        <img src={LocationIcon} style={{ height: "40px" }} />
+        {/* <img src={LocationIcon} style={{ height: "40px" }} />
+         */}
+        <ActionIcon color="green">
+          <IconMapPin size={40} />
+        </ActionIcon>
         <CityState
           style={{ display: "inline" }}
         >{`${opportunity.city}, ${opportunity.state}`}</CityState>
@@ -114,7 +119,10 @@ export function OpportunityInfo({
           size="md"
         >
           Apply
-          <img src={ApplyIcon} style={{ height: "20px", marginLeft: "7px" }} />
+          {/* <img src={ApplyIcon} style={{ height: "20px", marginLeft: "7px" }} /> */}
+          <ActionIcon color="blue" variant="filled">
+            <IconExternalLink />
+          </ActionIcon>
         </Button>
         <Button
           radius="md"

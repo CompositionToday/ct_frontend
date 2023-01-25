@@ -48,10 +48,12 @@ export const OpportunityPageContainer = styled.div`
 
 export const GridContainer = styled.div<GridContainer>`
   border: 1px solid #2f2f2f;
+  border-bottom: ${(props) =>
+    props.medianScreen ? "1px solid white" : "1px solid #2f2f2f"};
   border-radius: ${(props) => (props.medianScreen ? "auto" : "10px")};
   // padding: 10px;
   width: ${(props) => (props.medianScreen ? "100vw" : "85vw")};
-  height: ${(props) => (props.medianScreen ? "100vh" : "75vh")};
+  height: ${(props) => (props.medianScreen ? "85vh" : "75vh")};
   // min-height: 100vh;
   overflow: hidden;
   margin: auto;
@@ -91,7 +93,7 @@ export const OpportunityCard = styled.div<PaginationCard>`
 `;
 
 export const PaginationNavbarContainer = styled(Flex)`
-  padding-top: 30px;
+  padding-top: 20px;
   padding-bottom: 30px;
   height: 100%;
 `;

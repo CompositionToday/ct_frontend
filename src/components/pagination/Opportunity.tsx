@@ -15,9 +15,17 @@ import { OpportunityTitle } from "./OpportunityInfoHelper";
 import { OpportunityInfo } from "./OpportunityInfo";
 import { PaginationNavbar } from "./PaginationNavbar";
 import LocationIcon from "./LocationIcon.svg";
-import { MediaQuery, Pagination, Modal, Flex, Badge } from "@mantine/core";
+import {
+  MediaQuery,
+  Pagination,
+  Modal,
+  Flex,
+  Badge,
+  ActionIcon,
+} from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useLocation } from "react-router-dom";
+import { IconMapPin } from "@tabler/icons";
 
 export function Opportunity() {
   const [opportunityType, setOpportunityType] = useState(
@@ -112,25 +120,26 @@ export function Opportunity() {
                   >
                     <OpportunityTitle>{opportunity.title}</OpportunityTitle>
                     <p>{opportunity.organization}</p>
-                    <CityStateContainer>
+                    {/* <CityStateContainer>
                       <Flex justify="center" align="center" gap="xs">
                         <img src={LocationIcon} style={{ height: "27px" }} />
                         <span>
                           {opportunity.city}, {opportunity.state}
                         </span>
                       </Flex>
-                    </CityStateContainer>
-                    {/* <Badge
+                    </CityStateContainer> */}
+
+                    <Badge
                       leftSection={
-                        <img
-                          src={SmallLocationPic}
-                          style={{ height: "20px" }}
-                        />
+                        <ActionIcon color="green">
+                          <IconMapPin size={20} />
+                        </ActionIcon>
                       }
+                      color="gray"
                       sx={{ marginBottom: "15px" }}
                     >
                       {opportunity.city}, {opportunity.state}
-                    </Badge> */}
+                    </Badge>
                   </OpportunityCard>
                 );
               })}
