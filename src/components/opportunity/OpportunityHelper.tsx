@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Grid, Flex, Button, TextInput } from "@mantine/core";
+import { Grid, Flex, Button, TextInput, ActionIcon } from "@mantine/core";
 
 export declare enum jobType {
   teacher,
@@ -111,8 +111,19 @@ export const CityStateContainer = styled.p`
   padding: 5px;
 `;
 
-export const SearchBar = styled(TextInput)`
-  width: 35%;
+export const FilterIconContainer = styled.div`
+  display: inline;
+  // margin-bottom: 15px;
+  background: white;
+`;
+
+export const SearchBar = styled(TextInput)<GridContainer>`
+  width: ${(props) => (props.medianScreen ? "75%" : "35%")};
   margin-left: 12px;
   margin-bottom: 10px;
+  display: inline-block;
+`;
+
+export const SearchFilterContainer = styled(Flex)`
+  margin-bottom: 5px;
 `;

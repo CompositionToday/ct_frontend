@@ -11,6 +11,8 @@ import {
   PaginationNavbarContainer,
   CityStateContainer,
   SearchBar,
+  FilterIconContainer,
+  SearchFilterContainer,
 } from "./OpportunityHelper";
 import { OpportunityTitle } from "./OpportunityInfoHelper";
 import { OpportunityInfo } from "./OpportunityInfo";
@@ -23,11 +25,10 @@ import {
   Flex,
   Badge,
   ActionIcon,
-  TextInput,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useLocation } from "react-router-dom";
-import { IconMapPin } from "@tabler/icons";
+import { IconMapPin, IconFilter, IconSearch } from "@tabler/icons";
 
 export function Opportunity() {
   const [opportunityType, setOpportunityType] = useState(
@@ -63,7 +64,26 @@ export function Opportunity() {
   return (
     <OpportunityPageContainer>
       <GridContainer medianScreen={medianScreen}>
-        <SearchBar />
+        <SearchFilterContainer align="center">
+          <SearchBar
+            medianScreen={medianScreen}
+            placeholder="Title or organization"
+            rightSection={<IconSearch color="#808080" />}
+          />
+          {/* <ActionIcon
+            color="gray"
+            style={{
+              display: "inline-block",
+              background: "white",
+              marginBottom: "15px",
+            }}
+          >
+            <IconFilter size={40} color="#808080" />
+          </ActionIcon> */}
+          <FilterIconContainer>
+            <IconFilter size={40} color="#808080" />
+          </FilterIconContainer>
+        </SearchFilterContainer>
         <OpportunityGrid justify="center" medianScreen={medianScreen} grow>
           <OpportunityLeftColumnContainer span={4}>
             <OpportunityLeftColumnContent
