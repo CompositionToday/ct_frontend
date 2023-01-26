@@ -10,6 +10,8 @@ import { Competitions } from "./pages/Competitions";
 import { NavBar } from "./components/navigation/NavBar";
 import { navItems } from "./components/navigation/NavItems";
 import { Users } from "./pages/adminView/Users";
+import { Festivals } from "./pages/Festivals";
+import { Opportunity } from "./components/opportunity/Opportunity";
 
 export default function App() {
   return (
@@ -23,6 +25,8 @@ export default function App() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/competitions" element={<Competitions />} />
+        <Route path="/festivals" element={<Festivals />} />
+        <Route path="/concerts" element={<Opportunity />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

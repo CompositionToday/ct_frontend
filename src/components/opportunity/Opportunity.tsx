@@ -31,11 +31,10 @@ import { useLocation } from "react-router-dom";
 import { IconMapPin, IconFilter, IconSearch } from "@tabler/icons";
 
 export function Opportunity() {
-  const [opportunityType, setOpportunityType] = useState(
-    useLocation().pathname.slice(1)
-  );
-  const [pageCount, setPageCount] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [opportunityType, setOpportunityType] = useState(
+  //   useLocation().pathname.slice(1)
+  // );
+  const opportunityType = useLocation().pathname.slice(1);
   const [currentOpportunity, setCurrentOpportunity] =
     useState<OpportunityItem | null>(null);
   const [displayOpportunityArray, setDisplayOpportunityArray] = useState<
