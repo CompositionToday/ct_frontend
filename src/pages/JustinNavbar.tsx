@@ -18,8 +18,8 @@ export function JustinNavbar() {
   const { classes } = useStyles();
   return (
     <Menu shadow="xl"
-    radius={"lg"}
-    width={200} >
+    radius={0}
+    width={"100vw"} >
       <Menu.Target>
       <Burger
             opened={opened}
@@ -28,7 +28,9 @@ export function JustinNavbar() {
             size="lg"
           />
       </Menu.Target>
-      <Menu.Dropdown >
+      <Menu.Dropdown 
+      style={{height:"100vh"}}
+      >
         <Menu.Item onClick={() => navigate("/")}>Home</Menu.Item>
         <Menu.Item onClick={() => navigate("/jobs")}>Jobs</Menu.Item>
         <Menu.Item onClick={() => navigate("/competitions")}>Competitions</Menu.Item>
