@@ -13,7 +13,7 @@ import ApplyIcon from "./ApplyIcon.svg";
 import React, { useState, useEffect } from "react";
 import { Flex, Button, MediaQuery, ActionIcon } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { IconMapPin, IconExternalLink } from "@tabler/icons";
+import { IconMapPin, IconExternalLink, IconEdit } from "@tabler/icons";
 
 export function OpportunityInfo({
   opportunity,
@@ -122,6 +122,18 @@ export function OpportunityInfo({
           {/* <img src={ApplyIcon} style={{ height: "20px", marginLeft: "7px" }} /> */}
           <ActionIcon color="blue" variant="filled">
             <IconExternalLink />
+          </ActionIcon>
+        </Button>
+        <Button
+          radius="md"
+          sx={{ height: 30, alignSelf: "flex-start" }}
+          size="md"
+          color="green"
+          variant="filled"
+        >
+          Edit
+          <ActionIcon color="green" variant="filled">
+            <IconEdit />
           </ActionIcon>
         </Button>
         <Button
