@@ -165,7 +165,7 @@ export function NavBar({ links }: HeaderActionProps) {
     <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }} mt={10}>
       <Container className={classes.inner} fluid>
         <Group style={{ paddingLeft: 25 }}>
-          <Burger
+        <Burger
             opened={opened}
             onClick={toggle}
             className={classes.burger}

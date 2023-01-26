@@ -1,19 +1,35 @@
 import React from "react";
-import { Menu, Button, Text } from '@mantine/core';
-//import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons'; icons that im not using
+import { Menu, Button, Burger, Text, createStyles } from '@mantine/core';
+//import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons'; icons that im not using 
+// <Button style={{ width: "80%" , height: "200px" }}>whopper</Button>
 import { useNavigate } from "react-router-dom";
+import { useDisclosure } from "@mantine/hooks";
 
 export function JustinNavbar() {
   const navigate = useNavigate();
+  const [opened, { toggle }] = useDisclosure(false);
+  const useStyles = createStyles((theme) => ({
+    burger: {
+      [theme.fn.largerThan("sm")]: {
+        display: "none",
+      },
+    },
+  }));
+  const { classes } = useStyles();
   return (
     <Menu shadow="xl"
     radius={"lg"}
     width={200} >
       <Menu.Target>
-        <Button style={{ width: "100%" , height: "200px" }}>Menu</Button>
+      <Burger
+            opened={opened}
+            onClick={toggle}
+            className={classes.burger}
+            size="lg"
+          />
       </Menu.Target>
-
       <Menu.Dropdown >
+        <Menu.Item onClick={() => navigate("/")}>Home</Menu.Item>
         <Menu.Item onClick={() => navigate("/jobs")}>Jobs</Menu.Item>
         <Menu.Item onClick={() => navigate("/competitions")}>Competitions</Menu.Item>
         <Menu.Item onClick={() => navigate("/festivals")}>Festivals</Menu.Item>
