@@ -1,6 +1,7 @@
 import React from "react";
 import { Menu, Button, Text } from '@mantine/core';
 //import { IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight } from '@tabler/icons'; icons that im not using
+import { useNavigate } from "react-router-dom";
 
 export function JustinNavbar() {
   return (
@@ -19,6 +20,7 @@ export function JustinNavbar() {
         <Menu.Divider />
         <Menu.Item >Login</Menu.Item>
         <Menu.Item >Register</Menu.Item>
+        <Menu.Item color="red">Sign Out</Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );
