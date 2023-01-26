@@ -16,7 +16,10 @@ import {
 } from "./OpportunityHelper";
 import { OpportunityTitle } from "./OpportunityInfoHelper";
 import { OpportunityInfo } from "./OpportunityInfo";
-import { PaginationNavbar } from "../pagination/PaginationNavbar";
+import {
+  PaginationNavbar,
+  PaginationSearchObject,
+} from "../pagination/PaginationNavbar";
 import LocationIcon from "./LocationIcon.svg";
 import {
   MediaQuery,
@@ -41,6 +44,11 @@ export function Opportunity() {
     OpportunityItem[]
   >([]);
   const [displayModal, setDisplayModal] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
+    title: "",
+    organization: "",
+  });
   const medianScreen = useMediaQuery("(max-width: 992px)");
 
   useEffect(() => {
@@ -60,6 +68,27 @@ export function Opportunity() {
     setDisplayModal(false);
   };
 
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    console.log(searchValue);
+    let temp = { title: searchValue, organization: searchValue };
+    setSearchObj({ ...temp });
+  };
+
+  const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
+  useEffect(() => {
+    console.log(searchObj);
+  }, [searchObj]);
+
   return (
     <OpportunityPageContainer>
       <GridContainer medianScreen={medianScreen}>
@@ -67,7 +96,10 @@ export function Opportunity() {
           <SearchBar
             medianScreen={medianScreen}
             placeholder="Title or organization"
-            rightSection={<IconSearch color="#808080" />}
+            rightSection={<IconSearch color="#808080" onClick={handleSubmit} />}
+            value={searchValue}
+            onChange={handleSearchInput}
+            onKeyDown={handleEnterKeyDown}
           />
           {/* <ActionIcon
             color="gray"
@@ -127,6 +159,7 @@ export function Opportunity() {
                 apiEndpointExtension={opportunityType}
                 numberOfItemsPerPage={4}
                 setListOfObjects={setDisplayOpportunityArray}
+                searchFilterObject={searchObj}
               />
             </OpportunityLeftColumnContent>
           </OpportunityLeftColumnContainer>

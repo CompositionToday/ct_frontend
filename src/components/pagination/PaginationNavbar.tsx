@@ -86,9 +86,8 @@ export function PaginationNavbar({
         console.log(err);
       }
     };
-
     getPageCount();
-  }, []);
+  }, [searchFilterObject]);
 
   useEffect(() => {
     const getCurrentPage = async () => {
