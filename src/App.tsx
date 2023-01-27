@@ -11,7 +11,8 @@ import { NavBar } from "./components/navigation/NavBar";
 import { navItems } from "./components/navigation/NavItems";
 import { Users } from "./pages/adminView/Users";
 import { Festivals } from "./pages/Festivals";
-import { Opportunity } from "./components/opportunity/Opportunity";
+import { CreateOpportunityPage } from "./pages/CreateOpportunityPage";
+import { Concerts } from "./pages/Concerts";
 
 export default function App() {
   return (
@@ -26,8 +27,9 @@ export default function App() {
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/festivals" element={<Festivals />} />
-        <Route path="/concerts" element={<Opportunity />} />
+        <Route path="/concerts" element={<Concerts />} />
         <Route path="/admin/users" element={<Users />} />
+        <Route path="/create-opportunity" element={<CreateOpportunityPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
