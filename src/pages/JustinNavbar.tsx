@@ -31,15 +31,15 @@ export function JustinNavbar() {
       <Menu.Dropdown 
       style={{height:"100vh"}}
       >
-        <Menu.Item onClick={() => navigate("/")}>Home</Menu.Item>
-        <Menu.Item onClick={() => navigate("/jobs")}>Jobs</Menu.Item>
-        <Menu.Item onClick={() => navigate("/competitions")}>Competitions</Menu.Item>
-        <Menu.Item onClick={() => navigate("/festivals")}>Festivals</Menu.Item>
-        <Menu.Item onClick={() => navigate("/concerts")}>Concerts</Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/")}>Home</Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/jobs")}>Jobs</Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/competitions")}>Competitions</Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/festivals")}>Festivals</Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/concerts")}>Concerts</Menu.Item>
         <Menu.Divider />
-        <Menu.Item onClick={() => navigate("/login")}>Login</Menu.Item>
-        <Menu.Item onClick={() => navigate("/register")}>Register</Menu.Item>
-        <Menu.Item color="red">Sign Out</Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/login")}>Login</Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/register")}>Register</Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} color="red">Sign Out</Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );
