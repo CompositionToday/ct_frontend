@@ -4,5 +4,5 @@ import { Paper } from "@mantine/core";
 export const CreateOpportunityContainer = styled.div`
   width: 75vw;
   margin: 0 auto;
-  margin-bottom: 10px;
+  margin-bottom: 60px;
 `;

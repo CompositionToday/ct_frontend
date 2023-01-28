@@ -119,19 +119,20 @@ export function Location({ setCity, setState, city, state }: LocationProp) {
   }, [data]);
 
   return (
-    <div style={{ margin: "10px" }}>
+    <div style={{ marginTop: "10px" }}>
       <Autocomplete
         value={value}
         data={data}
         onChange={handleChange}
         rightSection={loading ? <Loader size={16} /> : null}
         label="Location"
-        placeholder="Enter a city"
+        placeholder="City, State"
         onItemSubmit={handleDropdownSelect}
         limit={15}
         classNames={{
           input: classes.input,
         }}
+        withAsterisk
       />
     </div>
   );

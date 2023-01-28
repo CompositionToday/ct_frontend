@@ -12,13 +12,14 @@ export declare enum jobType {
 export interface OpportunityItem {
   UID: string;
   idposts: number;
+  keyword?: string;
   title: string;
-  description: string;
   link: string;
+  organization: string;
+  description: string;
   date_posted: Date;
   city: string;
   state: string;
-  organization: string;
   end_date: Date | string;
   salary?: string;
   job_type?: jobType | any;
