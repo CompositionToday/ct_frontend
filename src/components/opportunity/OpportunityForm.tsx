@@ -116,7 +116,7 @@ export function OpportunityForm({
             })}
           >
             <TextInputFullWidth
-              label="Get rid of me"
+              label="Get rid of me since I'm an input for the UID"
               placeholder="Title"
               display
               withAsterisk
