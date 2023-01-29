@@ -122,13 +122,6 @@ export function OpportunityForm({
               withAsterisk
               {...form.getInputProps("UID")}
             />
-            <TextInputFullWidth
-              label="Title"
-              placeholder="Title"
-              display
-              withAsterisk
-              {...form.getInputProps("title")}
-            />
             <TwoInputRow
               justify="space-around"
               gap="md"
@@ -136,20 +129,27 @@ export function OpportunityForm({
               direction={medianScreen ? "column" : "row"}
             >
               <TextInputFullWidth
+                label="Title"
+                placeholder="Title"
+                display
+                withAsterisk
+                {...form.getInputProps("title")}
+              />
+              <TextInputFullWidth
                 label="Organization"
                 placeholder="Organization"
                 display
                 withAsterisk
                 {...form.getInputProps("organization")}
               />
-              <TextInputFullWidth
-                label="Link"
-                placeholder="Link"
-                display
-                withAsterisk
-                {...form.getInputProps("link")}
-              />
             </TwoInputRow>
+            <TextInputFullWidth
+              label="Link"
+              placeholder="Link"
+              display
+              withAsterisk
+              {...form.getInputProps("link")}
+            />
             <DescriptionInput
               label="Description"
               placeholder="Description"
