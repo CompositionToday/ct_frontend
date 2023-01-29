@@ -37,8 +37,10 @@ export interface PaginationSearchObject {
   first_name?: string;
   last_name?: string;
   email?: string;
-  is_admin?: number;
-  is_banned?: number;
+  keyword?: string;
+  is_admin?: string;
+  is_banned?: string;
+  is_regular?: string;
 }
 
 export function PaginationNavbar({
@@ -60,13 +62,14 @@ export function PaginationNavbar({
   useEffect(() => {
     const getPageCount = async () => {
       try {
+        console.log("searchFilterObj", searchFilterObject);
         const countUrl = new URL(`${url}/${apiEndpointExtension}/count`);
         if (searchFilterObject) {
           for (const [key, value] of Object.entries(searchFilterObject)) {
             countUrl.searchParams.set(key, String(value));
           }
         }
-
+        console.log("url:", countUrl.toString());
         let responseCount = await fetch(countUrl);
 
         let responseCountJson = await responseCount.json();
@@ -74,6 +77,8 @@ export function PaginationNavbar({
           responseCountJson.count / numberOfItemsPerPage
         );
         setPageCount(numberOfPage);
+
+        console.log(numberOfPage);
 
         // let responseOpportunity = await fetch(
         //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1`

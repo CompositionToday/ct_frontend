@@ -8,7 +8,7 @@ import {
 } from "@mantine/core";
 import { Input } from "@mantine/core";
 import { IconSearch, IconFilter } from "@tabler/icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PaginationSearchObject } from "../pagination/PaginationNavbar";
 
 interface SearchAndFilterProp {
@@ -17,7 +17,8 @@ interface SearchAndFilterProp {
 
 const useStyles = createStyles(() => ({
   container: {
-    padding: "30px 0px",
+    padding: "0px",
+    marginTop: "45px",
   },
 
   search: {
@@ -26,14 +27,20 @@ const useStyles = createStyles(() => ({
 }));
 
 const createSearchObj = (
-  e: React.ChangeEvent<HTMLInputElement>,
-  setSearchObj: React.Dispatch<React.SetStateAction<PaginationSearchObject>>
+  setSearchObj: React.Dispatch<React.SetStateAction<PaginationSearchObject>>,
+  adminChecked: boolean,
+  bannedChecked: boolean,
+  regularChecked: boolean,
+  e?: React.ChangeEvent<HTMLInputElement>
 ) => {
   let searchObj: PaginationSearchObject = {
-    first_name: e.target.value,
-    last_name: e.target.value,
-    email: e.target.value,
+    keyword: e ? e.target.value : "",
+    is_admin: adminChecked ? "1" : "0",
+    is_banned: bannedChecked ? "1" : "0",
+    is_regular: regularChecked ? "1" : "0",
   };
+
+  console.log(searchObj);
 
   setSearchObj(searchObj);
 };
@@ -43,6 +50,10 @@ export function SearchAndFilterUsers({ setSearchObj }: SearchAndFilterProp) {
   const [adminChecked, setAdminChecked] = useState(true);
   const [bannedChecked, setBannedChecked] = useState(true);
   const [regularChecked, setRegularChecked] = useState(true);
+
+  useEffect(() => {
+    createSearchObj(setSearchObj, adminChecked, bannedChecked, regularChecked);
+  }, [adminChecked, bannedChecked, regularChecked]);
 
   return (
     <Group className={classes.container} position="apart">
@@ -54,7 +65,13 @@ export function SearchAndFilterUsers({ setSearchObj }: SearchAndFilterProp) {
         }
         placeholder="Search"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          createSearchObj(e, setSearchObj)
+          createSearchObj(
+            setSearchObj,
+            adminChecked,
+            bannedChecked,
+            regularChecked,
+            e
+          )
         }
         className={classes.search}
       />

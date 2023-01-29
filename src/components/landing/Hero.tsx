@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
     justifyContent: "space-between",
-    paddingTop: theme.spacing.xl,
+    // paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.xl * 6,
   },
 
@@ -46,7 +46,8 @@ const useStyles = createStyles((theme) => ({
 
   image: {
     flex: 1,
-    minWidth: 480,
+    // maxWidth: "40vw",
+    // marginLeft: 40,
 
     [theme.fn.smallerThan("md")]: {
       display: "none",
@@ -73,7 +74,9 @@ const useStyles = createStyles((theme) => ({
   },
 
   container: {
-    maxWidth: 1080,
+    // marginTop: "-95px",
+    // marginBottom: "-50px",
+    maxWidth: "75vw",
   },
 
   subheading: {
