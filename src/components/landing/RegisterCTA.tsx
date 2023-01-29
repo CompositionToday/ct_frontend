@@ -26,26 +26,29 @@ const useStyles = createStyles((theme) => ({
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
     [theme.fn.smallerThan("sm")]: {
-      fontSize: 32,
+      fontSize: 28,
+    },
+  },
+
+  subtitle: {
+    fontSize: 25,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 18,
     },
   },
 
   control: {
-    [theme.fn.smallerThan("sm")]: {
-      width: "100%",
-    },
+    fontSize: 18,
+    // [theme.fn.smallerThan("sm")]: {
+    //   width: "100%",
+    // },
   },
 
-  mobileImage: {
-    [theme.fn.largerThan("sm")]: {
-      display: "none",
-    },
-  },
-
-  desktopImage: {
+  image: {
     maxWidth: 450,
     [theme.fn.smallerThan("sm")]: {
-      display: "none",
+      maxWidth: 250,
     },
   },
 
@@ -75,10 +78,9 @@ export function RegisterCTA() {
           cols={2}
           breakpoints={[{ maxWidth: "sm", cols: 1, spacing: 40 }]}
         >
-          <Image src={image} className={classes.mobileImage} />
           <div className={classes.centerText}>
             <Title className={classes.title}>Want to contribute?</Title>
-            <Text color="dimmed" size={25}>
+            <Text color="dimmed" className={classes.subtitle}>
               Create an account with us today to post opportunities you've come
               across.
             </Text>
@@ -93,7 +95,7 @@ export function RegisterCTA() {
             </Button>
           </div>
           <div className={classes.centerImage}>
-            <Image src={image} className={classes.desktopImage} />
+            <Image src={image} className={classes.image} />
           </div>
         </SimpleGrid>
       </AnimateIn>

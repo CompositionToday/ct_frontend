@@ -33,8 +33,8 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1.2,
     fontWeight: 900,
 
-    [theme.fn.smallerThan("xs")]: {
-      fontSize: 28,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 36,
     },
   },
 
@@ -73,6 +73,10 @@ const useStyles = createStyles((theme) => ({
 
   subheading: {
     fontSize: 25,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 22,
+    },
   },
 }));
 
