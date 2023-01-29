@@ -11,6 +11,7 @@ export interface LocationProp {
   state?: string | undefined;
   setCity: React.Dispatch<React.SetStateAction<string>>;
   setState: React.Dispatch<React.SetStateAction<string>>;
+  error: boolean;
 }
 
 interface LocationData {
@@ -19,7 +20,13 @@ interface LocationData {
   state: string;
 }
 
-export function Location({ setCity, setState, city, state }: LocationProp) {
+export function Location({
+  setCity,
+  setState,
+  city,
+  state,
+  error,
+}: LocationProp) {
   const timeoutRef = useRef<number>(-1);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,6 +56,12 @@ export function Location({ setCity, setState, city, state }: LocationProp) {
   };
 
   useEffect(() => {
+    console.log("Chose a location");
+    console.log("city: ", city);
+    console.log("state: ", state);
+  }, [city, state]);
+
+  useEffect(() => {
     console.log(value);
     if (value === "") {
       setLoading(false);
@@ -57,7 +70,8 @@ export function Location({ setCity, setState, city, state }: LocationProp) {
 
     const delayDebounceFn = setTimeout(async () => {
       try {
-        console.log(value);
+        console.log("value: ", value);
+
         // Send Axios request here
         let temp = await fetch(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${value}.json?country=us&limit=10&types=place&autocomplete=true&access_token=${process.env.REACT_APP_MAPBOX_API_KEY}`
@@ -133,6 +147,7 @@ export function Location({ setCity, setState, city, state }: LocationProp) {
           input: classes.input,
         }}
         withAsterisk
+        error={error && !value ? "Select a location" : false}
       />
     </div>
   );

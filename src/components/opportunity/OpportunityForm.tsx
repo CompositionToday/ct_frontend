@@ -27,12 +27,15 @@ export function OpportunityForm({
   opportunity,
 }: OpportunityFormProp) {
   const [city, setCity] = useState(opportunity?.city ? opportunity.city : "");
-  const [state, setState] = useState("");
-  const [dateRange, setDateRange] = useState<DateRangePickerValue>([
-    null,
-    null,
-  ]);
-  const [salary, setSalary] = useState<number>(0);
+  const [state, setState] = useState(
+    opportunity?.state ? opportunity.state : ""
+  );
+  // const [dateRange, setDateRange] = useState<DateRangePickerValue>([
+  //   null,
+  //   null,
+  // ]);
+  // const [salary, setSalary] = useState<number>(0);
+  const [displayError, setDisplayError] = useState(false);
   const medianScreen = useMediaQuery("(max-width: 992px)");
   const form = useForm({
     initialValues: {
@@ -44,8 +47,8 @@ export function OpportunityForm({
       organization: opportunity?.organization || "",
       description: opportunity?.description || "",
       date_posted: new Date(),
-      city: opportunity?.city || "",
-      state: opportunity?.state || "",
+      city: city,
+      state: state,
       end_date: opportunity?.end_date || "",
       salary: opportunity?.salary || "",
       job_type: opportunity?.job_type || "",
@@ -55,15 +58,15 @@ export function OpportunityForm({
       start_date: opportunity?.start_date || "",
     },
     validate: {
-      UID: (value) => (value ? null : "Need to give a UID"),
+      // UID: (value) => (value ? null : "Need to give a UID"),
       title: (value) => (value ? null : "Please give a title"),
-      link: (value) => (value ? null : "Please give a link"),
       organization: (value) =>
         value ? null : "Please give an organization name",
+      link: (value) => (value ? null : "Please give a link"),
       description: (value) => (value ? null : "Please give a description"),
-      date_posted: (value) => (value ? null : "Need to give a date posted"),
-      city: (value) => (value ? null : "Please give a city"),
-      state: (value) => (value ? null : "Please give a state"),
+      // date_posted: (value) => (value ? null : "Need to give a date posted"),
+      // city: (value) => (value ? null : "Please give a city"),
+      // state: (value) => (value ? null : "Please give a state"),
       end_date: (value: Date | string) =>
         value ? null : "Please give an end date",
       salary: (value) =>
@@ -80,9 +83,9 @@ export function OpportunityForm({
     console.log(opportunityType);
   }, [opportunityType]);
 
-  useEffect(() => {
-    console.log(dateRange);
-  }, [dateRange]);
+  // useEffect(() => {
+  //   console.log(dateRange);
+  // }, [dateRange]);
 
   return (
     <OpportunityFormContainer>
@@ -93,6 +96,12 @@ export function OpportunityForm({
               console.log(values);
             })}
           >
+            <TextInputFullWidth
+              label="Get rid of me"
+              placeholder="Title"
+              withAsterisk
+              {...form.getInputProps("UID")}
+            />
             <TextInputFullWidth
               label="Title"
               placeholder="Title"
@@ -130,6 +139,7 @@ export function OpportunityForm({
               setCity={setCity}
               state={state}
               setState={setState}
+              error={displayError && (!city || !state)}
             />
             <TwoInputRow
               justify="space-around"
@@ -139,12 +149,12 @@ export function OpportunityForm({
               <SalaryInput
                 label="Salary"
                 placeholder="Please give an amount"
-                value={salary}
+                // value={salary}
                 defaultValue={0}
-                onChange={(e) => {
-                  if (e) setSalary(e);
-                  else setSalary(0);
-                }}
+                // onChange={(e) => {
+                //   if (e) setSalary(e);
+                //   else setSalary(0);
+                // }}
                 parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}
                 formatter={(value) =>
                   !Number.isNaN(parseFloat(value ? value : ""))
@@ -152,41 +162,58 @@ export function OpportunityForm({
                     : "$ "
                 }
                 withAsterisk
+                {...form.getInputProps("salary")}
               />
               <TextInputFullWidth
                 label="Job Type"
                 placeholder="Job Type"
                 withAsterisk
+                {...form.getInputProps("job_type")}
               />
             </TwoInputRow>
             <TextInputFullWidth
               label="Winner"
               placeholder="Give the name of the winner if applicable"
+              {...form.getInputProps("winner")}
             />
             <TextInputFullWidth
               label="Category"
               placeholder="Category"
               withAsterisk
+              {...form.getInputProps("category")}
             />
             <TextInputFullWidth
               label="Address"
               placeholder="Address"
               withAsterisk
+              {...form.getInputProps("address")}
             />
             <EndDateInput
               placeholder="End Date"
               label="End Date"
               withAsterisk
+              {...form.getInputProps("end_date")}
             />
             <StartEndDatePicker
               placeholder="Choose start and end date"
               label="Date Range"
-              value={dateRange}
-              onChange={setDateRange}
+              // value={dateRange}
+              // onChange={setDateRange}
               withAsterisk
+              onChange={(e) => {
+                console.log(e);
+              }}
+              {...form.getInputProps("start_date")}
             />
             <SubmitButtonContainer justify="center">
-              <Button type="submit">Submit</Button>
+              <Button
+                type="submit"
+                onClick={() => {
+                  setDisplayError(true);
+                }}
+              >
+                Submit
+              </Button>
             </SubmitButtonContainer>
           </form>
         </OpportunityFormContentContainer>

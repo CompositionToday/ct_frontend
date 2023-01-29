@@ -13,6 +13,7 @@ export function Jobs() {
         setState={setState}
         city={city}
         state={state}
+        error={true}
       />
       <p>City: {city}</p>
       <p>State: {state}</p>
