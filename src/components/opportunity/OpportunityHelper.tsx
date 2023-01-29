@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Grid, Flex, Button, TextInput, ActionIcon } from "@mantine/core";
+import { DateRangePickerValue } from "@mantine/dates";
 
 export declare enum jobType {
   teacher,

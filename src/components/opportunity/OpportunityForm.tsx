@@ -40,6 +40,8 @@ export function OpportunityForm({
   const form = useForm({
     initialValues: {
       // FIXME: Need to actually put the UID of the logged in user here
+      // FIXME: Need to actually put the idposts if there is an edit
+      // FIXME: Need to put in some type of date form fields here and validations fo them. Specifically the date_range
       UID: opportunity?.UID || "",
       idposts: opportunity?.idposts || -1,
       title: opportunity?.title || "",
@@ -56,6 +58,10 @@ export function OpportunityForm({
       category: opportunity?.category || "",
       address: opportunity?.address || "",
       start_date: opportunity?.start_date || "",
+      // dateRange:
+      //   opportunity?.end_date && opportunity?.start_date
+      //     ? [opportunity.start_date, opportunity?.end_date]
+      //     : [null, null],
     },
     validate: {
       // UID: (value) => (value ? null : "Need to give a UID"),
@@ -71,11 +77,23 @@ export function OpportunityForm({
         value ? null : "Please give an end date",
       salary: (value) =>
         value || opportunityType !== "jobs" ? null : "Please give a salary",
-      job_type: (value) => (value ? null : "Please give the type of job"),
-      category: (value) => (value ? null : "Please give the category"),
-      address: (value) => (value ? null : "Please give an address"),
-      start_date: (value: Date | string) =>
-        value ? null : "Please give a start date",
+      job_type: (value) =>
+        value || opportunityType !== "jobs"
+          ? null
+          : "Please give the type of job",
+      category: (value) =>
+        value || opportunityType !== "competitions"
+          ? null
+          : "Please give the category",
+      address: (value) =>
+        value ||
+        (opportunityType !== "concerts" && opportunityType !== "festivals")
+          ? null
+          : "Please give an address",
+      // start_date: (value: Date | string | DateRangePickerValue) =>
+      //   value ? null : "Please give a start date",
+      // dateRange: (value: DateRangePickerValue) =>
+      //   value ? null : "Please give a date range",
     },
   });
 
@@ -94,34 +112,40 @@ export function OpportunityForm({
           <form
             onSubmit={form.onSubmit((values) => {
               console.log(values);
+              // console.log("Start: ", values.dateRange[0]);
             })}
           >
             <TextInputFullWidth
               label="Get rid of me"
               placeholder="Title"
+              display
               withAsterisk
               {...form.getInputProps("UID")}
             />
             <TextInputFullWidth
               label="Title"
               placeholder="Title"
+              display
               withAsterisk
               {...form.getInputProps("title")}
             />
             <TwoInputRow
               justify="space-around"
               gap="md"
+              display
               direction={medianScreen ? "column" : "row"}
             >
               <TextInputFullWidth
                 label="Organization"
                 placeholder="Organization"
+                display
                 withAsterisk
                 {...form.getInputProps("organization")}
               />
               <TextInputFullWidth
                 label="Link"
                 placeholder="Link"
+                display
                 withAsterisk
                 {...form.getInputProps("link")}
               />
@@ -145,10 +169,12 @@ export function OpportunityForm({
               justify="space-around"
               gap="md"
               direction={medianScreen ? "column" : "row"}
+              display={opportunityType === "jobs"}
             >
               <SalaryInput
                 label="Salary"
                 placeholder="Please give an amount"
+                display={opportunityType === "jobs"}
                 // value={salary}
                 defaultValue={0}
                 // onChange={(e) => {
@@ -167,6 +193,7 @@ export function OpportunityForm({
               <TextInputFullWidth
                 label="Job Type"
                 placeholder="Job Type"
+                display={opportunityType === "jobs"}
                 withAsterisk
                 {...form.getInputProps("job_type")}
               />
@@ -174,36 +201,44 @@ export function OpportunityForm({
             <TextInputFullWidth
               label="Winner"
               placeholder="Give the name of the winner if applicable"
+              display={opportunityType === "competitions"}
               {...form.getInputProps("winner")}
             />
             <TextInputFullWidth
               label="Category"
               placeholder="Category"
+              display={opportunityType === "competitions"}
               withAsterisk
               {...form.getInputProps("category")}
             />
             <TextInputFullWidth
               label="Address"
               placeholder="Address"
+              display={
+                opportunityType === "concerts" ||
+                opportunityType === "festivals"
+              }
               withAsterisk
               {...form.getInputProps("address")}
             />
             <EndDateInput
               placeholder="End Date"
               label="End Date"
+              display={opportunityType !== "festivals"}
               withAsterisk
               {...form.getInputProps("end_date")}
             />
             <StartEndDatePicker
               placeholder="Choose start and end date"
               label="Date Range"
+              display={opportunityType === "festivals"}
               // value={dateRange}
               // onChange={setDateRange}
               withAsterisk
               onChange={(e) => {
                 console.log(e);
               }}
-              {...form.getInputProps("start_date")}
+              {...form.getInputProps("dateRange")}
             />
             <SubmitButtonContainer justify="center">
               <Button
