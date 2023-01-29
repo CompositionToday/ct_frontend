@@ -40,9 +40,6 @@ const useStyles = createStyles((theme) => ({
 
   control: {
     fontSize: 18,
-    // [theme.fn.smallerThan("sm")]: {
-    //   width: "100%",
-    // },
   },
 
   image: {
