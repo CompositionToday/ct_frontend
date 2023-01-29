@@ -13,6 +13,7 @@ import { Users } from "./pages/adminView/Users";
 import { Festivals } from "./pages/Festivals";
 import { CreateOpportunityPage } from "./pages/CreateOpportunityPage";
 import { Concerts } from "./pages/Concerts";
+import { JustinNavbar } from "./pages/JustinNavbar";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/concerts" element={<Concerts />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/create-opportunity" element={<CreateOpportunityPage />} />
+        <Route path="/navbar-mobile" element={<JustinNavbar />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>

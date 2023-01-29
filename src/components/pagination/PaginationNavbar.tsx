@@ -93,8 +93,6 @@ export function PaginationNavbar({
     const getCurrentPage = async () => {
       try {
         const getUrl = new URL(`${url}/${apiEndpointExtension}`);
-        console.log(searchFilterObject);
-        console.log(getUrl);
         if (searchFilterObject) {
           for (const [key, value] of Object.entries(searchFilterObject)) {
             getUrl.searchParams.set(key, String(value));

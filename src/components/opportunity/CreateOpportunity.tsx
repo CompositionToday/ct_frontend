@@ -6,6 +6,14 @@ import { Center, Paper, Select } from "@mantine/core";
 export function CreateOpportunity() {
   const [opportunityType, setOpportunityType] = useState("Jobs");
 
+  const handleOpportunityTypeChange = (e: string) => {
+    setOpportunityType(e);
+  };
+
+  useEffect(() => {
+    console.log(opportunityType);
+  }, [opportunityType]);
+
   return (
     <CreateOpportunityContainer>
       <h1 style={{ textAlign: "center" }}>Create Opportunity</h1>
@@ -13,10 +21,11 @@ export function CreateOpportunity() {
         label="Opportunity Type"
         placeholder="Select opportunity type"
         value={opportunityType}
+        onChange={handleOpportunityTypeChange}
         data={["Jobs", "Competitions", "Festivals", "Concerts"]}
       />
       <OpportunityForm
-        opportunityType={opportunityType}
+        opportunityType={opportunityType.toLowerCase()}
         // opportunity={{
         //   UID: "1",
         //   idposts: 1,

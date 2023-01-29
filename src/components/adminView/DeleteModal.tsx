@@ -1,7 +1,9 @@
 import { Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
+import React from "react";
+import { RawUserData } from "../adminView/UsersList";
 
-export const openDeleteModal = (name: string) =>
+export const openDeleteModal = (name: string, email: string, index: number, setRawUserList: React.Dispatch<React.SetStateAction<RawUserData[]>>) =>
   openConfirmModal({
     title: "Delete User",
     centered: true,
