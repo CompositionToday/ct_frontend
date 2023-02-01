@@ -61,6 +61,13 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
+
+  container: {
+    [theme.fn.largerThan("sm")]: {
+      paddingLeft: 30,
+      paddingRight: 30,
+    },
+  },
 }));
 
 export function RegisterCTA() {
@@ -74,6 +81,7 @@ export function RegisterCTA() {
           spacing={80}
           cols={2}
           breakpoints={[{ maxWidth: "sm", cols: 1, spacing: 40 }]}
+          className={classes.container}
         >
           <div className={classes.centerText}>
             <Title className={classes.title}>Want to contribute?</Title>
