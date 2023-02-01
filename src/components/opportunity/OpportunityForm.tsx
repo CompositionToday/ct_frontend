@@ -22,6 +22,26 @@ interface OpportunityFormProp {
   opportunity?: OpportunityItem;
 }
 
+interface formValue {
+  UID?: string;
+  idposts?: string | number;
+  keyword?: string;
+  title: string;
+  link: string;
+  organization: string;
+  description: string;
+  date_posted: Date | number;
+  city: string;
+  state: string;
+  end_date: string | number | Date;
+  salary: number | string;
+  job_type: any;
+  winner: string;
+  category: string;
+  address: string;
+  start_date: string | number | Date;
+}
+
 export function OpportunityForm({
   opportunityType,
   opportunity,
@@ -30,34 +50,43 @@ export function OpportunityForm({
   const [state, setState] = useState(
     opportunity?.state ? opportunity.state : ""
   );
-  // const [dateRange, setDateRange] = useState<DateRangePickerValue>([
-  //   null,
-  //   null,
-  // ]);
-  // const [salary, setSalary] = useState<number>(0);
-  const [displayError, setDisplayError] = useState(false);
+  const [dateRange, setDateRange] = useState<DateRangePickerValue>([
+    opportunity && opportunity?.start_date
+      ? new Date(opportunity?.start_date)
+      : null,
+    opportunity && opportunity?.end_date
+      ? new Date(opportunity?.end_date)
+      : null,
+  ]);
+  const [displayLocationError, setDisplayLocationError] = useState(false);
+  const [displayDateRangeError, setDisplayDateRangeError] = useState(false);
   const medianScreen = useMediaQuery("(max-width: 992px)");
   const form = useForm({
     initialValues: {
       // FIXME: Need to actually put the UID of the logged in user here
       // FIXME: Need to actually put the idposts if there is an edit
-      // FIXME: Need to put in some type of date form fields here and validations fo them. Specifically the date_range
-      UID: opportunity?.UID || "",
-      idposts: opportunity?.idposts || -1,
+      // UID: opportunity?.UID || "",
+      // idposts: opportunity?.idposts || -1,
       title: opportunity?.title || "",
       link: opportunity?.link || "",
       organization: opportunity?.organization || "",
       description: opportunity?.description || "",
-      date_posted: new Date(),
+      date_posted: opportunity?.date_posted
+        ? new Date(opportunity?.date_posted)
+        : new Date(),
       city: city,
       state: state,
-      end_date: opportunity?.end_date || "",
+      end_date: opportunity?.end_date
+        ? new Date(opportunity?.end_date)
+        : new Date(),
       salary: opportunity?.salary || "",
       job_type: opportunity?.job_type || "",
       winner: opportunity?.winner || "",
       category: opportunity?.category || "",
       address: opportunity?.address || "",
-      start_date: opportunity?.start_date || "",
+      start_date: opportunity?.start_date
+        ? new Date(opportunity?.start_date)
+        : new Date(),
       // dateRange:
       //   opportunity?.end_date && opportunity?.start_date
       //     ? [opportunity.start_date, opportunity?.end_date]
@@ -74,8 +103,10 @@ export function OpportunityForm({
       // city: (value) => (value ? null : "Please give a city"),
       // state: (value) => (value ? null : "Please give a state"),
       end_date: (value: Date | string) =>
-        value ? null : "Please give an end date",
-      salary: (value) =>
+        value || opportunityType === "festivals"
+          ? null
+          : "Please give an end date",
+      salary: (value: number) =>
         value || opportunityType !== "jobs" ? null : "Please give a salary",
       job_type: (value) =>
         value || opportunityType !== "jobs"
@@ -92,10 +123,93 @@ export function OpportunityForm({
           : "Please give an address",
       // start_date: (value: Date | string | DateRangePickerValue) =>
       //   value ? null : "Please give a start date",
-      // dateRange: (value: DateRangePickerValue) =>
-      //   value ? null : "Please give a date range",
     },
   });
+  const essentialOpportunityKey = [
+    "UID",
+    "idposts",
+    "title",
+    "link",
+    "organization",
+    "description",
+    "date_posted",
+    "city",
+    "state",
+    "end_date",
+  ];
+  const jobOpportunityKey = ["salary", "job_type"];
+  const competitionOpportunityKey = ["winner", "category"];
+  const concertOpportunityKey = ["address"];
+  const festivalOpportunityKey = ["start_date", "address"];
+
+  // FIXME: When creating the request object, need to make sure that we use keyword
+  // instead of explicitly using title and organization
+  const handleFormSubmission = (values: formValue) => {
+    console.log("these are the values: ", values);
+    if (
+      opportunityType === "festivals" &&
+      (!dateRange || !dateRange[0] || !dateRange[1])
+    ) {
+      console.log(
+        "There is no date range given for a festival, returning out of function"
+      );
+      return;
+    }
+
+    if (!city || !state) {
+      console.log(
+        "there is no location that was selected, now returning out of function"
+      );
+      return;
+    }
+
+    let opportunityKeys: string[] = [...essentialOpportunityKey];
+    if (opportunityType === "jobs") {
+      opportunityKeys = essentialOpportunityKey.concat(jobOpportunityKey);
+    } else if (opportunityType === "competitions") {
+      opportunityKeys = essentialOpportunityKey.concat(
+        competitionOpportunityKey
+      );
+    } else if (opportunityType === "concerts") {
+      opportunityKeys = essentialOpportunityKey.concat(concertOpportunityKey);
+    } else if (opportunityType === "festivals") {
+      opportunityKeys = essentialOpportunityKey.concat(festivalOpportunityKey);
+    }
+
+    // FIXME: Need to make sure that I actually give the UID of the signed in user
+    // FIXME: Need to make sure if I need to give some type of idposts or not
+    let req = { ...values };
+    for (let key in req) {
+      if (!opportunityKeys.includes(key)) {
+        delete req[key as keyof typeof req];
+      }
+    }
+
+    if (
+      opportunityType === "festivals" &&
+      dateRange &&
+      dateRange[0] &&
+      dateRange[1]
+    ) {
+      req.start_date = dateRange[0].valueOf();
+      req.end_date = dateRange[1].valueOf();
+    } else {
+      req.end_date = values.end_date.valueOf();
+    }
+
+    req.city = city;
+    req.state = state;
+    req.UID = "12343testyo";
+
+    let tempDate = new Date();
+    let day = tempDate.getDate();
+    let month = tempDate.getMonth() + 1;
+    let year = tempDate.getFullYear();
+    req.date_posted = new Date(`${year}-${month}-${day}`).valueOf();
+
+    console.log("showing req:");
+    console.log(req);
+  };
 
   useEffect(() => {
     console.log(opportunityType);
@@ -110,10 +224,7 @@ export function OpportunityForm({
       <Paper shadow="sm" withBorder>
         <OpportunityFormContentContainer>
           <form
-            onSubmit={form.onSubmit((values) => {
-              console.log(values);
-              // console.log("Start: ", values.dateRange[0]);
-            })}
+            onSubmit={form.onSubmit((values) => handleFormSubmission(values))}
           >
             <TextInputFullWidth
               label="Get rid of me since I'm an input for the UID"
@@ -163,7 +274,8 @@ export function OpportunityForm({
               setCity={setCity}
               state={state}
               setState={setState}
-              error={displayError && (!city || !state)}
+              displayError={displayLocationError}
+              setDisplayError={setDisplayLocationError}
             />
             <TwoInputRow
               justify="space-around"
@@ -235,16 +347,39 @@ export function OpportunityForm({
               // value={dateRange}
               // onChange={setDateRange}
               withAsterisk
+              value={dateRange}
               onChange={(e) => {
                 console.log(e);
+                setDateRange(e);
+                setDisplayDateRangeError(false);
               }}
-              {...form.getInputProps("dateRange")}
+              error={
+                displayDateRangeError &&
+                (!dateRange || dateRange[0] === null || dateRange[1] === null)
+                  ? "Please give a date range"
+                  : false
+              }
+              // error="this is a test"
+              // {...form.getInputProps("dateRange")}
             />
             <SubmitButtonContainer justify="center">
               <Button
                 type="submit"
                 onClick={() => {
-                  setDisplayError(true);
+                  setDisplayLocationError(true);
+                  setDisplayDateRangeError(true);
+                  console.log(form.isValid());
+                  console.log(form.isValid("title"));
+                  console.log(form.isValid("organization"));
+                  console.log(form.isValid("link"));
+                  console.log(form.isValid("description"));
+                  console.log(form.isValid("end_date"));
+                  console.log(form.isValid("salary"));
+                  console.log(form.isValid("job_type"));
+                  console.log(form.isValid("category"));
+                  console.log(form.isValid("address"));
+                  console.log(displayLocationError);
+                  console.log(displayDateRangeError);
                 }}
               >
                 Submit

@@ -33,10 +33,12 @@ export function CreateOpportunity() {
         //   link: "link to some website",
         //   organization: "UCF Football",
         //   description: "The future of college football",
-        //   date_posted: new Date(),
+        //   date_posted: new Date().valueOf(),
         //   city: "orlando",
         //   state: "florida",
-        //   end_date: new Date(),
+        //   end_date: new Date().valueOf(),
+        //   salary: 120000,
+        //   job_type: "Football staff",
         // }}
       />
     </CreateOpportunityContainer>

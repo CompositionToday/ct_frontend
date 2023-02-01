@@ -11,7 +11,8 @@ export interface LocationProp {
   state?: string | undefined;
   setCity: React.Dispatch<React.SetStateAction<string>>;
   setState: React.Dispatch<React.SetStateAction<string>>;
-  error: boolean;
+  displayError: boolean;
+  setDisplayError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface LocationData {
@@ -25,7 +26,8 @@ export function Location({
   setState,
   city,
   state,
-  error,
+  displayError,
+  setDisplayError,
 }: LocationProp) {
   const timeoutRef = useRef<number>(-1);
   const [value, setValue] = useState("");
@@ -33,12 +35,12 @@ export function Location({
   const [data, setData] = useState<LocationData[]>([]);
   const [userLocation, setUserLocation] = useState<string>("");
 
-  const useStyles = createStyles((theme) => ({
-    input: {
-      borderColor: value !== "" && (city === "" || state === "") ? "red" : "",
-    },
-  }));
-  const { classes } = useStyles();
+  // const useStyles = createStyles((theme) => ({
+  //   input: {
+  //     borderColor: value !== "" && (city === "" || state === "") ? "red" : "",
+  //   },
+  // }));
+  // const { classes } = useStyles();
 
   const handleChange = async (val: string) => {
     console.log("I am triggered");
@@ -56,6 +58,12 @@ export function Location({
   };
 
   useEffect(() => {
+    if (city && state) {
+      setValue(`${city}, ${state}`);
+    }
+  }, []);
+
+  useEffect(() => {
     console.log("Chose a location");
     console.log("city: ", city);
     console.log("state: ", state);
@@ -67,6 +75,8 @@ export function Location({
       setLoading(false);
       return;
     }
+
+    setDisplayError(false);
 
     const delayDebounceFn = setTimeout(async () => {
       try {
@@ -143,11 +153,15 @@ export function Location({
         placeholder="City, State"
         onItemSubmit={handleDropdownSelect}
         limit={15}
-        classNames={{
-          input: classes.input,
-        }}
+        // classNames={{
+        //   input: classes.input,
+        // }}
         withAsterisk
-        error={error && !value ? "Select a location" : false}
+        error={
+          displayError && (!city || !state)
+            ? "Select a location from the dropdown"
+            : false
+        }
       />
     </div>
   );

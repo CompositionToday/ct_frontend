@@ -10,24 +10,27 @@ export declare enum jobType {
   composor,
 }
 
+// FIXME: Need to get rid of or make optional title and organization here
 export interface OpportunityItem {
   UID: string;
-  idposts: number;
+  idposts?: number;
   keyword?: string;
-  title: string;
+  title?: string;
+  organization?: string;
   link: string;
-  organization: string;
   description: string;
-  date_posted: Date;
+  date_posted: Date | number;
   city: string;
   state: string;
-  end_date: Date | string;
-  salary?: string;
+  // end_date: Date | string | number;
+  end_date: number;
+  salary?: string | number;
   job_type?: jobType | any;
   winner?: string | null;
   category?: string;
   address?: string;
-  start_date?: Date | string;
+  // start_date?: Date | string | number;
+  start_date?: number;
 }
 
 interface PaginationCard {

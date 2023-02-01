@@ -8,13 +8,14 @@ export function Jobs() {
   return (
     <div>
       <p>testyo</p>
-      <Location
+      {/* <Location
         setCity={setCity}
         setState={setState}
         city={city}
         state={state}
         error={true}
-      />
+        displayError={true}
+      /> */}
       <p>City: {city}</p>
       <p>State: {state}</p>
     </div>

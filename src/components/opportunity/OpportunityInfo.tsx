@@ -73,7 +73,7 @@ export function OpportunityInfo({
         <SpecificOpportunityInfoContainer>
           <div>
             <Label>Start Date: </Label>
-            <span>{opportunity?.start_date as string}</span>
+            <span>{opportunity?.start_date}</span>
           </div>
           <div>
             <Label>Address: </Label>
