@@ -91,7 +91,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   logo: {
-    [theme.fn.largerThan("sm")]: {
+    [theme.fn.largerThan("md")]: {
       paddingLeft: "25px",
     },
   },
