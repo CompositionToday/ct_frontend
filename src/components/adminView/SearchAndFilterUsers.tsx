@@ -1,11 +1,4 @@
-import {
-  Container,
-  ActionIcon,
-  createStyles,
-  Menu,
-  Chip,
-  Group,
-} from "@mantine/core";
+import { ActionIcon, createStyles, Menu, Chip, Group } from "@mantine/core";
 import { Input } from "@mantine/core";
 import { IconSearch, IconFilter } from "@tabler/icons";
 import React, { useState, useEffect } from "react";
@@ -45,11 +38,32 @@ const createSearchObj = (
   setSearchObj(searchObj);
 };
 
+const changeFilter = (
+  filter: string,
+  setAdminChecked: React.Dispatch<React.SetStateAction<boolean>>,
+  setBannedChecked: React.Dispatch<React.SetStateAction<boolean>>,
+  setRegularChecked: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  if (filter === "admin") {
+    setAdminChecked((e) => !e);
+    setBannedChecked(false);
+    setRegularChecked(false);
+  } else if (filter === "banned") {
+    setBannedChecked((e) => !e);
+    setAdminChecked(false);
+    setRegularChecked(false);
+  } else if (filter === "regular") {
+    setRegularChecked((e) => !e);
+    setAdminChecked(false);
+    setBannedChecked(false);
+  }
+};
+
 export function SearchAndFilterUsers({ setSearchObj }: SearchAndFilterProp) {
   const { classes } = useStyles();
-  const [adminChecked, setAdminChecked] = useState(true);
-  const [bannedChecked, setBannedChecked] = useState(true);
-  const [regularChecked, setRegularChecked] = useState(true);
+  const [adminChecked, setAdminChecked] = useState(false);
+  const [bannedChecked, setBannedChecked] = useState(false);
+  const [regularChecked, setRegularChecked] = useState(false);
 
   useEffect(() => {
     createSearchObj(setSearchObj, adminChecked, bannedChecked, regularChecked);
@@ -83,37 +97,85 @@ export function SearchAndFilterUsers({ setSearchObj }: SearchAndFilterProp) {
         </Menu.Target>
 
         <Menu.Dropdown>
-          <Menu.Item onClick={() => setAdminChecked((v) => !v)}>
+          <Menu.Item
+            onClick={() =>
+              changeFilter(
+                "admin",
+                setAdminChecked,
+                setBannedChecked,
+                setRegularChecked
+              )
+            }
+          >
             <Chip
               defaultChecked
               color="green"
               variant="filled"
               checked={adminChecked}
-              onChange={() => setAdminChecked((v) => !v)}
+              onChange={() =>
+                changeFilter(
+                  "admin",
+                  setAdminChecked,
+                  setBannedChecked,
+                  setRegularChecked
+                )
+              }
             >
               Admin
             </Chip>
           </Menu.Item>
 
-          <Menu.Item onClick={() => setBannedChecked((v) => !v)}>
+          <Menu.Item
+            onClick={() =>
+              changeFilter(
+                "banned",
+                setAdminChecked,
+                setBannedChecked,
+                setRegularChecked
+              )
+            }
+          >
             <Chip
               defaultChecked
               color="red"
               variant="filled"
               checked={bannedChecked}
-              onChange={() => setBannedChecked((v) => !v)}
+              onChange={() =>
+                changeFilter(
+                  "banned",
+                  setAdminChecked,
+                  setBannedChecked,
+                  setRegularChecked
+                )
+              }
             >
               Banned
             </Chip>
           </Menu.Item>
 
-          <Menu.Item onClick={() => setRegularChecked((v) => !v)}>
+          <Menu.Item
+            onClick={() =>
+              changeFilter(
+                "regular",
+                setAdminChecked,
+                setBannedChecked,
+                setRegularChecked
+              )
+            }
+          >
             <Chip
               defaultChecked
               color="blue"
               variant="filled"
               checked={regularChecked}
-              onChange={() => setRegularChecked((v) => !v)}
+              onChange={() =>
+                changeFilter(
+                  "regular",
+                  setAdminChecked,
+                  setBannedChecked,
+                  setRegularChecked
+                )
+              }
             >
               Regular
             </Chip>

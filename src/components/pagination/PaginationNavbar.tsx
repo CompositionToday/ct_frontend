@@ -5,7 +5,7 @@ import {
 } from "./OpportunityHelper";
 import { RawUserData } from "../adminView/UsersList";
 import React, { useState, useEffect } from "react";
-import { MediaQuery, Pagination } from "@mantine/core";
+import { Pagination } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 
 export interface PaginationNavbarProp {
@@ -77,16 +77,6 @@ export function PaginationNavbar({
           responseCountJson.count / numberOfItemsPerPage
         );
         setPageCount(numberOfPage);
-
-        console.log(numberOfPage);
-
-        // let responseOpportunity = await fetch(
-        //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1`
-        // );
-
-        // let responseOpportunityJson = await responseOpportunity.json();
-        // console.log(responseOpportunityJson);
-        // setPaginationDisplayOpportunity(responseOpportunityJson.listOfJobs);
       } catch (err) {
         console.log(err);
       }
@@ -110,15 +100,13 @@ export function PaginationNavbar({
 
         let responseJson = await response.json();
         setListOfObjects(responseJson.listOfObjects);
-        // setPaginationDisplayOpportunity(responseOpportunityJson.listOfObjects);
-        // setCurrentOpportunity(responseOpportunityJson.listOfObjects[0]);
       } catch (err) {
         console.log(err);
       }
     };
 
     getCurrentPage();
-  }, [currentPage, pageCount]);
+  }, [currentPage, pageCount, searchFilterObject]);
 
   return (
     <PaginationNavbarContainer justify="center" align="flex-end">

@@ -68,11 +68,13 @@ const useStyles = createStyles((theme) => ({
   table: {
     maxWidth: "100%",
     flexBasis: "100%",
+    height: "90%",
   },
 
   pagination: {
     flexBasis: "100%",
     marginBottom: "30px",
+    height: 0,
   },
 
   bold: {
@@ -223,7 +225,7 @@ export function UsersList() {
         <Container className={classes.table}>
           <MantineProvider>
             <ModalsProvider>
-              <ScrollArea>
+              <ScrollArea style={{ height: "95%" }}>
                 <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
                   <thead>
                     <tr>
