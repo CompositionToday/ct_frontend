@@ -8,11 +8,12 @@ import {
   StartEndDatePicker,
   SalaryInput,
   SubmitButtonContainer,
+  DropdownCategory,
 } from "./OpportunityFormHelper";
 import { OpportunityItem } from "./OpportunityHelper";
 import { Location } from "../filter/Location";
 import React, { useState, useEffect } from "react";
-import { Paper, NumberInput, Button } from "@mantine/core";
+import { Paper, NumberInput, Button, Select } from "@mantine/core";
 import { DateRangePickerValue } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
@@ -79,7 +80,7 @@ export function OpportunityForm({
       end_date: opportunity?.end_date
         ? new Date(opportunity?.end_date)
         : new Date(),
-      salary: opportunity?.salary || "",
+      salary: opportunity?.salary || 0,
       job_type: opportunity?.job_type || "",
       winner: opportunity?.winner || "",
       category: opportunity?.category || "",
@@ -311,17 +312,25 @@ export function OpportunityForm({
                 {...form.getInputProps("job_type")}
               />
             </TwoInputRow>
-            <TextInputFullWidth
+            {/* <TextInputFullWidth
               label="Winner"
               placeholder="Give the name of the winner if applicable"
               display={opportunityType === "competitions"}
               {...form.getInputProps("winner")}
-            />
-            <TextInputFullWidth
+            /> */}
+            {/* <TextInputFullWidth
               label="Category"
               placeholder="Category"
               display={opportunityType === "competitions"}
               withAsterisk
+              {...form.getInputProps("category")}
+            /> */}
+            <DropdownCategory
+              label="Category"
+              placeholder={`Select ${opportunityType} category`}
+              withAsterisk
+              display={opportunityType === "competitions"}
+              data={["Brass", "Woodwind", "Percussion"]}
               {...form.getInputProps("category")}
             />
             <TextInputFullWidth

@@ -50,7 +50,7 @@ export function Opportunity() {
     displayOpportunitySearchFilterModal,
     setDisplayOpportunitySearchFilterModal,
   ] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
+  const [keyword, setKeyword] = useState("");
   const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
     keyword: "",
   });
@@ -74,14 +74,13 @@ export function Opportunity() {
   };
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+    setKeyword(e.target.value);
     console.log(e.target.value);
   };
 
   const handleSubmit = () => {
-    console.log(searchValue);
-    let temp = { title: searchValue, organization: searchValue };
-    setSearchObj({ ...temp });
+    console.log(keyword);
+    setSearchObj({ ...searchObj, keyword: keyword });
   };
 
   const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -102,7 +101,7 @@ export function Opportunity() {
             medianScreen={medianScreen}
             placeholder="Title or organization"
             rightSection={<IconSearch color="#808080" onClick={handleSubmit} />}
-            value={searchValue}
+            value={keyword}
             onChange={handleSearchInput}
             onKeyDown={handleEnterKeyDown}
           />
@@ -202,7 +201,12 @@ export function Opportunity() {
         fullScreen={medianScreen}
         size="80%"
       >
-        <OpportunityFilterForm />
+        <OpportunityFilterForm
+          searchObj={searchObj}
+          setSearchObj={setSearchObj}
+          keyword={keyword}
+          setKeyword={setKeyword}
+        />
       </Modal>
     </OpportunityPageContainer>
   );

@@ -28,7 +28,7 @@ export interface PaginationSearchObject {
   state?: string;
   organization?: string;
   end_date?: Date | string | number;
-  salary?: string;
+  salary?: number;
   job_type?: jobType | any;
   winner?: string | null;
   category?: string;

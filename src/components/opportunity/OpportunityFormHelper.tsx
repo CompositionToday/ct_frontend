@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import { Flex, TextInput, Textarea, NumberInput, Button } from "@mantine/core";
+import {
+  Flex,
+  TextInput,
+  Textarea,
+  NumberInput,
+  Button,
+  Select,
+} from "@mantine/core";
 import { DatePicker, DateRangePicker } from "@mantine/dates";
 
 interface OpportunityInput {
@@ -48,4 +55,8 @@ export const SalaryInput = styled(NumberInput)<OpportunityInput>`
 export const SubmitButtonContainer = styled(Flex)`
   margin-top: 30px;
   width: 100%;
+`;
+
+export const DropdownCategory = styled(Select)<OpportunityInput>`
+  display: ${(props) => (props.display ? "auto" : "none")};
 `;
