@@ -1,4 +1,7 @@
-import { CreateOpportunityContainer } from "./CreateOpportunityHelper";
+import {
+  CreateOpportunityContainer,
+  FormHeader,
+} from "./CreateOpportunityHelper";
 import { OpportunityForm } from "./OpportunityForm";
 import React, { useState, useEffect } from "react";
 import { Center, Paper, Select } from "@mantine/core";
@@ -16,7 +19,7 @@ export function CreateOpportunity() {
 
   return (
     <CreateOpportunityContainer>
-      <h1 style={{ textAlign: "center" }}>Create Opportunity</h1>
+      <FormHeader>Create Opportunity</FormHeader>
       <Select
         label="Opportunity Type"
         placeholder="Select opportunity type"

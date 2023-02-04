@@ -27,18 +27,20 @@ export interface PaginationSearchObject {
   city?: string;
   state?: string;
   organization?: string;
-  end_date?: Date | string;
+  end_date?: Date | string | number;
   salary?: string;
   job_type?: jobType | any;
   winner?: string | null;
   category?: string;
   address?: string;
-  start_date?: Date | string;
+  start_date?: Date | string | number;
   first_name?: string;
   last_name?: string;
   email?: string;
+  keyword?: string;
   is_admin?: number;
   is_banned?: number;
+  is_regular?: number;
 }
 
 export function PaginationNavbar({
@@ -67,6 +69,7 @@ export function PaginationNavbar({
           }
         }
 
+        console.log("countUrl: ", countUrl.toString());
         let responseCount = await fetch(countUrl);
 
         let responseCountJson = await responseCount.json();
@@ -100,6 +103,7 @@ export function PaginationNavbar({
         }
 
         getUrl.searchParams.set("page_number", String(currentPage));
+        console.log("getUrl: ", getUrl.toString());
         let response = await fetch(getUrl);
 
         let responseJson = await response.json();

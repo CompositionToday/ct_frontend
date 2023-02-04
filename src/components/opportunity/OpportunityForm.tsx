@@ -276,6 +276,7 @@ export function OpportunityForm({
               setState={setState}
               displayError={displayLocationError}
               setDisplayError={setDisplayLocationError}
+              withAsterisk
             />
             <TwoInputRow
               justify="space-around"

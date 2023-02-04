@@ -40,8 +40,9 @@ export const StartEndDatePicker = styled(DateRangePicker)<OpportunityInput>`
   display: ${(props) => (props.display ? "auto" : "none")};
 `;
 
-export const SalaryInput = styled(NumberInput)`
+export const SalaryInput = styled(NumberInput)<OpportunityInput>`
   margin-top: 10px;
+  display: ${(props) => (props.display ? "auto" : "none")};
 `;
 
 export const SubmitButtonContainer = styled(Flex)`

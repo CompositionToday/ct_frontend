@@ -32,6 +32,7 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import { useLocation } from "react-router-dom";
 import { IconMapPin, IconFilter, IconSearch } from "@tabler/icons";
+import { OpportunityFilterForm } from "./OpportunityFilterForm";
 
 export function Opportunity() {
   // const [opportunityType, setOpportunityType] = useState(
@@ -43,11 +44,15 @@ export function Opportunity() {
   const [displayOpportunityArray, setDisplayOpportunityArray] = useState<
     OpportunityItem[]
   >([]);
-  const [displayModal, setDisplayModal] = useState(false);
+  const [displayOpportunityInfoModal, setDisplayOpportunityInfoModal] =
+    useState(false);
+  const [
+    displayOpportunitySearchFilterModal,
+    setDisplayOpportunitySearchFilterModal,
+  ] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
-    title: "",
-    organization: "",
+    keyword: "",
   });
   const medianScreen = useMediaQuery("(max-width: 992px)");
 
@@ -61,11 +66,11 @@ export function Opportunity() {
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
-    setDisplayModal(true);
+    setDisplayOpportunityInfoModal(true);
   };
 
   const handleCloseModal = () => {
-    setDisplayModal(false);
+    setDisplayOpportunityInfoModal(false);
   };
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +116,11 @@ export function Opportunity() {
           >
             <IconFilter size={40} color="#808080" />
           </ActionIcon> */}
-          <FilterIconContainer>
+          <FilterIconContainer
+            onClick={() => {
+              setDisplayOpportunitySearchFilterModal(true);
+            }}
+          >
             <IconFilter size={40} color="#808080" />
           </FilterIconContainer>
         </SearchFilterContainer>
@@ -174,13 +183,27 @@ export function Opportunity() {
         </OpportunityGrid>
       </GridContainer>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
-        <Modal opened={displayModal} onClose={handleCloseModal} fullScreen>
+        <Modal
+          opened={displayOpportunityInfoModal}
+          onClose={handleCloseModal}
+          fullScreen
+        >
           <OpportunityInfo
             opportunity={currentOpportunity}
             opportunityType={opportunityType}
           />
         </Modal>
       </MediaQuery>
+      <Modal
+        opened={displayOpportunitySearchFilterModal}
+        onClose={() => {
+          setDisplayOpportunitySearchFilterModal(false);
+        }}
+        fullScreen={medianScreen}
+        size="80%"
+      >
+        <OpportunityFilterForm />
+      </Modal>
     </OpportunityPageContainer>
   );
 }

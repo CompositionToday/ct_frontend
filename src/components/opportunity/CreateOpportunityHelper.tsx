@@ -6,3 +6,7 @@ export const CreateOpportunityContainer = styled.div`
   margin: 0 auto;
   margin-bottom: 60px;
 `;
+
+export const FormHeader = styled.h1`
+  text-align: center;
+`;

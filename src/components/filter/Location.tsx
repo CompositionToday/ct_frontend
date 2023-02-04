@@ -7,12 +7,13 @@ import {
 } from "@mantine/core";
 
 export interface LocationProp {
-  city?: string | undefined;
-  state?: string | undefined;
+  city: string | undefined;
+  state: string | undefined;
   setCity: React.Dispatch<React.SetStateAction<string>>;
   setState: React.Dispatch<React.SetStateAction<string>>;
-  displayError: boolean;
-  setDisplayError: React.Dispatch<React.SetStateAction<boolean>>;
+  displayError?: boolean;
+  setDisplayError?: React.Dispatch<React.SetStateAction<boolean>>;
+  withAsterisk: boolean;
 }
 
 interface LocationData {
@@ -28,6 +29,7 @@ export function Location({
   state,
   displayError,
   setDisplayError,
+  withAsterisk,
 }: LocationProp) {
   const timeoutRef = useRef<number>(-1);
   const [value, setValue] = useState("");
@@ -76,7 +78,9 @@ export function Location({
       return;
     }
 
-    setDisplayError(false);
+    if (setDisplayError) {
+      setDisplayError(false);
+    }
 
     const delayDebounceFn = setTimeout(async () => {
       try {
@@ -156,7 +160,7 @@ export function Location({
         // classNames={{
         //   input: classes.input,
         // }}
-        withAsterisk
+        withAsterisk={withAsterisk}
         error={
           displayError && (!city || !state)
             ? "Select a location from the dropdown"
