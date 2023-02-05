@@ -11,13 +11,14 @@ import {
 import LocationIcon from "./LocationIcon.svg";
 import ApplyIcon from "./ApplyIcon.svg";
 import React, { useState, useEffect } from "react";
-import { Flex, Button, MediaQuery, ActionIcon } from "@mantine/core";
+import { Flex, Button, MediaQuery, ActionIcon, Modal } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconMapPin, IconExternalLink, IconEdit } from "@tabler/icons";
 
 export function OpportunityInfo({
   opportunity,
   opportunityType,
+  setEditModal,
 }: OpportunityInfoProp) {
   const largeScreen = useMediaQuery("(min-width: 992px)");
 
@@ -73,7 +74,8 @@ export function OpportunityInfo({
         <SpecificOpportunityInfoContainer>
           <div>
             <Label>Start Date: </Label>
-            <span>{opportunity?.start_date}</span>
+            {/* FIXME: Need to make sure that when we get the start_date, from the backend, that I fix this code such that we get it as an integer */}
+            <span>{opportunity?.start_date?.toString()}</span>
           </div>
           <div>
             <Label>Address: </Label>
@@ -132,7 +134,11 @@ export function OpportunityInfo({
           variant="filled"
         >
           Edit
-          <ActionIcon color="green" variant="filled">
+          <ActionIcon
+            color="green"
+            variant="filled"
+            onClick={() => setEditModal(true)}
+          >
             <IconEdit />
           </ActionIcon>
         </Button>

@@ -21,6 +21,7 @@ import { useForm } from "@mantine/form";
 interface OpportunityFormProp {
   opportunityType: string;
   opportunity?: OpportunityItem;
+  handleSubmission: (opportunity: OpportunityItem) => void;
 }
 
 interface formValue {
@@ -46,6 +47,7 @@ interface formValue {
 export function OpportunityForm({
   opportunityType,
   opportunity,
+  handleSubmission,
 }: OpportunityFormProp) {
   const [city, setCity] = useState(opportunity?.city ? opportunity.city : "");
   const [state, setState] = useState(
@@ -145,7 +147,7 @@ export function OpportunityForm({
 
   // FIXME: When creating the request object, need to make sure that we use keyword
   // instead of explicitly using title and organization
-  const handleFormSubmission = (values: formValue) => {
+  const handleFormSubmission = (values: OpportunityItem) => {
     console.log("these are the values: ", values);
     if (
       opportunityType === "festivals" &&
@@ -179,7 +181,7 @@ export function OpportunityForm({
 
     // FIXME: Need to make sure that I actually give the UID of the signed in user
     // FIXME: Need to make sure if I need to give some type of idposts or not
-    let req = { ...values };
+    let req: OpportunityItem = { ...values };
     for (let key in req) {
       if (!opportunityKeys.includes(key)) {
         delete req[key as keyof typeof req];
@@ -210,6 +212,7 @@ export function OpportunityForm({
 
     console.log("showing req:");
     console.log(req);
+    handleSubmission(req);
   };
 
   useEffect(() => {

@@ -12,7 +12,7 @@ export declare enum jobType {
 
 // FIXME: Need to get rid of or make optional title and organization here
 export interface OpportunityItem {
-  UID: string;
+  UID?: string;
   idposts?: number;
   keyword?: string;
   title?: string;
@@ -23,14 +23,14 @@ export interface OpportunityItem {
   city: string;
   state: string;
   // end_date: Date | string | number;
-  end_date: number;
+  end_date: Date | number;
   salary?: string | number;
   job_type?: jobType | any;
   winner?: string | null;
   category?: string;
   address?: string;
   // start_date?: Date | string | number;
-  start_date?: number;
+  start_date?: Date | number;
 }
 
 interface PaginationCard {

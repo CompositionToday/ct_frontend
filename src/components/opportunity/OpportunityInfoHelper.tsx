@@ -5,6 +5,7 @@ import { Flex } from "@mantine/core";
 export interface OpportunityInfoProp {
   opportunity: OpportunityItem | null;
   opportunityType: string;
+  setEditModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const OpportunityInfoContainer = styled.div`

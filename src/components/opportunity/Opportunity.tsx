@@ -33,6 +33,8 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useLocation } from "react-router-dom";
 import { IconMapPin, IconFilter, IconSearch } from "@tabler/icons";
 import { OpportunityFilterForm } from "./OpportunityFilterForm";
+import { OpportunityForm } from "./OpportunityForm";
+import { FormHeader } from "./CreateOpportunityHelper";
 
 export function Opportunity() {
   // const [opportunityType, setOpportunityType] = useState(
@@ -50,6 +52,8 @@ export function Opportunity() {
     displayOpportunitySearchFilterModal,
     setDisplayOpportunitySearchFilterModal,
   ] = useState(false);
+  const [displayOpportunityEditModal, setDisplayOpportunityEditModal] =
+    useState(false);
   const [keyword, setKeyword] = useState("");
   const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
     keyword: "",
@@ -78,15 +82,19 @@ export function Opportunity() {
     console.log(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleInputSubmit = () => {
     console.log(keyword);
     setSearchObj({ ...searchObj, keyword: keyword });
   };
 
   const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      handleSubmit();
+      handleInputSubmit();
     }
+  };
+
+  const handleEditButton = async (opportunity: OpportunityItem) => {
+    console.log("opportunity in opportunity: ", opportunity);
   };
 
   useEffect(() => {
@@ -100,7 +108,9 @@ export function Opportunity() {
           <SearchBar
             medianScreen={medianScreen}
             placeholder="Title or organization"
-            rightSection={<IconSearch color="#808080" onClick={handleSubmit} />}
+            rightSection={
+              <IconSearch color="#808080" onClick={handleInputSubmit} />
+            }
             value={keyword}
             onChange={handleSearchInput}
             onKeyDown={handleEnterKeyDown}
@@ -176,6 +186,7 @@ export function Opportunity() {
               <OpportunityInfo
                 opportunity={currentOpportunity}
                 opportunityType={opportunityType}
+                setEditModal={setDisplayOpportunityEditModal}
               />
             </OpportunityRightColumnContainer>
           </MediaQuery>
@@ -190,6 +201,7 @@ export function Opportunity() {
           <OpportunityInfo
             opportunity={currentOpportunity}
             opportunityType={opportunityType}
+            setEditModal={setDisplayOpportunityEditModal}
           />
         </Modal>
       </MediaQuery>
@@ -206,6 +218,21 @@ export function Opportunity() {
           setSearchObj={setSearchObj}
           keyword={keyword}
           setKeyword={setKeyword}
+        />
+      </Modal>
+      <Modal
+        opened={displayOpportunityEditModal}
+        onClose={() => {
+          setDisplayOpportunityEditModal(false);
+        }}
+        fullScreen={medianScreen}
+        size="80%"
+      >
+        <FormHeader>Edit Opportunity</FormHeader>
+        <OpportunityForm
+          opportunityType={opportunityType}
+          opportunity={currentOpportunity ? currentOpportunity : undefined}
+          handleSubmission={handleEditButton}
         />
       </Modal>
     </OpportunityPageContainer>

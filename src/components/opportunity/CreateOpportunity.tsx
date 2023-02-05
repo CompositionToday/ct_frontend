@@ -5,12 +5,17 @@ import {
 import { OpportunityForm } from "./OpportunityForm";
 import React, { useState, useEffect } from "react";
 import { Center, Paper, Select } from "@mantine/core";
+import { OpportunityItem } from "./OpportunityHelper";
 
 export function CreateOpportunity() {
   const [opportunityType, setOpportunityType] = useState("Jobs");
 
   const handleOpportunityTypeChange = (e: string) => {
     setOpportunityType(e);
+  };
+
+  const handleSubmission = async (opportunity: OpportunityItem) => {
+    console.log("opportunity in create: ", opportunity);
   };
 
   useEffect(() => {
@@ -29,6 +34,7 @@ export function CreateOpportunity() {
       />
       <OpportunityForm
         opportunityType={opportunityType.toLowerCase()}
+        handleSubmission={handleSubmission}
         // opportunity={{
         //   UID: "1",
         //   idposts: 1,
