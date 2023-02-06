@@ -46,7 +46,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function NotFoundImage() {
+export function BannedPage() {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
