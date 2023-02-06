@@ -12,7 +12,6 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
-import { sign } from "crypto";
 
 const musicNoteIcon = require("../../images/MusicNote.png");
 
@@ -27,13 +26,13 @@ const useStyles = createStyles((theme) => ({
   },
 
   links: {
-    [theme.fn.smallerThan("sm")]: {
+    [theme.fn.smallerThan("md")]: {
       display: "none",
     },
   },
 
   burger: {
-    [theme.fn.largerThan("sm")]: {
+    [theme.fn.largerThan("md")]: {
       display: "none",
     },
   },
@@ -69,6 +68,10 @@ const useStyles = createStyles((theme) => ({
     fontSize: 18,
     textDecoration: "none",
     fontWeight: 600,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 14,
+    },
   },
 
   grayText: {
@@ -81,6 +84,16 @@ const useStyles = createStyles((theme) => ({
 
   image: {
     maxWidth: 30,
+
+    [theme.fn.smallerThan("sm")]: {
+      maxWidth: 25,
+    },
+  },
+
+  logo: {
+    [theme.fn.largerThan("md")]: {
+      paddingLeft: "25px",
+    },
   },
 
   logoGroup: {
@@ -105,6 +118,7 @@ export function NavBar({ links }: HeaderActionProps) {
   const { classes } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const [signedIn, setSignedIn] = useState(false);
+
   const items = links.map((link) => {
     return (
       <a
@@ -130,7 +144,7 @@ export function NavBar({ links }: HeaderActionProps) {
         </Button>
       </Group>
     ) : (
-      <Group style={{ paddingRight: 25 }}>
+      <Group style={{ paddingRight: 25 }} className={classes.links}>
         <Button
           variant="subtle"
           sx={{ height: 30 }}
@@ -167,13 +181,7 @@ export function NavBar({ links }: HeaderActionProps) {
   return (
     <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }} mt={10}>
       <Container className={classes.inner} fluid>
-        <Group style={{ paddingLeft: 25 }}>
-          <Burger
-            opened={opened}
-            onClick={toggle}
-            className={classes.burger}
-            size="sm"
-          />
+        <Group className={classes.logo}>
           <Group spacing="xs" className={classes.logoGroup}>
             <a className={classes.title} onClick={() => navigate("/")}>
               COMPOSITION:
@@ -185,6 +193,12 @@ export function NavBar({ links }: HeaderActionProps) {
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
+        <Burger
+            opened={opened}
+            onClick={toggle}
+            className={classes.burger}
+            size="sm"
+          />
         <HandleUserButton />
       </Container>
     </Header>
