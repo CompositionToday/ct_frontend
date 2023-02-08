@@ -170,13 +170,12 @@ export function OpportunityInfo({
           size="md"
           color="green"
           variant="filled"
+          onClick={() => {
+            setEditModal(true);
+          }}
         >
           Edit
-          <ActionIcon
-            color="green"
-            variant="filled"
-            onClick={() => setEditModal(true)}
-          >
+          <ActionIcon color="green" variant="filled">
             <IconEdit />
           </ActionIcon>
         </Button>

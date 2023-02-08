@@ -58,6 +58,7 @@ export function Opportunity() {
   const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
     keyword: "",
   });
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const medianScreen = useMediaQuery("(max-width: 992px)");
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
@@ -86,7 +87,38 @@ export function Opportunity() {
   };
 
   const handleEditButton = async (opportunity: OpportunityItem) => {
-    console.log("opportunity in opportunity: ", opportunity);
+    try {
+      delete opportunity.UID;
+
+      console.log("opportunity in opportunity: ", opportunity);
+
+      let requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(opportunity),
+      };
+
+      let response = await fetch(
+        `${url}/${opportunityType}/${currentOpportunity?.idposts}`,
+        requestOptions
+      );
+
+      let responseJson = await response.json();
+      console.log("put response: ", responseJson);
+
+      let editedOpportunity = responseJson.listOfObjects[0];
+
+      for (let i = 0; i < displayOpportunityArray.length; i++) {
+        if (displayOpportunityArray[i].idposts === editedOpportunity.idposts) {
+          let tempArray = displayOpportunityArray;
+          tempArray[i] = editedOpportunity;
+          setDisplayOpportunityArray([...tempArray]);
+          break;
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
