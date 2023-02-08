@@ -12,7 +12,9 @@ import {
 } from "./OpportunityFormHelper";
 import { OpportunityItem } from "./OpportunityHelper";
 import { Location } from "../filter/Location";
+import { auth } from "../../Firebase";
 import React, { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 import { Paper, NumberInput, Button, Select } from "@mantine/core";
 import { DateRangePickerValue } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
@@ -63,10 +65,10 @@ export function OpportunityForm({
   ]);
   const [displayLocationError, setDisplayLocationError] = useState(false);
   const [displayDateRangeError, setDisplayDateRangeError] = useState(false);
+  const [userUID, setUserUID] = useState("");
   const medianScreen = useMediaQuery("(max-width: 992px)");
   const form = useForm({
     initialValues: {
-      // FIXME: Need to actually put the UID of the logged in user here
       // FIXME: Need to actually put the idposts if there is an edit
       // UID: opportunity?.UID || "",
       // idposts: opportunity?.idposts || -1,
@@ -202,7 +204,7 @@ export function OpportunityForm({
 
     req.city = city;
     req.state = state;
-    req.UID = "12343testyo";
+    req.UID = userUID;
 
     let tempDate = new Date();
     let day = tempDate.getDate();
@@ -214,6 +216,14 @@ export function OpportunityForm({
     console.log(req);
     handleSubmission(req);
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserUID(user.uid);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     console.log(opportunityType);

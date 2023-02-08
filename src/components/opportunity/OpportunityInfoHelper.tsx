@@ -1,11 +1,15 @@
 import { OpportunityItem } from "./OpportunityHelper";
 import styled from "@emotion/styled";
-import { Flex } from "@mantine/core";
+import { Button, Flex } from "@mantine/core";
 
 export interface OpportunityInfoProp {
   opportunity: OpportunityItem | null;
   opportunityType: string;
   setEditModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface DisplayButton {
+  display?: boolean;
 }
 
 export const OpportunityInfoContainer = styled.div`

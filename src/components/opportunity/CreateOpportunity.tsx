@@ -3,12 +3,16 @@ import {
   FormHeader,
 } from "./CreateOpportunityHelper";
 import { OpportunityForm } from "./OpportunityForm";
+import { auth } from "../../Firebase";
 import React, { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 import { Center, Paper, Select } from "@mantine/core";
 import { OpportunityItem } from "./OpportunityHelper";
+import { useNavigate } from "react-router-dom";
 
 export function CreateOpportunity() {
   const [opportunityType, setOpportunityType] = useState("Jobs");
+  const navigate = useNavigate();
 
   const handleOpportunityTypeChange = (e: string) => {
     setOpportunityType(e);
@@ -17,6 +21,14 @@ export function CreateOpportunity() {
   const handleSubmission = async (opportunity: OpportunityItem) => {
     console.log("opportunity in create: ", opportunity);
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/");
+      }
+    });
+  });
 
   useEffect(() => {
     console.log(opportunityType);

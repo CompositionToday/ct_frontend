@@ -60,14 +60,6 @@ export function Opportunity() {
   });
   const medianScreen = useMediaQuery("(max-width: 992px)");
 
-  useEffect(() => {
-    if (displayOpportunityArray.length >= 0) {
-      setCurrentOpportunity(displayOpportunityArray[0]);
-    } else {
-      setCurrentOpportunity(null);
-    }
-  }, [displayOpportunityArray]);
-
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
     setDisplayOpportunityInfoModal(true);
@@ -96,6 +88,14 @@ export function Opportunity() {
   const handleEditButton = async (opportunity: OpportunityItem) => {
     console.log("opportunity in opportunity: ", opportunity);
   };
+
+  useEffect(() => {
+    if (displayOpportunityArray.length >= 0) {
+      setCurrentOpportunity(displayOpportunityArray[0]);
+    } else {
+      setCurrentOpportunity(null);
+    }
+  }, [displayOpportunityArray]);
 
   useEffect(() => {
     console.log(searchObj);

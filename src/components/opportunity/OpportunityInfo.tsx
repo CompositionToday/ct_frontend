@@ -8,6 +8,8 @@ import {
   Label,
   SpecificOpportunityInfoContainer,
 } from "./OpportunityInfoHelper";
+import { auth } from "../../Firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import LocationIcon from "./LocationIcon.svg";
 import ApplyIcon from "./ApplyIcon.svg";
 import React, { useState, useEffect } from "react";
@@ -20,7 +22,10 @@ export function OpportunityInfo({
   opportunityType,
   setEditModal,
 }: OpportunityInfoProp) {
+  const [userUID, setUserUID] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const largeScreen = useMediaQuery("(min-width: 992px)");
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 
   const SpecificOpportunityInfo = () => {
     if (opportunityType === "competitions") {
@@ -88,6 +93,35 @@ export function OpportunityInfo({
     return null;
   };
 
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUserUID(user.uid);
+
+        // let response = await fetch(
+        //   `${url}/users?keyword=${user.email}&page_number=1`
+        // );
+        try {
+          let response = await fetch(
+            `${url}/users?keyword=${user.email}&page_number=1`
+          );
+          let responseJson = await response.json();
+          console.log(responseJson.listOfObjects[0].is_admin);
+          if (responseJson.listOfObjects[0].is_admin === 1) {
+            setIsAdmin(true);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("Users Uid: ", userUID);
+    console.log("isAdmin: ", isAdmin);
+  }, [userUID, setIsAdmin]);
+
   if (!opportunity) {
     return (
       <div>
@@ -128,7 +162,11 @@ export function OpportunityInfo({
         </Button>
         <Button
           radius="md"
-          sx={{ height: 30, alignSelf: "flex-start" }}
+          sx={{
+            height: 30,
+            alignSelf: "flex-start",
+            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
+          }}
           size="md"
           color="green"
           variant="filled"
@@ -144,7 +182,11 @@ export function OpportunityInfo({
         </Button>
         <Button
           radius="md"
-          sx={{ height: 30, alignSelf: "flex-start" }}
+          sx={{
+            height: 30,
+            alignSelf: "flex-start",
+            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
+          }}
           size="md"
           color="red"
           variant="filled"
@@ -153,7 +195,11 @@ export function OpportunityInfo({
         </Button>
         <Button
           radius="md"
-          sx={{ height: 30, alignSelf: "flex-start" }}
+          sx={{
+            height: 30,
+            alignSelf: "flex-start",
+            display: isAdmin ? "auto" : "none",
+          }}
           size="md"
           color="red"
           variant="filled"
