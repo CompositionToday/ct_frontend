@@ -47,7 +47,7 @@ const useStyles = createStyles((theme) => ({
     paddingBottom: 35,
     color: "white",
     [theme.fn.smallerThan("sm")]: {
-      fontSize: 24,
+      fontSize: 22,
     },
   },
 
@@ -74,8 +74,13 @@ const useStyles = createStyles((theme) => ({
     border: `6px solid #FFFFFF`,
 
     "&:hover": {
-      border: `6px solid #90CAF9`,
+      border: `6px solid #40C057`,
       cursor: `pointer`,
+    },
+
+    [theme.fn.smallerThan("sm")]: {
+      width: 145,
+      height: 145,
     },
   },
 
@@ -83,8 +88,12 @@ const useStyles = createStyles((theme) => ({
     width: "100%",
     fontSize: 23,
     fontWeight: 500,
-    color: "#2F2F2F",
+    color: "#454545",
     textAlign: "center",
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 14,
+    },
   },
 
   featureCards: {
@@ -94,17 +103,51 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     alignContent: "center",
     flexWrap: "wrap",
+    padding: 0,
+  },
+
+  feature: {
+    padding: 0,
+
+    [theme.fn.smallerThan("sm")]: {
+      padding: 0,
+    },
   },
 
   featureContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    maxWidth: "100%",
   },
 
   image: {
     marginTop: -20,
     maxWidth: 80,
+
+    [theme.fn.smallerThan("sm")]: {
+      marginTop: -10,
+      maxWidth: 55,
+    },
+  },
+
+  container: {
+    maxWidth: "100%", 
+
+    [theme.fn.smallerThan("sm")]: {
+      padding: 0,
+    },
+  },
+
+  grid: {
+    gap: 50,
+
+    [theme.fn.smallerThan("md")]: {
+      gap: "40px 60px",
+    },
+    [theme.fn.smallerThan("sm")]: {
+      gap: "40px 16px",
+    },        
   },
 }));
 
@@ -113,7 +156,7 @@ export function Features() {
   const navigate = useNavigate();
 
   const features = mockdata.map((feature) => (
-    <Container>
+    <Container className={classes.feature}>
       <Card
         key={feature.title}
         shadow="md"
@@ -132,9 +175,9 @@ export function Features() {
   ));
   return (
     <Container
-      size="lg"
       py="xl"
       style={{ paddingTop: 100, paddingBottom: 100 }}
+      className={classes.container}
     >
       <AnimateIn>
         <Title order={2} className={classes.title} align="center" mt="xl">
@@ -143,13 +186,12 @@ export function Features() {
         </Title>
       </AnimateIn>
       <AnimateIn>
-        <Container mb="xl">
+        <Container mb="xl" className={classes.featureContainer}>
           <SimpleGrid
             cols={4}
-            spacing="sm"
             mt={50}
-            breakpoints={[{ maxWidth: "md", cols: 1 }]}
-            className={classes.featureContainer}
+            className={classes.grid}
+            breakpoints={[{ maxWidth: "md", cols: 2 }]}
           >
             {features}
           </SimpleGrid>

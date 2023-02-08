@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
     justifyContent: "space-between",
-    paddingTop: theme.spacing.xl,
+    // paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.xl * 6,
   },
 
@@ -27,14 +27,14 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    color: theme.colorScheme === "dark" ? theme.white : "#2F2F2F",
+    color: theme.colorScheme === "dark" ? theme.white : "#454545",
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: 55,
     lineHeight: 1.2,
-    fontWeight: 900,
+    fontWeight: 800,
 
-    [theme.fn.smallerThan("xs")]: {
-      fontSize: 28,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 36,
     },
   },
 
@@ -46,7 +46,8 @@ const useStyles = createStyles((theme) => ({
 
   image: {
     flex: 1,
-    minWidth: 480,
+    // maxWidth: "40vw",
+    // marginLeft: 40,
 
     [theme.fn.smallerThan("md")]: {
       display: "none",
@@ -63,16 +64,24 @@ const useStyles = createStyles((theme) => ({
     padding: "4px 12px",
   },
 
-  blueText: {
-    color: "#228BE6",
+  textHighlight: {
+    lineHeight: 0,
   },
 
   container: {
-    maxWidth: 1080,
+    maxWidth: "75vw",
+
+    [theme.fn.smallerThan("md")]: {
+      maxWidth: "85vw",
+    },
   },
 
   subheading: {
     fontSize: 25,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 22,
+    },
   },
 }));
 
@@ -85,7 +94,25 @@ export function Hero() {
           <div className={classes.content}>
             <Title className={classes.title} mb="xl">
               The Best Way to Discover{" "}
-              <span className={classes.blueText}>Music Opportunities</span>
+              {/* <span className={classes.blueText}>Music Opportunities</span> */}
+              <Text
+                span
+                fw={800}
+                className={classes.textHighlight}
+                variant="gradient"
+                gradient={{ from: "cyan", to: "blue", deg: 45 }}
+              >
+                Music{" "}
+              </Text>
+              <Text
+                span
+                fw={800}
+                className={classes.textHighlight}
+                variant="gradient"
+                gradient={{ from: "green", to: "blue", deg: 45 }}
+              >
+                Opportunities
+              </Text>
             </Title>
             <Text color="dimmed" mt="xl" className={classes.subheading}>
               An online hub for musicians to find jobs, competitions, festivals,

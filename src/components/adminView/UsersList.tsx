@@ -1,4 +1,5 @@
 import {
+  Paper,
   Menu,
   Badge,
   Table,
@@ -24,9 +25,11 @@ import { useEffect, useState } from "react";
 import { openMakeAdminModal, openRemoveAdminModal } from "./AdminModal";
 import { openDeleteModal } from "./DeleteModal";
 import { openBanModal, openUnbanModal } from "./BanModal";
-import { PaginationNavbar, PaginationSearchObject } from "../pagination/PaginationNavbar";
+import {
+  PaginationNavbar,
+  PaginationSearchObject,
+} from "../pagination/PaginationNavbar";
 import { SearchAndFilterUsers } from "./SearchAndFilterUsers";
-
 
 interface UserTableData {
   name: string;
@@ -51,10 +54,27 @@ const typeColors: Record<string, string> = {
 
 const useStyles = createStyles((theme) => ({
   container: {
-    maxWidth: 1080,
-    border: "1px solid #9E9E9E",
-    borderRadius: "15px",
-    padding: "20px",
+    width: "80vw",
+    height: "70vh",
+  },
+
+  userContainer: {
+    width: "80vw",
+    height: "60vh",
+    display: "flex",
+    flexWrap: "wrap",
+  },
+
+  table: {
+    maxWidth: "100%",
+    flexBasis: "100%",
+    height: "90%",
+  },
+
+  pagination: {
+    flexBasis: "100%",
+    marginBottom: "30px",
+    height: 0,
   },
 
   bold: {
@@ -68,13 +88,12 @@ export function UsersList() {
   const [rawUserList, setRawUserList] = useState<RawUserData[]>([]);
   const [userList, setUserList] = useState<UserTableData[]>([]);
   const [searchParams, setSearchParams] = useState<PaginationSearchObject>({
-    first_name: "",
-    last_name: "",
-    email: ""
+    keyword: "",
   });
 
   useEffect(() => {
     convertRawUserDataToTableData();
+    console.log("rawUserList", rawUserList);
   }, [rawUserList, searchParams]);
 
   const convertRawUserDataToTableData = () => {
@@ -136,8 +155,20 @@ export function UsersList() {
               }
               onClick={
                 item.type === "Admin"
-                  ? () => openRemoveAdminModal(item.name, item.email, index, setRawUserList)
-                  : () => openMakeAdminModal(item.name, item.email, index, setRawUserList)
+                  ? () =>
+                      openRemoveAdminModal(
+                        item.name,
+                        item.email,
+                        index,
+                        setRawUserList
+                      )
+                  : () =>
+                      openMakeAdminModal(
+                        item.name,
+                        item.email,
+                        index,
+                        setRawUserList
+                      )
               }
             >
               {item.type === "Admin" ? "Remove Admin" : "Make Admin"}
@@ -153,8 +184,15 @@ export function UsersList() {
               }
               onClick={
                 item.type === "Banned"
-                  ? () => openUnbanModal(item.name, item.email, index, setRawUserList)
-                  : () => openBanModal(item.name, item.email, index, setRawUserList)
+                  ? () =>
+                      openUnbanModal(
+                        item.name,
+                        item.email,
+                        index,
+                        setRawUserList
+                      )
+                  : () =>
+                      openBanModal(item.name, item.email, index, setRawUserList)
               }
             >
               {item.type === "Banned" ? "Unban" : "Ban"} User
@@ -162,7 +200,9 @@ export function UsersList() {
 
             <Menu.Item
               icon={<IconTrash size={16} stroke={1.5} />}
-              onClick={() => openDeleteModal(item.name, item.email, index, setRawUserList)}
+              onClick={() =>
+                openDeleteModal(item.name, item.email, index, setRawUserList)
+              }
             >
               Delete User
             </Menu.Item>
@@ -173,33 +213,43 @@ export function UsersList() {
   ));
 
   return (
-    <Container>
+    <Container fluid className={classes.container}>
       <SearchAndFilterUsers setSearchObj={setSearchParams} />
-      <Container className={classes.container}>
-        <MantineProvider>
-          <ModalsProvider>
-            <ScrollArea>
-              <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Type</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>{rows}</tbody>
-              </Table>
-            </ScrollArea>
-          </ModalsProvider>
-        </MantineProvider>
-        <PaginationNavbar
-          apiEndpointExtension={'users'}
-          numberOfItemsPerPage={4}
-          setListOfObjects={setRawUserList}
-          searchFilterObject={searchParams}
-        />
-      </Container>
+      <Paper
+        withBorder
+        p={30}
+        mt={30}
+        radius="lg"
+        className={classes.userContainer}
+      >
+        <Container className={classes.table}>
+          <MantineProvider>
+            <ModalsProvider>
+              <ScrollArea style={{ height: "95%" }}>
+                <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Type</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>{rows}</tbody>
+                </Table>
+              </ScrollArea>
+            </ModalsProvider>
+          </MantineProvider>
+        </Container>
+        <Container className={classes.pagination}>
+          <PaginationNavbar
+            apiEndpointExtension={"users"}
+            numberOfItemsPerPage={10}
+            setListOfObjects={setRawUserList}
+            searchFilterObject={searchParams}
+          />
+        </Container>
+      </Paper>
     </Container>
   );
 }

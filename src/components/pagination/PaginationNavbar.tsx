@@ -5,7 +5,7 @@ import {
 } from "../opportunity/OpportunityHelper";
 import { RawUserData } from "../adminView/UsersList";
 import React, { useState, useEffect } from "react";
-import { MediaQuery, Pagination } from "@mantine/core";
+import { Pagination } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 
 export interface PaginationNavbarProp {
@@ -38,9 +38,9 @@ export interface PaginationSearchObject {
   last_name?: string;
   email?: string;
   keyword?: string;
-  is_admin?: number;
-  is_banned?: number;
-  is_regular?: number;
+  is_admin?: string;
+  is_banned?: string;
+  is_regular?: string;
 }
 
 export function PaginationNavbar({
@@ -62,6 +62,7 @@ export function PaginationNavbar({
   useEffect(() => {
     const getPageCount = async () => {
       try {
+        console.log("searchFilterObj", searchFilterObject);
         const countUrl = new URL(`${url}/${apiEndpointExtension}/count`);
         if (searchFilterObject) {
           for (const [key, value] of Object.entries(searchFilterObject)) {
@@ -77,14 +78,6 @@ export function PaginationNavbar({
           responseCountJson.count / numberOfItemsPerPage
         );
         setPageCount(numberOfPage);
-
-        // let responseOpportunity = await fetch(
-        //   `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/jobs?page_number=1`
-        // );
-
-        // let responseOpportunityJson = await responseOpportunity.json();
-        // console.log(responseOpportunityJson);
-        // setPaginationDisplayOpportunity(responseOpportunityJson.listOfJobs);
       } catch (err) {
         console.log(err);
       }
@@ -108,15 +101,13 @@ export function PaginationNavbar({
 
         let responseJson = await response.json();
         setListOfObjects(responseJson.listOfObjects);
-        // setPaginationDisplayOpportunity(responseOpportunityJson.listOfObjects);
-        // setCurrentOpportunity(responseOpportunityJson.listOfObjects[0]);
       } catch (err) {
         console.log(err);
       }
     };
 
     getCurrentPage();
-  }, [currentPage, pageCount]);
+  }, [currentPage, pageCount, searchFilterObject]);
 
   return (
     <PaginationNavbarContainer justify="center" align="flex-end">
