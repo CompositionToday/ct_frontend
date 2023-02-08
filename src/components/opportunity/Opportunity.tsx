@@ -89,6 +89,7 @@ export function Opportunity() {
   const handleEditButton = async (opportunity: OpportunityItem) => {
     try {
       delete opportunity.UID;
+      delete opportunity.date_posted;
 
       console.log("opportunity in opportunity: ", opportunity);
 

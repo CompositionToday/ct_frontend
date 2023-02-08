@@ -199,7 +199,7 @@ export function OpportunityForm({
       req.start_date = dateRange[0].valueOf();
       req.end_date = dateRange[1].valueOf();
     } else {
-      req.end_date = values.end_date.valueOf();
+      req.end_date = values.end_date?.valueOf();
     }
 
     req.city = city;
