@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 export function CreateOpportunity() {
   const [opportunityType, setOpportunityType] = useState("Jobs");
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const navigate = useNavigate();
 
   const handleOpportunityTypeChange = (e: string) => {
@@ -19,7 +20,23 @@ export function CreateOpportunity() {
   };
 
   const handleSubmission = async (opportunity: OpportunityItem) => {
-    console.log("opportunity in create: ", opportunity);
+    try {
+      console.log("opportunity in create: ", opportunity);
+
+      let requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(opportunity),
+      };
+
+      let response = await fetch(`${url}/${opportunityType}`, requestOptions);
+
+      let responseJson = await response.json();
+
+      console.log("POST response json: ", responseJson);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
