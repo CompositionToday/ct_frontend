@@ -20,13 +20,6 @@ const useStyles = createStyles((theme) => ({
     maxWidth: 480,
     marginRight: theme.spacing.xl * 3,
 
-    [theme.fn.largerThan("sm")]: {
-      maxWidth: "100%",
-      marginRight: 0,
-      paddingLeft: 30,
-      paddingRight: 30,
-    },
-
     [theme.fn.smallerThan("md")]: {
       maxWidth: "100%",
       marginRight: 0,
@@ -71,19 +64,16 @@ const useStyles = createStyles((theme) => ({
     padding: "4px 12px",
   },
 
-  blueText: {
-    // fontWeight: 800,
-    // color: "#228BE6",
-  },
-
   textHighlight: {
     lineHeight: 0,
   },
 
   container: {
-    // marginTop: "-95px",
-    // marginBottom: "-50px",
     maxWidth: "75vw",
+
+    [theme.fn.smallerThan("md")]: {
+      maxWidth: "85vw",
+    },
   },
 
   subheading: {

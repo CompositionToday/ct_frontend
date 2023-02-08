@@ -27,7 +27,7 @@ const makeOrRemoveAdmin = async (
     setRawUserList((existingData) => {
       return [
         ...existingData.slice(0, index),
-        resJSON[0],
+        resJSON.listOfObjects[0],
         ...existingData.slice(index + 1),
       ];
     });

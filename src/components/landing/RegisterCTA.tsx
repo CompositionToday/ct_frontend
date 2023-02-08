@@ -16,7 +16,13 @@ const useStyles = createStyles((theme) => ({
   root: {
     paddingTop: 100,
     paddingBottom: 40,
+    paddingLeft: 0,
+    paddingRight: 0,
     maxWidth: 1080,
+
+    [theme.fn.smallerThan("md")]: {
+      maxWidth: "90vw",
+    },
   },
 
   title: {
@@ -64,7 +70,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   container: {
-    [theme.fn.largerThan("sm")]: {
+    [theme.fn.smallerThan("md")]: {
       paddingLeft: 30,
       paddingRight: 30,
     },
