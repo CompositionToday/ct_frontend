@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Location } from "../components/filter/Location";
+import { Opportunity } from "../components/opportunity/Opportunity";
 
 export function Jobs() {
   const [city, setCity] = useState<string>("");
@@ -7,17 +8,7 @@ export function Jobs() {
 
   return (
     <div>
-      <p>testyo</p>
-      {/* <Location
-        setCity={setCity}
-        setState={setState}
-        city={city}
-        state={state}
-        error={true}
-        displayError={true}
-      /> */}
-      <p>City: {city}</p>
-      <p>State: {state}</p>
+      <Opportunity />
     </div>
   );
 }
