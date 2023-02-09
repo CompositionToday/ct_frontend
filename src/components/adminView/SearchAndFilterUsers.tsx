@@ -21,13 +21,13 @@ const useStyles = createStyles(() => ({
 
 const createSearchObj = (
   setSearchObj: React.Dispatch<React.SetStateAction<PaginationSearchObject>>,
+  searchKeyword: string,
   adminChecked: boolean,
   bannedChecked: boolean,
   regularChecked: boolean,
-  e?: React.ChangeEvent<HTMLInputElement>
 ) => {
   let searchObj: PaginationSearchObject = {
-    keyword: e ? e.target.value : "",
+    keyword: searchKeyword,
     is_admin: adminChecked ? "1" : "0",
     is_banned: bannedChecked ? "1" : "0",
     is_regular: regularChecked ? "1" : "0",
@@ -64,13 +64,14 @@ export function SearchAndFilterUsers({ setSearchObj }: SearchAndFilterProp) {
   const [adminChecked, setAdminChecked] = useState(false);
   const [bannedChecked, setBannedChecked] = useState(false);
   const [regularChecked, setRegularChecked] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   useEffect(() => {
-    createSearchObj(setSearchObj, adminChecked, bannedChecked, regularChecked);
-  }, [adminChecked, bannedChecked, regularChecked]);
+    createSearchObj(setSearchObj, searchKeyword, adminChecked, bannedChecked, regularChecked);
+  }, [adminChecked, bannedChecked, regularChecked, searchKeyword]);
 
   return (
-    <Group className={classes.container} position="apart">
+    <Group className={classes.container} position="left">
       <Input
         icon={
           <ActionIcon color="dark.2">
@@ -78,15 +79,7 @@ export function SearchAndFilterUsers({ setSearchObj }: SearchAndFilterProp) {
           </ActionIcon>
         }
         placeholder="Search"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          createSearchObj(
-            setSearchObj,
-            adminChecked,
-            bannedChecked,
-            regularChecked,
-            e
-          )
-        }
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchKeyword(e.target.value)}
         className={classes.search}
       />
       <Menu closeOnItemClick={false}>
