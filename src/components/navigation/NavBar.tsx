@@ -194,11 +194,11 @@ export function NavBar({ links }: HeaderActionProps) {
           {items}
         </Group>
         <Burger
-            opened={opened}
-            onClick={toggle}
-            className={classes.burger}
-            size="sm"
-          />
+          opened={opened}
+          onClick={toggle}
+          className={classes.burger}
+          size="sm"
+        />
         <HandleUserButton />
       </Container>
     </Header>
