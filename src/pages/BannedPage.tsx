@@ -51,7 +51,7 @@ export function BannedPage() {
   const navigate = useNavigate();
 
   return (
-    <Container className={classes.root}>
+    <Container className={classes.root} >
       <SimpleGrid 
       spacing={80} 
       cols={2} 
