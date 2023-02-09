@@ -11,6 +11,7 @@ import { NavBar } from "./components/navigation/NavBar";
 import { navItems } from "./components/navigation/NavItems";
 import { Users } from "./pages/adminView/Users";
 import { JustinNavbar } from "./pages/JustinNavbar";
+import { BannedPage } from "./pages/BannedPage";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/navbar-mobile" element={<JustinNavbar />} />
+        <Route path="/banned" element={<BannedPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
