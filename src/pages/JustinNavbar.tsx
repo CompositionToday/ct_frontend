@@ -14,12 +14,18 @@ export function JustinNavbar() {
         display: "none",
       },
     },
+    menu: {
+      [theme.fn.largerThan("md")]: {
+        display: "none",
+      },
+    },
   }));
   const { classes } = useStyles();
   return (
     <Menu shadow="xl"
     radius={0}
-    width={"100vw"} >
+    width={"100vw"}
+    >
       <Menu.Target>
       <Burger
             opened={opened}
@@ -29,6 +35,7 @@ export function JustinNavbar() {
           />
       </Menu.Target>
       <Menu.Dropdown 
+      className={classes.menu}
       style={{height:"100vh"}}
       >
         <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/")}>Home</Menu.Item>
