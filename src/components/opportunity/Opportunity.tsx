@@ -91,6 +91,9 @@ export function Opportunity() {
       delete opportunity.UID;
       delete opportunity.date_posted;
 
+      opportunity.end_date = opportunity.end_date?.toString();
+      opportunity.start_date = opportunity.start_date?.toString();
+
       console.log("opportunity in opportunity: ", opportunity);
 
       let requestOptions = {

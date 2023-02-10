@@ -67,6 +67,21 @@ export function OpportunityForm({
   const [displayDateRangeError, setDisplayDateRangeError] = useState(false);
   const [userUID, setUserUID] = useState("");
   const medianScreen = useMediaQuery("(max-width: 992px)");
+
+  const getCurrentDate = (time = new Date().valueOf()) => {
+    let tempDate: Date;
+
+    tempDate = new Date(time);
+
+    let day = tempDate.getDate();
+    let month = tempDate.getMonth();
+    let year = tempDate.getFullYear();
+    let currentDate = new Date(year, month, day, 0, 0, 0, 0);
+    console.log("current date: ", currentDate);
+
+    return currentDate.valueOf();
+  };
+
   const form = useForm({
     initialValues: {
       // FIXME: Need to actually put the idposts if there is an edit
@@ -78,12 +93,12 @@ export function OpportunityForm({
       description: opportunity?.description || "",
       date_posted: opportunity?.date_posted
         ? new Date(opportunity?.date_posted)
-        : new Date(),
+        : new Date(getCurrentDate()),
       city: city,
       state: state,
       end_date: opportunity?.end_date
         ? new Date(opportunity?.end_date)
-        : new Date(),
+        : new Date(getCurrentDate()),
       salary: opportunity?.salary || 0,
       job_type: opportunity?.job_type || "",
       winner: opportunity?.winner || "",
@@ -91,7 +106,7 @@ export function OpportunityForm({
       address: opportunity?.address || "",
       start_date: opportunity?.start_date
         ? new Date(opportunity?.start_date)
-        : new Date(),
+        : new Date(getCurrentDate()),
       // dateRange:
       //   opportunity?.end_date && opportunity?.start_date
       //     ? [opportunity.start_date, opportunity?.end_date]
@@ -196,24 +211,26 @@ export function OpportunityForm({
       dateRange[0] &&
       dateRange[1]
     ) {
-      req.start_date = dateRange[0].valueOf();
-      req.end_date = dateRange[1].valueOf();
+      req.start_date = getCurrentDate(dateRange[0].valueOf());
+      req.end_date = getCurrentDate(dateRange[1].valueOf());
     } else {
-      req.end_date = values.end_date?.valueOf();
+      req.end_date = getCurrentDate(
+        typeof values.end_date === "number"
+          ? values.end_date?.valueOf()
+          : undefined
+      );
     }
 
     req.city = city;
     req.state = state;
     req.UID = userUID;
 
-    let tempDate = new Date();
-    let day = tempDate.getDate();
-    let month = tempDate.getMonth() + 1;
-    let year = tempDate.getFullYear();
-    req.date_posted = new Date(`${year}-${month}-${day}`).valueOf();
+    req.date_posted = getCurrentDate();
 
+    console.log(new Date(req.end_date));
     console.log("showing req:");
     console.log(req);
+
     handleSubmission(req);
   };
 
@@ -401,6 +418,7 @@ export function OpportunityForm({
                   console.log(form.isValid("job_type"));
                   console.log(form.isValid("category"));
                   console.log(form.isValid("address"));
+
                   console.log(displayLocationError);
                   console.log(displayDateRangeError);
                 }}

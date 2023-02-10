@@ -16,6 +16,8 @@ import React, { useState, useEffect } from "react";
 import { Flex, Button, MediaQuery, ActionIcon, Modal } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconMapPin, IconExternalLink, IconEdit } from "@tabler/icons";
+import { OpportunityItem } from "./OpportunityHelper";
+import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
 
 export function OpportunityInfo({
   opportunity,
@@ -24,74 +26,18 @@ export function OpportunityInfo({
 }: OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [endDate, setEndDate] = useState(
+    typeof opportunity?.end_date === "number"
+      ? new Date(opportunity?.end_date)
+      : new Date()
+  );
+  const [startDate, setStartDate] = useState(
+    typeof opportunity?.start_date === "number"
+      ? new Date(opportunity?.start_date)
+      : new Date()
+  );
   const largeScreen = useMediaQuery("(min-width: 992px)");
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
-
-  const SpecificOpportunityInfo = () => {
-    if (opportunityType === "competitions") {
-      return (
-        <SpecificOpportunityInfoContainer>
-          {opportunity?.winner && (
-            <div>
-              <Label>Winner: </Label>
-              <span>{opportunity?.winner}</span>
-            </div>
-          )}
-          <div>
-            <Label>Category: </Label>
-            <span>{opportunity?.category}</span>
-          </div>
-        </SpecificOpportunityInfoContainer>
-      );
-    }
-
-    if (opportunityType === "concerts") {
-      return (
-        <SpecificOpportunityInfoContainer>
-          <div>
-            <Label>Address: </Label>
-            <span>{opportunity?.address}</span>
-          </div>
-        </SpecificOpportunityInfoContainer>
-      );
-    }
-
-    if (opportunityType === "jobs") {
-      return (
-        <SpecificOpportunityInfoContainer>
-          {opportunity?.salary && (
-            <div>
-              <Label>Salary: </Label>
-              <span>{opportunity?.salary}</span>
-            </div>
-          )}
-          <div>
-            <Label>Job Type: </Label>
-            <span>{opportunity?.job_type}</span>
-          </div>
-        </SpecificOpportunityInfoContainer>
-      );
-    }
-
-    // FIXME: Need to convert mySQL datetime to JS date
-    if (opportunityType === "festivals") {
-      return (
-        <SpecificOpportunityInfoContainer>
-          <div>
-            <Label>Start Date: </Label>
-            {/* FIXME: Need to make sure that when we get the start_date, from the backend, that I fix this code such that we get it as an integer */}
-            <span>{opportunity?.start_date?.toString()}</span>
-          </div>
-          <div>
-            <Label>Address: </Label>
-            <span>{opportunity?.address}</span>
-          </div>
-        </SpecificOpportunityInfoContainer>
-      );
-    }
-
-    return null;
-  };
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -115,7 +61,25 @@ export function OpportunityInfo({
         }
       }
     });
+
+    setStartDate(
+      typeof opportunity?.start_date === "number"
+        ? new Date(opportunity?.start_date)
+        : new Date()
+    );
+    setEndDate(
+      typeof opportunity?.end_date === "number"
+        ? new Date(opportunity?.end_date)
+        : new Date()
+    );
   }, []);
+
+  useEffect(() => {
+    console.log("start: ", startDate);
+    console.log("end: ", endDate);
+    console.log(opportunity);
+    console.log(typeof opportunity?.end_date);
+  }, [endDate, startDate, opportunity]);
 
   useEffect(() => {
     console.log("Users Uid: ", userUID);
@@ -206,10 +170,18 @@ export function OpportunityInfo({
           Delete Post & Ban Account
         </Button>
       </ButtonsContainer>
-      <SpecificOpportunityInfo />
+      <SpecificOpportunityInfo
+        opportunity={opportunity}
+        opportunityType={opportunityType}
+      />
       <DescriptionContainer>
         <Label>Description:</Label>
         <p>{opportunity.description}</p>
+        <p>
+          {typeof opportunity.start_date === "number"
+            ? new Date(opportunity.start_date).toString()
+            : new Date().toString()}
+        </p>
       </DescriptionContainer>
     </OpportunityInfoContainer>
   );

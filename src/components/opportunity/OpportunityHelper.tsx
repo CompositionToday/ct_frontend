@@ -19,18 +19,18 @@ export interface OpportunityItem {
   organization?: string;
   link?: string;
   description?: string;
-  date_posted?: Date | number;
+  date_posted?: Date | string | number;
   city?: string;
   state?: string;
   // end_date: Date | string | number;
-  end_date?: Date | number;
+  end_date?: Date | string | number;
   salary?: string | number;
   job_type?: jobType | any;
   winner?: string | null;
   category?: string;
   address?: string;
   // start_date?: Date | string | number;
-  start_date?: Date | number;
+  start_date?: Date | string | number;
 }
 
 interface PaginationCard {

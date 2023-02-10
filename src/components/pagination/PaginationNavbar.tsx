@@ -80,6 +80,8 @@ export function PaginationNavbar({
         setPageCount(numberOfPage);
       } catch (err) {
         console.log(err);
+      } finally {
+        setCurrentPage(1);
       }
     };
     getPageCount();
