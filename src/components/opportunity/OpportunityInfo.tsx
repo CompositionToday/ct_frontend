@@ -180,7 +180,7 @@ export function OpportunityInfo({
         <p>
           {typeof opportunity.start_date === "number"
             ? new Date(opportunity.start_date).toString()
-            : new Date().toString()}
+            : `${new Date().toString()} deafulted`}
         </p>
       </DescriptionContainer>
     </OpportunityInfoContainer>

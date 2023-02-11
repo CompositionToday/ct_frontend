@@ -21,9 +21,6 @@ export function CreateOpportunity() {
 
   const handleSubmission = async (opportunity: OpportunityItem) => {
     try {
-      opportunity.end_date = opportunity.end_date?.toString();
-      opportunity.start_date = opportunity.start_date?.toString();
-
       console.log("opportunity in create: ", opportunity);
       console.log(
         "end_date: ",
@@ -31,6 +28,9 @@ export function CreateOpportunity() {
           typeof opportunity.end_date === "number" ? opportunity.end_date : 1000
         )
       );
+      opportunity.end_date = opportunity.end_date?.toString();
+      opportunity.start_date = opportunity.start_date?.toString();
+      opportunity.date_posted = opportunity.date_posted?.toString();
 
       let requestOptions = {
         method: "POST",
