@@ -113,17 +113,19 @@ export function OpportunityInfo({
         wrap="wrap"
         direction={largeScreen ? "row" : "column"}
       >
-        <Button
-          radius="md"
-          sx={{ height: 30, alignSelf: "flex-start" }}
-          size="md"
-        >
-          Apply
-          {/* <img src={ApplyIcon} style={{ height: "20px", marginLeft: "7px" }} /> */}
-          <ActionIcon color="blue" variant="filled">
-            <IconExternalLink />
-          </ActionIcon>
-        </Button>
+        <a href={opportunity.link} target="blank">
+          <Button
+            radius="md"
+            sx={{ height: 30, alignSelf: "flex-start" }}
+            size="md"
+          >
+            Apply
+            {/* <img src={ApplyIcon} style={{ height: "20px", marginLeft: "7px" }} /> */}
+            <ActionIcon color="blue" variant="filled">
+              <IconExternalLink />
+            </ActionIcon>
+          </Button>
+        </a>
         <Button
           radius="md"
           sx={{
@@ -174,6 +176,12 @@ export function OpportunityInfo({
         opportunity={opportunity}
         opportunityType={opportunityType}
       />
+      <Label>End Date:</Label>
+      <p>{`${
+        typeof opportunity.end_date === "number"
+          ? new Date(opportunity.end_date).toString()
+          : `${new Date()} defaulted end date`
+      }`}</p>
       <DescriptionContainer>
         <Label>Description:</Label>
         <p>{opportunity.description}</p>
