@@ -57,6 +57,8 @@ export function Opportunity() {
   const [keyword, setKeyword] = useState("");
   const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
     keyword: "",
+    // is_flagged: "0",
+    // is_deleted: "1",
   });
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const medianScreen = useMediaQuery("(max-width: 992px)");

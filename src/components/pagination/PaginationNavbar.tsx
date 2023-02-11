@@ -38,6 +38,8 @@ export interface PaginationSearchObject {
   last_name?: string;
   email?: string;
   keyword?: string;
+  is_deleted?: string | number;
+  is_flagged?: string | number;
   is_admin?: string;
   is_banned?: string;
   is_regular?: string;
@@ -102,7 +104,7 @@ export function PaginationNavbar({
         let response = await fetch(getUrl);
 
         let responseJson = await response.json();
-        setListOfObjects(responseJson.listOfObjects);
+        setListOfObjects(responseJson.listOfObjects || []);
       } catch (err) {
         console.log(err);
       }
