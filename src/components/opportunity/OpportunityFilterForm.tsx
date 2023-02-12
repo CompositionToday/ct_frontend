@@ -80,6 +80,7 @@ export function OpportunityFilterForm({
               category: e ? e : "",
             })
           }
+          value={tempSearchObj.category}
         />
         <Location
           city={city}
@@ -103,7 +104,11 @@ export function OpportunityFilterForm({
         <EndDateInput
           label="End date"
           display={opportunityType !== "festivals"}
-          value={searchObj.end_date ? new Date(searchObj.end_date) : undefined}
+          value={
+            searchObj.end_date
+              ? new Date(searchObj.end_date as number)
+              : undefined
+          }
           onChange={(e) =>
             setTempSearchObj({
               ...tempSearchObj,
