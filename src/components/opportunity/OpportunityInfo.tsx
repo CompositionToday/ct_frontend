@@ -15,6 +15,7 @@ import ApplyIcon from "./ApplyIcon.svg";
 import React, { useState, useEffect } from "react";
 import { Flex, Button, MediaQuery, ActionIcon, Modal } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
 import { IconMapPin, IconExternalLink, IconEdit } from "@tabler/icons";
 import { OpportunityItem } from "./OpportunityHelper";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
@@ -155,6 +156,12 @@ export function OpportunityInfo({
           size="md"
           color="red"
           variant="filled"
+          onClick={() =>
+            showNotification({
+              title: "default notification",
+              message: "hey there, your code is somewhere",
+            })
+          }
         >
           Delete Post
         </Button>

@@ -30,6 +30,7 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
 import { IconMapPin, IconFilter, IconSearch } from "@tabler/icons";
 import { OpportunityFilterForm } from "./OpportunityFilterForm";
@@ -122,8 +123,20 @@ export function Opportunity() {
           break;
         }
       }
+
+      showNotification({
+        title: "Success",
+        message: "Your edits has been successfully made",
+        color: "green",
+      });
+      setDisplayOpportunityEditModal(false);
     } catch (err) {
       console.log(err);
+      showNotification({
+        title: "Error",
+        message: "There was a problem, please try again later",
+        color: "red",
+      });
     }
   };
 
