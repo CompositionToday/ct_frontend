@@ -27,6 +27,7 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -66,6 +67,8 @@ export function Login() {
       } else {
         setErrorMessage(defaultErrorMessage);
       }
+
+      console.log(err);
     }
   };
 

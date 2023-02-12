@@ -23,13 +23,17 @@ import {
   Center,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { TwoInputRow } from "../components/opportunity/OpportunityFormHelper";
 
 export function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -37,6 +41,14 @@ export function Register() {
 
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+  };
+
+  const handleFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(e.target.value);
+  };
+
+  const handleLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value);
   };
 
   const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +61,10 @@ export function Register() {
         throw "Please input an email";
       }
 
+      if (firstName === "" || lastName === "") {
+        throw "Please give a name";
+      }
+
       if (password === "" || confirmPassword === "") {
         throw "Please input a password";
       }
@@ -57,7 +73,29 @@ export function Register() {
         throw "Passwords do not match";
       }
 
-      await createUserWithEmailAndPassword(auth, email, password);
+      let userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      let user = userCredential.user;
+
+      let requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          UID: user.uid,
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+        }),
+      };
+
+      let response = await fetch(`${url}/users`, requestOptions);
+
+      let responseJson = await response.json();
+
+      console.log("POST user response json: ", responseJson);
 
       navigate("/");
     } catch (err: unknown) {
@@ -78,6 +116,8 @@ export function Register() {
       } else {
         setErrorMessage(defaultErrorMessage);
       }
+
+      console.log(err);
     }
   };
 
@@ -116,6 +156,22 @@ export function Register() {
             value={email}
             onChange={handleEmail}
           />
+          <TwoInputRow display gap="10px">
+            <TextInput
+              label="First name"
+              placeholder="Enter your first name"
+              required
+              value={firstName}
+              onChange={handleFirstName}
+            />
+            <TextInput
+              label="Last Name"
+              placeholder="Enter your last name"
+              required
+              value={lastName}
+              onChange={handleLastName}
+            />
+          </TwoInputRow>
           <PasswordInput
             label="Password"
             placeholder="Enter a password"

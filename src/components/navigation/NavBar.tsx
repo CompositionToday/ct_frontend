@@ -11,7 +11,7 @@ import {
   Image,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const musicNoteIcon = require("../../images/MusicNote.png");
 
@@ -113,7 +113,9 @@ interface HeaderActionProps {
 }
 
 export function NavBar({ links }: HeaderActionProps) {
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { classes } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
@@ -131,6 +133,35 @@ export function NavBar({ links }: HeaderActionProps) {
     );
   });
 
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setSignedIn(true);
+      } else {
+        setSignedIn(false);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        console.log(user?.email);
+
+        let response = await fetch(
+          `${url}/users?page_number=1&keyword=${user.email}`
+        );
+        let responseJson = await response.json();
+
+        let userDate = responseJson.listOfObjects[0];
+
+        if (userDate.is_banned) {
+          navigate("/banned");
+        }
+      }
+    });
+  }, [location.pathname, signedIn]);
+
   const HandleUserButton: React.FC = () => {
     return signedIn ? (
       <Group style={{ paddingRight: 25 }}>
@@ -138,7 +169,13 @@ export function NavBar({ links }: HeaderActionProps) {
           variant="subtle"
           sx={{ height: 30 }}
           size="md"
-          onClick={() => signOut(auth)}
+          onClick={async () => {
+            console.log("sign out button clicked");
+            await signOut(auth);
+            setSignedIn(false);
+            console.log("redirecting to landing");
+            navigate("/");
+          }}
         >
           Sign Out
         </Button>
@@ -167,16 +204,6 @@ export function NavBar({ links }: HeaderActionProps) {
       </Group>
     );
   };
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setSignedIn(true);
-      } else {
-        setSignedIn(false);
-      }
-    });
-  }, []);
 
   return (
     <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }} mt={10}>

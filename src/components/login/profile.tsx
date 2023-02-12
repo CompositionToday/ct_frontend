@@ -8,6 +8,7 @@ interface ErrorMessageProp {
 // Any other errors are developer made errors
 export const authErrorList = {
   "auth/wrong-password": "You have entered an invalid email or password",
+  "auth/user-not-found": "You have entered an invalid email or password",
   "auth/invalid-email": "Please give a valid email",
   "auth/weak-password": "Password must be at least 6 characters",
   "auth/email-already-in-use":
@@ -15,6 +16,7 @@ export const authErrorList = {
   "Passwords do not match": "Passwords do not match",
   "Please input a password": "Please input a password",
   "Please input an email": "Please input an email",
+  "Please give a name": "Please give a name",
 };
 
 export const defaultErrorMessage =
