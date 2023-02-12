@@ -90,9 +90,6 @@ export function OpportunityForm({
 
   const form = useForm({
     initialValues: {
-      // FIXME: Need to actually put the idposts if there is an edit
-      // UID: opportunity?.UID || "",
-      // idposts: opportunity?.idposts || -1,
       title: opportunity?.title || "",
       link: opportunity?.link || "",
       organization: opportunity?.organization || "",
@@ -203,8 +200,6 @@ export function OpportunityForm({
       opportunityKeys = essentialOpportunityKey.concat(festivalOpportunityKey);
     }
 
-    // FIXME: Need to make sure that I actually give the UID of the signed in user
-    // FIXME: Need to make sure if I need to give some type of idposts or not
     let req: OpportunityItem = { ...values };
     for (let key in req) {
       if (!opportunityKeys.includes(key)) {

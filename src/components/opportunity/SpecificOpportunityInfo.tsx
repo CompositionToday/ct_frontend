@@ -64,13 +64,11 @@ export const SpecificOpportunityInfo = ({
     );
   }
 
-  // FIXME: Need to convert mySQL datetime to JS date
   if (opportunityType === "festivals") {
     return (
       <SpecificOpportunityInfoContainer>
         <div>
           <Label>Start Date: </Label>
-          {/* FIXME: Need to make sure that when we get the start_date, from the backend, that I fix this code such that we get it as an integer */}
           <span>
             {`${
               new Date(opportunity?.start_date as number).getMonth() + 1
