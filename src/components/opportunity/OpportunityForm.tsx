@@ -105,7 +105,7 @@ export function OpportunityForm({
       end_date: opportunity?.end_date
         ? new Date(opportunity?.end_date)
         : new Date(getCurrentDate()),
-      salary: opportunity?.salary || 0,
+      salary: +(opportunity?.salary as number) || 0,
       job_type: opportunity?.job_type || "",
       winner: opportunity?.winner || "",
       category: opportunity?.category || "",
@@ -245,6 +245,11 @@ export function OpportunityForm({
         setUserUID(user.uid);
       }
     });
+
+    console.log("Here is the opportunity passed into the form: ", opportunity);
+    let sal = opportunity?.salary as number;
+    console.log(+sal);
+    console.log(sal);
   }, []);
 
   useEffect(() => {

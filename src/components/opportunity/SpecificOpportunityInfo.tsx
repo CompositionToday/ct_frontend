@@ -48,7 +48,12 @@ export const SpecificOpportunityInfo = ({
         {opportunity?.salary && (
           <div>
             <Label>Salary: </Label>
-            <span>{opportunity?.salary}</span>
+            <span>
+              $
+              {opportunity?.salary
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </span>
           </div>
         )}
         <div>

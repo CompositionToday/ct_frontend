@@ -96,6 +96,7 @@ export function Opportunity() {
 
       opportunity.end_date = opportunity.end_date?.toString();
       opportunity.start_date = opportunity.start_date?.toString();
+      opportunity.salary = opportunity.salary?.toString();
 
       console.log("opportunity in opportunity: ", opportunity);
 
