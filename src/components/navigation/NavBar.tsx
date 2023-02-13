@@ -116,6 +116,7 @@ export function NavBar({ links }: HeaderActionProps) {
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const navigate = useNavigate();
   const location = useLocation();
+  const [userBanned, setUserBanned] = useState(false);
 
   const { classes } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
@@ -141,6 +142,8 @@ export function NavBar({ links }: HeaderActionProps) {
         setSignedIn(false);
       }
     });
+
+    console.log(location.pathname);
   }, []);
 
   useEffect(() => {
@@ -157,10 +160,23 @@ export function NavBar({ links }: HeaderActionProps) {
 
         if (userDate.is_banned) {
           navigate("/banned");
+          setUserBanned(true);
+        } else {
+          setUserBanned(false);
         }
+      } else {
+        setUserBanned(false);
+        console.log("setting banned to false");
       }
     });
+
+    console.log("pathname ", location.pathname);
+    console.log("signedInn ", signedIn);
   }, [location.pathname, signedIn]);
+
+  useEffect(() => {
+    console.log("useeffect state: ", userBanned);
+  }, [userBanned]);
 
   const HandleUserButton: React.FC = () => {
     return signedIn ? (
@@ -206,7 +222,12 @@ export function NavBar({ links }: HeaderActionProps) {
   };
 
   return (
-    <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }} mt={10}>
+    <Header
+      height={HEADER_HEIGHT}
+      sx={{ borderBottom: 0 }}
+      mt={10}
+      style={{ visibility: userBanned ? "hidden" : "visible" }}
+    >
       <Container className={classes.inner} fluid>
         <Group className={classes.logo}>
           <Group spacing="xs" className={classes.logoGroup}>
