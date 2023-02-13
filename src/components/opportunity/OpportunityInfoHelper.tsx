@@ -42,3 +42,7 @@ export const Label = styled.h2`
 export const SpecificOpportunityInfoContainer = styled.div`
   margin-top: 16px;
 `;
+
+export const DescriptionContent = styled.p`
+  white-space: pre-line;
+`;

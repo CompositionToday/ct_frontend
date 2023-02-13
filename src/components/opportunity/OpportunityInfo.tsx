@@ -7,6 +7,7 @@ import {
   DescriptionContainer,
   Label,
   SpecificOpportunityInfoContainer,
+  DescriptionContent,
 } from "./OpportunityInfoHelper";
 import { auth } from "../../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -191,7 +192,7 @@ export function OpportunityInfo({
       }`}</p>
       <DescriptionContainer>
         <Label>Description:</Label>
-        <p>{opportunity.description}</p>
+        <DescriptionContent>{opportunity.description}</DescriptionContent>
         <p>
           {typeof opportunity.start_date === "number"
             ? new Date(opportunity.start_date).toString()
