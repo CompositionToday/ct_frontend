@@ -115,8 +115,10 @@ export function CreateOpportunity() {
           do next?
         </p>
         <Flex justify="flex-end" gap={20} wrap="wrap">
-          <Button>Make another opportunity</Button>
-          <Button>Go to the home page</Button>
+          <Button onClick={() => window.location.reload()}>
+            Make another opportunity
+          </Button>
+          <Button onClick={() => navigate("/")}>Go to the home page</Button>
         </Flex>
       </Modal>
     </CreateOpportunityContainer>
