@@ -6,6 +6,7 @@ export interface OpportunityInfoProp {
   opportunity: OpportunityItem | null;
   opportunityType: string;
   setEditModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface DisplayButton {

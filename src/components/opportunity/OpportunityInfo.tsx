@@ -25,6 +25,7 @@ export function OpportunityInfo({
   opportunity,
   opportunityType,
   setEditModal,
+  setDeleteModal,
 }: OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -157,12 +158,9 @@ export function OpportunityInfo({
           size="md"
           color="red"
           variant="filled"
-          onClick={() =>
-            showNotification({
-              title: "default notification",
-              message: "hey there, your code is somewhere",
-            })
-          }
+          onClick={() => {
+            setDeleteModal(true);
+          }}
         >
           Delete Post
         </Button>

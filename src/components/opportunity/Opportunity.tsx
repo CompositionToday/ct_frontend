@@ -28,6 +28,7 @@ import {
   Flex,
   Badge,
   ActionIcon,
+  Button,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -55,11 +56,13 @@ export function Opportunity() {
   ] = useState(false);
   const [displayOpportunityEditModal, setDisplayOpportunityEditModal] =
     useState(false);
+  const [displayDeleteConfirmationModal, setDisplayDeleteConfirmationModal] =
+    useState(false);
   const [keyword, setKeyword] = useState("");
   const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
     keyword: "",
-    // is_flagged: "0",
-    // is_deleted: "1",
+    is_flagged: "0",
+    is_deleted: "0",
   });
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const medianScreen = useMediaQuery("(max-width: 992px)");
@@ -239,6 +242,7 @@ export function Opportunity() {
                 opportunity={currentOpportunity}
                 opportunityType={opportunityType}
                 setEditModal={setDisplayOpportunityEditModal}
+                setDeleteModal={setDisplayDeleteConfirmationModal}
               />
             </OpportunityRightColumnContainer>
           </MediaQuery>
@@ -254,6 +258,7 @@ export function Opportunity() {
             opportunity={currentOpportunity}
             opportunityType={opportunityType}
             setEditModal={setDisplayOpportunityEditModal}
+            setDeleteModal={setDisplayDeleteConfirmationModal}
           />
         </Modal>
       </MediaQuery>
@@ -286,6 +291,34 @@ export function Opportunity() {
           opportunity={currentOpportunity ? currentOpportunity : undefined}
           handleSubmission={handleEditButton}
         />
+      </Modal>
+      <Modal
+        opened={displayDeleteConfirmationModal}
+        onClose={() => setDisplayDeleteConfirmationModal(false)}
+        fullScreen={medianScreen}
+      >
+        <FormHeader>Are you sure you want to delete this post?</FormHeader>
+        <Flex justify="flex-end" gap={20} wrap="wrap">
+          <Button
+            color="gray"
+            onClick={() => setDisplayDeleteConfirmationModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="red"
+            onClick={() => {
+              console.log("testyo");
+              setDisplayDeleteConfirmationModal(false);
+              showNotification({
+                title: "Opportunity Deleted",
+                message: "Opportunity was deleted",
+              });
+            }}
+          >
+            Delete
+          </Button>
+        </Flex>
       </Modal>
     </OpportunityPageContainer>
   );
