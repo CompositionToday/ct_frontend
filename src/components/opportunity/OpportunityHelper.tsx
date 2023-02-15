@@ -43,6 +43,10 @@ interface GridContainer {
   medianScreen: boolean;
 }
 
+interface FilterIcon {
+  isFilter: boolean;
+}
+
 export const PageContainer = styled(Flex)`
   height: 50vh;
   width: 100vw;
@@ -118,10 +122,10 @@ export const CityStateContainer = styled.p`
   padding: 5px;
 `;
 
-export const FilterIconContainer = styled.div`
+export const FilterIconContainer = styled.div<FilterIcon>`
   display: inline;
   // margin-bottom: 15px;
-  background: white;
+  background: ${(props) => (props.isFilter ? "red" : "white")};
 `;
 
 export const SearchBar = styled(TextInput)<GridContainer>`

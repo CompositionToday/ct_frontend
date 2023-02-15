@@ -194,6 +194,8 @@ export function OpportunityFilterForm({
               //   }
               // }
 
+              temp.is_deleted = searchObj.is_deleted;
+              temp.is_flagged = searchObj.is_flagged;
               console.log("temp after: ", temp);
               setSearchObj(temp);
             }}

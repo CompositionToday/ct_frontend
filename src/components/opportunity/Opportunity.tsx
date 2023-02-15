@@ -202,7 +202,7 @@ export function Opportunity() {
   }, [displayOpportunityArray]);
 
   useEffect(() => {
-    console.log(searchObj);
+    console.log("searchobj: ", searchObj);
   }, [searchObj]);
 
   return (
@@ -233,6 +233,17 @@ export function Opportunity() {
             onClick={() => {
               setDisplayOpportunitySearchFilterModal(true);
             }}
+            isFilter={
+              !!(
+                searchObj.is_flagged !== "0" ||
+                searchObj.is_deleted !== "0" ||
+                !!searchObj.city ||
+                !!searchObj.state ||
+                !!searchObj.salary ||
+                !!searchObj.category ||
+                !!searchObj.job_type
+              )
+            }
           >
             <IconFilter size={40} color="#808080" />
           </FilterIconContainer>

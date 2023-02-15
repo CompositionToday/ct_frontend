@@ -124,7 +124,11 @@ export function OpportunityInfo({
           >
             Apply
             {/* <img src={ApplyIcon} style={{ height: "20px", marginLeft: "7px" }} /> */}
-            <ActionIcon color="blue" variant="filled">
+            <ActionIcon
+              color="blue"
+              variant="filled"
+              sx={{ backgroundColor: "transparent" }}
+            >
               <IconExternalLink />
             </ActionIcon>
           </Button>
@@ -144,7 +148,11 @@ export function OpportunityInfo({
           }}
         >
           Edit
-          <ActionIcon color="green" variant="filled">
+          <ActionIcon
+            color="green"
+            variant="filled"
+            sx={{ backgroundColor: "transparent" }}
+          >
             <IconEdit />
           </ActionIcon>
         </Button>
