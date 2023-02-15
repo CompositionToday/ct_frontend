@@ -113,12 +113,12 @@ export function Opportunity() {
 
       let responseJson = await editFunction(tempOpportunity);
       console.log("fake delete resposne: ", responseJson);
+      setRecall(recall + 1);
+      setDisplayOpportunityInfoModal(false);
       showNotification({
         title: "Opportunity Deleted",
         message: "Opportunity was deleted",
       });
-      setDisplayOpportunityInfoModal(false);
-      setRecall(recall + 1);
     } catch (err) {
       console.log(err);
       showNotification({
