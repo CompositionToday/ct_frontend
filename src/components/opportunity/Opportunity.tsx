@@ -289,6 +289,7 @@ export function Opportunity() {
         <OpportunityForm
           opportunityType={opportunityType}
           opportunity={currentOpportunity ? currentOpportunity : undefined}
+          displayWinnerInput
           handleSubmission={handleEditButton}
         />
       </Modal>

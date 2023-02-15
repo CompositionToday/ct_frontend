@@ -23,6 +23,7 @@ import { useForm } from "@mantine/form";
 interface OpportunityFormProp {
   opportunityType: string;
   opportunity?: OpportunityItem;
+  displayWinnerInput?: boolean;
   handleSubmission: (opportunity: OpportunityItem) => void;
 }
 
@@ -50,6 +51,7 @@ export function OpportunityForm({
   opportunityType,
   opportunity,
   handleSubmission,
+  displayWinnerInput = false,
 }: OpportunityFormProp) {
   const [city, setCity] = useState(opportunity?.city ? opportunity.city : "");
   const [state, setState] = useState(
@@ -347,12 +349,13 @@ export function OpportunityForm({
                 {...form.getInputProps("job_type")}
               />
             </TwoInputRow>
-            {/* <TextInputFullWidth
+            <TextInputFullWidth
               label="Winner"
               placeholder="Give the name of the winner if applicable"
-              display={opportunityType === "competitions"}
+              description="Leave the field empty if you want to delete the winner's name"
+              display={displayWinnerInput && opportunityType === "competitions"}
               {...form.getInputProps("winner")}
-            /> */}
+            />
             {/* <TextInputFullWidth
               label="Category"
               placeholder="Category"
