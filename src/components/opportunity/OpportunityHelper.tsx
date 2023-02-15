@@ -105,6 +105,7 @@ export const OpportunityCard = styled.div<PaginationCard>`
   padding-bottom: 15px;
   background-color: ${(props) => (props.selected ? "#e2f0fe" : "auto")};
   border-top-left-radius: 8px;
+  z-index: -100;
 `;
 
 export const PaginationNavbarContainer = styled(Flex)`
@@ -122,19 +123,12 @@ export const CityStateContainer = styled.p`
   padding: 5px;
 `;
 
-export const FilterIconContainer = styled.div<FilterIcon>`
-  display: inline;
-  // margin-bottom: 15px;
-  background: ${(props) => (props.isFilter ? "red" : "white")};
-`;
-
 export const SearchBar = styled(TextInput)<GridContainer>`
   width: ${(props) => (props.medianScreen ? "75%" : "35%")};
-  margin-left: 12px;
-  margin-bottom: 10px;
-  display: inline-block;
+  min-width: 400px;
 `;
 
 export const SearchFilterContainer = styled(Flex)`
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  margin-left: 1%;
 `;

@@ -11,7 +11,6 @@ import {
   PaginationNavbarContainer,
   CityStateContainer,
   SearchBar,
-  FilterIconContainer,
   SearchFilterContainer,
 } from "./OpportunityHelper";
 import { OpportunityTitle } from "./OpportunityInfoHelper";
@@ -229,12 +228,14 @@ export function Opportunity() {
           >
             <IconFilter size={40} color="#808080" />
           </ActionIcon> */}
-          <FilterIconContainer
+          <ActionIcon
             onClick={() => {
               setDisplayOpportunitySearchFilterModal(true);
             }}
-            isFilter={
-              !!(
+            color="dark.2"
+            size="lg"
+            sx={{
+              backgroundColor: !!(
                 searchObj.is_flagged !== "0" ||
                 searchObj.is_deleted !== "0" ||
                 !!searchObj.city ||
@@ -243,10 +244,12 @@ export function Opportunity() {
                 !!searchObj.category ||
                 !!searchObj.job_type
               )
-            }
+                ? "red"
+                : "white",
+            }}
           >
-            <IconFilter size={40} color="#808080" />
-          </FilterIconContainer>
+            <IconFilter size={40} stroke={1.5} />
+          </ActionIcon>
         </SearchFilterContainer>
         <OpportunityGrid justify="center" medianScreen={medianScreen} grow>
           <OpportunityLeftColumnContainer span={4}>
