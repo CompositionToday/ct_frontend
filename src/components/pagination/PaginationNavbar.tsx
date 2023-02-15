@@ -15,6 +15,7 @@ export interface PaginationNavbarProp {
   setListOfObjects:
     | React.Dispatch<React.SetStateAction<RawUserData[]>>
     | React.Dispatch<React.SetStateAction<OpportunityItem[]>>;
+  recall?: number;
 }
 
 export interface PaginationSearchObject {
@@ -55,6 +56,7 @@ export function PaginationNavbar({
   setListOfObjects,
   // An optional object where the keys are the name of the attribute you want to search for and the value is the actual value of the key.
   searchFilterObject,
+  recall = -99,
 }: PaginationNavbarProp) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
@@ -84,10 +86,11 @@ export function PaginationNavbar({
         console.log(err);
       } finally {
         setCurrentPage(1);
+        console.log(recall);
       }
     };
     getPageCount();
-  }, [searchFilterObject]);
+  }, [searchFilterObject, recall]);
 
   useEffect(() => {
     const getCurrentPage = async () => {
@@ -111,7 +114,7 @@ export function PaginationNavbar({
     };
 
     getCurrentPage();
-  }, [currentPage, pageCount, searchFilterObject]);
+  }, [currentPage, pageCount, searchFilterObject, recall]);
 
   return (
     <PaginationNavbarContainer justify="center" align="flex-end">

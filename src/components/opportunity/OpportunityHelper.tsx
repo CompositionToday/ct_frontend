@@ -29,6 +29,8 @@ export interface OpportunityItem {
   winner?: string | null;
   category?: string;
   address?: string;
+  is_deleted?: string | number;
+  is_flagged?: string | number;
   // start_date?: Date | string | number;
   start_date?: Date | string | number;
 }

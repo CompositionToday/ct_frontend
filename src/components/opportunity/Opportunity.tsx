@@ -66,6 +66,7 @@ export function Opportunity() {
   });
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const medianScreen = useMediaQuery("(max-width: 992px)");
+  const [recall, setRecall] = useState(0);
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
@@ -92,6 +93,44 @@ export function Opportunity() {
     }
   };
 
+  // FIXME: See if I can get rid of reptitive code by just calling the handleEditButton function
+  const deleteCurrentPost = async () => {
+    try {
+      let tempOpportunity = currentOpportunity;
+
+      if (!tempOpportunity) {
+        throw "There is not an opportunity selected";
+      }
+
+      delete tempOpportunity?.UID;
+      delete tempOpportunity?.date_posted;
+
+      tempOpportunity.end_date = tempOpportunity?.end_date?.toString();
+      tempOpportunity.start_date = tempOpportunity?.start_date?.toString();
+      tempOpportunity.salary = tempOpportunity?.salary?.toString();
+
+      tempOpportunity.is_deleted = "1";
+
+      let responseJson = await editFunction(tempOpportunity);
+      console.log("fake delete resposne: ", responseJson);
+      showNotification({
+        title: "Opportunity Deleted",
+        message: "Opportunity was deleted",
+      });
+      setDisplayOpportunityInfoModal(false);
+      setRecall(recall + 1);
+    } catch (err) {
+      console.log(err);
+      showNotification({
+        title: "Error",
+        message: "Something went wrong, please try again later",
+        color: "red",
+      });
+    } finally {
+      setDisplayDeleteConfirmationModal(false);
+    }
+  };
+
   const handleEditButton = async (opportunity: OpportunityItem) => {
     try {
       delete opportunity.UID;
@@ -103,21 +142,7 @@ export function Opportunity() {
 
       console.log("opportunity in opportunity: ", opportunity);
 
-      let requestOptions = {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(opportunity),
-      };
-
-      let response = await fetch(
-        `${url}/${opportunityType}/${currentOpportunity?.idposts}`,
-        requestOptions
-      );
-
-      let responseJson = await response.json();
-      console.log("put response: ", responseJson);
-
-      let editedOpportunity = responseJson.listOfObjects[0];
+      let editedOpportunity = await editFunction(opportunity);
 
       for (let i = 0; i < displayOpportunityArray.length; i++) {
         if (displayOpportunityArray[i].idposts === editedOpportunity.idposts) {
@@ -141,6 +166,30 @@ export function Opportunity() {
         message: "There was a problem, please try again later",
         color: "red",
       });
+    }
+  };
+
+  const editFunction = async (opportunity: OpportunityItem) => {
+    try {
+      let requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(opportunity),
+      };
+
+      let response = await fetch(
+        `${url}/${opportunityType}/${currentOpportunity?.idposts}`,
+        requestOptions
+      );
+
+      let responseJson = await response.json();
+      console.log("put response: ", responseJson);
+
+      let editedOpportunity = responseJson.listOfObjects[0];
+
+      return editedOpportunity;
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -233,6 +282,7 @@ export function Opportunity() {
                 numberOfItemsPerPage={4}
                 setListOfObjects={setDisplayOpportunityArray}
                 searchFilterObject={searchObj}
+                recall={recall}
               />
             </OpportunityLeftColumnContent>
           </OpportunityLeftColumnContainer>
@@ -306,17 +356,7 @@ export function Opportunity() {
           >
             Cancel
           </Button>
-          <Button
-            color="red"
-            onClick={() => {
-              console.log("testyo");
-              setDisplayDeleteConfirmationModal(false);
-              showNotification({
-                title: "Opportunity Deleted",
-                message: "Opportunity was deleted",
-              });
-            }}
-          >
+          <Button color="red" onClick={deleteCurrentPost}>
             Delete
           </Button>
         </Flex>
