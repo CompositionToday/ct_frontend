@@ -105,7 +105,6 @@ export const OpportunityCard = styled.div<PaginationCard>`
   padding-bottom: 15px;
   background-color: ${(props) => (props.selected ? "#e2f0fe" : "auto")};
   border-top-left-radius: 8px;
-  z-index: -100;
 `;
 
 export const PaginationNavbarContainer = styled(Flex)`

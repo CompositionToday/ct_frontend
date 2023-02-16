@@ -328,6 +328,7 @@ export function OpportunityForm({
                 display={opportunityType === "jobs"}
                 // value={salary}
                 defaultValue={0}
+                min={0}
                 // onChange={(e) => {
                 //   if (e) setSalary(e);
                 //   else setSalary(0);
@@ -341,11 +342,19 @@ export function OpportunityForm({
                 withAsterisk
                 {...form.getInputProps("salary")}
               />
-              <TextInputFullWidth
+              <DropdownCategory
                 label="Job Type"
-                placeholder="Job Type"
-                display={opportunityType === "jobs"}
+                placeholder={`Select job type`}
                 withAsterisk
+                display={opportunityType === "jobs"}
+                data={[
+                  "Faculty",
+                  "Instruction",
+                  "Publishing",
+                  "Performance",
+                  "Composing",
+                  "Other",
+                ]}
                 {...form.getInputProps("job_type")}
               />
             </TwoInputRow>
@@ -365,7 +374,7 @@ export function OpportunityForm({
             /> */}
             <DropdownCategory
               label="Category"
-              placeholder={`Select ${opportunityType} category`}
+              placeholder={`Select competitions category`}
               withAsterisk
               display={opportunityType === "competitions"}
               data={["Brass", "Woodwind", "Percussion"]}

@@ -39,6 +39,7 @@ export function OpportunityFilterForm({
     salary: searchObj.salary ? searchObj.salary : 0,
     category: searchObj.category ? searchObj.category : "",
     end_date: searchObj.end_date ? searchObj.end_date : 0,
+    job_type: searchObj.job_type ? searchObj.job_type : "",
   });
   const opportunityType = useLocation().pathname.slice(1);
 
@@ -67,13 +68,11 @@ export function OpportunityFilterForm({
         {/* <TextInputFullWidth label="Category" placeholder="Category" display /> */}
         {/* FIXME: Need to make a dropdown for job_type */}
         <DropdownCategory
-          label="Category"
-          placeholder={`Select ${opportunityType} category`}
+          label="Competition Category"
+          placeholder={`Select competitions category`}
           data={["Brass", "Woodwind", "Percussion"]}
           allowDeselect
-          display={
-            opportunityType === "competitions" || opportunityType === "jobs"
-          }
+          display={opportunityType === "competitions"}
           onChange={(e) =>
             setTempSearchObj({
               ...tempSearchObj,
@@ -81,6 +80,27 @@ export function OpportunityFilterForm({
             })
           }
           value={tempSearchObj.category}
+        />
+        <DropdownCategory
+          label="Job Type"
+          placeholder={`Select job type`}
+          allowDeselect
+          display={opportunityType === "jobs"}
+          data={[
+            "Faculty",
+            "Instruction",
+            "Publishing",
+            "Performance",
+            "Composing",
+            "Other",
+          ]}
+          onChange={(e) =>
+            setTempSearchObj({
+              ...tempSearchObj,
+              job_type: e ? e : "",
+            })
+          }
+          value={tempSearchObj.job_type}
         />
         <Location
           city={city}
