@@ -22,6 +22,9 @@ import {
 } from "../pagination/PaginationNavbar";
 import LocationIcon from "./LocationIcon.svg";
 import {
+  Image,
+  Group,
+  Input,
   MediaQuery,
   Pagination,
   Modal,
@@ -37,6 +40,9 @@ import { IconMapPin, IconFilter, IconSearch } from "@tabler/icons";
 import { OpportunityFilterForm } from "./OpportunityFilterForm";
 import { OpportunityForm } from "./OpportunityForm";
 import { FormHeader } from "./CreateOpportunityHelper";
+
+const greenTriangle = require("../../images/GreenTriangle.png");
+const blueTriangle = require("../../images/BlueTriangle.png");
 
 export function Opportunity() {
   // const [opportunityType, setOpportunityType] = useState(
@@ -207,9 +213,33 @@ export function Opportunity() {
 
   return (
     <OpportunityPageContainer>
+      <Image
+        src={String(blueTriangle)}
+        style={{
+          width: "24%",
+          position: "absolute",
+          right: "0px",
+        }}
+      />
+      <Image
+        src={String(greenTriangle)}
+        style={{ width: "24%", position: "absolute", bottom: "0px" }}
+      />
       <GridContainer medianScreen={medianScreen}>
         <SearchFilterContainer align="center">
-          <SearchBar
+          <Group>
+            <Input
+              icon={
+                <ActionIcon color="dark.2" onClick={handleInputSubmit}>
+                  <IconSearch />
+                </ActionIcon>
+              }
+              placeholder="Search"
+              onChange={handleSearchInput}
+              onKeyDown={handleEnterKeyDown}
+              sx={{ minWidth: "400px" }}
+            />
+            {/* <SearchBar
             medianScreen={medianScreen}
             placeholder="Title or organization"
             rightSection={
@@ -218,24 +248,24 @@ export function Opportunity() {
             value={keyword}
             onChange={handleSearchInput}
             onKeyDown={handleEnterKeyDown}
-          />
-          {/* <ActionIcon
-            color="gray"
-            style={{
-              display: "inline-block",
-              background: "white",
-              marginBottom: "15px",
-            }}
-          >
-            <IconFilter size={40} color="#808080" />
-          </ActionIcon> */}
-          <FilterIconContainer
+          /> */}
+            <ActionIcon
+              color="dark.2"
+              size="lg"
+              onClick={() => {
+                setDisplayOpportunitySearchFilterModal(true);
+              }}
+            >
+              <IconFilter size={40} stroke={1.5} />
+            </ActionIcon>
+          </Group>
+          {/* <FilterIconContainer
             onClick={() => {
               setDisplayOpportunitySearchFilterModal(true);
             }}
           >
             <IconFilter size={40} color="#808080" />
-          </FilterIconContainer>
+          </FilterIconContainer> */}
         </SearchFilterContainer>
         <OpportunityGrid justify="center" medianScreen={medianScreen} grow>
           <OpportunityLeftColumnContainer span={4}>
@@ -254,7 +284,9 @@ export function Opportunity() {
                     onClick={() => handleOpportunityClick(opportunity)}
                   >
                     <OpportunityTitle>{opportunity.title}</OpportunityTitle>
-                    <p>{opportunity.organization}</p>
+                    <p style={{ fontSize: "14px" }}>
+                      {opportunity.organization}
+                    </p>
                     {/* <CityStateContainer>
                       <Flex justify="center" align="center" gap="xs">
                         <img src={LocationIcon} style={{ height: "27px" }} />
@@ -266,11 +298,14 @@ export function Opportunity() {
 
                     <Badge
                       leftSection={
-                        <ActionIcon color="green">
-                          <IconMapPin size={20} />
-                        </ActionIcon>
+                        <IconMapPin
+                          size={18}
+                          color="#40C057"
+                          style={{ marginBottom: "-3px" }}
+                        />
                       }
                       color="gray"
+                      sx={{ height: "25px" }}
                     >
                       {opportunity.city}, {opportunity.state}
                     </Badge>

@@ -1,7 +1,7 @@
 import {
   OpportunityInfoProp,
   OpportunityInfoContainer,
-  OpportunityTitle,
+  MoreInfoOpportunityTitle,
   CityState,
   ButtonsContainer,
   DescriptionContainer,
@@ -99,16 +99,21 @@ export function OpportunityInfo({
 
   return (
     <OpportunityInfoContainer>
-      <OpportunityTitle>{opportunity.title}</OpportunityTitle>
-      <Flex align="center">
-        {/* <img src={LocationIcon} style={{ height: "40px" }} />
-         */}
-        <ActionIcon color="green">
-          <IconMapPin size={40} />
-        </ActionIcon>
-        <CityState
-          style={{ display: "inline" }}
-        >{`${opportunity.city}, ${opportunity.state}`}</CityState>
+      <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
+      <Flex direction="row">
+        <Flex align="center">
+          <IconMapPin size={30} color="#40C057" />
+          <CityState
+            style={{ display: "inline", fontSize: "17px" }}
+          >{`${opportunity.city}, ${opportunity.state}`}</CityState>
+        </Flex>
+        {/* REPLACE THIS WITH OTHER BADGES */}
+        {/* <Flex align="center">
+          <IconMapPin size={30} color="#40C057" />
+          <CityState
+            style={{ display: "inline", fontSize: "17px" }}
+          >{`${opportunity.city}, ${opportunity.state}`}</CityState>
+        </Flex> */}
       </Flex>
       <ButtonsContainer
         justify=""
@@ -121,12 +126,9 @@ export function OpportunityInfo({
             radius="md"
             sx={{ height: 30, alignSelf: "flex-start" }}
             size="md"
+            rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
           >
             Apply
-            {/* <img src={ApplyIcon} style={{ height: "20px", marginLeft: "7px" }} /> */}
-            <ActionIcon color="blue" variant="filled">
-              <IconExternalLink />
-            </ActionIcon>
           </Button>
         </a>
         <Button

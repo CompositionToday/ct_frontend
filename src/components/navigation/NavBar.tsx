@@ -9,9 +9,12 @@ import {
   Button,
   Burger,
   Image,
+  Menu,
+  Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
+import { IconUserCircle } from "@tabler/icons";
 
 const musicNoteIcon = require("../../images/MusicNote.png");
 
@@ -121,6 +124,8 @@ export function NavBar({ links }: HeaderActionProps) {
   const { classes } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const [signedIn, setSignedIn] = useState(false);
+  const [userFirstName, setUserFirstName] = useState("Welcome");
+  const [userAdmin, setUserAdmin] = useState(false);
 
   const items = links.map((link) => {
     return (
@@ -156,9 +161,17 @@ export function NavBar({ links }: HeaderActionProps) {
         );
         let responseJson = await response.json();
 
-        let userDate = responseJson.listOfObjects[0];
+        let userData = responseJson.listOfObjects[0];
 
-        if (userDate.is_banned) {
+        setUserFirstName(userData.first_name);
+
+        if (userData.is_admin) {
+          setUserAdmin(true);
+        } else {
+          setUserAdmin(false);
+        }
+
+        if (userData.is_banned) {
           navigate("/banned");
           setUserBanned(true);
         } else {
@@ -166,6 +179,7 @@ export function NavBar({ links }: HeaderActionProps) {
         }
       } else {
         setUserBanned(false);
+        setUserAdmin(false);
         console.log("setting banned to false");
       }
     });
@@ -178,23 +192,89 @@ export function NavBar({ links }: HeaderActionProps) {
     console.log("useeffect state: ", userBanned);
   }, [userBanned]);
 
+  // const displayAdminPages: React.FC = () => {
+  //   return userAdmin ? (
+  //     <div>
+  //       <Menu.Divider />
+  //       <Menu.Label>Admin</Menu.Label>
+  //       <Menu.Item
+  //         style={{ fontSize: "12pt" }}
+  //         onClick={() => navigate("/admin/user")}
+  //       >
+  //         Manage Users
+  //       </Menu.Item>
+  //       <Menu.Item style={{ fontSize: "12pt" }} onClick={() => navigate("/")}>
+  //         Recent Posts
+  //       </Menu.Item>
+  //     </div>
+  //   ) : (
+  //     <Text>Not an Admin</Text>
+  //   );
+  // };
+
   const HandleUserButton: React.FC = () => {
     return signedIn ? (
       <Group style={{ paddingRight: 25 }}>
-        <Button
-          variant="subtle"
-          sx={{ height: 30 }}
-          size="md"
-          onClick={async () => {
-            console.log("sign out button clicked");
-            await signOut(auth);
-            setSignedIn(false);
-            console.log("redirecting to landing");
-            navigate("/");
-          }}
-        >
-          Sign Out
-        </Button>
+        <Menu shadow="md" width={150} withArrow>
+          <Menu.Target>
+            <Button
+              variant="subtle"
+              sx={{ height: 30 }}
+              size="md"
+              leftIcon={<IconUserCircle />}
+              color="gray.7"
+            >
+              Hi, {userFirstName}
+            </Button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Label>Posts</Menu.Label>
+            <Menu.Item
+              style={{ fontSize: "12pt" }}
+              onClick={() => navigate("/")}
+            >
+              My Posts
+            </Menu.Item>
+            <Menu.Item
+              style={{ fontSize: "12pt" }}
+              onClick={() => navigate("/create-opportunity")}
+            >
+              Create a Post
+            </Menu.Item>
+            {userAdmin && (
+              <>
+                <Menu.Divider />
+                <Menu.Label>Admin</Menu.Label>
+                <Menu.Item
+                  style={{ fontSize: "12pt" }}
+                  onClick={() => navigate("/admin/users")}
+                >
+                  Manage Users
+                </Menu.Item>
+                <Menu.Item
+                  style={{ fontSize: "12pt" }}
+                  onClick={() => navigate("/")}
+                >
+                  Recent Posts
+                </Menu.Item>
+              </>
+            )}
+            <Menu.Divider />
+            <Menu.Item
+              style={{ fontSize: "12pt" }}
+              color="red"
+              onClick={async () => {
+                console.log("sign out button clicked");
+                await signOut(auth);
+                setSignedIn(false);
+                console.log("redirecting to landing");
+                navigate("/");
+              }}
+            >
+              Sign Out
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
       </Group>
     ) : (
       <Group style={{ paddingRight: 25 }} className={classes.links}>
