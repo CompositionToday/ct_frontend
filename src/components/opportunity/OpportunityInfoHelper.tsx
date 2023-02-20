@@ -14,12 +14,18 @@ interface DisplayButton {
 }
 
 export const OpportunityInfoContainer = styled.div`
-  padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
 `;
 
 export const OpportunityTitle = styled.h1`
   color: #228be6;
-  font-size: 25px;
+  font-size: 20px;
+`;
+
+export const MoreInfoOpportunityTitle = styled.h1`
+  color: #228be6;
+  font-size: 24px;
 `;
 
 export const CityState = styled.p`
@@ -36,7 +42,7 @@ export const DescriptionContainer = styled.div`
 `;
 
 export const Label = styled.h2`
-  font-size: 20px;
+  font-size: 18px;
   display: inline;
 `;
 

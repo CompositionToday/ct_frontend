@@ -60,7 +60,7 @@ export const OpportunityPageContainer = styled.div`
 
 export const GridContainer = styled.div<GridContainer>`
   // padding: 10px;
-  width: ${(props) => (props.medianScreen ? "100vw" : "90vw")};
+  width: ${(props) => (props.medianScreen ? "100vw" : "80vw")};
   height: ${(props) => (props.medianScreen ? "85vh" : "75vh")};
   // min-height: 100vh;
   overflow: visible;
@@ -71,9 +71,9 @@ export const GridContainer = styled.div<GridContainer>`
 export const OpportunityGrid = styled(Grid)<GridContainer>`
   position: relative;
   height: 93%;
-  width: ${(props) => (props.medianScreen ? "100%" : "98%")};
   text-align: left;
   margin: 0 auto;
+  background-color: white;
   border: 1px solid #2f2f2f;
   border-bottom: ${(props) =>
     props.medianScreen ? "1px solid white" : "1px solid #2f2f2f"};
@@ -100,7 +100,7 @@ export const OpportunityRightColumnContainer = styled(Grid.Col)`
 
 export const OpportunityCard = styled.div<PaginationCard>`
   border-bottom: 1px solid;
-  padding-left: 10px;
+  padding-left: 25px;
   padding-right: 10px;
   padding-bottom: 15px;
   background-color: ${(props) => (props.selected ? "#e2f0fe" : "auto")};
@@ -128,6 +128,5 @@ export const SearchBar = styled(TextInput)<GridContainer>`
 `;
 
 export const SearchFilterContainer = styled(Flex)`
-  margin-bottom: 10px;
-  margin-left: 1%;
+  margin-bottom: 20px;
 `;
