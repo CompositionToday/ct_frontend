@@ -548,12 +548,12 @@ export function Opportunity() {
       </Modal>
       <Modal
         opened={displayFlagConfirmationModal}
-        onClose={() => setDisplayBanConfirmationModal(false)}
+        onClose={() => setDisplayFlagConfirmationModal(false)}
         fullScreen={medianScreen}
       >
         <FormHeader>
-          Are you sure you want to {currentOpportunity?.is_flagged && "un"}flag
-          this post?
+          Are you sure you want to {currentOpportunity?.is_flagged ? "un" : ""}
+          flag this post?
         </FormHeader>
         <Flex justify="flex-end" gap={20} wrap="wrap">
           <Button
