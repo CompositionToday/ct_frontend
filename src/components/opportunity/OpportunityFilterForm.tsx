@@ -52,7 +52,7 @@ export function OpportunityFilterForm({
     <Paper shadow="sm" withBorder>
       <OpportunityFilterFormContentContainer>
         <FormHeader>Filters</FormHeader>
-        <TextInputFullWidth
+        {/* <TextInputFullWidth
           label="Title/Organization"
           placeholder="Title/Organization"
           display
@@ -64,7 +64,7 @@ export function OpportunityFilterForm({
             });
             setKeyword(e.target.value);
           }}
-        />
+        /> */}
         {/* <TextInputFullWidth label="Category" placeholder="Category" display /> */}
         {/* FIXME: Need to make a dropdown for job_type */}
         <DropdownCategory

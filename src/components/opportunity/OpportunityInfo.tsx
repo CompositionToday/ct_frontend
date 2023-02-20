@@ -26,6 +26,7 @@ export function OpportunityInfo({
   opportunityType,
   setEditModal,
   setDeleteModal,
+  setBannedModal,
 }: OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -180,6 +181,7 @@ export function OpportunityInfo({
           size="md"
           color="red"
           variant="filled"
+          onClick={() => setBannedModal(true)}
         >
           Delete Post & Ban Account
         </Button>

@@ -39,6 +39,7 @@ import { IconMapPin, IconFilter, IconSearch } from "@tabler/icons";
 import { OpportunityFilterForm } from "./OpportunityFilterForm";
 import { OpportunityForm } from "./OpportunityForm";
 import { FormHeader } from "./CreateOpportunityHelper";
+import { fetchSignInMethodsForEmail } from "firebase/auth";
 
 const greenTriangle = require("../../images/GreenTriangle.png");
 const blueTriangle = require("../../images/BlueTriangle.png");
@@ -62,6 +63,8 @@ export function Opportunity() {
   const [displayOpportunityEditModal, setDisplayOpportunityEditModal] =
     useState(false);
   const [displayDeleteConfirmationModal, setDisplayDeleteConfirmationModal] =
+    useState(false);
+  const [displayBanConfirmationModal, setDisplayBanConfirmationModal] =
     useState(false);
   const [keyword, setKeyword] = useState("");
   const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
@@ -98,7 +101,6 @@ export function Opportunity() {
     }
   };
 
-  // FIXME: See if I can get rid of reptitive code by just calling the handleEditButton function
   const deleteCurrentPost = async () => {
     try {
       let tempOpportunity = currentOpportunity;
@@ -113,7 +115,6 @@ export function Opportunity() {
       tempOpportunity.end_date = tempOpportunity?.end_date?.toString();
       tempOpportunity.start_date = tempOpportunity?.start_date?.toString();
       tempOpportunity.salary = tempOpportunity?.salary?.toString();
-
       tempOpportunity.is_deleted = "1";
 
       let responseJson = await editFunction(tempOpportunity);
@@ -171,6 +172,41 @@ export function Opportunity() {
         message: "There was a problem, please try again later",
         color: "red",
       });
+    }
+  };
+
+  // FIXME: need to implement this after the backend people will allow me to ban a user based on UID, or I have a way to get the email based on the UID on the frontend
+  const handleBanButton = async () => {
+    try {
+      console.log("handleBanButton function");
+      throw "handleBanButton Called";
+      let userIdentifier = "";
+
+      let requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_banned: "1" }),
+      };
+
+      let response = await fetch(`url/users/${userIdentifier}`, requestOptions);
+
+      let responseJson = await response.json();
+      console.log("ban responseJson: ", responseJson);
+      setRecall(recall + 1);
+      showNotification({
+        title: "User banned",
+        message:
+          "The user has been banned and all their postings has been removed",
+      });
+    } catch (err) {
+      console.log(err);
+      showNotification({
+        title: "Error",
+        message: "There was a problem, please try again later",
+        color: "red",
+      });
+    } finally {
+      setDisplayBanConfirmationModal(false);
     }
   };
 
@@ -356,6 +392,7 @@ export function Opportunity() {
                 opportunityType={opportunityType}
                 setEditModal={setDisplayOpportunityEditModal}
                 setDeleteModal={setDisplayDeleteConfirmationModal}
+                setBannedModal={setDisplayBanConfirmationModal}
               />
             </OpportunityRightColumnContainer>
           </MediaQuery>
@@ -372,6 +409,7 @@ export function Opportunity() {
             opportunityType={opportunityType}
             setEditModal={setDisplayOpportunityEditModal}
             setDeleteModal={setDisplayDeleteConfirmationModal}
+            setBannedModal={setDisplayBanConfirmationModal}
           />
         </Modal>
       </MediaQuery>
@@ -420,6 +458,24 @@ export function Opportunity() {
             Cancel
           </Button>
           <Button color="red" onClick={deleteCurrentPost}>
+            Delete
+          </Button>
+        </Flex>
+      </Modal>
+      <Modal
+        opened={displayBanConfirmationModal}
+        onClose={() => setDisplayBanConfirmationModal(false)}
+        fullScreen={medianScreen}
+      >
+        <FormHeader>Are you sure you want to ban this user?</FormHeader>
+        <Flex justify="flex-end" gap={20} wrap="wrap">
+          <Button
+            color="gray"
+            onClick={() => setDisplayBanConfirmationModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button color="red" onClick={handleBanButton}>
             Delete
           </Button>
         </Flex>
