@@ -66,6 +66,8 @@ export function Opportunity() {
     useState(false);
   const [displayBanConfirmationModal, setDisplayBanConfirmationModal] =
     useState(false);
+  const [displayFlagConfirmationModal, setDisplayFlagConfirmationModal] =
+    useState(false);
   const [keyword, setKeyword] = useState("");
   const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
     keyword: "",

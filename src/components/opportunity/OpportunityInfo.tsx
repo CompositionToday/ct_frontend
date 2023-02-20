@@ -17,7 +17,13 @@ import React, { useState, useEffect } from "react";
 import { Flex, Button, MediaQuery, ActionIcon, Modal } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
-import { IconMapPin, IconExternalLink, IconEdit } from "@tabler/icons";
+import {
+  IconMapPin,
+  IconExternalLink,
+  IconEdit,
+  IconFlag,
+  IconFlagOff,
+} from "@tabler/icons";
 import { OpportunityItem } from "./OpportunityHelper";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
 
@@ -185,6 +191,9 @@ export function OpportunityInfo({
         >
           Delete Post & Ban Account
         </Button>
+        <ActionIcon>
+          {!opportunity.is_flagged ? <IconFlag /> : <IconFlagOff />}
+        </ActionIcon>
       </ButtonsContainer>
       <SpecificOpportunityInfo
         opportunity={opportunity}
