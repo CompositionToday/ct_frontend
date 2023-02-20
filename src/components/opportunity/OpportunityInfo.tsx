@@ -33,6 +33,7 @@ export function OpportunityInfo({
   setEditModal,
   setDeleteModal,
   setBannedModal,
+  setFlagModal,
 }: OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -191,7 +192,11 @@ export function OpportunityInfo({
         >
           Delete Post & Ban Account
         </Button>
-        <ActionIcon>
+        <ActionIcon
+          onClick={() => {
+            setFlagModal(true);
+          }}
+        >
           {!opportunity.is_flagged ? <IconFlag /> : <IconFlagOff />}
         </ActionIcon>
       </ButtonsContainer>

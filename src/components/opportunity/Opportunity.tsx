@@ -117,6 +117,7 @@ export function Opportunity() {
       tempOpportunity.end_date = tempOpportunity?.end_date?.toString();
       tempOpportunity.start_date = tempOpportunity?.start_date?.toString();
       tempOpportunity.salary = tempOpportunity?.salary?.toString();
+      tempOpportunity.is_flagged = currentOpportunity?.is_flagged?.toString();
       tempOpportunity.is_deleted = "1";
 
       let responseJson = await editFunction(tempOpportunity);
@@ -144,6 +145,7 @@ export function Opportunity() {
       delete opportunity.UID;
       delete opportunity.date_posted;
 
+      // Format any number keys as strings since the APIs only accept strings for the request body
       opportunity.end_date = opportunity.end_date?.toString();
       opportunity.start_date = opportunity.start_date?.toString();
       opportunity.salary = opportunity.salary?.toString();
@@ -174,6 +176,86 @@ export function Opportunity() {
         message: "There was a problem, please try again later",
         color: "red",
       });
+    }
+  };
+
+  const handleFlagButton = async () => {
+    try {
+      let tempOpportunity = currentOpportunity;
+
+      if (!tempOpportunity) {
+        throw "There is not an opportunity selected";
+      }
+
+      delete tempOpportunity?.UID;
+      delete tempOpportunity?.date_posted;
+
+      // Format any number keys as strings since the APIs only accept strings for the request body
+      tempOpportunity.end_date = tempOpportunity?.end_date?.toString();
+      tempOpportunity.start_date = tempOpportunity?.start_date?.toString();
+      tempOpportunity.salary = tempOpportunity?.salary?.toString();
+      tempOpportunity.is_flagged = currentOpportunity?.is_flagged ? "0" : "1";
+      tempOpportunity.is_deleted = currentOpportunity?.is_deleted?.toString();
+
+      let responseJson = await editFunction(tempOpportunity);
+      console.log("fake flag resposne: ", responseJson);
+      setRecall(recall + 1);
+      setDisplayOpportunityInfoModal(false);
+      showNotification({
+        title: "Opportunity Flagged",
+        message: "Opportunity was flagged",
+      });
+    } catch (err) {
+      console.log(err);
+      showNotification({
+        title: "Error",
+        message: "Something went wrong, please try again later",
+        color: "red",
+      });
+    } finally {
+      setDisplayFlagConfirmationModal(false);
+    }
+  };
+
+  const editFunction = async (opportunity: OpportunityItem) => {
+    try {
+      let idpost = currentOpportunity?.idposts;
+      // Delete the idposts in the opportunity such that the backend doesn't actually update the idpost column in mySQL.
+      // This shouldn't be necessary to do at all but have it here just in-case the idposts here is some how different from the idposts in the url parameters and/or in mySQL
+      delete opportunity.idposts;
+
+      // Delete any invalid keys (like undefined keys or keys with value of null) such that it doesn't crash the API
+      for (let key in opportunity) {
+        if (!opportunity[key as keyof typeof opportunity] && key !== "winner") {
+          delete opportunity[key as keyof typeof opportunity];
+        }
+      }
+
+      console.log(
+        "edit button opportunity param: ",
+        opportunity,
+        currentOpportunity?.idposts
+      );
+      console.log("edit url: ", `${url}/${opportunityType}/${idpost}`);
+      let requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(opportunity),
+      };
+
+      let response = await fetch(
+        `${url}/${opportunityType}/${idpost}`,
+        requestOptions
+      );
+
+      let responseJson = await response.json();
+      console.log("put response: ", responseJson);
+
+      let editedOpportunity = responseJson.listOfObjects[0];
+
+      return editedOpportunity;
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -212,28 +294,18 @@ export function Opportunity() {
     }
   };
 
-  const editFunction = async (opportunity: OpportunityItem) => {
-    try {
-      let requestOptions = {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(opportunity),
-      };
-
-      let response = await fetch(
-        `${url}/${opportunityType}/${currentOpportunity?.idposts}`,
-        requestOptions
-      );
-
-      let responseJson = await response.json();
-      console.log("put response: ", responseJson);
-
-      let editedOpportunity = responseJson.listOfObjects[0];
-
-      return editedOpportunity;
-    } catch (err) {
-      console.log(err);
-    }
+  const handleFilterIconBackground = () => {
+    return !!(
+      searchObj.is_flagged !== "0" ||
+      searchObj.is_deleted !== "0" ||
+      !!searchObj.city ||
+      !!searchObj.state ||
+      !!searchObj.salary ||
+      !!searchObj.category ||
+      !!searchObj.job_type
+    )
+      ? "red"
+      : "white";
   };
 
   useEffect(() => {
@@ -294,17 +366,7 @@ export function Opportunity() {
                 setDisplayOpportunitySearchFilterModal(true);
               }}
               sx={{
-                backgroundColor: !!(
-                  searchObj.is_flagged !== "0" ||
-                  searchObj.is_deleted !== "0" ||
-                  !!searchObj.city ||
-                  !!searchObj.state ||
-                  !!searchObj.salary ||
-                  !!searchObj.category ||
-                  !!searchObj.job_type
-                )
-                  ? "red"
-                  : "white",
+                backgroundColor: handleFilterIconBackground(),
               }}
             >
               <IconFilter size={40} stroke={1.5} />
@@ -395,6 +457,7 @@ export function Opportunity() {
                 setEditModal={setDisplayOpportunityEditModal}
                 setDeleteModal={setDisplayDeleteConfirmationModal}
                 setBannedModal={setDisplayBanConfirmationModal}
+                setFlagModal={setDisplayFlagConfirmationModal}
               />
             </OpportunityRightColumnContainer>
           </MediaQuery>
@@ -412,6 +475,7 @@ export function Opportunity() {
             setEditModal={setDisplayOpportunityEditModal}
             setDeleteModal={setDisplayDeleteConfirmationModal}
             setBannedModal={setDisplayBanConfirmationModal}
+            setFlagModal={setDisplayFlagConfirmationModal}
           />
         </Modal>
       </MediaQuery>
@@ -478,7 +542,30 @@ export function Opportunity() {
             Cancel
           </Button>
           <Button color="red" onClick={handleBanButton}>
-            Delete
+            Ban
+          </Button>
+        </Flex>
+      </Modal>
+      <Modal
+        opened={displayFlagConfirmationModal}
+        onClose={() => setDisplayBanConfirmationModal(false)}
+        fullScreen={medianScreen}
+      >
+        <FormHeader>
+          Are you sure you want to {currentOpportunity?.is_flagged && "un"}flag
+          this post?
+        </FormHeader>
+        <Flex justify="flex-end" gap={20} wrap="wrap">
+          <Button
+            color="gray"
+            onClick={() =>
+              setDisplayFlagConfirmationModal(!displayFlagConfirmationModal)
+            }
+          >
+            Cancel
+          </Button>
+          <Button color="red" onClick={handleFlagButton}>
+            {currentOpportunity?.is_flagged ? "Unf" : "F"}lag
           </Button>
         </Flex>
       </Modal>
