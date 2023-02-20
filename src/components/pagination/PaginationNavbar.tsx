@@ -103,7 +103,7 @@ export function PaginationNavbar({
         }
 
         getUrl.searchParams.set("page_number", String(currentPage));
-        console.log("getUrl: ", getUrl.toString());
+        console.log("geturl: ", getUrl.toString());
         let response = await fetch(getUrl);
 
         let responseJson = await response.json();
