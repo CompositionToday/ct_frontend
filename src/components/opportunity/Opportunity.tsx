@@ -118,7 +118,7 @@ export function Opportunity() {
       tempOpportunity.start_date = tempOpportunity?.start_date?.toString();
       tempOpportunity.salary = tempOpportunity?.salary?.toString();
       tempOpportunity.is_flagged = currentOpportunity?.is_flagged?.toString();
-      tempOpportunity.is_deleted = "1";
+      tempOpportunity.is_deleted = currentOpportunity?.is_deleted ? "0" : "1";
 
       let responseJson = await editFunction(tempOpportunity);
       console.log("fake delete resposne: ", responseJson);
@@ -263,8 +263,20 @@ export function Opportunity() {
   const handleBanButton = async () => {
     try {
       console.log("handleBanButton function");
-      throw "handleBanButton Called";
-      let userIdentifier = "";
+      console.log("current opportuntiy: ", currentOpportunity);
+
+      let responseUser = await fetch(`${url}/users/${currentOpportunity?.UID}`);
+      let responseUserJson = await responseUser.json();
+
+      console.log(responseUserJson);
+
+      if (responseUserJson.listOfObjects.length < 1) {
+        throw "Auther of post does not exist in database";
+      }
+
+      let authorOfCurrentOpportunity = responseUserJson.listOfObjects[0];
+
+      console.log("author: ", authorOfCurrentOpportunity.email);
 
       let requestOptions = {
         method: "PUT",
@@ -272,7 +284,10 @@ export function Opportunity() {
         body: JSON.stringify({ is_banned: "1" }),
       };
 
-      let response = await fetch(`url/users/${userIdentifier}`, requestOptions);
+      let response = await fetch(
+        `${url}/users/${authorOfCurrentOpportunity.email}`,
+        requestOptions
+      );
 
       let responseJson = await response.json();
       console.log("ban responseJson: ", responseJson);
@@ -515,7 +530,10 @@ export function Opportunity() {
         onClose={() => setDisplayDeleteConfirmationModal(false)}
         fullScreen={medianScreen}
       >
-        <FormHeader>Are you sure you want to delete this post?</FormHeader>
+        <FormHeader>
+          Are you sure you want to {currentOpportunity?.is_deleted ? "un" : ""}
+          delete this post?
+        </FormHeader>
         <Flex justify="flex-end" gap={20} wrap="wrap">
           <Button
             color="gray"
@@ -524,7 +542,7 @@ export function Opportunity() {
             Cancel
           </Button>
           <Button color="red" onClick={deleteCurrentPost}>
-            Delete
+            {currentOpportunity?.is_deleted ? "Und" : "D"}elete
           </Button>
         </Flex>
       </Modal>
@@ -533,7 +551,10 @@ export function Opportunity() {
         onClose={() => setDisplayBanConfirmationModal(false)}
         fullScreen={medianScreen}
       >
-        <FormHeader>Are you sure you want to ban this user?</FormHeader>
+        <FormHeader>
+          Are you sure you want to ban this user? Banning a user also deletes
+          all their post
+        </FormHeader>
         <Flex justify="flex-end" gap={20} wrap="wrap">
           <Button
             color="gray"
