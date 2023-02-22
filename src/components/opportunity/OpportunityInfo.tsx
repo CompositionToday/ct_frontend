@@ -21,8 +21,10 @@ import {
   IconMapPin,
   IconExternalLink,
   IconEdit,
+  IconFlag,
   IconPencil,
   IconTrash,
+  IconFlagOff,
   IconBan,
 } from "@tabler/icons";
 import { OpportunityItem } from "./OpportunityHelper";
@@ -33,6 +35,8 @@ export function OpportunityInfo({
   opportunityType,
   setEditModal,
   setDeleteModal,
+  setBannedModal,
+  setFlagModal,
 }: OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -173,19 +177,6 @@ export function OpportunityInfo({
         >
           <IconTrash />
         </ActionIcon>
-        {/* <Button
-          radius="md"
-          sx={{
-            height: 30,
-            alignSelf: "flex-start",
-            display: isAdmin ? "auto" : "none",
-          }}
-          size="md"
-          color="red"
-          variant="filled"
-        >
-          Delete Post & Ban Account
-        </Button> */}
         <ActionIcon
           color="red"
           sx={{
@@ -193,8 +184,17 @@ export function OpportunityInfo({
             alignSelf: "flex-start",
             display: isAdmin ? "auto" : "none",
           }}
+          onClick={() => setBannedModal(true)}
         >
           <IconBan />
+        </ActionIcon>
+        <ActionIcon
+          color="yellow"
+          onClick={() => {
+            setFlagModal(true);
+          }}
+        >
+          {!opportunity.is_flagged ? <IconFlag /> : <IconFlagOff />}
         </ActionIcon>
       </ButtonsContainer>
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
