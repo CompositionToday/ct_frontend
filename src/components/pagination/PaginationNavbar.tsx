@@ -44,6 +44,7 @@ export interface PaginationSearchObject {
   is_admin?: string;
   is_banned?: string;
   is_regular?: string;
+  current_email?: string;
 }
 
 export function PaginationNavbar({
@@ -122,7 +123,8 @@ export function PaginationNavbar({
         page={currentPage}
         onChange={setCurrentPage}
         total={pageCount}
-        size={medianScreen ? "sm" : "md"}
+        size={medianScreen ? "xs" : "sm"}
+        radius="xl"
       />
     </PaginationNavbarContainer>
   );

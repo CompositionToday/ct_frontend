@@ -3,31 +3,37 @@ import { Input } from "@mantine/core";
 import { IconSearch, IconFilter } from "@tabler/icons";
 import React, { useState, useEffect } from "react";
 import { PaginationSearchObject } from "../pagination/PaginationNavbar";
+import { auth } from "../../Firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 interface SearchAndFilterProp {
+  email: string;
   setSearchObj: React.Dispatch<React.SetStateAction<PaginationSearchObject>>;
 }
 
 const useStyles = createStyles(() => ({
   container: {
     padding: "0px",
-    marginTop: "45px",
+    marginTop: "40px",
   },
 
   search: {
     minWidth: "400px",
+    borderColor: "#939393",
   },
 }));
 
 const createSearchObj = (
   setSearchObj: React.Dispatch<React.SetStateAction<PaginationSearchObject>>,
   searchKeyword: string,
+  email: string,
   adminChecked: boolean,
   bannedChecked: boolean,
-  regularChecked: boolean,
+  regularChecked: boolean
 ) => {
   let searchObj: PaginationSearchObject = {
     keyword: searchKeyword,
+    current_email: email,
     is_admin: adminChecked ? "1" : "0",
     is_banned: bannedChecked ? "1" : "0",
     is_regular: regularChecked ? "1" : "0",
@@ -59,7 +65,10 @@ const changeFilter = (
   }
 };
 
-export function SearchAndFilterUsers({ setSearchObj }: SearchAndFilterProp) {
+export function SearchAndFilterUsers({
+  email,
+  setSearchObj,
+}: SearchAndFilterProp) {
   const { classes } = useStyles();
   const [adminChecked, setAdminChecked] = useState(false);
   const [bannedChecked, setBannedChecked] = useState(false);
@@ -67,7 +76,14 @@ export function SearchAndFilterUsers({ setSearchObj }: SearchAndFilterProp) {
   const [searchKeyword, setSearchKeyword] = useState("");
 
   useEffect(() => {
-    createSearchObj(setSearchObj, searchKeyword, adminChecked, bannedChecked, regularChecked);
+    createSearchObj(
+      setSearchObj,
+      searchKeyword,
+      email,
+      adminChecked,
+      bannedChecked,
+      regularChecked
+    );
   }, [adminChecked, bannedChecked, regularChecked, searchKeyword]);
 
   return (
@@ -79,7 +95,9 @@ export function SearchAndFilterUsers({ setSearchObj }: SearchAndFilterProp) {
           </ActionIcon>
         }
         placeholder="Search"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchKeyword(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearchKeyword(e.target.value)
+        }
         className={classes.search}
       />
       <Menu closeOnItemClick={false}>

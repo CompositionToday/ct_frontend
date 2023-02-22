@@ -14,6 +14,8 @@ import {
 } from "@mantine/core";
 
 const musicNoteIcon = require("../images/BigMusicNote.png");
+const greenTriangle = require("../images/GreenTriangle.png");
+const blueTriangle = require("../images/BlueTriangle.png");
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -85,8 +87,20 @@ export function About() {
 
   return (
     <div className={classes.container}>
-      {/* <NavBar links={navItems.links} /> */}
-      <Container>
+      <Image
+        src={String(blueTriangle)}
+        style={{
+          width: "24%",
+          position: "absolute",
+          right: "0px",
+          top: "80px",
+        }}
+      />
+      <Image
+        src={String(greenTriangle)}
+        style={{ width: "24%", position: "absolute", top: "650px" }}
+      />
+      <Container sx={{ maxWidth: "75vw" }}>
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.subtitle}>

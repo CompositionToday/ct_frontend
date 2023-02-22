@@ -108,9 +108,8 @@ export const OpportunityCard = styled.div<PaginationCard>`
 `;
 
 export const PaginationNavbarContainer = styled(Flex)`
-  padding-top: 20px;
+  padding-top: 30px;
   padding-bottom: 30px;
-  height: 100%;
 `;
 
 export const CityStateContainer = styled.p`

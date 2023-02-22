@@ -342,7 +342,7 @@ export function Opportunity() {
               })}
               <PaginationNavbar
                 apiEndpointExtension={opportunityType}
-                numberOfItemsPerPage={4}
+                numberOfItemsPerPage={10}
                 setListOfObjects={setDisplayOpportunityArray}
                 searchFilterObject={searchObj}
                 recall={recall}

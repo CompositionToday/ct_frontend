@@ -20,7 +20,8 @@ import {
   IconArrowBigDownLine,
   IconDots,
 } from "@tabler/icons";
-import { User } from "firebase/auth";
+import { auth } from "../../Firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { openMakeAdminModal, openRemoveAdminModal } from "./AdminModal";
 import { openDeleteModal } from "./DeleteModal";
@@ -55,41 +56,80 @@ const typeColors: Record<string, string> = {
 const useStyles = createStyles((theme) => ({
   container: {
     width: "80vw",
-    height: "70vh",
+    height: "75vh",
   },
 
   userContainer: {
     width: "80vw",
-    height: "60vh",
+    height: "65vh",
     display: "flex",
     flexWrap: "wrap",
+    position: "relative",
+    zIndex: 1,
+    borderColor: "#939393",
   },
 
   table: {
     maxWidth: "100%",
     flexBasis: "100%",
-    height: "90%",
+    height: "85%",
   },
 
   pagination: {
     flexBasis: "100%",
-    marginBottom: "30px",
+    marginBottom: "80px",
     height: 0,
   },
 
   bold: {
     fontWeight: 700,
   },
+
+  header: {
+    position: "sticky",
+    top: 0,
+    backgroundColor:
+      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+    transition: "box-shadow 150ms ease",
+
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      zIndex: 1,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      borderBottom: `1px solid ${
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[3]
+          : theme.colors.gray[2]
+      }`,
+    },
+  },
+
+  scrolled: {
+    boxShadow: theme.shadows.sm,
+  },
 }));
 
 export function UsersList() {
   const theme = useMantineTheme();
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const [rawUserList, setRawUserList] = useState<RawUserData[]>([]);
   const [userList, setUserList] = useState<UserTableData[]>([]);
   const [searchParams, setSearchParams] = useState<PaginationSearchObject>({
     keyword: "",
+    current_email: "",
   });
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user && user.email) {
+        setSearchParams({ ...searchParams, current_email: user.email });
+      }
+    });
+  }, []);
 
   useEffect(() => {
     convertRawUserDataToTableData();
@@ -138,7 +178,7 @@ export function UsersList() {
       <td>
         <Menu>
           <Menu.Target>
-            <ActionIcon color="dark">
+            <ActionIcon color="dark" sx={{ position: "static", zIndex: 0 }}>
               <IconDots size={16} stroke={1.5} />
             </ActionIcon>
           </Menu.Target>
@@ -214,7 +254,10 @@ export function UsersList() {
 
   return (
     <Container fluid className={classes.container}>
-      <SearchAndFilterUsers setSearchObj={setSearchParams} />
+      <SearchAndFilterUsers
+        email={searchParams.current_email ? searchParams.current_email : ""}
+        setSearchObj={setSearchParams}
+      />
       <Paper
         withBorder
         p={30}
@@ -225,14 +268,21 @@ export function UsersList() {
         <Container className={classes.table}>
           <MantineProvider>
             <ModalsProvider>
-              <ScrollArea style={{ height: "95%" }}>
+              <ScrollArea
+                style={{ height: "100%" }}
+                onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
+              >
                 <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
-                  <thead>
+                  <thead
+                    className={cx(classes.header, {
+                      [classes.scrolled]: scrolled,
+                    })}
+                  >
                     <tr>
                       <th>Name</th>
                       <th>Email</th>
                       <th>Type</th>
-                      <th />
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>{rows}</tbody>

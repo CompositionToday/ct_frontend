@@ -17,7 +17,14 @@ import React, { useState, useEffect } from "react";
 import { Flex, Button, MediaQuery, ActionIcon, Modal } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
-import { IconMapPin, IconExternalLink, IconEdit } from "@tabler/icons";
+import {
+  IconMapPin,
+  IconExternalLink,
+  IconEdit,
+  IconPencil,
+  IconTrash,
+  IconBan,
+} from "@tabler/icons";
 import { OpportunityItem } from "./OpportunityHelper";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
 
@@ -99,6 +106,97 @@ export function OpportunityInfo({
 
   return (
     <OpportunityInfoContainer>
+      <ButtonsContainer
+        justify="flex-end"
+        gap="sm"
+        wrap="wrap"
+        direction={largeScreen ? "row" : "column"}
+      >
+        {/* <Button
+          radius="md"
+          sx={{
+            height: 30,
+            alignSelf: "flex-start",
+            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
+          }}
+          size="md"
+          color="green"
+          variant="filled"
+          onClick={() => {
+            setEditModal(true);
+          }}
+        >
+          Edit
+          <ActionIcon color="green" variant="filled">
+            <IconEdit />
+          </ActionIcon>
+        </Button> */}
+        <ActionIcon
+          color="green"
+          sx={{
+            height: 30,
+            alignSelf: "flex-start",
+            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
+          }}
+          onClick={() => {
+            setEditModal(true);
+          }}
+        >
+          <IconPencil />
+        </ActionIcon>
+        {/* <Button
+          radius="md"
+          sx={{
+            height: 30,
+            alignSelf: "flex-start",
+            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
+          }}
+          size="md"
+          color="red"
+          variant="filled"
+          onClick={() => {
+            setDeleteModal(true);
+          }}
+        >
+          Delete Post
+        </Button> */}
+        <ActionIcon
+          color="red"
+          sx={{
+            height: 30,
+            alignSelf: "flex-start",
+            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
+          }}
+          onClick={() => {
+            setDeleteModal(true);
+          }}
+        >
+          <IconTrash />
+        </ActionIcon>
+        {/* <Button
+          radius="md"
+          sx={{
+            height: 30,
+            alignSelf: "flex-start",
+            display: isAdmin ? "auto" : "none",
+          }}
+          size="md"
+          color="red"
+          variant="filled"
+        >
+          Delete Post & Ban Account
+        </Button> */}
+        <ActionIcon
+          color="red"
+          sx={{
+            height: 30,
+            alignSelf: "flex-start",
+            display: isAdmin ? "auto" : "none",
+          }}
+        >
+          <IconBan />
+        </ActionIcon>
+      </ButtonsContainer>
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
       <Flex direction="row">
         <Flex align="center">
@@ -115,75 +213,16 @@ export function OpportunityInfo({
           >{`${opportunity.city}, ${opportunity.state}`}</CityState>
         </Flex> */}
       </Flex>
-      <ButtonsContainer
-        justify=""
-        gap="xl"
-        wrap="wrap"
-        direction={largeScreen ? "row" : "column"}
-      >
-        <a href={opportunity.link} target="blank">
-          <Button
-            radius="md"
-            sx={{ height: 30, alignSelf: "flex-start" }}
-            size="md"
-            rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
-          >
-            Apply
-          </Button>
-        </a>
+      <a href={opportunity.link} target="blank">
         <Button
           radius="md"
-          sx={{
-            height: 30,
-            alignSelf: "flex-start",
-            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
-          }}
+          sx={{ height: 30, alignSelf: "flex-start" }}
           size="md"
-          color="green"
-          variant="filled"
-          onClick={() => {
-            setEditModal(true);
-          }}
+          rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
         >
-          Edit
-          <ActionIcon
-            color="green"
-            variant="filled"
-            sx={{ backgroundColor: "transparent" }}
-          >
-            <IconEdit />
-          </ActionIcon>
+          Apply
         </Button>
-        <Button
-          radius="md"
-          sx={{
-            height: 30,
-            alignSelf: "flex-start",
-            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
-          }}
-          size="md"
-          color="red"
-          variant="filled"
-          onClick={() => {
-            setDeleteModal(true);
-          }}
-        >
-          Delete Post
-        </Button>
-        <Button
-          radius="md"
-          sx={{
-            height: 30,
-            alignSelf: "flex-start",
-            display: isAdmin ? "auto" : "none",
-          }}
-          size="md"
-          color="red"
-          variant="filled"
-        >
-          Delete Post & Ban Account
-        </Button>
-      </ButtonsContainer>
+      </a>
       <SpecificOpportunityInfo
         opportunity={opportunity}
         opportunityType={opportunityType}
