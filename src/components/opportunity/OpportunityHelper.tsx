@@ -31,6 +31,7 @@ export interface OpportunityItem {
   address?: string;
   is_deleted?: string | number;
   is_flagged?: string | number;
+  type?: string;
   // start_date?: Date | string | number;
   start_date?: Date | string | number;
 }
