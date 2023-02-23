@@ -22,31 +22,41 @@ export function JustinNavbar() {
   }));
   const { classes } = useStyles();
   return (
-    <Menu shadow="xl"
-    radius={0}
-    width={"100vw"}
-    >
+    <Menu shadow="xl" radius={0} width={"100vw"}>
       <Menu.Target>
-      <Burger
+        <Burger
             opened={opened}
             onClick={toggle}
             className={classes.burger}
             size="lg"
-          />
+        />
       </Menu.Target>
-      <Menu.Dropdown 
-      className={classes.menu}
-      style={{height:"100vh"}}
-      >
-        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/")}>Home</Menu.Item>
-        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/jobs")}>Jobs</Menu.Item>
-        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/competitions")}>Competitions</Menu.Item>
-        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/festivals")}>Festivals</Menu.Item>
-        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/concerts")}>Concerts</Menu.Item>
+      <Menu.Dropdown className={classes.menu} style={{height:"100vh"}}>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/")}>
+          Home
+        </Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/jobs")}>
+          Jobs
+        </Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/competitions")}>
+          Competitions
+        </Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/festivals")}>
+          Festivals
+        </Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/concerts")}>
+          Concerts
+        </Menu.Item>
         <Menu.Divider />
-        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/login")}>Login</Menu.Item>
-        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/register")}>Register</Menu.Item>
-        <Menu.Item style={{fontSize:"19pt"}} color="red">Sign Out</Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/login")}>
+          Login
+        </Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} onClick={() => navigate("/register")}>
+          Register
+        </Menu.Item>
+        <Menu.Item style={{fontSize:"19pt"}} color="red">
+          Sign Out
+        </Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );
