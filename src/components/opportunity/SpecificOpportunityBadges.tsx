@@ -64,6 +64,38 @@ export const SpecificOpportunityBadges = ({
   if (opportunityType === "jobs") {
     return (
       <>
+        {opportunity?.job_type && (
+          <Tooltip label="Job Type">
+            <Badge
+              leftSection={
+                <IconBriefcase
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {opportunity?.job_type}
+            </Badge>
+          </Tooltip>
+        )}
+        <Tooltip label="Job Category">
+          <Badge
+            leftSection={
+              <IconCategory
+                size={18}
+                color="#40C057"
+                style={{ marginBottom: "-3px" }}
+              />
+            }
+            color="gray"
+            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+          >
+            {opportunity?.job_category}
+          </Badge>
+        </Tooltip>
         {opportunity?.salary && (
           <Tooltip label="Salary">
             <Badge
@@ -84,21 +116,6 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
-        <Tooltip label="Job Category">
-          <Badge
-            leftSection={
-              <IconBriefcase
-                size={18}
-                color="#40C057"
-                style={{ marginBottom: "-3px" }}
-              />
-            }
-            color="gray"
-            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
-          >
-            {opportunity?.job_category}
-          </Badge>
-        </Tooltip>
       </>
     );
   }

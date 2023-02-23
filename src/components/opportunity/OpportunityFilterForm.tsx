@@ -69,7 +69,7 @@ export function OpportunityFilterForm({
           value={tempSearchObj.competition_category}
         />
         <DropdownCategory
-          label="Job Type"
+          label="Job Category"
           placeholder={`Select job category`}
           allowDeselect
           display={opportunityType === "jobs"}
@@ -94,7 +94,14 @@ export function OpportunityFilterForm({
           placeholder={`Select job type`}
           allowDeselect
           display={opportunityType === "jobs"}
-          data={["Full-time", "Part-time", "Any"]}
+          data={[
+            "Full-time",
+            "Part-time",
+            "Contract",
+            "Temporary",
+            "Volunteer",
+            "Internship",
+          ]}
           onChange={(e) =>
             setTempSearchObj({
               ...tempSearchObj,

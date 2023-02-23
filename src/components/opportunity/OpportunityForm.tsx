@@ -130,10 +130,6 @@ export function OpportunityForm({
         value.trim() || opportunityType !== "jobs"
           ? null
           : "Please give the category of job",
-      job_type: (value) =>
-        value.trim() || opportunityType !== "jobs"
-          ? null
-          : "Please give the type of job",
       competition_category: (value) =>
         value.trim() || opportunityType !== "competitions"
           ? null
@@ -373,9 +369,15 @@ export function OpportunityForm({
               <DropdownCategory
                 label="Job type"
                 placeholder={`Select job type`}
-                withAsterisk
                 display={opportunityType === "jobs"}
-                data={["Full-time", "Part-time", "Any"]}
+                data={[
+                  "Full-time",
+                  "Part-time",
+                  "Contract",
+                  "Temporary",
+                  "Volunteer",
+                  "Internship",
+                ]}
                 {...form.getInputProps("job_type")}
               />
             </TwoInputRow>
@@ -386,13 +388,6 @@ export function OpportunityForm({
               display={displayWinnerInput && opportunityType === "competitions"}
               {...form.getInputProps("winner")}
             />
-            {/* <TextInputFullWidth
-              label="Category"
-              placeholder="Category"
-              display={opportunityType === "competitions"}
-              withAsterisk
-              {...form.getInputProps("category")}
-            /> */}
             <DropdownCategory
               label="Category"
               placeholder={`Select competitions category`}
@@ -440,8 +435,6 @@ export function OpportunityForm({
               placeholder="Choose start and end date"
               label="Date Range"
               display={opportunityType === "festivals"}
-              // value={dateRange}
-              // onChange={setDateRange}
               withAsterisk
               value={dateRange}
               onChange={(e) => {

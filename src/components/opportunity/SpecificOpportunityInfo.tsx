@@ -75,6 +75,24 @@ export const SpecificOpportunityInfo = ({
   if (opportunityType === "jobs") {
     return (
       <SpecificOpportunityInfoContainer>
+        {opportunity?.job_type && (
+          <Tooltip label="Job Type">
+            <Flex align="center">
+              <IconBriefcase size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                {opportunity?.job_type}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
+        <Tooltip label="Job Category">
+          <Flex align="center">
+            <IconCategory size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {opportunity?.job_category}
+            </span>
+          </Flex>
+        </Tooltip>
         {opportunity?.salary && (
           <Tooltip label="Salary">
             <Flex align="center">
@@ -88,22 +106,6 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
-        <Tooltip label="Job Category">
-          <Flex align="center">
-            <IconBriefcase size={30} color="#40C057" />
-            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-              {opportunity?.job_category}
-            </span>
-          </Flex>
-        </Tooltip>
-        <Tooltip label="Job Type">
-          <Flex align="center">
-            <IconBriefcase size={30} color="#40C057" />
-            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-              {opportunity?.job_type}
-            </span>
-          </Flex>
-        </Tooltip>
       </SpecificOpportunityInfoContainer>
     );
   }
