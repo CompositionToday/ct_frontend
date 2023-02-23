@@ -30,10 +30,7 @@ export const MoreInfoOpportunityTitle = styled.h1`
   font-size: 24px;
 `;
 
-export const CityState = styled.p`
-  margin-left: 10px;
-  font-size: 15px;
-`;
+export const CityState = styled.p``;
 
 export const ButtonsContainer = styled(Flex)`
   margin-top: 15px;
@@ -48,9 +45,7 @@ export const Label = styled.h2`
   display: inline;
 `;
 
-export const SpecificOpportunityInfoContainer = styled.div`
-  margin-top: 16px;
-`;
+export const SpecificOpportunityInfoContainer = styled.div``;
 
 export const DescriptionContent = styled.p`
   white-space: pre-line;

@@ -37,7 +37,9 @@ export function OpportunityFilterForm({
   const [tempSearchObj, setTempSearchObj] = useState<PaginationSearchObject>({
     keyword: keyword ? keyword : "",
     salary: searchObj.salary ? searchObj.salary : 0,
-    category: searchObj.category ? searchObj.category : "",
+    competition_category: searchObj.competition_category
+      ? searchObj.competition_category
+      : "",
     end_date: searchObj.end_date ? searchObj.end_date : 0,
     job_type: searchObj.job_type ? searchObj.job_type : "",
   });
@@ -76,10 +78,10 @@ export function OpportunityFilterForm({
           onChange={(e) =>
             setTempSearchObj({
               ...tempSearchObj,
-              category: e ? e : "",
+              competition_category: e ? e : "",
             })
           }
-          value={tempSearchObj.category}
+          value={tempSearchObj.competition_category}
         />
         <DropdownCategory
           label="Job Type"

@@ -79,7 +79,6 @@ export function OpportunityForm({
     let month = tempDate.getMonth();
     let year = tempDate.getFullYear();
     let currentDate = new Date(year, month, day, 0, 0, 0, 0);
-    console.log("current date: ", currentDate);
 
     return currentDate.valueOf();
   };
@@ -107,7 +106,7 @@ export function OpportunityForm({
       salary: +(opportunity?.salary as number) || 0,
       job_type: opportunity?.job_type || "",
       winner: opportunity?.winner || "",
-      category: opportunity?.category || "",
+      competition_category: opportunity?.competition_category || "",
       address: opportunity?.address || "",
       start_date: opportunity?.start_date
         ? new Date(opportunity?.start_date)
@@ -138,7 +137,7 @@ export function OpportunityForm({
         value || opportunityType !== "jobs"
           ? null
           : "Please give the type of job",
-      category: (value) =>
+      competition_category: (value) =>
         value || opportunityType !== "competitions"
           ? null
           : "Please give the category",
@@ -163,9 +162,9 @@ export function OpportunityForm({
     "state",
     "end_date",
   ];
-  const jobOpportunityKey = ["salary", "job_type"];
-  const competitionOpportunityKey = ["winner", "category"];
-  const concertOpportunityKey = ["address"];
+  const jobOpportunityKey = ["salary", "job_type", "job_category"];
+  const competitionOpportunityKey = ["winner", "competition_category"];
+  const concertOpportunityKey = ["address", "start_time"];
   const festivalOpportunityKey = ["start_date", "address"];
 
   // FIXME: When creating the request object, need to make sure that we use keyword
@@ -259,18 +258,18 @@ export function OpportunityForm({
 
   return (
     <OpportunityFormContainer>
-      <Paper shadow="sm" withBorder>
+      <Paper shadow="sm" withBorder radius="lg" sx={{ padding: "20px 40px" }}>
         <OpportunityFormContentContainer>
           <form
             onSubmit={form.onSubmit((values) => handleFormSubmission(values))}
           >
-            <TextInputFullWidth
+            {/* <TextInputFullWidth
               label="Get rid of me since I'm an input for the UID"
               placeholder="Title"
               display
               withAsterisk
               {...form.getInputProps("UID")}
-            />
+            /> */}
             <TwoInputRow
               justify="space-around"
               gap="md"
@@ -378,7 +377,7 @@ export function OpportunityForm({
               withAsterisk
               display={opportunityType === "competitions"}
               data={["Brass", "Woodwind", "Percussion"]}
-              {...form.getInputProps("category")}
+              {...form.getInputProps("competition_category")}
             />
             <TextInputFullWidth
               label="Address"
@@ -419,7 +418,10 @@ export function OpportunityForm({
               // error="this is a test"
               // {...form.getInputProps("dateRange")}
             />
-            <SubmitButtonContainer justify="center">
+            <SubmitButtonContainer
+              justify="center"
+              sx={{ marginBottom: "20px" }}
+            >
               <Button
                 type="submit"
                 onClick={() => {
@@ -433,7 +435,7 @@ export function OpportunityForm({
                   console.log(form.isValid("end_date"));
                   console.log(form.isValid("salary"));
                   console.log(form.isValid("job_type"));
-                  console.log(form.isValid("category"));
+                  console.log(form.isValid("competition_category"));
                   console.log(form.isValid("address"));
 
                   console.log(displayLocationError);

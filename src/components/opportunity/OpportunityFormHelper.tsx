@@ -18,7 +18,6 @@ export const OpportunityFormContainer = styled.div`
 `;
 
 export const OpportunityFormContentContainer = styled.div`
-  padding: 20px;
   margin: 0 auto;
 `;
 

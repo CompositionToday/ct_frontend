@@ -31,6 +31,7 @@ import {
   Badge,
   ActionIcon,
   Button,
+  Tooltip,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -40,6 +41,7 @@ import { OpportunityFilterForm } from "./OpportunityFilterForm";
 import { OpportunityForm } from "./OpportunityForm";
 import { FormHeader } from "./CreateOpportunityHelper";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
+import { SpecificOpportunityBadges } from "./SpecificOpportunityBadges";
 
 const greenTriangle = require("../../images/GreenTriangle.png");
 const blueTriangle = require("../../images/BlueTriangle.png");
@@ -127,6 +129,7 @@ export function Opportunity() {
       showNotification({
         title: "Opportunity Deleted",
         message: "Opportunity was deleted",
+        color: "green",
       });
     } catch (err) {
       console.log(err);
@@ -164,8 +167,8 @@ export function Opportunity() {
       }
 
       showNotification({
-        title: "Success",
-        message: "Your edits has been successfully made",
+        title: "Edits Made",
+        message: "Your changes have been applied",
         color: "green",
       });
       setDisplayOpportunityEditModal(false);
@@ -202,8 +205,10 @@ export function Opportunity() {
       setRecall(recall + 1);
       setDisplayOpportunityInfoModal(false);
       showNotification({
-        title: "Opportunity Flagged",
-        message: "Opportunity was flagged",
+        title: "Post Reported",
+        message:
+          "You reported this post. It will be reviewed by an administrator",
+        color: "green",
       });
     } catch (err) {
       console.log(err);
@@ -293,9 +298,10 @@ export function Opportunity() {
       console.log("ban responseJson: ", responseJson);
       setRecall(recall + 1);
       showNotification({
-        title: "User banned",
+        title: "User Banned",
         message:
-          "The user has been banned and all their postings has been removed",
+          "The user has been banned and all of their posts have been deleted",
+        color: "green",
       });
     } catch (err) {
       console.log(err);
@@ -316,7 +322,7 @@ export function Opportunity() {
       !!searchObj.city ||
       !!searchObj.state ||
       !!searchObj.salary ||
-      !!searchObj.category ||
+      !!searchObj.competition_category ||
       !!searchObj.job_type
     )
       ? "red"
@@ -364,16 +370,6 @@ export function Opportunity() {
               value={keyword}
               sx={{ minWidth: "400px" }}
             />
-            {/* <SearchBar
-            medianScreen={medianScreen}
-            placeholder="Title or organization"
-            rightSection={
-              <IconSearch color="#808080" onClick={handleInputSubmit} />
-            }
-            value={keyword}
-            onChange={handleSearchInput}
-            onKeyDown={handleEnterKeyDown}
-          /> */}
             <ActionIcon
               color="dark.2"
               size="lg"
@@ -387,28 +383,6 @@ export function Opportunity() {
               <IconFilter size={40} stroke={1.5} />
             </ActionIcon>
           </Group>
-          {/* <FilterIconContainer
-            onClick={() => {
-              setDisplayOpportunitySearchFilterModal(true);
-            }}
-            color="dark.2"
-            size="lg"
-            sx={{
-              backgroundColor: !!(
-                searchObj.is_flagged !== "0" ||
-                searchObj.is_deleted !== "0" ||
-                !!searchObj.city ||
-                !!searchObj.state ||
-                !!searchObj.salary ||
-                !!searchObj.category ||
-                !!searchObj.job_type
-              )
-                ? "red"
-                : "white",
-            }}
-          >
-            <IconFilter size={40} color="#808080" />
-          </FilterIconContainer> */}
         </SearchFilterContainer>
         <OpportunityGrid justify="center" medianScreen={medianScreen} grow>
           <OpportunityLeftColumnContainer span={4}>
@@ -430,28 +404,25 @@ export function Opportunity() {
                     <p style={{ fontSize: "14px" }}>
                       {opportunity.organization}
                     </p>
-                    {/* <CityStateContainer>
-                      <Flex justify="center" align="center" gap="xs">
-                        <img src={LocationIcon} style={{ height: "27px" }} />
-                        <span>
-                          {opportunity.city}, {opportunity.state}
-                        </span>
-                      </Flex>
-                    </CityStateContainer> */}
-
-                    <Badge
-                      leftSection={
-                        <IconMapPin
-                          size={18}
-                          color="#40C057"
-                          style={{ marginBottom: "-3px" }}
-                        />
-                      }
-                      color="gray"
-                      sx={{ height: "25px" }}
-                    >
-                      {opportunity.city}, {opportunity.state}
-                    </Badge>
+                    <Tooltip label="Location">
+                      <Badge
+                        leftSection={
+                          <IconMapPin
+                            size={18}
+                            color="#40C057"
+                            style={{ marginBottom: "-3px" }}
+                          />
+                        }
+                        color="gray"
+                        sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+                      >
+                        {opportunity.city}, {opportunity.state}
+                      </Badge>
+                    </Tooltip>
+                    <SpecificOpportunityBadges
+                      opportunity={opportunity}
+                      opportunityType={opportunityType}
+                    ></SpecificOpportunityBadges>
                   </OpportunityCard>
                 );
               })}

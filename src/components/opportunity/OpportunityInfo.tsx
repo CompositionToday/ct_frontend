@@ -14,7 +14,14 @@ import { onAuthStateChanged } from "firebase/auth";
 import LocationIcon from "./LocationIcon.svg";
 import ApplyIcon from "./ApplyIcon.svg";
 import React, { useState, useEffect } from "react";
-import { Flex, Button, MediaQuery, ActionIcon, Modal } from "@mantine/core";
+import {
+  Flex,
+  Button,
+  MediaQuery,
+  ActionIcon,
+  Modal,
+  Tooltip,
+} from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import {
@@ -116,95 +123,83 @@ export function OpportunityInfo({
         wrap="wrap"
         direction={largeScreen ? "row" : "column"}
       >
-        {/* <Button
-          radius="md"
-          sx={{
-            height: 30,
-            alignSelf: "flex-start",
-            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
-          }}
-          size="md"
-          color="green"
-          variant="filled"
-          onClick={() => {
-            setEditModal(true);
-          }}
-        >
-          Edit
-          <ActionIcon color="green" variant="filled">
-            <IconEdit />
+        <Tooltip label="Edit Post" withArrow>
+          <ActionIcon
+            color="green"
+            sx={{
+              height: 30,
+              alignSelf: "flex-start",
+              display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
+            }}
+            onClick={() => {
+              setEditModal(true);
+            }}
+          >
+            <IconPencil />
           </ActionIcon>
-        </Button> */}
-        <ActionIcon
-          color="green"
-          sx={{
-            height: 30,
-            alignSelf: "flex-start",
-            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
-          }}
-          onClick={() => {
-            setEditModal(true);
-          }}
-        >
-          <IconPencil />
-        </ActionIcon>
-        {/* <Button
-          radius="md"
-          sx={{
-            height: 30,
-            alignSelf: "flex-start",
-            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
-          }}
-          size="md"
-          color="red"
-          variant="filled"
-          onClick={() => {
-            setDeleteModal(true);
-          }}
-        >
-          Delete Post
-        </Button> */}
-        <ActionIcon
-          color="red"
-          sx={{
-            height: 30,
-            alignSelf: "flex-start",
-            display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
-          }}
-          onClick={() => {
-            setDeleteModal(true);
-          }}
-        >
-          <IconTrash />
-        </ActionIcon>
-        <ActionIcon
-          color="red"
-          sx={{
-            height: 30,
-            alignSelf: "flex-start",
-            display: isAdmin ? "auto" : "none",
-          }}
-          onClick={() => setBannedModal(true)}
-        >
-          <IconBan />
-        </ActionIcon>
-        <ActionIcon
-          color="yellow"
-          onClick={() => {
-            setFlagModal(true);
-          }}
-        >
-          {!opportunity.is_flagged ? <IconFlag /> : <IconFlagOff />}
-        </ActionIcon>
+        </Tooltip>
+        <Tooltip label="Delete Post" withArrow>
+          <ActionIcon
+            color="red"
+            sx={{
+              height: 30,
+              alignSelf: "flex-start",
+              display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
+            }}
+            onClick={() => {
+              setDeleteModal(true);
+            }}
+          >
+            <IconTrash />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label="Ban User" withArrow>
+          <ActionIcon
+            color="red"
+            sx={{
+              height: 30,
+              alignSelf: "flex-start",
+              display: isAdmin ? "auto" : "none",
+            }}
+            onClick={() => setBannedModal(true)}
+          >
+            <IconBan />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label="Report Post" withArrow>
+          <ActionIcon
+            color="yellow"
+            onClick={() => {
+              setFlagModal(true);
+            }}
+          >
+            {!opportunity.is_flagged ? <IconFlag /> : <IconFlagOff />}
+          </ActionIcon>
+        </Tooltip>
       </ButtonsContainer>
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
-      <Flex direction="row">
+      <Flex direction="column">
         <Flex align="center">
-          <IconMapPin size={30} color="#40C057" />
-          <CityState
-            style={{ display: "inline", fontSize: "17px" }}
-          >{`${opportunity.city}, ${opportunity.state}`}</CityState>
+          <Tooltip label="Location">
+            <Flex align="center">
+              <IconMapPin size={30} color="#40C057" />
+              <CityState
+                style={{
+                  display: "inline",
+                  fontSize: "17px",
+                  margin: "0px 0px 0px 10px",
+                }}
+              >{`${opportunity.city}, ${opportunity.state}`}</CityState>
+            </Flex>
+          </Tooltip>
         </Flex>
+        <Flex align="center">
+          <SpecificOpportunityInfo
+            opportunity={opportunity}
+            opportunityType={opportunityType}
+          />
+        </Flex>
+
         {/* REPLACE THIS WITH OTHER BADGES */}
         {/* <Flex align="center">
           <IconMapPin size={30} color="#40C057" />
@@ -216,23 +211,21 @@ export function OpportunityInfo({
       <a href={opportunity.link} target="blank">
         <Button
           radius="md"
-          sx={{ height: 30, alignSelf: "flex-start" }}
+          sx={{ height: 30, alignSelf: "flex-start", margin: "15px 0px" }}
           size="md"
           rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
         >
           Apply
         </Button>
       </a>
-      <SpecificOpportunityInfo
-        opportunity={opportunity}
-        opportunityType={opportunityType}
-      />
-      <Label>End Date:</Label>
-      <p>{`${
-        typeof opportunity.end_date === "number"
-          ? new Date(opportunity.end_date).toString()
-          : `${new Date()} defaulted end date`
-      }`}</p>
+      <Flex>
+        <Label>End Date:</Label>
+        <p>{`${
+          typeof opportunity.end_date === "number"
+            ? new Date(opportunity.end_date).toString()
+            : `${new Date()} defaulted end date`
+        }`}</p>
+      </Flex>
       <DescriptionContainer>
         <Label>Description:</Label>
         <DescriptionContent>{opportunity.description}</DescriptionContent>

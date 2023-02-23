@@ -19,18 +19,13 @@ export function CreateOpportunity() {
   const navigate = useNavigate();
 
   const handleOpportunityTypeChange = (e: string) => {
-    setOpportunityType(e);
+    setOpportunityType(e + "s");
   };
 
   const handleSubmission = async (opportunity: OpportunityItem) => {
     try {
-      console.log("opportunity in create: ", opportunity);
-      console.log(
-        "end_date: ",
-        new Date(
-          typeof opportunity.end_date === "number" ? opportunity.end_date : 1000
-        )
-      );
+      console.log("Opportunity:", opportunity);
+
       opportunity.end_date = opportunity.end_date?.toString();
       opportunity.start_date = opportunity.start_date?.toString();
       opportunity.date_posted = opportunity.date_posted?.toString();
@@ -72,19 +67,20 @@ export function CreateOpportunity() {
 
   return (
     <CreateOpportunityContainer>
-      <FormHeader>Create Opportunity</FormHeader>
+      <FormHeader>Create Post</FormHeader>
       <Select
         label="Opportunity Type"
         placeholder="Select opportunity type"
-        value={opportunityType}
+        value={opportunityType.substring(0, opportunityType.length - 1)}
         onChange={handleOpportunityTypeChange}
-        data={["Jobs", "Competitions", "Festivals", "Concerts"]}
+        data={["Job", "Competition", "Festival", "Concert"]}
+        sx={{ marginBottom: "25px" }}
       />
-      <TimeInput
+      {/* <TimeInput
         label="What time is it now?"
         onChange={(e) => console.log("change at time input ", e)}
         format="12"
-      />
+      /> */}
       <OpportunityForm
         opportunityType={opportunityType.toLowerCase()}
         handleSubmission={handleSubmission}

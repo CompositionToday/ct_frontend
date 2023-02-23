@@ -1,9 +1,16 @@
-import React from "react";
 import { OpportunityItem } from "./OpportunityHelper";
 import {
   SpecificOpportunityInfoContainer,
   Label,
 } from "./OpportunityInfoHelper";
+import {
+  IconMoneybag,
+  IconBriefcase,
+  IconMap2,
+  IconCategory,
+  IconTrophy,
+} from "@tabler/icons";
+import { Flex, Tooltip } from "@mantine/core";
 
 interface SpecificOpportunityInfoProp {
   opportunity: OpportunityItem;
@@ -17,16 +24,24 @@ export const SpecificOpportunityInfo = ({
   if (opportunityType === "competitions") {
     return (
       <SpecificOpportunityInfoContainer>
+        <Tooltip label="Category">
+          <Flex align="center">
+            <IconCategory size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {opportunity?.competition_category}
+            </span>
+          </Flex>
+        </Tooltip>
         {opportunity?.winner && (
-          <div>
-            <Label>Winner: </Label>
-            <span>{opportunity?.winner}</span>
-          </div>
+          <Tooltip label="Winner">
+            <Flex align="center">
+              <IconTrophy size={30} color="#FAB005" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                {opportunity?.winner}
+              </span>
+            </Flex>
+          </Tooltip>
         )}
-        <div>
-          <Label>Category: </Label>
-          <span>{opportunity?.category}</span>
-        </div>
       </SpecificOpportunityInfoContainer>
     );
   }
@@ -34,10 +49,14 @@ export const SpecificOpportunityInfo = ({
   if (opportunityType === "concerts") {
     return (
       <SpecificOpportunityInfoContainer>
-        <div>
-          <Label>Address: </Label>
-          <span>{opportunity?.address}</span>
-        </div>
+        <Tooltip label="Address">
+          <Flex align="center">
+            <IconMap2 size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {opportunity?.address}
+            </span>
+          </Flex>
+        </Tooltip>
       </SpecificOpportunityInfoContainer>
     );
   }
@@ -46,20 +65,26 @@ export const SpecificOpportunityInfo = ({
     return (
       <SpecificOpportunityInfoContainer>
         {opportunity?.salary && (
-          <div>
-            <Label>Salary: </Label>
-            <span>
-              $
-              {opportunity?.salary
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            </span>
-          </div>
+          <Tooltip label="Salary">
+            <Flex align="center">
+              <IconMoneybag size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                $
+                {opportunity?.salary
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </span>
+            </Flex>
+          </Tooltip>
         )}
-        <div>
-          <Label>Job Type: </Label>
-          <span>{opportunity?.job_type}</span>
-        </div>
+        <Tooltip label="Job Type">
+          <Flex align="center">
+            <IconBriefcase size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {opportunity?.job_type}
+            </span>
+          </Flex>
+        </Tooltip>
       </SpecificOpportunityInfoContainer>
     );
   }
@@ -67,6 +92,14 @@ export const SpecificOpportunityInfo = ({
   if (opportunityType === "festivals") {
     return (
       <SpecificOpportunityInfoContainer>
+        <Tooltip label="Address">
+          <Flex align="center">
+            <IconMap2 size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {opportunity?.address}
+            </span>
+          </Flex>
+        </Tooltip>
         <div>
           <Label>Start Date: </Label>
           <span>
@@ -78,10 +111,6 @@ export const SpecificOpportunityInfo = ({
               opportunity?.start_date as number
             ).getFullYear()} ${new Date(opportunity?.start_date as number)}`}
           </span>
-        </div>
-        <div>
-          <Label>Address: </Label>
-          <span>{opportunity?.address}</span>
         </div>
       </SpecificOpportunityInfoContainer>
     );

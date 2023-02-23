@@ -9,4 +9,6 @@ export const CreateOpportunityContainer = styled.div`
 
 export const FormHeader = styled.h1`
   text-align: center;
+  font-size: 30px;
+  color: #373a40;
 `;

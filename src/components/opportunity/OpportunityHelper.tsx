@@ -27,7 +27,8 @@ export interface OpportunityItem {
   salary?: string | number;
   job_type?: jobType | any;
   winner?: string | null;
-  category?: string;
+  competition_category?: string;
+  job_category?: string;
   address?: string;
   is_deleted?: string | number;
   is_flagged?: string | number;
