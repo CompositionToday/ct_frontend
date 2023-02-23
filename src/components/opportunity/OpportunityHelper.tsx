@@ -28,6 +28,7 @@ export interface OpportunityItem {
   type?: string;
   // start_date?: Date | string | number;
   start_date?: Date | string | number;
+  start_time?: Date | string | number | null;
 }
 
 interface PaginationCard {

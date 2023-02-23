@@ -7,7 +7,7 @@ import {
   Button,
   Select,
 } from "@mantine/core";
-import { DatePicker, DateRangePicker } from "@mantine/dates";
+import { DatePicker, DateRangePicker, TimeInput } from "@mantine/dates";
 
 interface OpportunityInput {
   display?: boolean;
@@ -60,5 +60,10 @@ export const SubmitButtonContainer = styled(Flex)`
 export const DropdownCategory = styled(Select)<OpportunityInput>`
   display: ${(props) => (props.display ? "auto" : "none")};
   width: 100%;
+  margin-top: 10px;
+`;
+
+export const StartTimeInput = styled(TimeInput)<OpportunityInput>`
+  display: ${(props) => (props.display ? "auto" : "none")};
   margin-top: 10px;
 `;

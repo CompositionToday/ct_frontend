@@ -29,6 +29,7 @@ export function CreateOpportunity() {
       opportunity.end_date = opportunity.end_date?.toString();
       opportunity.start_date = opportunity.start_date?.toString();
       opportunity.date_posted = opportunity.date_posted?.toString();
+      opportunity.start_time = opportunity.start_time?.toString();
 
       let requestOptions = {
         method: "POST",

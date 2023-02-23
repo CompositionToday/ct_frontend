@@ -46,6 +46,7 @@ export interface PaginationSearchObject {
   is_banned?: string;
   is_regular?: string;
   current_email?: string;
+  start_time?: Date | string | number | null;
 }
 
 export function PaginationNavbar({

@@ -9,6 +9,7 @@ import {
   SalaryInput,
   SubmitButtonContainer,
   DropdownCategory,
+  StartTimeInput,
 } from "./OpportunityFormHelper";
 import { OpportunityItem } from "./OpportunityHelper";
 import { Location } from "../filter/Location";
@@ -16,9 +17,10 @@ import { auth } from "../../Firebase";
 import React, { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { Paper, NumberInput, Button, Select, filterProps } from "@mantine/core";
-import { DateRangePickerValue } from "@mantine/dates";
+import { DateRangePickerValue, TimeInput } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
+import { start } from "repl";
 
 interface OpportunityFormProp {
   opportunityType: string;
@@ -45,8 +47,12 @@ export function OpportunityForm({
       ? new Date(opportunity?.end_date)
       : null,
   ]);
+  const [startTime, setStartTime] = useState<Date | null>(
+    opportunity?.start_time ? new Date(opportunity?.start_time) : null
+  );
   const [displayLocationError, setDisplayLocationError] = useState(false);
   const [displayDateRangeError, setDisplayDateRangeError] = useState(false);
+  const [displayStartTimeError, setDisplayStartTimeError] = useState(false);
   const [userUID, setUserUID] = useState("");
   const medianScreen = useMediaQuery("(max-width: 992px)");
 
@@ -92,6 +98,9 @@ export function OpportunityForm({
       start_date: opportunity?.start_date
         ? new Date(opportunity?.start_date)
         : new Date(getCurrentDate()),
+      start_time: opportunity?.start_time
+        ? new Date(opportunity?.start_time)
+        : null,
       // dateRange:
       //   opportunity?.end_date && opportunity?.start_date
       //     ? [opportunity.start_date, opportunity?.end_date]
@@ -169,6 +178,11 @@ export function OpportunityForm({
       return;
     }
 
+    if (opportunityType === "concerts" && !startTime) {
+      console.log("There is no start time given, returning out of function");
+      return;
+    }
+
     if (!city || !state) {
       console.log(
         "there is no location that was selected, now returning out of function"
@@ -216,6 +230,10 @@ export function OpportunityForm({
       req.end_date = getCurrentDate(
         values.end_date instanceof Date ? values.end_date?.valueOf() : undefined
       );
+    }
+
+    if (opportunityType === "concerts") {
+      req.start_time = startTime?.valueOf();
     }
 
     req.city = city;
@@ -393,6 +411,24 @@ export function OpportunityForm({
               withAsterisk
               {...form.getInputProps("address")}
             />
+            <StartTimeInput
+              label="Start Time"
+              format="12"
+              withAsterisk
+              clearable
+              display={opportunityType === "concerts"}
+              onChange={(e) => {
+                console.log("timeinput: ", e);
+                setStartTime(e);
+                setDisplayStartTimeError(false);
+              }}
+              value={startTime}
+              error={
+                displayStartTimeError && !startTime
+                  ? "Please give a start time"
+                  : false
+              }
+            />
             <EndDateInput
               placeholder="End Date"
               label="End Date"
@@ -431,6 +467,7 @@ export function OpportunityForm({
                 onClick={() => {
                   setDisplayLocationError(true);
                   setDisplayDateRangeError(true);
+                  setDisplayStartTimeError(true);
                   console.log(form.isValid());
                   console.log(form.isValid("title"));
                   console.log(form.isValid("organization"));
@@ -439,6 +476,7 @@ export function OpportunityForm({
                   console.log(form.isValid("end_date"));
                   console.log(form.isValid("salary"));
                   console.log(form.isValid("job_category"));
+                  console.log(form.isValid("job_type"));
                   console.log(form.isValid("job_type"));
                   console.log(form.isValid("competition_category"));
                   console.log(form.isValid("address"));

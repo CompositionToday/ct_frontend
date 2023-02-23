@@ -57,6 +57,17 @@ export const SpecificOpportunityInfo = ({
             </span>
           </Flex>
         </Tooltip>
+        <Tooltip label="Start Time">
+          <Flex align="center">
+            <IconMap2 size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {new Date(opportunity?.start_time as number).toLocaleString(
+                "en-US",
+                { hour: "numeric", minute: "numeric", hour12: true }
+              )}
+            </span>
+          </Flex>
+        </Tooltip>
       </SpecificOpportunityInfoContainer>
     );
   }
