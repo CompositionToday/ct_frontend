@@ -244,7 +244,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         opportunity,
         currentOpportunity?.idposts
       );
-      console.log("edit url: ", `${url}/${opportunityType}/${idpost}`);
+      console.log("edit url: ", `${url}/${currentOpportunity?.type}/${idpost}`);
       let requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -252,7 +252,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       };
 
       let response = await fetch(
-        `${url}/${opportunityType}/${idpost}`,
+        `${url}/${currentOpportunity?.type}/${idpost}`,
         requestOptions
       );
 

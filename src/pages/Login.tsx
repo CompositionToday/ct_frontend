@@ -30,11 +30,11 @@ export function Login() {
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+    setEmail(e.target.value.trim());
   };
 
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+    setPassword(e.target.value.trim());
   };
 
   const handleLogin = async () => {
