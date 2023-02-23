@@ -85,6 +85,7 @@ export function OpportunityForm({
         : new Date(getCurrentDate()),
       salary: +(opportunity?.salary as number) || 0,
       job_category: opportunity?.job_category || "",
+      job_type: opportunity?.job_type || "",
       winner: opportunity?.winner || "",
       competition_category: opportunity?.competition_category || "",
       address: opportunity?.address || "",
@@ -117,6 +118,10 @@ export function OpportunityForm({
       salary: (value: number) =>
         value || opportunityType !== "jobs" ? null : "Please give a salary",
       job_category: (value) =>
+        value.trim() || opportunityType !== "jobs"
+          ? null
+          : "Please give the category of job",
+      job_type: (value) =>
         value.trim() || opportunityType !== "jobs"
           ? null
           : "Please give the type of job",
@@ -346,6 +351,14 @@ export function OpportunityForm({
                   "Other",
                 ]}
                 {...form.getInputProps("job_category")}
+              />
+              <DropdownCategory
+                label="Job type"
+                placeholder={`Select job type`}
+                withAsterisk
+                display={opportunityType === "jobs"}
+                data={["Full-time", "Part-time", "Any"]}
+                {...form.getInputProps("job_type")}
               />
             </TwoInputRow>
             <TextInputFullWidth
