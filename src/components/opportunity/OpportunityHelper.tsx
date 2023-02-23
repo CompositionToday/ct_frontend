@@ -3,13 +3,6 @@ import styled from "@emotion/styled";
 import { Grid, Flex, Button, TextInput, ActionIcon } from "@mantine/core";
 import { DateRangePickerValue } from "@mantine/dates";
 
-export declare enum jobType {
-  teacher,
-  tutor,
-  professor,
-  composor,
-}
-
 // FIXME: Need to get rid of or make optional title and organization here
 export interface OpportunityItem {
   UID?: string;
@@ -25,7 +18,7 @@ export interface OpportunityItem {
   // end_date: Date | string | number;
   end_date?: Date | string | number;
   salary?: string | number;
-  job_type?: jobType | any;
+  job_type?: string;
   winner?: string | null;
   competition_category?: string;
   job_category?: string;

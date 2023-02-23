@@ -15,7 +15,7 @@ import { Location } from "../filter/Location";
 import { auth } from "../../Firebase";
 import React, { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { Paper, NumberInput, Button, Select } from "@mantine/core";
+import { Paper, NumberInput, Button, Select, filterProps } from "@mantine/core";
 import { DateRangePickerValue } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
@@ -25,26 +25,6 @@ interface OpportunityFormProp {
   opportunity?: OpportunityItem;
   displayWinnerInput?: boolean;
   handleSubmission: (opportunity: OpportunityItem) => void;
-}
-
-interface formValue {
-  UID?: string;
-  idposts?: string | number;
-  keyword?: string;
-  title: string;
-  link: string;
-  organization: string;
-  description: string;
-  date_posted: Date | number;
-  city: string;
-  state: string;
-  end_date: string | number | Date;
-  salary: number | string;
-  job_type: any;
-  winner: string;
-  category: string;
-  address: string;
-  start_date: string | number | Date;
 }
 
 export function OpportunityForm({
@@ -104,7 +84,7 @@ export function OpportunityForm({
         ? new Date(opportunity?.end_date)
         : new Date(getCurrentDate()),
       salary: +(opportunity?.salary as number) || 0,
-      job_type: opportunity?.job_type || "",
+      job_category: opportunity?.job_category || "",
       winner: opportunity?.winner || "",
       competition_category: opportunity?.competition_category || "",
       address: opportunity?.address || "",
@@ -136,7 +116,7 @@ export function OpportunityForm({
           : "Please give an end date",
       salary: (value: number) =>
         value || opportunityType !== "jobs" ? null : "Please give a salary",
-      job_type: (value) =>
+      job_category: (value) =>
         value.trim() || opportunityType !== "jobs"
           ? null
           : "Please give the type of job",
@@ -204,13 +184,18 @@ export function OpportunityForm({
       opportunityKeys = essentialOpportunityKey.concat(festivalOpportunityKey);
     }
 
-    let req: OpportunityItem = { ...values };
-    for (let key in req) {
-      let formattedKey = key as keyof typeof req;
+    let req: OpportunityItem = {};
+
+    for (let key in values) {
+      let formattedKey = key as keyof OpportunityItem;
       if (!opportunityKeys.includes(key)) {
-        delete req[formattedKey];
-      } else if (typeof req[formattedKey] === "string") {
-        req[formattedKey] = req[formattedKey].trim();
+        continue;
+      } else if (typeof values[formattedKey] === "string") {
+        let temp = values[formattedKey] as string;
+        temp = temp.trim();
+        req = { ...req, [formattedKey]: temp };
+      } else {
+        req = { ...req, [formattedKey]: values[formattedKey] };
       }
     }
 
@@ -348,8 +333,8 @@ export function OpportunityForm({
                 {...form.getInputProps("salary")}
               />
               <DropdownCategory
-                label="Job Type"
-                placeholder={`Select job type`}
+                label="Job Category"
+                placeholder={`Select job category`}
                 withAsterisk
                 display={opportunityType === "jobs"}
                 data={[
@@ -360,7 +345,7 @@ export function OpportunityForm({
                   "Composing",
                   "Other",
                 ]}
-                {...form.getInputProps("job_type")}
+                {...form.getInputProps("job_category")}
               />
             </TwoInputRow>
             <TextInputFullWidth
@@ -440,6 +425,7 @@ export function OpportunityForm({
                   console.log(form.isValid("description"));
                   console.log(form.isValid("end_date"));
                   console.log(form.isValid("salary"));
+                  console.log(form.isValid("job_category"));
                   console.log(form.isValid("job_type"));
                   console.log(form.isValid("competition_category"));
                   console.log(form.isValid("address"));

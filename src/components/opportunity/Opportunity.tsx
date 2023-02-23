@@ -331,7 +331,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       !!searchObj.state ||
       !!searchObj.salary ||
       !!searchObj.competition_category ||
-      !!searchObj.job_type
+      !!searchObj.job_category
     )
       ? "red"
       : "white";

@@ -84,7 +84,7 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
-        <Tooltip label="Job Type">
+        <Tooltip label="Job Category">
           <Badge
             leftSection={
               <IconBriefcase
@@ -96,7 +96,7 @@ export const SpecificOpportunityBadges = ({
             color="gray"
             sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
           >
-            {opportunity?.job_type}
+            {opportunity?.job_category}
           </Badge>
         </Tooltip>
       </>

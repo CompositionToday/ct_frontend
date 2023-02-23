@@ -84,20 +84,6 @@ export function CreateOpportunity() {
       <OpportunityForm
         opportunityType={opportunityType.toLowerCase()}
         handleSubmission={handleSubmission}
-        // opportunity={{
-        //   UID: "1",
-        //   idposts: 1,
-        //   title: "Title of post",
-        //   link: "link to some website",
-        //   organization: "UCF Football",
-        //   description: "The future of college football",
-        //   date_posted: new Date().valueOf(),
-        //   city: "orlando",
-        //   state: "florida",
-        //   end_date: new Date().valueOf(),
-        //   salary: 120000,
-        //   job_type: "Football staff",
-        // }}
       />
       <Modal
         opened={displaySuccessModal}

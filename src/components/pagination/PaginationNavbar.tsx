@@ -1,7 +1,6 @@
 import {
   OpportunityItem,
   PaginationNavbarContainer,
-  jobType,
 } from "../opportunity/OpportunityHelper";
 import { RawUserData } from "../adminView/UsersList";
 import React, { useState, useEffect } from "react";
@@ -30,7 +29,7 @@ export interface PaginationSearchObject {
   organization?: string;
   end_date?: Date | string | number;
   salary?: number;
-  job_type?: jobType | any;
+  job_type?: string;
   winner?: string | null;
   job_category?: string;
   competition_category?: string;
