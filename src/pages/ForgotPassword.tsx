@@ -52,7 +52,7 @@ export function ForgotPassword() {
   const [validInput, setValidInput] = useState(false);
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+    setEmail(e.target.value.trim());
   };
 
   const handlePasswordReset = async () => {

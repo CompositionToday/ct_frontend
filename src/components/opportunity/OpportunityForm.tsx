@@ -118,12 +118,15 @@ export function OpportunityForm({
     },
     validate: {
       // UID: (value) => (value ? null : "Need to give a UID"),
-      title: (value) => (value ? null : "Please give a title"),
+      title: (value) => (value.trim() ? null : "Please give a title"),
       organization: (value) =>
-        value ? null : "Please give an organization name",
+        value.trim() ? null : "Please give an organization name",
       link: (value) =>
-        value && validateUrl(value) ? null : "Please give a valid URL link",
-      description: (value) => (value ? null : "Please give a description"),
+        value.trim() && validateUrl(value.trim())
+          ? null
+          : "Please give a valid URL link",
+      description: (value) =>
+        value.trim() ? null : "Please give a description",
       // date_posted: (value) => (value ? null : "Need to give a date posted"),
       // city: (value) => (value ? null : "Please give a city"),
       // state: (value) => (value ? null : "Please give a state"),
@@ -134,15 +137,15 @@ export function OpportunityForm({
       salary: (value: number) =>
         value || opportunityType !== "jobs" ? null : "Please give a salary",
       job_type: (value) =>
-        value || opportunityType !== "jobs"
+        value.trim() || opportunityType !== "jobs"
           ? null
           : "Please give the type of job",
       competition_category: (value) =>
-        value || opportunityType !== "competitions"
+        value.trim() || opportunityType !== "competitions"
           ? null
           : "Please give the category",
       address: (value) =>
-        value ||
+        value.trim() ||
         (opportunityType !== "concerts" && opportunityType !== "festivals")
           ? null
           : "Please give an address",
@@ -203,8 +206,11 @@ export function OpportunityForm({
 
     let req: OpportunityItem = { ...values };
     for (let key in req) {
+      let formattedKey = key as keyof typeof req;
       if (!opportunityKeys.includes(key)) {
-        delete req[key as keyof typeof req];
+        delete req[formattedKey];
+      } else if (typeof req[formattedKey] === "string") {
+        req[formattedKey] = req[formattedKey].trim();
       }
     }
 

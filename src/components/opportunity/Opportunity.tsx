@@ -43,10 +43,14 @@ import { FormHeader } from "./CreateOpportunityHelper";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { SpecificOpportunityBadges } from "./SpecificOpportunityBadges";
 
+interface OpportunityProp {
+  apiEndpoint: string;
+}
+
 const greenTriangle = require("../../images/GreenTriangle.png");
 const blueTriangle = require("../../images/BlueTriangle.png");
 
-export function Opportunity() {
+export function Opportunity({ apiEndpoint }: OpportunityProp) {
   // const [opportunityType, setOpportunityType] = useState(
   //   useLocation().pathname.slice(1)
   // );
@@ -104,6 +108,10 @@ export function Opportunity() {
       handleInputSubmit();
     }
   };
+
+  useEffect(() => {
+    console.log("apiEndpoint prop: ", apiEndpoint);
+  }, []);
 
   const deleteCurrentPost = async () => {
     try {
@@ -241,7 +249,7 @@ export function Opportunity() {
         opportunity,
         currentOpportunity?.idposts
       );
-      console.log("edit url: ", `${url}/${opportunityType}/${idpost}`);
+      console.log("edit url: ", `${url}/${currentOpportunity?.type}/${idpost}`);
       let requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -249,7 +257,7 @@ export function Opportunity() {
       };
 
       let response = await fetch(
-        `${url}/${opportunityType}/${idpost}`,
+        `${url}/${currentOpportunity?.type}/${idpost}`,
         requestOptions
       );
 
@@ -427,7 +435,7 @@ export function Opportunity() {
                 );
               })}
               <PaginationNavbar
-                apiEndpointExtension={opportunityType}
+                apiEndpointExtension={apiEndpoint}
                 numberOfItemsPerPage={10}
                 setListOfObjects={setDisplayOpportunityArray}
                 searchFilterObject={searchObj}
@@ -439,7 +447,11 @@ export function Opportunity() {
             <OpportunityRightColumnContainer span={8}>
               <OpportunityInfo
                 opportunity={currentOpportunity}
-                opportunityType={opportunityType}
+                opportunityType={
+                  currentOpportunity && currentOpportunity.type
+                    ? currentOpportunity.type
+                    : opportunityType
+                }
                 setEditModal={setDisplayOpportunityEditModal}
                 setDeleteModal={setDisplayDeleteConfirmationModal}
                 setBannedModal={setDisplayBanConfirmationModal}
@@ -457,7 +469,11 @@ export function Opportunity() {
         >
           <OpportunityInfo
             opportunity={currentOpportunity}
-            opportunityType={opportunityType}
+            opportunityType={
+              currentOpportunity && currentOpportunity.type
+                ? currentOpportunity.type
+                : opportunityType
+            }
             setEditModal={setDisplayOpportunityEditModal}
             setDeleteModal={setDisplayDeleteConfirmationModal}
             setBannedModal={setDisplayBanConfirmationModal}
@@ -490,7 +506,11 @@ export function Opportunity() {
       >
         <FormHeader>Edit Opportunity</FormHeader>
         <OpportunityForm
-          opportunityType={opportunityType}
+          opportunityType={
+            currentOpportunity && currentOpportunity.type
+              ? currentOpportunity.type
+              : opportunityType
+          }
           opportunity={currentOpportunity ? currentOpportunity : undefined}
           displayWinnerInput
           handleSubmission={handleEditButton}

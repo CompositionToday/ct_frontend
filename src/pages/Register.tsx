@@ -36,23 +36,23 @@ export function Register() {
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+    setEmail(e.target.value.trim());
   };
 
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+    setPassword(e.target.value.trim());
   };
 
   const handleFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
+    setFirstName(e.target.value.trim());
   };
 
   const handleLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value);
+    setLastName(e.target.value.trim());
   };
 
   const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
+    setConfirmPassword(e.target.value.trim());
   };
 
   const handleRegister = async () => {

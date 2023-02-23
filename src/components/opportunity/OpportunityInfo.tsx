@@ -73,7 +73,10 @@ export function OpportunityInfo({
             `${url}/users?keyword=${user.email}&page_number=1`
           );
           let responseJson = await response.json();
-          console.log(responseJson.listOfObjects[0].is_admin);
+          console.log(
+            "user admin return:",
+            responseJson.listOfObjects[0].is_admin
+          );
           if (responseJson.listOfObjects[0].is_admin === 1) {
             setIsAdmin(true);
           }
@@ -226,6 +229,10 @@ export function OpportunityInfo({
             : `${new Date()} defaulted end date`
         }`}</p>
       </Flex>
+      <div>
+        <Label>Opportunity Type: </Label>
+        <span>{opportunity.type}</span>
+      </div>
       <DescriptionContainer>
         <Label>Description:</Label>
         <DescriptionContent>{opportunity.description}</DescriptionContent>

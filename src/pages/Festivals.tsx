@@ -4,7 +4,7 @@ import { Opportunity } from "../components/opportunity/Opportunity";
 export function Festivals() {
   return (
     <div>
-      <Opportunity />
+      <Opportunity apiEndpoint="festivals" />
     </div>
   );
 }

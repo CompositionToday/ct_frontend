@@ -36,6 +36,7 @@ export interface PaginationSearchObject {
   competition_category?: string;
   address?: string;
   start_date?: Date | string | number;
+  type?: string;
   first_name?: string;
   last_name?: string;
   email?: string;

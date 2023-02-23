@@ -5,7 +5,7 @@ import { Opportunity } from "../components/opportunity/Opportunity";
 export function Competitions() {
   return (
     <div>
-      <Opportunity />
+      <Opportunity apiEndpoint="competitions" />
     </div>
   );
 }

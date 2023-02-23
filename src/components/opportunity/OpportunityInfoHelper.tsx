@@ -49,4 +49,6 @@ export const SpecificOpportunityInfoContainer = styled.div``;
 
 export const DescriptionContent = styled.p`
   white-space: pre-line;
+  width: 100%;
+  overflow-wrap: break-word;
 `;

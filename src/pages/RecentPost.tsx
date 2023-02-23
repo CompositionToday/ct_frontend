@@ -1,9 +1,10 @@
 import React from "react";
 import { Opportunity } from "../components/opportunity/Opportunity";
-export function Concerts() {
+
+export function RecentPost() {
   return (
     <div>
-      <Opportunity apiEndpoint="concerts" />
+      <Opportunity apiEndpoint="posts" />
     </div>
   );
 }
