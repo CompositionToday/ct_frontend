@@ -20,7 +20,6 @@ import { Paper, NumberInput, Button, Select, filterProps } from "@mantine/core";
 import { DateRangePickerValue, TimeInput } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import { start } from "repl";
 
 interface OpportunityFormProp {
   opportunityType: string;
