@@ -21,7 +21,7 @@ export const OpportunityFormContentContainer = styled.div`
   margin: 0 auto;
 `;
 
-export const TwoInputRow = styled(Flex)<OpportunityInput>`
+export const MultipleInputRow = styled(Flex)<OpportunityInput>`
   margin-top: 10px;
   display: ${(props) => (props.display ? "auto" : "none")};
 `;

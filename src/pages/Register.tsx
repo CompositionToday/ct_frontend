@@ -23,7 +23,7 @@ import {
   Center,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import { TwoInputRow } from "../components/opportunity/OpportunityFormHelper";
+import { MultipleInputRow } from "../components/opportunity/OpportunityFormHelper";
 
 export function Register() {
   const navigate = useNavigate();
@@ -156,7 +156,7 @@ export function Register() {
             value={email}
             onChange={handleEmail}
           />
-          <TwoInputRow display gap="10px">
+          <MultipleInputRow display gap="10px">
             <TextInput
               label="First name"
               placeholder="Enter your first name"
@@ -171,7 +171,7 @@ export function Register() {
               value={lastName}
               onChange={handleLastName}
             />
-          </TwoInputRow>
+          </MultipleInputRow>
           <PasswordInput
             label="Password"
             placeholder="Enter a password"

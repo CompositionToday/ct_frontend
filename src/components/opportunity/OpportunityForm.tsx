@@ -2,7 +2,7 @@ import {
   TextInputFullWidth,
   OpportunityFormContainer,
   OpportunityFormContentContainer,
-  TwoInputRow,
+  MultipleInputRow,
   DescriptionInput,
   EndDateInput,
   StartEndDatePicker,
@@ -124,8 +124,6 @@ export function OpportunityForm({
         value || opportunityType === "festivals"
           ? null
           : "Please give an end date",
-      salary: (value: number) =>
-        value || opportunityType !== "jobs" ? null : "Please give a salary",
       job_category: (value) =>
         value.trim() || opportunityType !== "jobs"
           ? null
@@ -280,7 +278,7 @@ export function OpportunityForm({
               withAsterisk
               {...form.getInputProps("UID")}
             /> */}
-            <TwoInputRow
+            <MultipleInputRow
               justify="space-around"
               gap="md"
               display
@@ -300,56 +298,26 @@ export function OpportunityForm({
                 withAsterisk
                 {...form.getInputProps("organization")}
               />
-            </TwoInputRow>
-            <TextInputFullWidth
-              label="Link"
-              placeholder="Link"
-              display
-              withAsterisk
-              {...form.getInputProps("link")}
-            />
-            <DescriptionInput
-              label="Description"
-              placeholder="Description"
-              autosize
-              withAsterisk
-              minRows={5}
-              {...form.getInputProps("description")}
-            />
-            <Location
-              city={city}
-              setCity={setCity}
-              state={state}
-              setState={setState}
-              displayError={displayLocationError}
-              setDisplayError={setDisplayLocationError}
-              withAsterisk
-            />
-            <TwoInputRow
+            </MultipleInputRow>
+            <MultipleInputRow
               justify="space-around"
               gap="md"
               direction={medianScreen ? "column" : "row"}
               display={opportunityType === "jobs"}
             >
-              <SalaryInput
-                label="Salary"
-                placeholder="Please give an amount"
+              <DropdownCategory
+                label="Job type"
+                placeholder={`Select job type`}
                 display={opportunityType === "jobs"}
-                // value={salary}
-                defaultValue={0}
-                min={0}
-                // onChange={(e) => {
-                //   if (e) setSalary(e);
-                //   else setSalary(0);
-                // }}
-                parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}
-                formatter={(value) =>
-                  !Number.isNaN(parseFloat(value ? value : ""))
-                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    : "$ "
-                }
-                withAsterisk
-                {...form.getInputProps("salary")}
+                data={[
+                  "Full-time",
+                  "Part-time",
+                  "Contract",
+                  "Temporary",
+                  "Volunteer",
+                  "Internship",
+                ]}
+                {...form.getInputProps("job_type")}
               />
               <DropdownCategory
                 label="Job Category"
@@ -366,21 +334,45 @@ export function OpportunityForm({
                 ]}
                 {...form.getInputProps("job_category")}
               />
-              <DropdownCategory
-                label="Job type"
-                placeholder={`Select job type`}
+              <SalaryInput
+                label="Salary"
+                placeholder="Please give an amount"
                 display={opportunityType === "jobs"}
-                data={[
-                  "Full-time",
-                  "Part-time",
-                  "Contract",
-                  "Temporary",
-                  "Volunteer",
-                  "Internship",
-                ]}
-                {...form.getInputProps("job_type")}
+                defaultValue={0}
+                min={0}
+                parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}
+                formatter={(value) =>
+                  !Number.isNaN(parseFloat(value ? value : ""))
+                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    : "$ "
+                }
+                {...form.getInputProps("salary")}
               />
-            </TwoInputRow>
+            </MultipleInputRow>
+            <Location
+              city={city}
+              setCity={setCity}
+              state={state}
+              setState={setState}
+              displayError={displayLocationError}
+              setDisplayError={setDisplayLocationError}
+              withAsterisk
+            />
+            <TextInputFullWidth
+              label="Link"
+              placeholder="Link"
+              display
+              withAsterisk
+              {...form.getInputProps("link")}
+            />
+            <DescriptionInput
+              label="Description"
+              placeholder="Description"
+              autosize
+              withAsterisk
+              minRows={5}
+              {...form.getInputProps("description")}
+            />
             <TextInputFullWidth
               label="Winner"
               placeholder="Give the name of the winner if applicable"
