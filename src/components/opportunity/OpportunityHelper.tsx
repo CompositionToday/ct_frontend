@@ -33,6 +33,7 @@ export interface OpportunityItem {
   first_name?: string;
   last_name?: string;
   email?: string;
+  is_expired?: string;
 }
 
 interface PaginationCard {

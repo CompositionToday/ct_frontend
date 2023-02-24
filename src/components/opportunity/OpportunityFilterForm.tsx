@@ -45,6 +45,8 @@ export function OpportunityFilterForm({
     author: searchObj.author ? searchObj.author : "",
     is_flagged: searchObj.is_flagged ? searchObj.is_flagged : "",
     is_deleted: searchObj.is_deleted ? searchObj.is_deleted : "",
+    type: searchObj.type ? searchObj.type : "",
+    is_expired: searchObj.is_expired ? searchObj.is_expired : "",
   });
   const opportunityType = useLocation().pathname.slice(1);
 
@@ -124,12 +126,13 @@ export function OpportunityFilterForm({
           label="Salary"
           display={opportunityType === "jobs"}
           value={tempSearchObj.salary}
-          onChange={(e) =>
+          onChange={(e) => {
+            console.log(e);
             setTempSearchObj({
               ...tempSearchObj,
               salary: e,
-            })
-          }
+            });
+          }}
           icon={<p style={{ color: "black" }}>$</p>}
           min={0}
           parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}
@@ -169,16 +172,17 @@ export function OpportunityFilterForm({
           allowDeselect
           display={opportunityType === "admin/recent-posts"}
           data={[
+            { value: "-1", label: "No Filter" },
             {
               value: "0",
-              label: "no",
+              label: "Not Flagged Post Only",
             },
-            { value: "1", label: "yes" },
+            { value: "1", label: "Flagged Post Only" },
           ]}
           onChange={(e) =>
             setTempSearchObj({
               ...tempSearchObj,
-              is_flagged: e ? e : "",
+              is_flagged: e && e !== "-1" ? e : "",
             })
           }
           value={tempSearchObj.is_flagged as string}
@@ -189,19 +193,63 @@ export function OpportunityFilterForm({
           allowDeselect
           display={opportunityType === "admin/recent-posts"}
           data={[
+            { value: "-1", label: "No Filter" },
             {
               value: "0",
-              label: "no",
+              label: "Not Deleted Post Only",
             },
-            { value: "1", label: "yes" },
+            { value: "1", label: "Deleted Post Only" },
           ]}
           onChange={(e) =>
             setTempSearchObj({
               ...tempSearchObj,
-              is_deleted: e ? e : "",
+              is_deleted: e && e !== "-1" ? e : "",
             })
           }
           value={tempSearchObj.is_deleted as string}
+        />
+        <DropdownCategory
+          label="Expired Post"
+          placeholder={`Select if you want to see Expired post`}
+          allowDeselect
+          display={opportunityType === "admin/recent-posts"}
+          data={[
+            { value: "-1", label: "No Filter" },
+            {
+              value: "0",
+              label: "Not Expired Post Only",
+            },
+            { value: "1", label: "Expired Post Only" },
+          ]}
+          onChange={(e) =>
+            setTempSearchObj({
+              ...tempSearchObj,
+              is_expired: e && e !== "-1" ? e : "",
+            })
+          }
+          value={tempSearchObj.is_expired as string}
+        />
+        <DropdownCategory
+          label="Type of Post"
+          placeholder={`Select if you want a specific type of opportunity`}
+          allowDeselect
+          display={opportunityType === "admin/recent-posts"}
+          data={[
+            { value: "jobs", label: "Job" },
+            {
+              value: "competitions",
+              label: "Competition",
+            },
+            { value: "festivals", label: "Festival" },
+            { value: "concerts", label: "Concert" },
+          ]}
+          onChange={(e) =>
+            setTempSearchObj({
+              ...tempSearchObj,
+              type: e ? e : "",
+            })
+          }
+          value={tempSearchObj.type as string}
         />
         <StartEndDatePicker
           label="Date Range"
