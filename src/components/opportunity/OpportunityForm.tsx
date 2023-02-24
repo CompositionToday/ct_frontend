@@ -88,7 +88,7 @@ export function OpportunityForm({
       end_date: opportunity?.end_date
         ? new Date(opportunity?.end_date)
         : new Date(getCurrentDate()),
-      salary: +(opportunity?.salary as number) || 0,
+      salary: +(opportunity?.salary as number) || "",
       job_category: opportunity?.job_category || "",
       job_type: opportunity?.job_type || "",
       winner: opportunity?.winner || "",
@@ -339,11 +339,12 @@ export function OpportunityForm({
                 display={opportunityType === "jobs"}
                 // defaultValue={0}
                 min={0}
+                icon={<p style={{ color: "black" }}>$</p>}
                 parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}
                 formatter={(value) =>
                   !Number.isNaN(parseFloat(value ? value : ""))
-                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    : "$ "
+                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    : ""
                 }
                 {...form.getInputProps("salary")}
               />

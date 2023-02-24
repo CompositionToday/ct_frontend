@@ -36,7 +36,7 @@ export function OpportunityFilterForm({
   ]);
   const [tempSearchObj, setTempSearchObj] = useState<PaginationSearchObject>({
     keyword: keyword ? keyword : "",
-    salary: searchObj.salary ? searchObj.salary : 0,
+    salary: searchObj.salary,
     competition_category: searchObj.competition_category
       ? searchObj.competition_category
       : "",
@@ -118,15 +118,22 @@ export function OpportunityFilterForm({
           withAsterisk={false}
         />
         <SalaryInput
-          defaultValue={0}
           label="Salary"
           display={opportunityType === "jobs"}
           value={tempSearchObj.salary}
           onChange={(e) =>
             setTempSearchObj({
               ...tempSearchObj,
-              salary: e && typeof e === "number" ? e : 0,
+              salary: e,
             })
+          }
+          icon={<p style={{ color: "black" }}>$</p>}
+          min={0}
+          parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}
+          formatter={(value) =>
+            !Number.isNaN(parseFloat(value ? value : ""))
+              ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              : ""
           }
         />
         <EndDateInput
