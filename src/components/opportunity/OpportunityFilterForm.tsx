@@ -168,9 +168,12 @@ export function OpportunityFilterForm({
         />
         <DropdownCategory
           label="Flagged Post"
-          placeholder={`Select if you want to see Flaged post`}
+          placeholder={`Select if you want to see Flagged post`}
           allowDeselect
-          display={opportunityType === "admin/recent-posts"}
+          display={
+            opportunityType === "admin/recent-posts" ||
+            opportunityType === "my-posts"
+          }
           data={[
             { value: "-1", label: "No Filter" },
             {
@@ -191,7 +194,10 @@ export function OpportunityFilterForm({
           label="Deleted Post"
           placeholder={`Select if you want to see Deleted post`}
           allowDeselect
-          display={opportunityType === "admin/recent-posts"}
+          display={
+            opportunityType === "admin/recent-posts" ||
+            opportunityType === "my-posts"
+          }
           data={[
             { value: "-1", label: "No Filter" },
             {
@@ -212,7 +218,10 @@ export function OpportunityFilterForm({
           label="Expired Post"
           placeholder={`Select if you want to see Expired post`}
           allowDeselect
-          display={opportunityType === "admin/recent-posts"}
+          display={
+            opportunityType === "admin/recent-posts" ||
+            opportunityType === "my-posts"
+          }
           data={[
             { value: "-1", label: "No Filter" },
             {

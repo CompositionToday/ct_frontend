@@ -350,6 +350,10 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     console.log("searchobj: ", searchObj);
   }, [searchObj]);
 
+  useEffect(() => {
+    console.log("apiEndpiont in oppo: ", apiEndpoint);
+  }, [apiEndpoint]);
+
   return (
     <OpportunityPageContainer>
       <Image
