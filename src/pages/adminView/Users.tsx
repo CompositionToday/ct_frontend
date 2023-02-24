@@ -8,11 +8,35 @@ import { footerInfo } from "../../components/footer/FooterInfo";
 import { Footer } from "../../components/footer/Footer";
 import { UsersList } from "../../components/adminView/UsersList";
 import { Image } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 const greenTriangle = require("../../images/GreenTriangle.png");
 const blueTriangle = require("../../images/BlueTriangle.png");
 
 export function Users() {
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        let response = await fetch(
+          `${url}/users?page_number=1&keyword=${user.email}`
+        );
+
+        let responseJson = await response.json();
+
+        let userData = responseJson.listOfObjects[0];
+
+        if (!userData.is_admin) {
+          navigate("/");
+        }
+      } else {
+        navigate("/");
+      }
+    });
+  });
+
   return (
     <Container fluid style={{ padding: 0 }}>
       <Image
