@@ -62,6 +62,21 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  menuLink: {
+    fontSize: "12pt",
+  },
+
+  linkActive: {
+    "&, &:hover": {
+      backgroundColor: theme.fn.variant({
+        variant: "light",
+        color: theme.primaryColor,
+      }).background,
+      color: theme.fn.variant({ variant: "light", color: theme.primaryColor })
+        .color,
+    },
+  },
+
   linkLabel: {
     marginRight: 5,
   },
@@ -121,18 +136,25 @@ export function NavBar({ links }: HeaderActionProps) {
   const location = useLocation();
   const [userBanned, setUserBanned] = useState(false);
 
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const [signedIn, setSignedIn] = useState(false);
   const [userFirstName, setUserFirstName] = useState("Welcome");
   const [userAdmin, setUserAdmin] = useState(false);
 
+  const [active, setActive] = useState("/");
+
   const items = links.map((link) => {
     return (
       <a
         key={link.label}
-        className={classes.link}
-        onClick={() => navigate(link.link)}
+        className={cx(classes.link, {
+          [classes.linkActive]: active === link.link,
+        })}
+        onClick={() => {
+          navigate(link.link);
+          setActive(link.link);
+        }}
       >
         {link.label}
       </a>
@@ -210,14 +232,24 @@ export function NavBar({ links }: HeaderActionProps) {
           <Menu.Dropdown>
             <Menu.Label>Posts</Menu.Label>
             <Menu.Item
-              style={{ fontSize: "12pt" }}
-              onClick={() => navigate("/my-posts")}
+              className={cx(classes.menuLink, {
+                [classes.linkActive]: active === "/my-posts",
+              })}
+              onClick={() => {
+                navigate("/my-posts");
+                setActive("/my-posts");
+              }}
             >
               My Posts
             </Menu.Item>
             <Menu.Item
-              style={{ fontSize: "12pt" }}
-              onClick={() => navigate("/create-opportunity")}
+              className={cx(classes.menuLink, {
+                [classes.linkActive]: active === "/create-opportunity",
+              })}
+              onClick={() => {
+                navigate("/create-opportunity");
+                setActive("/create-opportunity");
+              }}
             >
               Create a Post
             </Menu.Item>
@@ -226,14 +258,24 @@ export function NavBar({ links }: HeaderActionProps) {
                 <Menu.Divider />
                 <Menu.Label>Admin</Menu.Label>
                 <Menu.Item
-                  style={{ fontSize: "12pt" }}
-                  onClick={() => navigate("/admin/users")}
+                  className={cx(classes.menuLink, {
+                    [classes.linkActive]: active === "/admin/users",
+                  })}
+                  onClick={() => {
+                    navigate("/admin/users");
+                    setActive("/admin/users");
+                  }}
                 >
                   Manage Users
                 </Menu.Item>
                 <Menu.Item
-                  style={{ fontSize: "12pt" }}
-                  onClick={() => navigate("/admin/recent-posts")}
+                  className={cx(classes.menuLink, {
+                    [classes.linkActive]: active === "/admin/recent-posts",
+                  })}
+                  onClick={() => {
+                    navigate("/admin/recent-posts");
+                    setActive("/admin/recent-posts");
+                  }}
                 >
                   Recent Posts
                 </Menu.Item>
@@ -291,7 +333,13 @@ export function NavBar({ links }: HeaderActionProps) {
       <Container className={classes.inner} fluid>
         <Group className={classes.logo}>
           <Group spacing="xs" className={classes.logoGroup}>
-            <a className={classes.title} onClick={() => navigate("/")}>
+            <a
+              className={classes.title}
+              onClick={() => {
+                navigate("/");
+                setActive("/");
+              }}
+            >
               COMPOSITION:
               <span className={classes.blueText}>TODAY</span>
             </a>
