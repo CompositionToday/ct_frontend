@@ -338,7 +338,7 @@ export function OpportunityForm({
                 label="Salary"
                 placeholder="Please give an amount"
                 display={opportunityType === "jobs"}
-                defaultValue={0}
+                // defaultValue={0}
                 min={0}
                 parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}
                 formatter={(value) =>

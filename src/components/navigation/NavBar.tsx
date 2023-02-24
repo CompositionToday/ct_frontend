@@ -192,26 +192,6 @@ export function NavBar({ links }: HeaderActionProps) {
     console.log("useeffect state: ", userBanned);
   }, [userBanned]);
 
-  // const displayAdminPages: React.FC = () => {
-  //   return userAdmin ? (
-  //     <div>
-  //       <Menu.Divider />
-  //       <Menu.Label>Admin</Menu.Label>
-  //       <Menu.Item
-  //         style={{ fontSize: "12pt" }}
-  //         onClick={() => navigate("/admin/user")}
-  //       >
-  //         Manage Users
-  //       </Menu.Item>
-  //       <Menu.Item style={{ fontSize: "12pt" }} onClick={() => navigate("/")}>
-  //         Recent Posts
-  //       </Menu.Item>
-  //     </div>
-  //   ) : (
-  //     <Text>Not an Admin</Text>
-  //   );
-  // };
-
   const HandleUserButton: React.FC = () => {
     return signedIn ? (
       <Group style={{ paddingRight: 25 }}>
@@ -231,7 +211,7 @@ export function NavBar({ links }: HeaderActionProps) {
             <Menu.Label>Posts</Menu.Label>
             <Menu.Item
               style={{ fontSize: "12pt" }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/my-posts")}
             >
               My Posts
             </Menu.Item>
@@ -253,7 +233,7 @@ export function NavBar({ links }: HeaderActionProps) {
                 </Menu.Item>
                 <Menu.Item
                   style={{ fontSize: "12pt" }}
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate("/admin/recent-posts")}
                 >
                   Recent Posts
                 </Menu.Item>

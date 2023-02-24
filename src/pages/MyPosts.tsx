@@ -1,5 +1,5 @@
 import React from "react";
 
-export function MyPost() {
+export function MyPosts() {
   return <div>MyPost</div>;
 }

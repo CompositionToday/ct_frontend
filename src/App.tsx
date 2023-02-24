@@ -16,8 +16,8 @@ import { Concerts } from "./pages/Concerts";
 import { JustinNavbar } from "./pages/JustinNavbar";
 import { BannedPage } from "./pages/BannedPage";
 import { NotificationsProvider } from "@mantine/notifications";
-import { RecentPost } from "./pages/RecentPost";
-import { MyPost } from "./pages/MyPost";
+import { RecentPosts } from "./pages/RecentPosts";
+import { MyPosts } from "./pages/MyPosts";
 
 export default function App() {
   return (
@@ -39,8 +39,8 @@ export default function App() {
             path="/create-opportunity"
             element={<CreateOpportunityPage />}
           />
-          <Route path="/recent-post" element={<RecentPost />} />
-          <Route path="/my-post" element={<MyPost />} />
+          <Route path="/admin/recent-posts" element={<RecentPosts />} />
+          <Route path="/my-posts" element={<MyPosts />} />
           <Route path="/navbar-mobile" element={<JustinNavbar />} />
           <Route path="/banned" element={<BannedPage />} />
           <Route path="*" element={<NotFound />} />
