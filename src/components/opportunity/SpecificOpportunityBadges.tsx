@@ -2,7 +2,7 @@ import { OpportunityItem } from "./OpportunityHelper";
 import {
   IconMoneybag,
   IconBriefcase,
-  IconMap2,
+  IconCalendarEvent,
   IconCategory,
   IconTrophy,
 } from "@tabler/icons";
@@ -58,7 +58,28 @@ export const SpecificOpportunityBadges = ({
 
   if (opportunityType === "concerts") {
     // Return the date and time
-    return <></>;
+    return (
+      <>
+        <Tooltip label="Date">
+          <Badge
+            leftSection={
+              <IconCalendarEvent
+                size={18}
+                color="#40C057"
+                style={{ marginBottom: "-3px" }}
+              />
+            }
+            color="gray"
+            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+          >
+            {new Date(opportunity?.start_date as string).toLocaleDateString(
+              "en-us",
+              { year: "numeric", month: "short", day: "numeric" }
+            )}
+          </Badge>
+        </Tooltip>
+      </>
+    );
   }
 
   if (opportunityType === "jobs") {
@@ -124,18 +145,29 @@ export const SpecificOpportunityBadges = ({
     // Return dates and times
     return (
       <>
-        {/* <div>
-          <Label>Start Date: </Label>
-          <span>
-            {`${
-              new Date(opportunity?.start_date as number).getMonth() + 1
-            }/${new Date(
-              opportunity?.start_date as number
-            ).getDate()}/${new Date(
-              opportunity?.start_date as number
-            ).getFullYear()} ${new Date(opportunity?.start_date as number)}`}
-          </span>
-        </div> */}
+        <Tooltip label="Date">
+          <Badge
+            leftSection={
+              <IconCalendarEvent
+                size={18}
+                color="#40C057"
+                style={{ marginBottom: "-3px" }}
+              />
+            }
+            color="gray"
+            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+          >
+            {new Date(opportunity?.start_date as string).toLocaleDateString(
+              "en-us",
+              { year: "numeric", month: "short", day: "numeric" }
+            )}{" "}
+            -{" "}
+            {new Date(opportunity?.end_date as string).toLocaleDateString(
+              "en-us",
+              { year: "numeric", month: "short", day: "numeric" }
+            )}
+          </Badge>
+        </Tooltip>
       </>
     );
   }
