@@ -10,7 +10,7 @@ import { Flex, Tooltip, Badge } from "@mantine/core";
 
 interface SpecificOpportunityInfoProp {
   opportunity: OpportunityItem;
-  opportunityType: string;
+  opportunityType?: string;
 }
 
 export const SpecificOpportunityBadges = ({

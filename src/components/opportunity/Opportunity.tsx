@@ -430,7 +430,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                     </Tooltip>
                     <SpecificOpportunityBadges
                       opportunity={opportunity}
-                      opportunityType={opportunityType}
+                      opportunityType={opportunity?.type}
                     ></SpecificOpportunityBadges>
                   </OpportunityCard>
                 );
