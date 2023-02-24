@@ -348,45 +348,6 @@ export function OpportunityForm({
                 {...form.getInputProps("salary")}
               />
             </MultipleInputRow>
-            <Location
-              city={city}
-              setCity={setCity}
-              state={state}
-              setState={setState}
-              displayError={displayLocationError}
-              setDisplayError={setDisplayLocationError}
-              withAsterisk
-            />
-            <TextInputFullWidth
-              label="Link"
-              placeholder="Link"
-              display
-              withAsterisk
-              {...form.getInputProps("link")}
-            />
-            <DescriptionInput
-              label="Description"
-              placeholder="Description"
-              autosize
-              withAsterisk
-              minRows={5}
-              {...form.getInputProps("description")}
-            />
-            <TextInputFullWidth
-              label="Winner"
-              placeholder="Give the name of the winner if applicable"
-              description="Leave the field empty if you want to delete the winner's name"
-              display={displayWinnerInput && opportunityType === "competitions"}
-              {...form.getInputProps("winner")}
-            />
-            <DropdownCategory
-              label="Category"
-              placeholder={`Select competitions category`}
-              withAsterisk
-              display={opportunityType === "competitions"}
-              data={["Brass", "Woodwind", "Percussion"]}
-              {...form.getInputProps("competition_category")}
-            />
             <TextInputFullWidth
               label="Address"
               placeholder="Address"
@@ -396,6 +357,15 @@ export function OpportunityForm({
               }
               withAsterisk
               {...form.getInputProps("address")}
+            />
+            <Location
+              city={city}
+              setCity={setCity}
+              state={state}
+              setState={setState}
+              displayError={displayLocationError}
+              setDisplayError={setDisplayLocationError}
+              withAsterisk
             />
             <StartTimeInput
               label="Start Time"
@@ -414,6 +384,14 @@ export function OpportunityForm({
                   ? "Please give a start time"
                   : false
               }
+            />
+            <DropdownCategory
+              label="Category"
+              placeholder={`Select competitions category`}
+              withAsterisk
+              display={opportunityType === "competitions"}
+              data={["Brass", "Woodwind", "Percussion"]}
+              {...form.getInputProps("competition_category")}
             />
             <EndDateInput
               placeholder="End Date"
@@ -441,6 +419,28 @@ export function OpportunityForm({
               }
               // error="this is a test"
               // {...form.getInputProps("dateRange")}
+            />
+            <TextInputFullWidth
+              label="Link"
+              placeholder="Link"
+              display
+              withAsterisk
+              {...form.getInputProps("link")}
+            />
+            <DescriptionInput
+              label="Description"
+              placeholder="Description"
+              autosize
+              withAsterisk
+              minRows={5}
+              {...form.getInputProps("description")}
+            />
+            <TextInputFullWidth
+              label="Winner"
+              placeholder="Give the name of the winner if applicable"
+              description="Leave the field empty if you want to delete the winner's name"
+              display={displayWinnerInput && opportunityType === "competitions"}
+              {...form.getInputProps("winner")}
             />
             <SubmitButtonContainer
               justify="center"

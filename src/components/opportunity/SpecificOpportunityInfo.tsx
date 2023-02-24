@@ -9,6 +9,8 @@ import {
   IconMap2,
   IconCategory,
   IconTrophy,
+  IconCalendarEvent,
+  IconClockHour4,
 } from "@tabler/icons";
 import { Flex, Tooltip } from "@mantine/core";
 
@@ -57,9 +59,20 @@ export const SpecificOpportunityInfo = ({
             </span>
           </Flex>
         </Tooltip>
+        <Tooltip label="Date">
+          <Flex align="center">
+            <IconCalendarEvent size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {new Date(opportunity?.start_date as string).toLocaleDateString(
+                "en-us",
+                { year: "numeric", month: "short", day: "numeric" }
+              )}
+            </span>
+          </Flex>
+        </Tooltip>
         <Tooltip label="Start Time">
           <Flex align="center">
-            <IconMap2 size={30} color="#40C057" />
+            <IconClockHour4 size={30} color="#40C057" />
             <span style={{ fontSize: "17px", marginLeft: "10px" }}>
               {new Date(opportunity?.start_time as number).toLocaleString(
                 "en-US",
@@ -121,7 +134,23 @@ export const SpecificOpportunityInfo = ({
             </span>
           </Flex>
         </Tooltip>
-        <div>
+        <Tooltip label="Date">
+          <Flex align="center">
+            <IconCalendarEvent size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {new Date(opportunity?.start_date as string).toLocaleDateString(
+                "en-us",
+                { year: "numeric", month: "short", day: "numeric" }
+              )}{" "}
+              -{" "}
+              {new Date(opportunity?.end_date as string).toLocaleDateString(
+                "en-us",
+                { year: "numeric", month: "short", day: "numeric" }
+              )}
+            </span>
+          </Flex>
+        </Tooltip>
+        {/* <div>
           <Label>Start Date: </Label>
           <span>
             {`${
@@ -130,9 +159,9 @@ export const SpecificOpportunityInfo = ({
               opportunity?.start_date as number
             ).getDate()}/${new Date(
               opportunity?.start_date as number
-            ).getFullYear()} ${new Date(opportunity?.start_date as number)}`}
+            ).getFullYear()}`}
           </span>
-        </div>
+        </div> */}
       </SpecificOpportunityInfoContainer>
     );
   }

@@ -221,14 +221,6 @@ export function OpportunityInfo({
           Apply
         </Button>
       </a>
-      <Flex>
-        <Label>End Date:</Label>
-        <p>{`${
-          typeof opportunity.end_date === "number"
-            ? new Date(opportunity.end_date).toString()
-            : `${new Date()} defaulted end date`
-        }`}</p>
-      </Flex>
       <div>
         <Label>Opportunity Type: </Label>
         <span>{opportunity.type}</span>
