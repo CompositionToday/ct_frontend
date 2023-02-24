@@ -77,8 +77,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   const [keyword, setKeyword] = useState("");
   const [searchObj, setSearchObj] = useState<PaginationSearchObject>({
     keyword: "",
-    is_flagged: "0",
-    is_deleted: "0",
   });
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const medianScreen = useMediaQuery("(max-width: 992px)");
@@ -236,6 +234,9 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       // Delete the idposts in the opportunity such that the backend doesn't actually update the idpost column in mySQL.
       // This shouldn't be necessary to do at all but have it here just in-case the idposts here is some how different from the idposts in the url parameters and/or in mySQL
       delete opportunity.idposts;
+      delete opportunity.first_name;
+      delete opportunity.last_name;
+      delete opportunity.email;
 
       // Delete any invalid keys (like undefined keys or keys with value of null) such that it doesn't crash the API
       for (let key in opportunity) {
@@ -325,8 +326,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
   const handleFilterIconBackground = () => {
     return !!(
-      searchObj.is_flagged !== "0" ||
-      searchObj.is_deleted !== "0" ||
+      (searchObj.is_flagged && searchObj.is_flagged !== "0") ||
+      (searchObj.is_deleted && searchObj.is_deleted !== "0") ||
       !!searchObj.city ||
       !!searchObj.state ||
       !!searchObj.salary ||
@@ -392,7 +393,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             </ActionIcon>
           </Group>
         </SearchFilterContainer>
-        <OpportunityGrid justify="center" medianScreen={medianScreen} grow>
+        <OpportunityGrid justify="center" medianScreen={medianScreen}>
           <OpportunityLeftColumnContainer span={4}>
             <OpportunityLeftColumnContent
               direction="column"

@@ -42,11 +42,13 @@ export interface PaginationSearchObject {
   keyword?: string;
   is_deleted?: string | number;
   is_flagged?: string | number;
+  is_expired?: string | number;
   is_admin?: string;
   is_banned?: string;
   is_regular?: string;
   current_email?: string;
   start_time?: Date | string | number | null;
+  author?: string;
 }
 
 export function PaginationNavbar({

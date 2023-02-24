@@ -18,11 +18,13 @@ interface DisplayButton {
 export const OpportunityInfoContainer = styled.div`
   padding-left: 25px;
   padding-right: 25px;
+  overflow-wrap: break-word;
 `;
 
 export const OpportunityTitle = styled.h1`
   color: #228be6;
   font-size: 20px;
+  overflow-wrap: break-word;
 `;
 
 export const MoreInfoOpportunityTitle = styled.h1`

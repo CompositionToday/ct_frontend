@@ -29,6 +29,10 @@ export interface OpportunityItem {
   // start_date?: Date | string | number;
   start_date?: Date | string | number;
   start_time?: Date | string | number | null;
+  author?: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
 }
 
 interface PaginationCard {

@@ -42,6 +42,9 @@ export function OpportunityFilterForm({
       : "",
     end_date: searchObj.end_date ? searchObj.end_date : 0,
     job_category: searchObj.job_category ? searchObj.job_category : "",
+    author: searchObj.author ? searchObj.author : "",
+    is_flagged: searchObj.is_flagged ? searchObj.is_flagged : "",
+    is_deleted: searchObj.is_deleted ? searchObj.is_deleted : "",
   });
   const opportunityType = useLocation().pathname.slice(1);
 
@@ -136,7 +139,7 @@ export function OpportunityFilterForm({
               : ""
           }
         />
-        <EndDateInput
+        {/* <EndDateInput
           label="End date"
           display={opportunityType !== "festivals"}
           value={
@@ -150,6 +153,55 @@ export function OpportunityFilterForm({
               end_date: e ? e.valueOf() : 0,
             })
           }
+        /> */}
+        <TextInputFullWidth
+          label="Author"
+          placeholder="Author"
+          display={opportunityType === "admin/recent-posts"}
+          value={tempSearchObj.author}
+          onChange={(e) =>
+            setTempSearchObj({ ...tempSearchObj, author: e.target.value })
+          }
+        />
+        <DropdownCategory
+          label="Flagged Post"
+          placeholder={`Select if you want to see Flaged post`}
+          allowDeselect
+          display={opportunityType === "admin/recent-posts"}
+          data={[
+            {
+              value: "0",
+              label: "no",
+            },
+            { value: "1", label: "yes" },
+          ]}
+          onChange={(e) =>
+            setTempSearchObj({
+              ...tempSearchObj,
+              is_flagged: e ? e : "",
+            })
+          }
+          value={tempSearchObj.is_flagged as string}
+        />
+        <DropdownCategory
+          label="Deleted Post"
+          placeholder={`Select if you want to see Deleted post`}
+          allowDeselect
+          display={opportunityType === "admin/recent-posts"}
+          data={[
+            {
+              value: "0",
+              label: "no",
+            },
+            { value: "1", label: "yes" },
+          ]}
+          onChange={(e) =>
+            setTempSearchObj({
+              ...tempSearchObj,
+              is_deleted: e ? e : "",
+            })
+          }
+          value={tempSearchObj.is_deleted as string}
         />
         <StartEndDatePicker
           label="Date Range"
@@ -187,8 +239,8 @@ export function OpportunityFilterForm({
                 delete temp.end_date;
               }
 
-              temp.is_deleted = searchObj.is_deleted;
-              temp.is_flagged = searchObj.is_flagged;
+              // temp.is_deleted = searchObj.is_deleted;
+              // temp.is_flagged = searchObj.is_flagged;
               console.log("temp after: ", temp);
               setSearchObj(temp);
             }}
