@@ -295,7 +295,11 @@ export function NavBar({ links }: HeaderActionProps) {
               COMPOSITION:
               <span className={classes.blueText}>TODAY</span>
             </a>
-            <Image src={String(musicNoteIcon)} className={classes.image} />
+            <Image
+              src={String(musicNoteIcon)}
+              className={classes.image}
+              onClick={() => navigate("/")}
+            />
           </Group>
         </Group>
         <Group spacing={5} className={classes.links}>
