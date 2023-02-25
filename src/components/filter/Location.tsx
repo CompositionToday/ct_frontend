@@ -148,11 +148,11 @@ export function Location({
         //   input: classes.input,
         // }}
         withAsterisk={withAsterisk}
-        error={
-          displayError && (!city || !state)
-            ? "Select a location from the dropdown"
-            : false
-        }
+        // error={
+        //   displayError && (!city || !state)
+        //     ? "Select a location from the dropdown"
+        //     : false
+        // }
         disabled={remoteStatus}
         // sx={{ width: "50%", display: "inline-block" }}
       />

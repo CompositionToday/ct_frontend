@@ -108,15 +108,30 @@ export function OpportunityForm({
     },
     validate: {
       // UID: (value) => (value ? null : "Need to give a UID"),
-      title: (value) => (value.trim() ? null : "Please give a title"),
+      title: (value) =>
+        value.trim()
+          ? value.trim().length <= 100
+            ? null
+            : "Please shorten the title"
+          : "Please give a title",
       organization: (value) =>
-        value.trim() ? null : "Please give an organization name",
+        value.trim()
+          ? value.trim().length <= 100
+            ? null
+            : "Please shorten the organization"
+          : "Please give an organization name",
       link: (value) =>
         value.trim() && validateUrl(value.trim())
-          ? null
+          ? value.trim().length <= 250
+            ? null
+            : "Please shorten the link"
           : "Please give a valid URL link",
       description: (value) =>
-        value.trim() ? null : "Please give a description",
+        value.trim()
+          ? value.trim().length
+            ? null
+            : "Please shorten the description"
+          : "Please give a description",
       // date_posted: (value) => (value ? null : "Need to give a date posted"),
       // city: (value) => (value ? null : "Please give a city"),
       // state: (value) => (value ? null : "Please give a state"),
@@ -177,12 +192,12 @@ export function OpportunityForm({
       return;
     }
 
-    if (opportunityType !== "competitions" && (!city || !state)) {
-      console.log(
-        "there is no location that was selected, now returning out of function"
-      );
-      return;
-    }
+    // if (opportunityType !== "competitions" && (!city || !state)) {
+    //   console.log(
+    //     "there is no location that was selected, now returning out of function"
+    //   );
+    //   return;
+    // }
 
     let opportunityKeys: string[] = [...essentialOpportunityKey];
     if (opportunityType === "jobs") {
