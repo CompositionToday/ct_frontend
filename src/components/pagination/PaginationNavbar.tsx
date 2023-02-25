@@ -119,7 +119,13 @@ export function PaginationNavbar({
     };
 
     getCurrentPage();
-  }, [currentPage, pageCount, searchFilterObject, recall]);
+  }, [
+    currentPage,
+    pageCount,
+    searchFilterObject,
+    recall,
+    apiEndpointExtension,
+  ]);
 
   return (
     <PaginationNavbarContainer justify="center" align="flex-end">

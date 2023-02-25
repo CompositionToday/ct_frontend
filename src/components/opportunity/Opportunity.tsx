@@ -98,7 +98,13 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
   const handleInputSubmit = () => {
     console.log(keyword);
-    setSearchObj({ ...searchObj, keyword: keyword });
+    if (keyword) {
+      setSearchObj({ ...searchObj, keyword: keyword });
+    } else {
+      let tempSearchObj = searchObj;
+      delete tempSearchObj.keyword;
+      setSearchObj({ ...tempSearchObj });
+    }
   };
 
   const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

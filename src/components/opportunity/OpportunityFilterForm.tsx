@@ -242,7 +242,10 @@ export function OpportunityFilterForm({
           label="Type of Post"
           placeholder={`Select if you want a specific type of opportunity`}
           allowDeselect
-          display={opportunityType === "admin/recent-posts"}
+          display={
+            opportunityType === "admin/recent-posts" ||
+            opportunityType === "my-posts"
+          }
           data={[
             { value: "jobs", label: "Job" },
             {
@@ -273,7 +276,7 @@ export function OpportunityFilterForm({
             onClick={() => {
               let temp = tempSearchObj;
               console.log("you clicked me");
-              console.log("temp before: ", temp);
+              console.log("temp before: ", temp, !!temp.keyword);
               for (const key in temp) {
                 if (!temp[key as keyof typeof temp]) {
                   delete temp[key as keyof typeof temp];
