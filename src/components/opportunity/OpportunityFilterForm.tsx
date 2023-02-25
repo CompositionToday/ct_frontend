@@ -121,6 +121,7 @@ export function OpportunityFilterForm({
           state={state}
           setState={setState}
           withAsterisk={false}
+          display={opportunityType !== "competitions"}
         />
         <SalaryInput
           label="Salary"

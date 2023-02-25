@@ -4,6 +4,7 @@ import {
   AutocompleteItem,
   Loader,
   createStyles,
+  Checkbox,
 } from "@mantine/core";
 
 export interface LocationProp {
@@ -14,6 +15,7 @@ export interface LocationProp {
   displayError?: boolean;
   setDisplayError?: React.Dispatch<React.SetStateAction<boolean>>;
   withAsterisk: boolean;
+  display: boolean;
 }
 
 interface LocationData {
@@ -30,12 +32,16 @@ export function Location({
   displayError,
   setDisplayError,
   withAsterisk,
+  display,
 }: LocationProp) {
   const timeoutRef = useRef<number>(-1);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<LocationData[]>([]);
   const [userLocation, setUserLocation] = useState<string>("");
+  const [remoteStatus, setRemoteStatus] = useState(
+    city === "Remote" || state === "Remote"
+  );
 
   // const useStyles = createStyles((theme) => ({
   //   input: {
@@ -103,35 +109,6 @@ export function Location({
             };
           })
         );
-
-        // Code that got the cities using the old API
-        // let locations = await fetch(
-        //   `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&countryIds=US&minPopulation=1000&namePrefix=${value}`,
-        //   {
-        //     method: "GET",
-        //     headers: {
-        //       "X-RapidAPI-Key": `${process.env.REACT_APP_GEO_API_KEY}`, // enter your rapid api key here
-        //       "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
-        //     },
-        //   }
-        // )
-        //   .then((response) => response.json())
-        //   .then((response) => {
-        //     console.log(response);
-        //     setData(
-        //       response.data.map((city: any) => {
-        //         // return `${city.name}, ${city.region}`;
-        //         return {
-        //           value: `${city.name}, ${city.region}`,
-        //           city: city.name,
-        //           state: city.region,
-        //         };
-        //       })
-        //     );
-        //     console.log("data", data);
-        //   })
-        //   .then(() => setLoading(false))
-        //   .catch((err) => err);
       } catch (err) {
         console.log(err);
       } finally {
@@ -146,8 +123,18 @@ export function Location({
     console.log("data", data);
   }, [data]);
 
+  useEffect(() => {
+    console.log("remote status: ", remoteStatus);
+    if (remoteStatus) {
+      setCity("Remote");
+      setState("Remote");
+      setValue("");
+      setData([]);
+    }
+  }, [remoteStatus]);
+
   return (
-    <div style={{ marginTop: "10px" }}>
+    <div style={display ? { marginTop: "10px" } : { display: "none" }}>
       <Autocomplete
         value={value}
         data={data}
@@ -166,6 +153,14 @@ export function Location({
             ? "Select a location from the dropdown"
             : false
         }
+        disabled={remoteStatus}
+        // sx={{ width: "50%", display: "inline-block" }}
+      />
+      <Checkbox
+        checked={remoteStatus}
+        onChange={(e) => setRemoteStatus(e.currentTarget.checked)}
+        label="Remote"
+        sx={{ marginTop: "10px" }}
       />
     </div>
   );

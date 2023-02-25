@@ -244,9 +244,18 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       delete opportunity.last_name;
       delete opportunity.email;
 
-      // Delete any invalid keys (like undefined keys or keys with value of null) such that it doesn't crash the API
+      console.log(
+        "before purge:",
+        typeof opportunity.city,
+        typeof opportunity.state
+      );
       for (let key in opportunity) {
-        if (!opportunity[key as keyof typeof opportunity] && key !== "winner") {
+        if (
+          !opportunity[key as keyof typeof opportunity] &&
+          key !== "winner" &&
+          key !== "city" &&
+          key !== "state"
+        ) {
           delete opportunity[key as keyof typeof opportunity];
         }
       }

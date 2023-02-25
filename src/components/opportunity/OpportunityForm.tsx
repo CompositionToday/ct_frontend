@@ -52,6 +52,7 @@ export function OpportunityForm({
   const [displayLocationError, setDisplayLocationError] = useState(false);
   const [displayDateRangeError, setDisplayDateRangeError] = useState(false);
   const [displayStartTimeError, setDisplayStartTimeError] = useState(false);
+  const [displayLocationInput, setDisplayLocationInput] = useState(true);
   const [userUID, setUserUID] = useState("");
   const medianScreen = useMediaQuery("(max-width: 992px)");
 
@@ -176,7 +177,7 @@ export function OpportunityForm({
       return;
     }
 
-    if (!city || !state) {
+    if (opportunityType !== "competitions" && (!city || !state)) {
       console.log(
         "there is no location that was selected, now returning out of function"
       );
@@ -229,6 +230,7 @@ export function OpportunityForm({
       req.start_time = startTime?.valueOf();
     }
 
+    console.log("chekcing city: ", city, city.length, city === "");
     req.city = city;
     req.state = state;
     req.UID = userUID;
@@ -257,7 +259,12 @@ export function OpportunityForm({
 
   useEffect(() => {
     console.log(opportunityType);
+    setDisplayLocationInput(opportunityType !== "competitions");
   }, [opportunityType]);
+
+  useEffect(() => {
+    console.log("display location input:", displayLocationInput);
+  }, [displayLocationInput]);
 
   // useEffect(() => {
   //   console.log(dateRange);
@@ -366,7 +373,8 @@ export function OpportunityForm({
               setState={setState}
               displayError={displayLocationError}
               setDisplayError={setDisplayLocationError}
-              withAsterisk
+              withAsterisk={false}
+              display={displayLocationInput}
             />
             <StartTimeInput
               label="Start Time"
