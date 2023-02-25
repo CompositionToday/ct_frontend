@@ -75,6 +75,9 @@ export function Location({
     console.log("Chose a location");
     console.log("city: ", city);
     console.log("state: ", state);
+    if (!city || !state) {
+      setValue("");
+    }
   }, [city, state]);
 
   useEffect(() => {

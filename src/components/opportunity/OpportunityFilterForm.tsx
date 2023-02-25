@@ -272,7 +272,7 @@ export function OpportunityFilterForm({
             setDateRange(e);
           }}
         />
-        <SubmitButtonContainer justify="center">
+        <SubmitButtonContainer justify="center" gap="sm">
           <Button
             onClick={() => {
               let temp = tempSearchObj;
@@ -307,6 +307,28 @@ export function OpportunityFilterForm({
             }}
           >
             Search
+          </Button>
+          <Button
+            onClick={() => {
+              let temp = tempSearchObj;
+              delete temp.salary;
+
+              for (const key in temp) {
+                if (key === "end_date") {
+                  temp = { ...temp, [key]: 0 };
+                } else {
+                  temp = { ...temp, [key]: "" };
+                }
+              }
+
+              // setSearchObj(temp);
+              setTempSearchObj(temp);
+              setCity("");
+              setState("");
+              setDateRange([null, null]);
+            }}
+          >
+            Clear
           </Button>
         </SubmitButtonContainer>
       </OpportunityFilterFormContentContainer>
