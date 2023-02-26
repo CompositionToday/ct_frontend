@@ -396,7 +396,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
               onChange={handleSearchInput}
               onKeyDown={handleEnterKeyDown}
               value={keyword}
-              sx={{ minWidth: "400px" }}
+              sx={{ minWidth: medianScreen ? "300px" : "400px" }}
             />
             <ActionIcon
               color="dark.2"
@@ -412,11 +412,15 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             </ActionIcon>
           </Group>
         </SearchFilterContainer>
-        <OpportunityGrid justify="center" medianScreen={medianScreen}>
+        <OpportunityGrid
+          justify="center"
+          medianScreen={medianScreen}
+          grow={medianScreen}
+        >
           <OpportunityLeftColumnContainer span={4}>
             <OpportunityLeftColumnContent
               direction="column"
-              gap={0}
+              // gap={0}
               columnGap={0}
             >
               {displayOpportunityArray?.map((opportunity: OpportunityItem) => {
@@ -486,6 +490,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           opened={displayOpportunityInfoModal}
           onClose={handleCloseModal}
           fullScreen
+          overflow="inside"
+          sx={{ overflow: "hidden" }}
         >
           <OpportunityInfo
             opportunity={currentOpportunity}

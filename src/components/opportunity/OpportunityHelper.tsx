@@ -50,13 +50,16 @@ interface FilterIcon {
 
 export const PageContainer = styled(Flex)`
   height: 50vh;
-  width: 100vw;
+  width: 110vw;
   border: 2px solid black;
 `;
 
 export const OpportunityPageContainer = styled.div`
   margin-top: 30px;
   height: 84vh;
+  // background-color: red;
+  // overflow-wrap: break-word;
+  // overflow-x: hidden;
 `;
 
 export const GridContainer = styled.div<GridContainer>`
@@ -86,11 +89,13 @@ export const OpportunityLeftColumnContent = styled(Flex)`
   // padding-left: 10px;
   // padding-right: 10px;
   overflow-y: auto;
+  // overflow-x: hidden;
 `;
 
 export const OpportunityLeftColumnContainer = styled(Grid.Col)`
   height: 100%;
   padding: 0;
+  width: 100%;
 `;
 
 export const OpportunityRightColumnContainer = styled(Grid.Col)`
@@ -101,11 +106,15 @@ export const OpportunityRightColumnContainer = styled(Grid.Col)`
 
 export const OpportunityCard = styled.div<PaginationCard>`
   border-bottom: 1px solid;
+  // width: 100%;
   padding-left: 25px;
   padding-right: 10px;
   padding-bottom: 15px;
   background-color: ${(props) => (props.selected ? "#e2f0fe" : "auto")};
   border-top-left-radius: 8px;
+  // overflow-wrap: break-word;
+  // word-wrap: break-word;
+  // display: inline-block;
 `;
 
 export const PaginationNavbarContainer = styled(Flex)`

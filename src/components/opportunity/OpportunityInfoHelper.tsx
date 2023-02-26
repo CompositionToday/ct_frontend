@@ -24,7 +24,8 @@ export const OpportunityInfoContainer = styled.div`
 export const OpportunityTitle = styled.h1`
   color: #228be6;
   font-size: 20px;
-  overflow-wrap: break-word;
+  // overflow-wrap: break-word;
+  word-wrap: break-word;
 `;
 
 export const MoreInfoOpportunityTitle = styled.h1`
