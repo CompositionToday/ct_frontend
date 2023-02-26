@@ -19,7 +19,7 @@ export const SpecificOpportunityBadges = ({
 }: SpecificOpportunityInfoProp) => {
   if (opportunityType === "competitions") {
     return (
-      <Flex wrap="wrap">
+      <>
         <Tooltip label="Category">
           <Badge
             leftSection={
@@ -52,14 +52,14 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
-      </Flex>
+      </>
     );
   }
 
   if (opportunityType === "concerts") {
     // Return the date and time
     return (
-      <Flex wrap="wrap">
+      <>
         <Tooltip label="Date">
           <Badge
             leftSection={
@@ -78,13 +78,13 @@ export const SpecificOpportunityBadges = ({
             )}
           </Badge>
         </Tooltip>
-      </Flex>
+      </>
     );
   }
 
   if (opportunityType === "jobs") {
     return (
-      <Flex wrap="wrap">
+      <>
         {opportunity?.job_type && (
           <Tooltip label="Job Type">
             <Badge
@@ -140,14 +140,14 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
-      </Flex>
+      </>
     );
   }
 
   if (opportunityType === "festivals") {
     // Return dates and times
     return (
-      <Flex wrap="wrap">
+      <>
         <Tooltip label="Date">
           <Badge
             leftSection={
@@ -171,7 +171,7 @@ export const SpecificOpportunityBadges = ({
             )}
           </Badge>
         </Tooltip>
-      </Flex>
+      </>
     );
   }
 
