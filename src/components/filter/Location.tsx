@@ -14,7 +14,7 @@ export interface LocationProp {
   setState: React.Dispatch<React.SetStateAction<string>>;
   displayError?: boolean;
   setDisplayError?: React.Dispatch<React.SetStateAction<boolean>>;
-  withAsterisk: boolean;
+  withAsterisk?: boolean;
   display: boolean;
 }
 
@@ -31,7 +31,7 @@ export function Location({
   state,
   displayError,
   setDisplayError,
-  withAsterisk,
+  withAsterisk = false,
   display,
 }: LocationProp) {
   const timeoutRef = useRef<number>(-1);
@@ -151,11 +151,11 @@ export function Location({
         //   input: classes.input,
         // }}
         withAsterisk={withAsterisk}
-        // error={
-        //   displayError && (!city || !state)
-        //     ? "Select a location from the dropdown"
-        //     : false
-        // }
+        error={
+          displayError && (!city || !state)
+            ? "Select a location from the dropdown"
+            : false
+        }
         disabled={remoteStatus}
         // sx={{ width: "50%", display: "inline-block" }}
       />

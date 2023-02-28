@@ -192,12 +192,15 @@ export function OpportunityForm({
       return;
     }
 
-    // if (opportunityType !== "competitions" && (!city || !state)) {
-    //   console.log(
-    //     "there is no location that was selected, now returning out of function"
-    //   );
-    //   return;
-    // }
+    if (
+      (opportunityType === "concerts" || opportunityType === "festivals") &&
+      (!city || !state)
+    ) {
+      console.log(
+        "there is no location that was selected, now returning out of function"
+      );
+      return;
+    }
 
     let opportunityKeys: string[] = [...essentialOpportunityKey];
     if (opportunityType === "jobs") {
@@ -275,6 +278,7 @@ export function OpportunityForm({
   useEffect(() => {
     console.log(opportunityType);
     setDisplayLocationInput(opportunityType !== "competitions");
+    setDisplayLocationError(false);
   }, [opportunityType]);
 
   useEffect(() => {
@@ -388,7 +392,10 @@ export function OpportunityForm({
               setState={setState}
               displayError={displayLocationError}
               setDisplayError={setDisplayLocationError}
-              withAsterisk={false}
+              withAsterisk={
+                opportunityType === "festivals" ||
+                opportunityType === "concerts"
+              }
               display={displayLocationInput}
             />
             <StartTimeInput
@@ -473,7 +480,12 @@ export function OpportunityForm({
               <Button
                 type="submit"
                 onClick={() => {
-                  setDisplayLocationError(true);
+                  if (
+                    opportunityType === "conerts" ||
+                    opportunityType === "festivals"
+                  ) {
+                    setDisplayLocationError(true);
+                  }
                   setDisplayDateRangeError(true);
                   setDisplayStartTimeError(true);
                   console.log(form.isValid());
