@@ -42,7 +42,6 @@ import { OpportunityForm } from "./OpportunityForm";
 import { FormHeader } from "./CreateOpportunityHelper";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { SpecificOpportunityBadges } from "./SpecificOpportunityBadges";
-import { subtle } from "crypto";
 
 interface OpportunityProp {
   apiEndpoint: string;
