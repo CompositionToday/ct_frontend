@@ -14,6 +14,11 @@ export function JustinNavbar() {
         display: "none",
       },
     },
+    menu: {
+      [theme.fn.largerThan("md")]: {
+        display: "none",
+      },
+    },
   }));
   const { classes } = useStyles();
   return (
