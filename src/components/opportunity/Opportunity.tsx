@@ -243,6 +243,9 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       delete opportunity.first_name;
       delete opportunity.last_name;
       delete opportunity.email;
+      delete opportunity.is_banned;
+      delete opportunity.is_admin;
+      delete opportunity.ban_message;
 
       console.log(
         "before purge:",

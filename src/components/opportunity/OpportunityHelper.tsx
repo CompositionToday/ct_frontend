@@ -34,6 +34,9 @@ export interface OpportunityItem {
   last_name?: string;
   email?: string;
   is_expired?: string;
+  is_banned?: number;
+  is_admin?: number;
+  ban_message?: string;
 }
 
 interface PaginationCard {
