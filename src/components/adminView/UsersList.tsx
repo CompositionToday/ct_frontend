@@ -9,9 +9,7 @@ import {
   useMantineTheme,
   Container,
   createStyles,
-  MantineProvider,
 } from "@mantine/core";
-import { ModalsProvider } from "@mantine/modals";
 import {
   IconBan,
   IconTrash,
@@ -23,9 +21,9 @@ import {
 import { auth } from "../../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { openMakeAdminModal, openRemoveAdminModal } from "./AdminModal";
-import { openDeleteModal } from "./DeleteModal";
-import { openBanModal, openUnbanModal } from "./BanModal";
+import { openAdminModal } from "./modals/AdminModal";
+import { openDeleteModal } from "./modals/DeleteModal";
+import { openBanModal } from "./modals/BanModal";
 import {
   PaginationNavbar,
   PaginationSearchObject,
@@ -196,17 +194,19 @@ export function UsersList() {
               onClick={
                 item.type === "Admin"
                   ? () =>
-                      openRemoveAdminModal(
+                      openAdminModal(
                         item.name,
                         item.email,
                         index,
+                        true,
                         setRawUserList
                       )
                   : () =>
-                      openMakeAdminModal(
+                      openAdminModal(
                         item.name,
                         item.email,
                         index,
+                        false,
                         setRawUserList
                       )
               }
@@ -225,14 +225,21 @@ export function UsersList() {
               onClick={
                 item.type === "Banned"
                   ? () =>
-                      openUnbanModal(
+                      openBanModal(
                         item.name,
                         item.email,
                         index,
+                        true,
                         setRawUserList
                       )
                   : () =>
-                      openBanModal(item.name, item.email, index, setRawUserList)
+                      openBanModal(
+                        item.name,
+                        item.email,
+                        index,
+                        false,
+                        setRawUserList
+                      )
               }
             >
               {item.type === "Banned" ? "Unban" : "Ban"} User
@@ -266,30 +273,26 @@ export function UsersList() {
         className={classes.userContainer}
       >
         <Container className={classes.table}>
-          <MantineProvider>
-            <ModalsProvider>
-              <ScrollArea
-                style={{ height: "100%" }}
-                onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
+          <ScrollArea
+            style={{ height: "100%" }}
+            onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
+          >
+            <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
+              <thead
+                className={cx(classes.header, {
+                  [classes.scrolled]: scrolled,
+                })}
               >
-                <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
-                  <thead
-                    className={cx(classes.header, {
-                      [classes.scrolled]: scrolled,
-                    })}
-                  >
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Type</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>{rows}</tbody>
-                </Table>
-              </ScrollArea>
-            </ModalsProvider>
-          </MantineProvider>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Type</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </Table>
+          </ScrollArea>
         </Container>
         <Container className={classes.pagination}>
           <PaginationNavbar

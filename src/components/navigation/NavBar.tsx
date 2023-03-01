@@ -10,11 +10,10 @@ import {
   Burger,
   Image,
   Menu,
-  Text,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IconUserCircle } from "@tabler/icons";
+import { useMediaQuery } from "@mantine/hooks";
 
 const musicNoteIcon = require("../../images/MusicNote.png");
 
@@ -26,6 +25,11 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+
+    [theme.fn.largerThan("md")]: {
+      marginLeft: "25px",
+      marginRight: "20px",
+    },
   },
 
   links: {
@@ -62,6 +66,21 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  menuLink: {
+    fontSize: "12pt",
+  },
+
+  linkActive: {
+    "&, &:hover": {
+      backgroundColor: theme.fn.variant({
+        variant: "light",
+        color: theme.primaryColor,
+      }).background,
+      color: theme.fn.variant({ variant: "light", color: theme.primaryColor })
+        .color,
+    },
+  },
+
   linkLabel: {
     marginRight: 5,
   },
@@ -93,17 +112,27 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  logo: {
-    [theme.fn.largerThan("md")]: {
-      paddingLeft: "25px",
-    },
-  },
-
   logoGroup: {
     gap: 5,
 
     "&:hover": {
       cursor: `pointer`,
+    },
+  },
+
+  dropdown: {
+    position: "absolute",
+    top: HEADER_HEIGHT,
+    left: 0,
+    right: 0,
+    zIndex: 4,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopWidth: 0,
+    overflow: "hidden",
+
+    [theme.fn.largerThan("md")]: {
+      display: "none",
     },
   },
 }));
@@ -121,18 +150,23 @@ export function NavBar({ links }: HeaderActionProps) {
   const location = useLocation();
   const [userBanned, setUserBanned] = useState(false);
 
-  const { classes } = useStyles();
-  const [opened, { toggle }] = useDisclosure(false);
+  const { classes, cx } = useStyles();
   const [signedIn, setSignedIn] = useState(false);
   const [userFirstName, setUserFirstName] = useState("Welcome");
   const [userAdmin, setUserAdmin] = useState(false);
+
+  const [active, setActive] = useState("/");
 
   const items = links.map((link) => {
     return (
       <a
         key={link.label}
-        className={classes.link}
-        onClick={() => navigate(link.link)}
+        className={cx(classes.link, {
+          [classes.linkActive]: active === link.link,
+        })}
+        onClick={() => {
+          navigate(link.link);
+        }}
       >
         {link.label}
       </a>
@@ -147,15 +181,11 @@ export function NavBar({ links }: HeaderActionProps) {
         setSignedIn(false);
       }
     });
-
-    console.log(location.pathname);
   }, []);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log(user?.email);
-
         let response = await fetch(
           `${url}/users?page_number=1&keyword=${user.email}`
         );
@@ -180,21 +210,163 @@ export function NavBar({ links }: HeaderActionProps) {
       } else {
         setUserBanned(false);
         setUserAdmin(false);
-        console.log("setting banned to false");
       }
     });
-
-    console.log("pathname ", location.pathname);
-    console.log("signedInn ", signedIn);
   }, [location.pathname, signedIn]);
 
   useEffect(() => {
-    console.log("useeffect state: ", userBanned);
-  }, [userBanned]);
+    setActive(location.pathname);
+  }, [location.pathname]);
 
-  const HandleUserButton: React.FC = () => {
+  const displayBurger = useMediaQuery("(max-width: 992px)");
+
+  const [opened, setOpened] = useState(false);
+
+  const DisplayBurger: React.FC = () => {
+    return (
+      <Menu.Dropdown>
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/jobs",
+          })}
+          onClick={() => {
+            navigate("/jobs");
+          }}
+        >
+          Jobs
+        </Menu.Item>
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/competitions",
+          })}
+          onClick={() => {
+            navigate("/competitions");
+          }}
+        >
+          Competitions
+        </Menu.Item>
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/festivals",
+          })}
+          onClick={() => {
+            navigate("/festivals");
+          }}
+        >
+          Festivals
+        </Menu.Item>
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/concerts",
+          })}
+          onClick={() => {
+            navigate("/concerts");
+          }}
+        >
+          Concerts
+        </Menu.Item>
+        <Menu.Divider />
+
+        {signedIn ? (
+          <DisplaySignedIn />
+        ) : (
+          <>
+            {/* <Menu.Label>Account</Menu.Label> */}
+            <Menu.Item
+              className={cx(classes.menuLink, {
+                [classes.linkActive]: active === "/login",
+              })}
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </Menu.Item>
+            <Menu.Item
+              className={cx(classes.menuLink, {
+                [classes.linkActive]: active === "/register",
+              })}
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
+              Register
+            </Menu.Item>
+          </>
+        )}
+      </Menu.Dropdown>
+    );
+  };
+
+  const DisplaySignedIn: React.FC = () => {
+    return (
+      <>
+        <Menu.Label>Posts</Menu.Label>
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/my-posts",
+          })}
+          onClick={() => {
+            navigate("/my-posts");
+          }}
+        >
+          My Posts
+        </Menu.Item>
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/create-opportunity",
+          })}
+          onClick={() => {
+            navigate("/create-opportunity");
+          }}
+        >
+          Create a Post
+        </Menu.Item>
+        {userAdmin && (
+          <>
+            <Menu.Divider />
+            <Menu.Label>Admin</Menu.Label>
+            <Menu.Item
+              className={cx(classes.menuLink, {
+                [classes.linkActive]: active === "/admin/users",
+              })}
+              onClick={() => {
+                navigate("/admin/users");
+              }}
+            >
+              Manage Users
+            </Menu.Item>
+            <Menu.Item
+              className={cx(classes.menuLink, {
+                [classes.linkActive]: active === "/admin/recent-posts",
+              })}
+              onClick={() => {
+                navigate("/admin/recent-posts");
+              }}
+            >
+              Recent Posts
+            </Menu.Item>
+          </>
+        )}
+        <Menu.Divider />
+        <Menu.Item
+          style={{ fontSize: "12pt" }}
+          color="red"
+          onClick={async () => {
+            await signOut(auth);
+            setSignedIn(false);
+            navigate("/");
+          }}
+        >
+          Sign Out
+        </Menu.Item>
+      </>
+    );
+  };
+
+  const DisplayMenuButton: React.FC = () => {
     return signedIn ? (
-      <Group style={{ paddingRight: 25 }}>
+      <Group>
         <Menu shadow="md" width={150} withArrow>
           <Menu.Target>
             <Button
@@ -208,51 +380,7 @@ export function NavBar({ links }: HeaderActionProps) {
             </Button>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Label>Posts</Menu.Label>
-            <Menu.Item
-              style={{ fontSize: "12pt" }}
-              onClick={() => navigate("/my-posts")}
-            >
-              My Posts
-            </Menu.Item>
-            <Menu.Item
-              style={{ fontSize: "12pt" }}
-              onClick={() => navigate("/create-opportunity")}
-            >
-              Create a Post
-            </Menu.Item>
-            {userAdmin && (
-              <>
-                <Menu.Divider />
-                <Menu.Label>Admin</Menu.Label>
-                <Menu.Item
-                  style={{ fontSize: "12pt" }}
-                  onClick={() => navigate("/admin/users")}
-                >
-                  Manage Users
-                </Menu.Item>
-                <Menu.Item
-                  style={{ fontSize: "12pt" }}
-                  onClick={() => navigate("/admin/recent-posts")}
-                >
-                  Recent Posts
-                </Menu.Item>
-              </>
-            )}
-            <Menu.Divider />
-            <Menu.Item
-              style={{ fontSize: "12pt" }}
-              color="red"
-              onClick={async () => {
-                console.log("sign out button clicked");
-                await signOut(auth);
-                setSignedIn(false);
-                console.log("redirecting to landing");
-                navigate("/");
-              }}
-            >
-              Sign Out
-            </Menu.Item>
+            <DisplaySignedIn />
           </Menu.Dropdown>
         </Menu>
       </Group>
@@ -263,7 +391,9 @@ export function NavBar({ links }: HeaderActionProps) {
           sx={{ height: 30 }}
           size="md"
           color="blue"
-          onClick={() => navigate("/login")}
+          onClick={() => {
+            navigate("/login");
+          }}
         >
           Login
         </Button>
@@ -273,7 +403,9 @@ export function NavBar({ links }: HeaderActionProps) {
           size="md"
           // variant="gradient"
           // gradient={{ from: 'green', to: 'blue', deg: 60 }}
-          onClick={() => navigate("/register")}
+          onClick={() => {
+            navigate("/register");
+          }}
         >
           Register
         </Button>
@@ -282,37 +414,57 @@ export function NavBar({ links }: HeaderActionProps) {
   };
 
   return (
-    <Header
-      height={HEADER_HEIGHT}
-      sx={{ borderBottom: 0 }}
-      mt={10}
-      style={{ visibility: userBanned ? "hidden" : "visible" }}
-    >
-      <Container className={classes.inner} fluid>
-        <Group className={classes.logo}>
-          <Group spacing="xs" className={classes.logoGroup}>
-            <a className={classes.title} onClick={() => navigate("/")}>
-              COMPOSITION:
-              <span className={classes.blueText}>TODAY</span>
-            </a>
-            <Image
-              src={String(musicNoteIcon)}
-              className={classes.image}
-              onClick={() => navigate("/")}
-            />
+    <>
+      <Header
+        height={HEADER_HEIGHT}
+        sx={{ borderBottom: 0 }}
+        mt={10}
+        style={{ visibility: userBanned ? "hidden" : "visible" }}
+      >
+        <Container className={classes.inner} fluid>
+          <Group>
+            <Group spacing="xs" className={classes.logoGroup}>
+              <a
+                className={classes.title}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                COMPOSITION:
+                <span className={classes.blueText}>TODAY</span>
+              </a>
+              <Image
+                src={String(musicNoteIcon)}
+                className={classes.image}
+                onClick={() => navigate("/")}
+              />
+            </Group>
           </Group>
-        </Group>
-        <Group spacing={5} className={classes.links}>
-          {items}
-        </Group>
-        <Burger
-          opened={opened}
-          onClick={toggle}
-          className={classes.burger}
-          size="sm"
-        />
-        <HandleUserButton />
-      </Container>
-    </Header>
+          <Group spacing={5} className={classes.links}>
+            {items}
+          </Group>
+          {displayBurger ? (
+            <Menu
+              shadow="md"
+              width="100vw"
+              onClose={() => {
+                setOpened(false);
+              }}
+            >
+              <Menu.Target>
+                <Burger
+                  opened={opened}
+                  onClick={() => setOpened((o) => !o)}
+                  size="sm"
+                />
+              </Menu.Target>
+              <DisplayBurger />
+            </Menu>
+          ) : (
+            <DisplayMenuButton />
+          )}
+        </Container>
+      </Header>
+    </>
   );
 }

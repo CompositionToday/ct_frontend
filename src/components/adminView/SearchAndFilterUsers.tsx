@@ -86,6 +86,11 @@ export function SearchAndFilterUsers({
     );
   }, [adminChecked, bannedChecked, regularChecked, searchKeyword]);
 
+  const isFilterEnabled = () => {
+    console.log("filter", adminChecked || bannedChecked || regularChecked);
+    return adminChecked || bannedChecked || regularChecked;
+  };
+
   return (
     <Group className={classes.container} position="left">
       <Input
@@ -102,7 +107,11 @@ export function SearchAndFilterUsers({
       />
       <Menu closeOnItemClick={false}>
         <Menu.Target>
-          <ActionIcon color="dark.2" size="lg">
+          <ActionIcon
+            size="lg"
+            color={isFilterEnabled() ? "blue" : "dark.2"}
+            variant={isFilterEnabled() ? "light" : "subtle"}
+          >
             <IconFilter size={40} stroke={1.5} />
           </ActionIcon>
         </Menu.Target>
