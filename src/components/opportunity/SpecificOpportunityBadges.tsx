@@ -5,8 +5,9 @@ import {
   IconCalendarEvent,
   IconCategory,
   IconTrophy,
+  IconMapPin,
 } from "@tabler/icons";
-import { Flex, Tooltip, Badge } from "@mantine/core";
+import { Tooltip, Badge } from "@mantine/core";
 
 interface SpecificOpportunityInfoProp {
   opportunity: OpportunityItem;
@@ -20,21 +21,6 @@ export const SpecificOpportunityBadges = ({
   if (opportunityType === "competitions") {
     return (
       <>
-        <Tooltip label="Category">
-          <Badge
-            leftSection={
-              <IconCategory
-                size={18}
-                color="#40C057"
-                style={{ marginBottom: "-3px" }}
-              />
-            }
-            color="gray"
-            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
-          >
-            {opportunity?.competition_category}
-          </Badge>
-        </Tooltip>
         {opportunity?.winner && (
           <Tooltip label="Winner">
             <Badge
@@ -52,6 +38,23 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
+        {opportunity?.competition_category && (
+          <Tooltip label="Category">
+            <Badge
+              leftSection={
+                <IconCategory
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {opportunity?.competition_category}
+            </Badge>
+          </Tooltip>
+        )}
       </>
     );
   }
@@ -60,24 +63,43 @@ export const SpecificOpportunityBadges = ({
     // Return the date and time
     return (
       <>
-        <Tooltip label="Date">
-          <Badge
-            leftSection={
-              <IconCalendarEvent
-                size={18}
-                color="#40C057"
-                style={{ marginBottom: "-3px" }}
-              />
-            }
-            color="gray"
-            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
-          >
-            {new Date(opportunity?.start_date as string).toLocaleDateString(
-              "en-us",
-              { year: "numeric", month: "short", day: "numeric" }
-            )}
-          </Badge>
-        </Tooltip>
+        {opportunity?.city && opportunity?.state && (
+          <Tooltip label="Location">
+            <Badge
+              leftSection={
+                <IconMapPin
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {opportunity.city}, {opportunity.state}
+            </Badge>
+          </Tooltip>
+        )}
+        {opportunity?.start_date && (
+          <Tooltip label="Date">
+            <Badge
+              leftSection={
+                <IconCalendarEvent
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {new Date(opportunity?.start_date as string).toLocaleDateString(
+                "en-us",
+                { year: "numeric", month: "short", day: "numeric" }
+              )}
+            </Badge>
+          </Tooltip>
+        )}
       </>
     );
   }
@@ -85,6 +107,23 @@ export const SpecificOpportunityBadges = ({
   if (opportunityType === "jobs") {
     return (
       <>
+        {opportunity?.city && opportunity?.state && (
+          <Tooltip label="Location">
+            <Badge
+              leftSection={
+                <IconMapPin
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {opportunity.city}, {opportunity.state}
+            </Badge>
+          </Tooltip>
+        )}
         {opportunity?.job_type && (
           <Tooltip label="Job Type">
             <Badge
@@ -102,21 +141,23 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
-        <Tooltip label="Job Category">
-          <Badge
-            leftSection={
-              <IconCategory
-                size={18}
-                color="#40C057"
-                style={{ marginBottom: "-3px" }}
-              />
-            }
-            color="gray"
-            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
-          >
-            {opportunity?.job_category}
-          </Badge>
-        </Tooltip>
+        {opportunity?.job_category && (
+          <Tooltip label="Job Category">
+            <Badge
+              leftSection={
+                <IconCategory
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {opportunity?.job_category}
+            </Badge>
+          </Tooltip>
+        )}
         {opportunity?.salary && (
           <Tooltip label="Salary">
             <Badge
@@ -145,29 +186,48 @@ export const SpecificOpportunityBadges = ({
     // Return dates and times
     return (
       <>
-        <Tooltip label="Date">
-          <Badge
-            leftSection={
-              <IconCalendarEvent
-                size={18}
-                color="#40C057"
-                style={{ marginBottom: "-3px" }}
-              />
-            }
-            color="gray"
-            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
-          >
-            {new Date(opportunity?.start_date as string).toLocaleDateString(
-              "en-us",
-              { year: "numeric", month: "short", day: "numeric" }
-            )}{" "}
-            -{" "}
-            {new Date(opportunity?.end_date as string).toLocaleDateString(
-              "en-us",
-              { year: "numeric", month: "short", day: "numeric" }
-            )}
-          </Badge>
-        </Tooltip>
+        {opportunity?.city && opportunity?.state && (
+          <Tooltip label="Location">
+            <Badge
+              leftSection={
+                <IconMapPin
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {opportunity.city}, {opportunity.state}
+            </Badge>
+          </Tooltip>
+        )}
+        {opportunity?.start_date && opportunity?.end_date && (
+          <Tooltip label="Date">
+            <Badge
+              leftSection={
+                <IconCalendarEvent
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {new Date(opportunity?.start_date as string).toLocaleDateString(
+                "en-us",
+                { year: "numeric", month: "short", day: "numeric" }
+              )}{" "}
+              -{" "}
+              {new Date(opportunity?.end_date as string).toLocaleDateString(
+                "en-us",
+                { year: "numeric", month: "short", day: "numeric" }
+              )}
+            </Badge>
+          </Tooltip>
+        )}
       </>
     );
   }

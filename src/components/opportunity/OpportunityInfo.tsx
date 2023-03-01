@@ -36,14 +36,18 @@ import {
 } from "@tabler/icons";
 import { OpportunityItem } from "./OpportunityHelper";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
+import { openDeleteModal } from "../adminView/modals/DeleteModal";
+import { openDeletePostModal } from "./modals/DeletePostModal";
+import { openBanPostModal } from "./modals/BanPostModal";
+import { openFlagPostModal } from "./modals/FlagPostModal";
 
 export function OpportunityInfo({
   opportunity,
   opportunityType,
   setEditModal,
-  setDeleteModal,
-  setBannedModal,
-  setFlagModal,
+  handleDeletePost,
+  handleBanPost,
+  handleFlagPost,
 }: OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -64,10 +68,6 @@ export function OpportunityInfo({
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUserUID(user.uid);
-
-        // let response = await fetch(
-        //   `${url}/users?keyword=${user.email}&page_number=1`
-        // );
         try {
           let response = await fetch(
             `${url}/users?keyword=${user.email}&page_number=1`
@@ -149,9 +149,15 @@ export function OpportunityInfo({
               alignSelf: "flex-start",
               display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
             }}
-            onClick={() => {
-              setDeleteModal(true);
-            }}
+            onClick={() =>
+              openDeletePostModal(
+                opportunity?.title ? opportunity.title : "",
+                handleDeletePost
+                  ? handleDeletePost
+                  : () => console.log("No delete function passed"),
+                isAdmin && opportunity.UID !== userUID ? true : false
+              )
+            }
           >
             <IconTrash />
           </ActionIcon>
@@ -162,9 +168,16 @@ export function OpportunityInfo({
             sx={{
               height: 30,
               alignSelf: "flex-start",
-              display: isAdmin ? "auto" : "none",
+              display: isAdmin && opportunity.UID !== userUID ? "auto" : "none",
             }}
-            onClick={() => setBannedModal(true)}
+            onClick={() =>
+              openBanPostModal(
+                opportunity?.title ? opportunity.title : "",
+                handleBanPost
+                  ? handleBanPost
+                  : () => console.log("No ban function passed")
+              )
+            }
           >
             <IconBan />
           </ActionIcon>
@@ -172,8 +185,18 @@ export function OpportunityInfo({
         <Tooltip label="Report Post" withArrow>
           <ActionIcon
             color="yellow"
+            sx={{
+              height: 30,
+              alignSelf: "flex-start",
+              display: isAdmin && opportunity.UID !== userUID ? "auto" : "none",
+            }}
             onClick={() => {
-              setFlagModal(true);
+              openFlagPostModal(
+                opportunity?.title ? opportunity.title : "",
+                handleFlagPost
+                  ? handleFlagPost
+                  : () => console.log("No flag function passed")
+              );
             }}
           >
             {!opportunity.is_flagged ? <IconFlag /> : <IconFlagOff />}
@@ -183,33 +206,11 @@ export function OpportunityInfo({
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
       <Flex direction="column">
         <Flex align="center">
-          <Tooltip label="Location">
-            <Flex align="center">
-              <IconMapPin size={30} color="#40C057" />
-              <CityState
-                style={{
-                  display: "inline",
-                  fontSize: "17px",
-                  margin: "0px 0px 0px 10px",
-                }}
-              >{`${opportunity.city}, ${opportunity.state}`}</CityState>
-            </Flex>
-          </Tooltip>
-        </Flex>
-        <Flex align="center">
           <SpecificOpportunityInfo
             opportunity={opportunity}
             opportunityType={opportunityType}
           />
         </Flex>
-
-        {/* REPLACE THIS WITH OTHER BADGES */}
-        {/* <Flex align="center">
-          <IconMapPin size={30} color="#40C057" />
-          <CityState
-            style={{ display: "inline", fontSize: "17px" }}
-          >{`${opportunity.city}, ${opportunity.state}`}</CityState>
-        </Flex> */}
       </Flex>
       <a href={opportunity.link} target="blank">
         <Button

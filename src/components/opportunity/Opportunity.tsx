@@ -42,6 +42,7 @@ import { OpportunityForm } from "./OpportunityForm";
 import { FormHeader } from "./CreateOpportunityHelper";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { SpecificOpportunityBadges } from "./SpecificOpportunityBadges";
+import { subtle } from "crypto";
 
 interface OpportunityProp {
   apiEndpoint: string;
@@ -323,7 +324,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     }
   };
 
-  const handleFilterIconBackground = () => {
+  const areFiltersEnabled = () => {
     return !!(
       searchObj.is_flagged !== "0" ||
       searchObj.is_deleted !== "0" ||
@@ -333,8 +334,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       !!searchObj.competition_category ||
       !!searchObj.job_category
     )
-      ? "red"
-      : "white";
+      ? true
+      : false;
   };
 
   useEffect(() => {
@@ -379,13 +380,11 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
               sx={{ minWidth: "400px" }}
             />
             <ActionIcon
-              color="dark.2"
+              color={areFiltersEnabled() ? "blue" : "dark.2"}
               size="lg"
+              variant={areFiltersEnabled() ? "light" : "subtle"}
               onClick={() => {
                 setDisplayOpportunitySearchFilterModal(true);
-              }}
-              sx={{
-                backgroundColor: handleFilterIconBackground(),
               }}
             >
               <IconFilter size={40} stroke={1.5} />
@@ -412,21 +411,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                     <p style={{ fontSize: "14px" }}>
                       {opportunity.organization}
                     </p>
-                    <Tooltip label="Location">
-                      <Badge
-                        leftSection={
-                          <IconMapPin
-                            size={18}
-                            color="#40C057"
-                            style={{ marginBottom: "-3px" }}
-                          />
-                        }
-                        color="gray"
-                        sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
-                      >
-                        {opportunity.city}, {opportunity.state}
-                      </Badge>
-                    </Tooltip>
                     <SpecificOpportunityBadges
                       opportunity={opportunity}
                       opportunityType={opportunityType}
@@ -456,6 +440,9 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                 setDeleteModal={setDisplayDeleteConfirmationModal}
                 setBannedModal={setDisplayBanConfirmationModal}
                 setFlagModal={setDisplayFlagConfirmationModal}
+                handleDeletePost={deleteCurrentPost}
+                handleBanPost={handleBanButton}
+                handleFlagPost={handleFlagButton}
               />
             </OpportunityRightColumnContainer>
           </MediaQuery>
@@ -516,7 +503,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           handleSubmission={handleEditButton}
         />
       </Modal>
-      <Modal
+      {/* <Modal
         opened={displayDeleteConfirmationModal}
         onClose={() => setDisplayDeleteConfirmationModal(false)}
         fullScreen={medianScreen}
@@ -536,8 +523,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             {currentOpportunity?.is_deleted ? "Und" : "D"}elete
           </Button>
         </Flex>
-      </Modal>
-      <Modal
+      </Modal> */}
+      {/* <Modal
         opened={displayBanConfirmationModal}
         onClose={() => setDisplayBanConfirmationModal(false)}
         fullScreen={medianScreen}
@@ -580,7 +567,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             {currentOpportunity?.is_flagged ? "Unf" : "F"}lag
           </Button>
         </Flex>
-      </Modal>
+      </Modal> */}
     </OpportunityPageContainer>
   );
 }

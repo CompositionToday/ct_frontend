@@ -9,6 +9,9 @@ export interface OpportunityInfoProp {
   setDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
   setBannedModal: React.Dispatch<React.SetStateAction<boolean>>;
   setFlagModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handleDeletePost?: () => void;
+  handleBanPost?: () => void;
+  handleFlagPost?: () => void;
 }
 
 interface DisplayButton {
