@@ -1,5 +1,5 @@
-import { Opportunity } from "../components/opportunity/Opportunity";
-import { auth } from "../Firebase";
+import { Opportunity } from "../../components/opportunity/Opportunity";
+import { auth } from "../../Firebase";
 import React, { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";

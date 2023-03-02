@@ -14,21 +14,34 @@ import {
 import { OpportunityItem } from "./OpportunityHelper";
 import { Location } from "../filter/Location";
 import { auth } from "../../Firebase";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { Paper, NumberInput, Button, Select, filterProps } from "@mantine/core";
+import { Paper, Button, createStyles } from "@mantine/core";
 import { DateRangePickerValue, TimeInput } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 
 interface OpportunityFormProp {
+  edit: boolean;
   opportunityType: string;
   opportunity?: OpportunityItem;
   displayWinnerInput?: boolean;
   handleSubmission: (opportunity: OpportunityItem) => void;
 }
 
+const useStyles = createStyles((theme) => ({
+  noShadow: {
+    boxShadow: "none",
+  },
+
+  shadow: {
+    boxShadow:
+      "0 1px 3px rgb(0 0 0 / 5%), rgb(0 0 0 / 5%) 0px 10px 15px -5px, rgb(0 0 0 / 4%) 0px 7px 7px -5px;",
+  },
+}));
+
 export function OpportunityForm({
+  edit,
   opportunityType,
   opportunity,
   handleSubmission,
@@ -55,6 +68,7 @@ export function OpportunityForm({
   const [displayLocationInput, setDisplayLocationInput] = useState(true);
   const [userUID, setUserUID] = useState("");
   const medianScreen = useMediaQuery("(max-width: 992px)");
+  const { classes } = useStyles();
 
   const getCurrentDate = (time = new Date().valueOf()) => {
     let tempDate: Date;
@@ -101,13 +115,8 @@ export function OpportunityForm({
       start_time: opportunity?.start_time
         ? new Date(opportunity?.start_time)
         : null,
-      // dateRange:
-      //   opportunity?.end_date && opportunity?.start_date
-      //     ? [opportunity.start_date, opportunity?.end_date]
-      //     : [null, null],
     },
     validate: {
-      // UID: (value) => (value ? null : "Need to give a UID"),
       title: (value) =>
         value.trim()
           ? value.trim().length <= 100
@@ -132,9 +141,6 @@ export function OpportunityForm({
             ? null
             : "Please shorten the description"
           : "Please give a description",
-      // date_posted: (value) => (value ? null : "Need to give a date posted"),
-      // city: (value) => (value ? null : "Please give a city"),
-      // state: (value) => (value ? null : "Please give a state"),
       end_date: (value: Date | string) =>
         value || opportunityType === "festivals"
           ? null
@@ -281,28 +287,21 @@ export function OpportunityForm({
     setDisplayLocationError(false);
   }, [opportunityType]);
 
-  useEffect(() => {
-    console.log("display location input:", displayLocationInput);
-  }, [displayLocationInput]);
-
-  // useEffect(() => {
-  //   console.log(dateRange);
-  // }, [dateRange]);
+  const smallerScreen = useMediaQuery("(max-width: 992px)");
 
   return (
     <OpportunityFormContainer>
-      <Paper shadow="sm" withBorder radius="lg" sx={{ padding: "20px 40px" }}>
+      <Paper
+        shadow="sm"
+        withBorder={edit ? false : true}
+        className={edit ? classes.noShadow : classes.shadow}
+        radius="lg"
+        sx={{ padding: smallerScreen ? "20px" : "20px 40px" }}
+      >
         <OpportunityFormContentContainer>
           <form
             onSubmit={form.onSubmit((values) => handleFormSubmission(values))}
           >
-            {/* <TextInputFullWidth
-              label="Get rid of me since I'm an input for the UID"
-              placeholder="Title"
-              display
-              withAsterisk
-              {...form.getInputProps("UID")}
-            /> */}
             <MultipleInputRow
               justify="space-around"
               gap="md"
@@ -332,6 +331,8 @@ export function OpportunityForm({
             >
               <DropdownCategory
                 label="Job type"
+                allowDeselect
+                clearable
                 placeholder={`Select job type`}
                 display={opportunityType === "jobs"}
                 data={[
@@ -348,6 +349,8 @@ export function OpportunityForm({
                 label="Job Category"
                 placeholder={`Select job category`}
                 withAsterisk
+                allowDeselect
+                clearable
                 display={opportunityType === "jobs"}
                 data={[
                   "Faculty",
@@ -361,9 +364,8 @@ export function OpportunityForm({
               />
               <SalaryInput
                 label="Salary"
-                placeholder="Please give an amount"
+                placeholder="Enter an amount"
                 display={opportunityType === "jobs"}
-                // defaultValue={0}
                 min={0}
                 icon={<p style={{ color: "black" }}>$</p>}
                 parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}

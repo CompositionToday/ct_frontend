@@ -4,13 +4,14 @@ import {
 } from "./CreateOpportunityHelper";
 import { OpportunityForm } from "./OpportunityForm";
 import { auth } from "../../Firebase";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { Center, Paper, Select, Modal, Button, Flex } from "@mantine/core";
+import { Container, Select, Modal, Button, Flex } from "@mantine/core";
 import { TimeInput } from "@mantine/dates";
 import { OpportunityItem } from "./OpportunityHelper";
 import { useNavigate } from "react-router-dom";
 import { showNotification } from "@mantine/notifications";
+import { useMediaQuery } from "@mantine/hooks";
 
 export function CreateOpportunity() {
   const [opportunityType, setOpportunityType] = useState("Jobs");
@@ -66,8 +67,12 @@ export function CreateOpportunity() {
     console.log(opportunityType);
   }, [opportunityType]);
 
+  const smallerScreen = useMediaQuery("(max-width: 992px)");
+
   return (
-    <CreateOpportunityContainer>
+    <Container
+      sx={{ marginBottom: "60px", width: smallerScreen ? "90vw" : "55vw" }}
+    >
       <FormHeader>Create Post</FormHeader>
       <Select
         label="Opportunity Type"
@@ -77,12 +82,8 @@ export function CreateOpportunity() {
         data={["Job", "Competition", "Festival", "Concert"]}
         sx={{ marginBottom: "25px" }}
       />
-      {/* <TimeInput
-        label="What time is it now?"
-        onChange={(e) => console.log("change at time input ", e)}
-        format="12"
-      /> */}
       <OpportunityForm
+        edit={false}
         opportunityType={opportunityType.toLowerCase()}
         handleSubmission={handleSubmission}
       />
@@ -104,6 +105,6 @@ export function CreateOpportunity() {
           <Button onClick={() => navigate("/")}>Go to the home page</Button>
         </Flex>
       </Modal>
-    </CreateOpportunityContainer>
+    </Container>
   );
 }

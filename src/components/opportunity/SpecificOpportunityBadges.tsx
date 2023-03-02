@@ -76,7 +76,10 @@ export const SpecificOpportunityBadges = ({
               color="gray"
               sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
             >
-              {opportunity.city}, {opportunity.state}
+              {opportunity.state === "Remote"
+                ? "Remote"
+                : `${opportunity.city},
+                ${opportunity.state}`}
             </Badge>
           </Tooltip>
         )}
@@ -120,7 +123,10 @@ export const SpecificOpportunityBadges = ({
               color="gray"
               sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
             >
-              {opportunity.city}, {opportunity.state}
+              {opportunity.state === "Remote"
+                ? "Remote"
+                : `${opportunity.city},
+                ${opportunity.state}`}
             </Badge>
           </Tooltip>
         )}
@@ -202,7 +208,10 @@ export const SpecificOpportunityBadges = ({
               color="gray"
               sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
             >
-              {opportunity.city}, {opportunity.state}
+              {opportunity.state === "Remote"
+                ? "Remote"
+                : `${opportunity.city},
+                ${opportunity.state}`}
             </Badge>
           </Tooltip>
         )}

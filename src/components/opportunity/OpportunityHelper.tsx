@@ -67,13 +67,10 @@ export const OpportunityPageContainer = styled.div`
 `;
 
 export const GridContainer = styled.div<GridContainer>`
-  // padding: 10px;
   width: ${(props) => (props.medianScreen ? "100vw" : "80vw")};
   height: ${(props) => (props.medianScreen ? "85vh" : "75vh")};
-  // min-height: 100vh;
   overflow: visible;
   margin: auto;
-  // margin-top: 20px;
 `;
 
 export const OpportunityGrid = styled(Grid)<GridContainer>`
@@ -138,8 +135,4 @@ export const CityStateContainer = styled.p`
 export const SearchBar = styled(TextInput)<GridContainer>`
   width: ${(props) => (props.medianScreen ? "75%" : "35%")};
   min-width: 400px;
-`;
-
-export const SearchFilterContainer = styled(Flex)`
-  margin-bottom: 20px;
 `;

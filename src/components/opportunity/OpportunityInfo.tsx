@@ -2,33 +2,19 @@ import {
   OpportunityInfoProp,
   OpportunityInfoContainer,
   MoreInfoOpportunityTitle,
-  CityState,
   ButtonsContainer,
   DescriptionContainer,
   Label,
-  SpecificOpportunityInfoContainer,
   DescriptionContent,
 } from "./OpportunityInfoHelper";
 import { auth } from "../../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import LocationIcon from "./LocationIcon.svg";
-import ApplyIcon from "./ApplyIcon.svg";
-import React, { useState, useEffect } from "react";
-import {
-  Flex,
-  Button,
-  MediaQuery,
-  ActionIcon,
-  Modal,
-  Tooltip,
-  Alert,
-} from "@mantine/core";
+import { useState, useEffect } from "react";
+import { Flex, Button, ActionIcon, Tooltip, Badge, Alert } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import {
-  IconMapPin,
   IconExternalLink,
-  IconEdit,
   IconFlag,
   IconPencil,
   IconTrash,
@@ -36,14 +22,13 @@ import {
   IconBan,
   IconAlertCircle,
 } from "@tabler/icons";
-import { OpportunityItem } from "./OpportunityHelper";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
-import { openDeleteModal } from "../adminView/modals/DeleteModal";
 import { openDeletePostModal } from "./modals/DeletePostModal";
 import { openBanPostModal } from "./modals/BanPostModal";
 import { openFlagPostModal } from "./modals/FlagPostModal";
 
 export function OpportunityInfo({
+  apiEndpoint,
   opportunity,
   opportunityType,
   setEditModal,
@@ -129,7 +114,7 @@ OpportunityInfoProp) {
         justify="flex-end"
         gap="sm"
         wrap="wrap"
-        direction={largeScreen ? "row" : "column"}
+        direction={"row"}
       >
         <Tooltip label="Edit Post" withArrow>
           <ActionIcon
@@ -209,6 +194,11 @@ OpportunityInfoProp) {
           </ActionIcon>
         </Tooltip>
       </ButtonsContainer>
+      {apiEndpoint.substring(0, 5) === "posts" && (
+        <Badge sx={{ marginTop: "15px" }}>
+          {opportunity.type?.substring(0, opportunity.type?.length - 1)}
+        </Badge>
+      )}
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
       {opportunity.is_deleted ? (
         <Alert
@@ -240,10 +230,6 @@ OpportunityInfoProp) {
           Apply
         </Button>
       </a>
-      <div>
-        <Label>Opportunity Type: </Label>
-        <span>{opportunity.type}</span>
-      </div>
       <DescriptionContainer>
         <Label>Description:</Label>
         <DescriptionContent>{opportunity.description}</DescriptionContent>

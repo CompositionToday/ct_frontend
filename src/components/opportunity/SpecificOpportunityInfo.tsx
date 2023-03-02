@@ -64,7 +64,12 @@ export const SpecificOpportunityInfo = ({
                   fontSize: "17px",
                   margin: "0px 0px 0px 10px",
                 }}
-              >{`${opportunity.city}, ${opportunity.state}`}</CityState>
+              >
+                {opportunity.state === "Remote"
+                  ? "Remote"
+                  : `${opportunity.city},
+              ${opportunity.state}`}
+              </CityState>
             </Flex>
           </Tooltip>
         )}
@@ -121,7 +126,12 @@ export const SpecificOpportunityInfo = ({
                   fontSize: "17px",
                   margin: "0px 0px 0px 10px",
                 }}
-              >{`${opportunity.city}, ${opportunity.state}`}</CityState>
+              >
+                {opportunity.state === "Remote"
+                  ? "Remote"
+                  : `${opportunity.city},
+              ${opportunity.state}`}
+              </CityState>
             </Flex>
           </Tooltip>
         )}
@@ -175,7 +185,12 @@ export const SpecificOpportunityInfo = ({
                   fontSize: "17px",
                   margin: "0px 0px 0px 10px",
                 }}
-              >{`${opportunity.city}, ${opportunity.state}`}</CityState>
+              >
+                {opportunity.state === "Remote"
+                  ? "Remote"
+                  : `${opportunity.city},
+              ${opportunity.state}`}
+              </CityState>
             </Flex>
           </Tooltip>
         )}
