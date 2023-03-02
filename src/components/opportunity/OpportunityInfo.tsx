@@ -210,7 +210,7 @@ OpportunityInfoProp) {
         </Tooltip>
       </ButtonsContainer>
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
-      {opportunity.is_deleted && (
+      {opportunity.is_deleted ? (
         <Alert
           icon={<IconAlertCircle size={16} />}
           title="Post Deleted"
@@ -223,7 +223,7 @@ OpportunityInfoProp) {
           </p>
           <p>{`this is the key: ${opportunity.deleted_comment}`}</p>
         </Alert>
-      )}
+      ) : null}
       <Flex direction="column">
         <SpecificOpportunityInfo
           opportunity={opportunity}
