@@ -47,6 +47,7 @@ export function OpportunityInfo({
   opportunity,
   opportunityType,
   setEditModal,
+  setDeleteModal,
   handleDeletePost,
   handleBanPost,
   handleFlagPost,
@@ -153,7 +154,7 @@ export function OpportunityInfo({
               alignSelf: "flex-start",
               display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
             }}
-            onClick={() =>
+            onClick={() => {
               openDeletePostModal(
                 opportunity?.title ? opportunity.title : "",
                 handleDeletePost
@@ -161,8 +162,9 @@ export function OpportunityInfo({
                   : () => console.log("No delete function passed"),
                 isAdmin && opportunity.UID !== userUID ? true : false,
                 setHelperDeleteComment
-              )
-            }
+              );
+              setDeleteModal(true);
+            }}
           >
             <IconTrash />
           </ActionIcon>

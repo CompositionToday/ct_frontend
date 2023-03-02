@@ -32,6 +32,8 @@ import {
   ActionIcon,
   Button,
   Tooltip,
+  Textarea,
+  Text,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -580,16 +582,31 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           handleSubmission={handleEditButton}
         />
       </Modal>
-      {/* <Modal
+      <Modal
         opened={displayDeleteConfirmationModal}
         onClose={() => setDisplayDeleteConfirmationModal(false)}
         fullScreen={medianScreen}
+        title="Delete Post"
+        centered
       >
-        <FormHeader>
-          Are you sure you want to {currentOpportunity?.is_deleted ? "un" : ""}
-          delete this post?
-        </FormHeader>
-        <Flex justify="flex-end" gap={20} wrap="wrap">
+        <Text size="sm">
+          Are you sure you want to delete{" "}
+          {userUid !== currentOpportunity?.UID ? "the" : "your"} post titled "
+          <span style={{ fontWeight: 700 }}>{currentOpportunity?.title}</span>"?
+        </Text>
+        <Textarea
+          value={deleteComment}
+          onChange={(e) => setDeleteComment(e.target.value)}
+          placeholder="Tell the user why you deleted their post"
+          label="Why are you deleting this post?"
+          sx={{ marginTop: "20px" }}
+        />
+        <Flex
+          justify="flex-end"
+          gap={20}
+          wrap="wrap"
+          sx={{ marginTop: "16px" }}
+        >
           <Button
             color="gray"
             onClick={() => setDisplayDeleteConfirmationModal(false)}
@@ -600,7 +617,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             {currentOpportunity?.is_deleted ? "Und" : "D"}elete
           </Button>
         </Flex>
-      </Modal> */}
+      </Modal>
       {/* <Modal
         opened={displayBanConfirmationModal}
         onClose={() => setDisplayBanConfirmationModal(false)}
