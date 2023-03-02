@@ -29,6 +29,7 @@ import {
   PaginationSearchObject,
 } from "../pagination/PaginationNavbar";
 import { SearchAndFilterUsers } from "./SearchAndFilterUsers";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface UserTableData {
   name: string;
@@ -54,29 +55,40 @@ const typeColors: Record<string, string> = {
 const useStyles = createStyles((theme) => ({
   container: {
     width: "80vw",
-    height: "75vh",
+    padding: "0px",
+
+    [theme.fn.smallerThan("md")]: {
+      width: "100%",
+    },
   },
 
   userContainer: {
-    width: "80vw",
-    height: "65vh",
     display: "flex",
     flexWrap: "wrap",
     position: "relative",
     zIndex: 1,
     borderColor: "#939393",
+
+    [theme.fn.smallerThan("md")]: {
+      padding: "15px",
+      borderRadius: "0px",
+    },
+
+    [theme.fn.largerThan("sm")]: {
+      height: "65vh",
+    },
   },
 
   table: {
     maxWidth: "100%",
+    maxHeight: "70%",
     flexBasis: "100%",
-    height: "85%",
-  },
+    padding: "40px 40px 0px 40px",
 
-  pagination: {
-    flexBasis: "100%",
-    marginBottom: "80px",
-    height: 0,
+    [theme.fn.smallerThan("md")]: {
+      maxHeight: "85%",
+      padding: "0px",
+    },
   },
 
   bold: {
@@ -153,22 +165,32 @@ export function UsersList() {
     setUserList(newUserList);
   };
 
+  const mobileScreen = useMediaQuery("(max-width: 768px)");
+
   const rows = userList?.map((item, index) => (
     <tr key={item.email}>
       <td>
         <Text size="sm" weight={500}>
           {item.name}
         </Text>
+        {mobileScreen && (
+          <Text size="xs" color="dimmed">
+            {item.email}
+          </Text>
+        )}
       </td>
-      <td>
-        <Text size="sm" color="dimmed">
-          {item.email}
-        </Text>
-      </td>
+      {!mobileScreen && (
+        <td>
+          <Text size="sm" color="dimmed">
+            {item.email}
+          </Text>
+        </td>
+      )}
       <td>
         <Badge
           color={typeColors[item.type.toLowerCase()]}
           variant={theme.colorScheme === "dark" ? "light" : "outline"}
+          size={mobileScreen ? "sm" : "md"}
         >
           {item.type}
         </Badge>
@@ -245,14 +267,14 @@ export function UsersList() {
               {item.type === "Banned" ? "Unban" : "Ban"} User
             </Menu.Item>
 
-            <Menu.Item
+            {/* <Menu.Item
               icon={<IconTrash size={16} stroke={1.5} />}
               onClick={() =>
                 openDeleteModal(item.name, item.email, index, setRawUserList)
               }
             >
               Delete User
-            </Menu.Item>
+            </Menu.Item> */}
           </Menu.Dropdown>
         </Menu>
       </td>
@@ -265,19 +287,13 @@ export function UsersList() {
         email={searchParams.current_email ? searchParams.current_email : ""}
         setSearchObj={setSearchParams}
       />
-      <Paper
-        withBorder
-        p={30}
-        mt={30}
-        radius="lg"
-        className={classes.userContainer}
-      >
+      <Paper withBorder mt={30} radius="lg" className={classes.userContainer}>
         <Container className={classes.table}>
           <ScrollArea
             style={{ height: "100%" }}
             onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
           >
-            <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
+            <Table verticalSpacing="sm">
               <thead
                 className={cx(classes.header, {
                   [classes.scrolled]: scrolled,
@@ -285,7 +301,7 @@ export function UsersList() {
               >
                 <tr>
                   <th>Name</th>
-                  <th>Email</th>
+                  {!mobileScreen && <th>Email</th>}
                   <th>Type</th>
                   <th></th>
                 </tr>
@@ -294,7 +310,7 @@ export function UsersList() {
             </Table>
           </ScrollArea>
         </Container>
-        <Container className={classes.pagination}>
+        <Container>
           <PaginationNavbar
             apiEndpointExtension={"users"}
             numberOfItemsPerPage={10}

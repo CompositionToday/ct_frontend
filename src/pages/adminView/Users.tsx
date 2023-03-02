@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-import { NavBar } from "../../components/navigation/NavBar";
-import { navItems } from "../../components/navigation/NavItems";
-import { Container } from "@mantine/core";
+import { Container, MediaQuery } from "@mantine/core";
 import { auth } from "../../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { footerInfo } from "../../components/footer/FooterInfo";
@@ -39,18 +37,22 @@ export function Users() {
 
   return (
     <Container fluid style={{ padding: 0 }}>
-      <Image
-        src={String(blueTriangle)}
-        style={{
-          width: "24%",
-          position: "absolute",
-          right: "0px",
-        }}
-      />
-      <Image
-        src={String(greenTriangle)}
-        style={{ width: "24%", position: "absolute", bottom: "0px" }}
-      />
+      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+        <Image
+          src={String(blueTriangle)}
+          style={{
+            width: "24%",
+            position: "absolute",
+            right: "0px",
+          }}
+        />
+      </MediaQuery>
+      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+        <Image
+          src={String(greenTriangle)}
+          style={{ width: "24%", position: "absolute", bottom: "0px" }}
+        />
+      </MediaQuery>
       <UsersList />
       <Footer data={footerInfo.data} />
     </Container>

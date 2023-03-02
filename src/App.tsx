@@ -1,6 +1,6 @@
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-import { HashRouter, BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { Landing } from "./pages/Landing";
 import { About } from "./pages/AboutUs";
 import { NotFound } from "./pages/NotFound";
@@ -13,12 +13,11 @@ import { Users } from "./pages/adminView/Users";
 import { Festivals } from "./pages/Festivals";
 import { CreateOpportunityPage } from "./pages/CreateOpportunityPage";
 import { Concerts } from "./pages/Concerts";
-import { JustinNavbar } from "./pages/JustinNavbar";
-import { BannedPage } from "./pages/BannedPage";
+import { BannedUser } from "./pages/BannedUser";
 import { NotificationsProvider } from "@mantine/notifications";
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
-import { RecentPosts } from "./pages/RecentPosts";
+import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
 
 export default function App() {
@@ -45,8 +44,7 @@ export default function App() {
               />
               <Route path="/admin/recent-posts" element={<RecentPosts />} />
               <Route path="/my-posts" element={<MyPosts />} />
-              <Route path="/navbar-mobile" element={<JustinNavbar />} />
-              <Route path="/banned" element={<BannedPage />} />
+              <Route path="/banned" element={<BannedUser />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </HashRouter>

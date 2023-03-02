@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { Button, Flex } from "@mantine/core";
 
 export interface OpportunityInfoProp {
+  apiEndpoint: string;
   opportunity: OpportunityItem | null;
   opportunityType: string;
   setEditModal: React.Dispatch<React.SetStateAction<boolean>>;

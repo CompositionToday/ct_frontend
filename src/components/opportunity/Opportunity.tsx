@@ -8,10 +8,6 @@ import {
   OpportunityLeftColumnContainer,
   OpportunityRightColumnContainer,
   OpportunityCard,
-  PaginationNavbarContainer,
-  CityStateContainer,
-  SearchBar,
-  SearchFilterContainer,
 } from "./OpportunityHelper";
 import { OpportunityTitle } from "./OpportunityInfoHelper";
 import { OpportunityInfo } from "./OpportunityInfo";
@@ -19,28 +15,23 @@ import {
   PaginationNavbar,
   PaginationSearchObject,
 } from "../pagination/PaginationNavbar";
-import LocationIcon from "./LocationIcon.svg";
 import {
   Image,
-  Group,
+  createStyles,
   Input,
   MediaQuery,
-  Pagination,
   Modal,
   Flex,
-  Badge,
   ActionIcon,
-  Button,
-  Tooltip,
+  Badge,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
-import { IconMapPin, IconFilter, IconSearch } from "@tabler/icons";
+import { IconFilter, IconSearch } from "@tabler/icons";
 import { OpportunityFilterForm } from "./OpportunityFilterForm";
 import { OpportunityForm } from "./OpportunityForm";
 import { FormHeader } from "./CreateOpportunityHelper";
-import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { SpecificOpportunityBadges } from "./SpecificOpportunityBadges";
 
 interface OpportunityProp {
@@ -50,10 +41,33 @@ interface OpportunityProp {
 const greenTriangle = require("../../images/GreenTriangle.png");
 const blueTriangle = require("../../images/BlueTriangle.png");
 
+const useStyles = createStyles((theme) => ({
+  container: {
+    padding: "0px",
+    marginTop: "40px",
+    marginBottom: "20px",
+
+    [theme.fn.smallerThan("md")]: {
+      marginLeft: "15px",
+      marginRight: "15px",
+    },
+  },
+
+  search: {
+    borderColor: "#939393",
+
+    flexBasis: "100%",
+    marginRight: "15px",
+
+    [theme.fn.largerThan("md")]: {
+      flexBasis: "40%",
+    },
+  },
+}));
+
 export function Opportunity({ apiEndpoint }: OpportunityProp) {
-  // const [opportunityType, setOpportunityType] = useState(
-  //   useLocation().pathname.slice(1)
-  // );
+  const { classes } = useStyles();
+
   const opportunityType = useLocation().pathname.slice(1);
   const [currentOpportunity, setCurrentOpportunity] =
     useState<OpportunityItem | null>(null);
@@ -114,7 +128,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   };
 
   useEffect(() => {
-    console.log("apiEndpoint prop: ", apiEndpoint);
+    console.log("apiEndpoint", apiEndpoint);
   }, []);
 
   const deleteCurrentPost = async () => {
@@ -179,7 +193,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       }
 
       showNotification({
-        title: "Edits Made",
+        title: "Edits Applied",
         message: "Your changes have been applied",
         color: "green",
       });
@@ -369,58 +383,58 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     console.log("apiEndpiont in oppo: ", apiEndpoint);
   }, [apiEndpoint]);
 
+  const smallerScreen = useMediaQuery("(max-width: 992px)");
+
   return (
     <OpportunityPageContainer>
-      <Image
-        src={String(blueTriangle)}
-        style={{
-          width: "24%",
-          position: "absolute",
-          right: "0px",
-        }}
-      />
-      <Image
-        src={String(greenTriangle)}
-        style={{ width: "24%", position: "absolute", bottom: "0px" }}
-      />
+      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+        <Image
+          src={String(blueTriangle)}
+          style={{
+            width: "24%",
+            position: "absolute",
+            right: "0px",
+          }}
+        />
+      </MediaQuery>
+      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+        <Image
+          src={String(greenTriangle)}
+          style={{ width: "24%", position: "absolute", bottom: "0px" }}
+        />
+      </MediaQuery>
       <GridContainer medianScreen={medianScreen}>
-        <SearchFilterContainer align="center">
-          <Group>
-            <Input
-              icon={
-                <ActionIcon color="dark.2" onClick={handleInputSubmit}>
-                  <IconSearch />
-                </ActionIcon>
-              }
-              placeholder="Search"
-              onChange={handleSearchInput}
-              onKeyDown={handleEnterKeyDown}
-              value={keyword}
-              sx={{ minWidth: medianScreen ? "300px" : "400px" }}
-            />
-            <ActionIcon
-              color={areFiltersEnabled() ? "blue" : "dark.2"}
-              size="lg"
-              variant={areFiltersEnabled() ? "light" : "subtle"}
-              onClick={() => {
-                setDisplayOpportunitySearchFilterModal(true);
-              }}
-            >
-              <IconFilter size={40} stroke={1.5} />
-            </ActionIcon>
-          </Group>
-        </SearchFilterContainer>
+        <Flex className={classes.container}>
+          <Input
+            icon={
+              <ActionIcon color="dark.2" onClick={handleInputSubmit}>
+                <IconSearch />
+              </ActionIcon>
+            }
+            placeholder="Search"
+            onChange={handleSearchInput}
+            onKeyDown={handleEnterKeyDown}
+            value={keyword}
+            className={classes.search}
+          />
+          <ActionIcon
+            color={areFiltersEnabled() ? "blue" : "dark.2"}
+            size="lg"
+            variant={areFiltersEnabled() ? "light" : "subtle"}
+            onClick={() => {
+              setDisplayOpportunitySearchFilterModal(true);
+            }}
+          >
+            <IconFilter size={40} stroke={1.5} />
+          </ActionIcon>
+        </Flex>
         <OpportunityGrid
           justify="center"
           medianScreen={medianScreen}
           grow={medianScreen}
         >
           <OpportunityLeftColumnContainer span={4}>
-            <OpportunityLeftColumnContent
-              direction="column"
-              // gap={0}
-              columnGap={0}
-            >
+            <OpportunityLeftColumnContent direction="column" columnGap={0}>
               {displayOpportunityArray?.map((opportunity: OpportunityItem) => {
                 return (
                   <OpportunityCard
@@ -430,6 +444,14 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                     }
                     onClick={() => handleOpportunityClick(opportunity)}
                   >
+                    {apiEndpoint.substring(0, 5) === "posts" && (
+                      <Badge sx={{ marginTop: "15px" }}>
+                        {opportunity.type?.substring(
+                          0,
+                          opportunity.type?.length - 1
+                        )}
+                      </Badge>
+                    )}
                     <OpportunityTitle>{opportunity.title}</OpportunityTitle>
                     <p style={{ fontSize: "14px" }}>
                       {opportunity.organization}
@@ -453,6 +475,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <OpportunityRightColumnContainer span={8}>
               <OpportunityInfo
+                apiEndpoint={apiEndpoint}
                 opportunity={currentOpportunity}
                 opportunityType={
                   currentOpportunity && currentOpportunity.type
@@ -476,10 +499,10 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           opened={displayOpportunityInfoModal}
           onClose={handleCloseModal}
           fullScreen
-          overflow="inside"
-          sx={{ overflow: "hidden" }}
+          sx={{ overflow: "hidden", zIndex: 1 }}
         >
           <OpportunityInfo
+            apiEndpoint={apiEndpoint}
             opportunity={currentOpportunity}
             opportunityType={
               currentOpportunity && currentOpportunity.type
@@ -499,7 +522,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           setDisplayOpportunitySearchFilterModal(false);
         }}
         fullScreen={medianScreen}
-        size="80%"
+        size="60%"
       >
         <OpportunityFilterForm
           searchObj={searchObj}
@@ -514,10 +537,11 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           setDisplayOpportunityEditModal(false);
         }}
         fullScreen={medianScreen}
-        size="80%"
+        size="60%"
       >
-        <FormHeader>Edit Opportunity</FormHeader>
+        <FormHeader>Edit Post</FormHeader>
         <OpportunityForm
+          edit={true}
           opportunityType={
             currentOpportunity && currentOpportunity.type
               ? currentOpportunity.type
@@ -528,71 +552,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           handleSubmission={handleEditButton}
         />
       </Modal>
-      {/* <Modal
-        opened={displayDeleteConfirmationModal}
-        onClose={() => setDisplayDeleteConfirmationModal(false)}
-        fullScreen={medianScreen}
-      >
-        <FormHeader>
-          Are you sure you want to {currentOpportunity?.is_deleted ? "un" : ""}
-          delete this post?
-        </FormHeader>
-        <Flex justify="flex-end" gap={20} wrap="wrap">
-          <Button
-            color="gray"
-            onClick={() => setDisplayDeleteConfirmationModal(false)}
-          >
-            Cancel
-          </Button>
-          <Button color="red" onClick={deleteCurrentPost}>
-            {currentOpportunity?.is_deleted ? "Und" : "D"}elete
-          </Button>
-        </Flex>
-      </Modal> */}
-      {/* <Modal
-        opened={displayBanConfirmationModal}
-        onClose={() => setDisplayBanConfirmationModal(false)}
-        fullScreen={medianScreen}
-      >
-        <FormHeader>
-          Are you sure you want to ban this user? Banning a user also deletes
-          all their post
-        </FormHeader>
-        <Flex justify="flex-end" gap={20} wrap="wrap">
-          <Button
-            color="gray"
-            onClick={() => setDisplayBanConfirmationModal(false)}
-          >
-            Cancel
-          </Button>
-          <Button color="red" onClick={handleBanButton}>
-            Ban
-          </Button>
-        </Flex>
-      </Modal>
-      <Modal
-        opened={displayFlagConfirmationModal}
-        onClose={() => setDisplayFlagConfirmationModal(false)}
-        fullScreen={medianScreen}
-      >
-        <FormHeader>
-          Are you sure you want to {currentOpportunity?.is_flagged ? "un" : ""}
-          flag this post?
-        </FormHeader>
-        <Flex justify="flex-end" gap={20} wrap="wrap">
-          <Button
-            color="gray"
-            onClick={() =>
-              setDisplayFlagConfirmationModal(!displayFlagConfirmationModal)
-            }
-          >
-            Cancel
-          </Button>
-          <Button color="red" onClick={handleFlagButton}>
-            {currentOpportunity?.is_flagged ? "Unf" : "F"}lag
-          </Button>
-        </Flex>
-      </Modal> */}
     </OpportunityPageContainer>
   );
 }

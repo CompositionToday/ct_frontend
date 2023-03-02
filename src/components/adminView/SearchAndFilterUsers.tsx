@@ -1,25 +1,34 @@
-import { ActionIcon, createStyles, Menu, Chip, Group } from "@mantine/core";
+import { ActionIcon, createStyles, Menu, Chip, Flex } from "@mantine/core";
 import { Input } from "@mantine/core";
 import { IconSearch, IconFilter } from "@tabler/icons";
 import React, { useState, useEffect } from "react";
 import { PaginationSearchObject } from "../pagination/PaginationNavbar";
-import { auth } from "../../Firebase";
-import { onAuthStateChanged } from "firebase/auth";
 
 interface SearchAndFilterProp {
   email: string;
   setSearchObj: React.Dispatch<React.SetStateAction<PaginationSearchObject>>;
 }
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles((theme) => ({
   container: {
     padding: "0px",
     marginTop: "40px",
+
+    [theme.fn.smallerThan("md")]: {
+      marginLeft: "15px",
+      marginRight: "15px",
+    },
   },
 
   search: {
-    minWidth: "400px",
     borderColor: "#939393",
+
+    flexBasis: "100%",
+    marginRight: "15px",
+
+    [theme.fn.largerThan("md")]: {
+      flexBasis: "40%",
+    },
   },
 }));
 
@@ -87,12 +96,11 @@ export function SearchAndFilterUsers({
   }, [adminChecked, bannedChecked, regularChecked, searchKeyword]);
 
   const isFilterEnabled = () => {
-    console.log("filter", adminChecked || bannedChecked || regularChecked);
     return adminChecked || bannedChecked || regularChecked;
   };
 
   return (
-    <Group className={classes.container} position="left">
+    <Flex className={classes.container}>
       <Input
         icon={
           <ActionIcon color="dark.2">
@@ -202,6 +210,6 @@ export function SearchAndFilterUsers({
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
-    </Group>
+    </Flex>
   );
 }

@@ -48,7 +48,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function BannedPage() {
+export function BannedUser() {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
