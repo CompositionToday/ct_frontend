@@ -148,7 +148,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         if (userUid === currentOpportunity?.UID) {
           tempOpportunity.deleted_comment = "Author has deleted this post";
         } else {
-          tempOpportunity.deleted_comment = deleteComment;
+          tempOpportunity.deleted_comment =
+            deleteComment || "Your post has been deleted";
         }
       } else {
         tempOpportunity.deleted_comment =
@@ -369,17 +370,16 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   };
 
   const areFiltersEnabled = () => {
-    return !!(
-      (searchObj.is_flagged && searchObj.is_flagged !== "0") ||
-      (searchObj.is_deleted && searchObj.is_deleted !== "0") ||
-      !!searchObj.city ||
-      !!searchObj.state ||
-      !!searchObj.salary ||
-      !!searchObj.competition_category ||
-      !!searchObj.job_category
-    )
+    return !!((searchObj.is_flagged && searchObj.is_flagged !== "0") ||
+    (searchObj.is_deleted && searchObj.is_deleted !== "0") ||
+    !!searchObj.city ||
+    !!searchObj.state ||
+    !!searchObj.salary ||
+    !!searchObj.competition_category ||
+    !!searchObj.job_category ||
+    !!searchObj.job_type
       ? true
-      : false;
+      : false);
   };
 
   useEffect(() => {
@@ -481,6 +481,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                     onClick={() => handleOpportunityClick(opportunity)}
                   >
                     <OpportunityTitle>{opportunity.title}</OpportunityTitle>
+                    <p>{deleteComment}</p>
                     <p style={{ fontSize: "14px" }}>
                       {opportunity.organization}
                     </p>

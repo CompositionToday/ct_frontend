@@ -47,6 +47,7 @@ export function OpportunityFilterForm({
     is_deleted: searchObj.is_deleted ? searchObj.is_deleted : "",
     type: searchObj.type ? searchObj.type : "",
     is_expired: searchObj.is_expired ? searchObj.is_expired : "",
+    job_type: searchObj.job_type ? searchObj.job_type : "",
   });
   const opportunityType = useLocation().pathname.slice(1);
 
