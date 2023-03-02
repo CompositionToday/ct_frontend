@@ -21,6 +21,7 @@ import {
   ActionIcon,
   Modal,
   Tooltip,
+  Alert,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -33,6 +34,7 @@ import {
   IconTrash,
   IconFlagOff,
   IconBan,
+  IconAlertCircle,
 } from "@tabler/icons";
 import { OpportunityItem } from "./OpportunityHelper";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
@@ -48,6 +50,8 @@ export function OpportunityInfo({
   handleDeletePost,
   handleBanPost,
   handleFlagPost,
+  helperDeleteComment,
+  setHelperDeleteComment,
 }: OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -155,7 +159,8 @@ export function OpportunityInfo({
                 handleDeletePost
                   ? handleDeletePost
                   : () => console.log("No delete function passed"),
-                isAdmin && opportunity.UID !== userUID ? true : false
+                isAdmin && opportunity.UID !== userUID ? true : false,
+                setHelperDeleteComment
               )
             }
           >
@@ -204,13 +209,25 @@ export function OpportunityInfo({
         </Tooltip>
       </ButtonsContainer>
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
+      {opportunity.is_deleted && (
+        <Alert
+          icon={<IconAlertCircle size={16} />}
+          title="Post Deleted"
+          color="red"
+        >
+          <p>
+            {opportunity.deleted_comment
+              ? opportunity.deleted_comment
+              : "Your post has been deleted"}
+          </p>
+          <p>{`this is the key: ${opportunity.deleted_comment}`}</p>
+        </Alert>
+      )}
       <Flex direction="column">
-        <Flex align="center">
-          <SpecificOpportunityInfo
-            opportunity={opportunity}
-            opportunityType={opportunityType}
-          />
-        </Flex>
+        <SpecificOpportunityInfo
+          opportunity={opportunity}
+          opportunityType={opportunityType}
+        />
       </Flex>
       <a href={opportunity.link} target="blank">
         <Button

@@ -37,6 +37,7 @@ export interface OpportunityItem {
   is_banned?: number;
   is_admin?: number;
   ban_message?: string;
+  deleted_comment?: string;
 }
 
 interface PaginationCard {

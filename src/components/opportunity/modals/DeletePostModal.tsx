@@ -1,10 +1,12 @@
+import react, { useState, useEffect } from "react";
 import { Text, Textarea } from "@mantine/core";
 import { openConfirmationModal } from "../../modal/ConfirmationModal";
 
 export const openDeletePostModal = (
   postTitle: string,
   deleteCurrentPost: () => void,
-  isAdminDeletingUserPost: boolean
+  isAdminDeletingUserPost: boolean,
+  setHelperDeleteComment: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const handleOnConfirm = () => {
     deleteCurrentPost();
@@ -20,6 +22,10 @@ export const openDeletePostModal = (
         </Text>
         {isAdminDeletingUserPost && (
           <Textarea
+            onChange={(e) => {
+              setHelperDeleteComment(e.target.value);
+              console.log("delete comment input:", e.target.value);
+            }}
             placeholder="Tell the user why you deleted their post"
             label="Why are you deleting this post?"
             sx={{ marginTop: "20px" }}

@@ -40,8 +40,9 @@ import { IconMapPin, IconFilter, IconSearch } from "@tabler/icons";
 import { OpportunityFilterForm } from "./OpportunityFilterForm";
 import { OpportunityForm } from "./OpportunityForm";
 import { FormHeader } from "./CreateOpportunityHelper";
-import { fetchSignInMethodsForEmail } from "firebase/auth";
+import { fetchSignInMethodsForEmail, onAuthStateChanged } from "firebase/auth";
 import { SpecificOpportunityBadges } from "./SpecificOpportunityBadges";
+import { auth } from "../../Firebase";
 
 interface OpportunityProp {
   apiEndpoint: string;
@@ -81,6 +82,9 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const medianScreen = useMediaQuery("(max-width: 992px)");
   const [recall, setRecall] = useState(0);
+  const [helperDeleteComment, setHelperDeleteComment] = useState("");
+  const [deleteComment, setDeleteComment] = useState("");
+  const [userUid, setUserUid] = useState("");
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
@@ -128,12 +132,36 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       delete tempOpportunity?.UID;
       delete tempOpportunity?.date_posted;
 
+      console.log(
+        "dlete mark: ",
+        currentOpportunity?.is_deleted,
+        currentOpportunity?.is_deleted === 0,
+        tempOpportunity?.is_deleted,
+        deleteComment
+      );
+      console.log("delete comment value inside function:", deleteComment);
+
+      if (currentOpportunity?.is_deleted === 0) {
+        console.log("in the first if");
+        if (userUid === currentOpportunity?.UID) {
+          tempOpportunity.deleted_comment = "Author has deleted this post";
+        } else {
+          tempOpportunity.deleted_comment = deleteComment;
+        }
+      } else {
+        tempOpportunity.deleted_comment =
+          "default message for not becoming undeleted";
+      }
+
       tempOpportunity.end_date = tempOpportunity?.end_date?.toString();
       tempOpportunity.start_date = tempOpportunity?.start_date?.toString();
       tempOpportunity.salary = tempOpportunity?.salary?.toString();
       tempOpportunity.is_flagged = currentOpportunity?.is_flagged?.toString();
       tempOpportunity.is_deleted = currentOpportunity?.is_deleted ? "0" : "1";
 
+      console.log("delete function params before calling edit: ", {
+        ...tempOpportunity,
+      });
       let responseJson = await editFunction(tempOpportunity);
       console.log("fake delete resposne: ", responseJson);
       setRecall(recall + 1);
@@ -247,11 +275,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       delete opportunity.is_admin;
       delete opportunity.ban_message;
 
-      console.log(
-        "before purge:",
-        typeof opportunity.city,
-        typeof opportunity.state
-      );
+      console.log("before purge:", opportunity.deleted_comment);
       for (let key in opportunity) {
         if (
           !opportunity[key as keyof typeof opportunity] &&
@@ -372,6 +396,27 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     console.log("apiEndpiont in oppo: ", apiEndpoint);
   }, [apiEndpoint]);
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      try {
+        if (user) {
+          setUserUid(user.uid);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("delete message in opp file:", helperDeleteComment);
+    setDeleteComment(helperDeleteComment);
+  }, [helperDeleteComment]);
+
+  useEffect(() => {
+    console.log("real delete comment:", deleteComment);
+  }, [deleteComment]);
+
   return (
     <OpportunityPageContainer>
       <Image
@@ -469,6 +514,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                 handleDeletePost={deleteCurrentPost}
                 handleBanPost={handleBanButton}
                 handleFlagPost={handleFlagButton}
+                helperDeleteComment={helperDeleteComment}
+                setHelperDeleteComment={setHelperDeleteComment}
               />
             </OpportunityRightColumnContainer>
           </MediaQuery>
@@ -493,6 +540,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             setDeleteModal={setDisplayDeleteConfirmationModal}
             setBannedModal={setDisplayBanConfirmationModal}
             setFlagModal={setDisplayFlagConfirmationModal}
+            helperDeleteComment={helperDeleteComment}
+            setHelperDeleteComment={setHelperDeleteComment}
           />
         </Modal>
       </MediaQuery>
