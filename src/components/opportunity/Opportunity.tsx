@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   GridContainer,
   OpportunityGrid,
@@ -85,7 +85,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   const medianScreen = useMediaQuery("(max-width: 992px)");
   const [recall, setRecall] = useState(0);
   const [helperDeleteComment, setHelperDeleteComment] = useState("");
-  const [deleteComment, setDeleteComment] = useState("");
+  const deleteComment = useRef("");
   const [userUid, setUserUid] = useState("");
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
@@ -149,7 +149,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           tempOpportunity.deleted_comment = "Author has deleted this post";
         } else {
           tempOpportunity.deleted_comment =
-            deleteComment || "Your post has been deleted";
+            deleteComment.current || "Your post has been deleted";
         }
       } else {
         tempOpportunity.deleted_comment =
@@ -410,10 +410,10 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     });
   }, []);
 
-  useEffect(() => {
-    console.log("delete message in opp file:", helperDeleteComment);
-    setDeleteComment(helperDeleteComment);
-  }, [helperDeleteComment]);
+  // useEffect(() => {
+  //   console.log("delete message in opp file:", helperDeleteComment);
+  //   setDeleteComment(helperDeleteComment);
+  // }, [helperDeleteComment]);
 
   useEffect(() => {
     console.log("real delete comment:", deleteComment);
@@ -481,7 +481,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                     onClick={() => handleOpportunityClick(opportunity)}
                   >
                     <OpportunityTitle>{opportunity.title}</OpportunityTitle>
-                    <p>{deleteComment}</p>
                     <p style={{ fontSize: "14px" }}>
                       {opportunity.organization}
                     </p>
@@ -492,13 +491,15 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                   </OpportunityCard>
                 );
               })}
-              <PaginationNavbar
-                apiEndpointExtension={apiEndpoint}
-                numberOfItemsPerPage={10}
-                setListOfObjects={setDisplayOpportunityArray}
-                searchFilterObject={searchObj}
-                recall={recall}
-              />
+              <div>
+                <PaginationNavbar
+                  apiEndpointExtension={apiEndpoint}
+                  numberOfItemsPerPage={10}
+                  setListOfObjects={setDisplayOpportunityArray}
+                  searchFilterObject={searchObj}
+                  recall={recall}
+                />
+              </div>
             </OpportunityLeftColumnContent>
           </OpportunityLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
@@ -517,8 +518,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                 handleDeletePost={deleteCurrentPost}
                 handleBanPost={handleBanButton}
                 handleFlagPost={handleFlagButton}
-                helperDeleteComment={helperDeleteComment}
-                setHelperDeleteComment={setHelperDeleteComment}
+                deleteComment={deleteComment}
+                // setHelperDeleteComment={setHelperDeleteComment}
               />
             </OpportunityRightColumnContainer>
           </MediaQuery>
@@ -529,7 +530,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           opened={displayOpportunityInfoModal}
           onClose={handleCloseModal}
           fullScreen
-          overflow="inside"
           sx={{ overflow: "hidden" }}
         >
           <OpportunityInfo
@@ -543,8 +543,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             setDeleteModal={setDisplayDeleteConfirmationModal}
             setBannedModal={setDisplayBanConfirmationModal}
             setFlagModal={setDisplayFlagConfirmationModal}
-            helperDeleteComment={helperDeleteComment}
-            setHelperDeleteComment={setHelperDeleteComment}
+            deleteComment={deleteComment}
+            // setHelperDeleteComment={setHelperDeleteComment}
           />
         </Modal>
       </MediaQuery>
@@ -583,7 +583,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           handleSubmission={handleEditButton}
         />
       </Modal>
-      <Modal
+      {/* <Modal
         opened={displayDeleteConfirmationModal}
         onClose={() => setDisplayDeleteConfirmationModal(false)}
         fullScreen={medianScreen}
@@ -596,8 +596,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           <span style={{ fontWeight: 700 }}>{currentOpportunity?.title}</span>"?
         </Text>
         <Textarea
-          value={deleteComment}
-          onChange={(e) => setDeleteComment(e.target.value)}
+          value={deleteComment.current}
+          onChange={(e) => deleteComment.current}
           placeholder="Tell the user why you deleted their post"
           label="Why are you deleting this post?"
           sx={{ marginTop: "20px" }}
@@ -618,7 +618,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             {currentOpportunity?.is_deleted ? "Und" : "D"}elete
           </Button>
         </Flex>
-      </Modal>
+      </Modal> */}
       {/* <Modal
         opened={displayBanConfirmationModal}
         onClose={() => setDisplayBanConfirmationModal(false)}

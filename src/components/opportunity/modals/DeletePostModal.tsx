@@ -6,7 +6,7 @@ export const openDeletePostModal = (
   postTitle: string,
   deleteCurrentPost: () => void,
   isAdminDeletingUserPost: boolean,
-  setHelperDeleteComment: React.Dispatch<React.SetStateAction<string>>
+  deleteComment: React.MutableRefObject<string>
 ) => {
   const handleOnConfirm = () => {
     deleteCurrentPost();
@@ -23,7 +23,7 @@ export const openDeletePostModal = (
         {isAdminDeletingUserPost && (
           <Textarea
             onChange={(e) => {
-              setHelperDeleteComment(e.target.value);
+              deleteComment.current = e.target.value;
               console.log("delete comment input:", e.target.value);
             }}
             placeholder="Tell the user why you deleted their post"

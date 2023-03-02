@@ -51,9 +51,9 @@ export function OpportunityInfo({
   handleDeletePost,
   handleBanPost,
   handleFlagPost,
-  helperDeleteComment,
-  setHelperDeleteComment,
-}: OpportunityInfoProp) {
+  deleteComment,
+}: // setHelperDeleteComment,
+OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [endDate, setEndDate] = useState(
@@ -154,17 +154,16 @@ export function OpportunityInfo({
               alignSelf: "flex-start",
               display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
             }}
-            onClick={() => {
+            onClick={() =>
               openDeletePostModal(
                 opportunity?.title ? opportunity.title : "",
                 handleDeletePost
                   ? handleDeletePost
                   : () => console.log("No delete function passed"),
                 isAdmin && opportunity.UID !== userUID ? true : false,
-                setHelperDeleteComment
-              );
-              setDeleteModal(true);
-            }}
+                deleteComment
+              )
+            }
           >
             <IconTrash />
           </ActionIcon>

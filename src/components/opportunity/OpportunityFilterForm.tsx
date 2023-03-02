@@ -56,6 +56,10 @@ export function OpportunityFilterForm({
     console.log(searchObj);
   }, [searchObj]);
 
+  useEffect(() => {
+    console.log("temp obj", tempSearchObj.job_type);
+  }, [tempSearchObj]);
+
   return (
     <Paper shadow="sm" withBorder>
       <OpportunityFilterFormContentContainer>
@@ -72,7 +76,11 @@ export function OpportunityFilterForm({
               competition_category: e ? e : "",
             })
           }
-          value={tempSearchObj.competition_category}
+          value={
+            (tempSearchObj.competition_category as string)
+              ? (tempSearchObj.competition_category as string)
+              : ""
+          }
         />
         <DropdownCategory
           label="Job Category"
@@ -93,13 +101,18 @@ export function OpportunityFilterForm({
               job_category: e ? e : "",
             })
           }
-          value={tempSearchObj.job_category}
+          value={
+            (tempSearchObj.job_category as string)
+              ? (tempSearchObj.job_category as string)
+              : ""
+          }
         />
         <DropdownCategory
           label="Job Type"
           placeholder={`Select job type`}
           allowDeselect
           display={opportunityType === "jobs"}
+          clearable
           data={[
             "Full-time",
             "Part-time",
@@ -114,7 +127,11 @@ export function OpportunityFilterForm({
               job_type: e ? e : "",
             })
           }
-          value={tempSearchObj.job_type}
+          value={
+            (tempSearchObj.job_type as string)
+              ? (tempSearchObj.job_type as string)
+              : ""
+          }
         />
         <Location
           city={city}
@@ -190,7 +207,11 @@ export function OpportunityFilterForm({
               is_flagged: e && e !== "-1" ? e : "",
             })
           }
-          value={tempSearchObj.is_flagged as string}
+          value={
+            (tempSearchObj.is_flagged as string)
+              ? (tempSearchObj.is_flagged as string)
+              : ""
+          }
         />
         <DropdownCategory
           label="Deleted Post"
@@ -214,7 +235,11 @@ export function OpportunityFilterForm({
               is_deleted: e && e !== "-1" ? e : "",
             })
           }
-          value={tempSearchObj.is_deleted as string}
+          value={
+            (tempSearchObj.is_deleted as string)
+              ? (tempSearchObj.is_deleted as string)
+              : ""
+          }
         />
         <DropdownCategory
           label="Expired Post"
@@ -238,7 +263,11 @@ export function OpportunityFilterForm({
               is_expired: e && e !== "-1" ? e : "",
             })
           }
-          value={tempSearchObj.is_expired as string}
+          value={
+            (tempSearchObj.is_expired as string)
+              ? (tempSearchObj.is_expired as string)
+              : ""
+          }
         />
         <DropdownCategory
           label="Type of Post"
@@ -263,7 +292,9 @@ export function OpportunityFilterForm({
               type: e ? e : "",
             })
           }
-          value={tempSearchObj.type as string}
+          value={
+            (tempSearchObj.type as string) ? (tempSearchObj.type as string) : ""
+          }
         />
         <StartEndDatePicker
           label="Date Range"

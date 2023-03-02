@@ -12,8 +12,8 @@ export interface OpportunityInfoProp {
   handleDeletePost?: () => void;
   handleBanPost?: () => void;
   handleFlagPost?: () => void;
-  helperDeleteComment: string;
-  setHelperDeleteComment: React.Dispatch<React.SetStateAction<string>>;
+  deleteComment: React.MutableRefObject<string>;
+  // setHelperDeleteComment: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface DisplayButton {

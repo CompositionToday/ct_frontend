@@ -77,6 +77,7 @@ export function Location({
     console.log("state: ", state);
     if (!city || !state) {
       setValue("");
+      setRemoteStatus(false);
     }
   }, [city, state]);
 
