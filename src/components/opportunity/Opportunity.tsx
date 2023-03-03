@@ -568,6 +568,9 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             setDeleteModal={setDisplayDeleteConfirmationModal}
             setBannedModal={setDisplayBanConfirmationModal}
             setFlagModal={setDisplayFlagConfirmationModal}
+            handleDeletePost={deleteCurrentPost}
+            handleBanPost={handleBanButton}
+            handleFlagPost={handleFlagButton}
             deleteComment={deleteComment}
             // setHelperDeleteComment={setHelperDeleteComment}
           />
