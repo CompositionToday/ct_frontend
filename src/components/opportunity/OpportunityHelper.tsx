@@ -68,7 +68,9 @@ export const OpportunityPageContainer = styled.div`
 
 export const GridContainer = styled.div<GridContainer>`
   width: ${(props) => (props.medianScreen ? "100vw" : "80vw")};
-  height: ${(props) => (props.medianScreen ? "85vh" : "75vh")};
+  height: ${(props) => (props.medianScreen ? "auto" : "75vh")};
+  min-height: ${(props) => (props.medianScreen ? "85vh" : "75vh")};
+  // background: red;
   overflow: visible;
   margin: auto;
 `;
@@ -76,6 +78,7 @@ export const GridContainer = styled.div<GridContainer>`
 export const OpportunityGrid = styled(Grid)<GridContainer>`
   position: relative;
   height: 93%;
+  // min-height: ${(props) => (props.medianScreen ? "80vh" : "auto")};
   text-align: left;
   margin: 0 auto;
   background-color: white;
@@ -85,16 +88,18 @@ export const OpportunityGrid = styled(Grid)<GridContainer>`
   border-radius: ${(props) => (props.medianScreen ? "auto" : "10px")};
 `;
 
-export const OpportunityLeftColumnContent = styled(Flex)`
+export const OpportunityLeftColumnContent = styled(Flex)<GridContainer>`
   height: 100%;
+  min-height: ${(props) => (props.medianScreen ? "80vh" : "auto")};
   // padding-left: 10px;
   // padding-right: 10px;
   overflow-y: auto;
   // overflow-x: hidden;
 `;
 
-export const OpportunityLeftColumnContainer = styled(Grid.Col)`
+export const OpportunityLeftColumnContainer = styled(Grid.Col)<GridContainer>`
   height: 100%;
+  // min-height: ${(props) => (props.medianScreen ? "80vh" : "auto")};
   padding: 0;
   width: 100%;
 `;

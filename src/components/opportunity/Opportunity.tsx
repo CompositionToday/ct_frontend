@@ -477,8 +477,12 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           medianScreen={smallerScreen}
           grow={smallerScreen}
         >
-          <OpportunityLeftColumnContainer span={4}>
-            <OpportunityLeftColumnContent direction="column" columnGap={0}>
+          <OpportunityLeftColumnContainer span={4} medianScreen={smallerScreen}>
+            <OpportunityLeftColumnContent
+              direction="column"
+              columnGap={0}
+              medianScreen={smallerScreen}
+            >
               {displayOpportunityArray?.map((opportunity: OpportunityItem) => {
                 return (
                   <OpportunityCard
