@@ -391,7 +391,12 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     !!searchObj.salary ||
     !!searchObj.competition_category ||
     !!searchObj.job_category ||
-    !!searchObj.job_type
+    !!searchObj.job_type ||
+    !!searchObj.type ||
+    !!searchObj.is_banned ||
+    !!searchObj.is_deleted ||
+    !!searchObj.is_expired ||
+    !!searchObj.author
       ? true
       : false);
   };
