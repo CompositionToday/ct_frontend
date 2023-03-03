@@ -145,21 +145,20 @@ export function Footer({ data }: FooterLinksProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [displayFooter, setDisplayFooter] = useState(true);
+  const validFooterPage = [
+    "/",
+    "/about",
+    "/jobs",
+    "/competitions",
+    "/festivals",
+    "/concerts",
+    "/admin/users",
+    "/create-opportunity",
+    "/admin/recent-posts",
+    "/my-posts",
+  ];
 
   useEffect(() => {
-    const validFooterPage = [
-      "/",
-      "/about",
-      "/jobs",
-      "/competitions",
-      "/festivals",
-      "/concerts",
-      "/admin/users",
-      "/create-opportunity",
-      "/admin/recent-posts",
-      "/my-posts",
-    ];
-
     if (validFooterPage.includes(location.pathname)) {
       setDisplayFooter(true);
     } else {
