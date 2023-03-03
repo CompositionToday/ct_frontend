@@ -183,6 +183,7 @@ export function NavBar({ links }: HeaderActionProps) {
     });
   }, []);
 
+  // This useEffect is to force users to be redirected to the banned page (assuming they are signed into a banned account), whenever they try to change the url, check if the current user is an admin, and make sure a user is scrolled to the top of the page whenever they redirect to a new page
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -212,6 +213,9 @@ export function NavBar({ links }: HeaderActionProps) {
         setUserAdmin(false);
       }
     });
+
+    // This is here so that no matter what page a user goes to, they will be redirect to the top of the page. The reason this has to be here is because for some reason, rediecting to a new page doesn't allows have them scrolled to the top of the page
+    window.scrollTo(0, 0);
   }, [location.pathname, signedIn]);
 
   useEffect(() => {

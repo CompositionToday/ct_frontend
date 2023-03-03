@@ -81,10 +81,6 @@ const useStyles = createStyles((theme) => ({
 export function About() {
   const { classes } = useStyles();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className={classes.container}>
       <Image
