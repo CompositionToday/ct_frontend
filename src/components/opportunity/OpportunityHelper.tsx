@@ -136,3 +136,9 @@ export const SearchBar = styled(TextInput)<GridContainer>`
   width: ${(props) => (props.medianScreen ? "75%" : "35%")};
   min-width: 400px;
 `;
+
+export const OpportunityPaginationNavbarContainer = styled(Flex)`
+  margin: auto;
+  background: "white";
+  flex-grow: 1;
+`;

@@ -8,6 +8,7 @@ import {
   OpportunityLeftColumnContainer,
   OpportunityRightColumnContainer,
   OpportunityCard,
+  OpportunityPaginationNavbarContainer,
 } from "./OpportunityHelper";
 import { OpportunityTitle } from "./OpportunityInfoHelper";
 import { OpportunityInfo } from "./OpportunityInfo";
@@ -501,7 +502,10 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                   </OpportunityCard>
                 );
               })}
-              <div>
+              <OpportunityPaginationNavbarContainer
+                align="flex-end"
+                justify="flex-end"
+              >
                 <PaginationNavbar
                   apiEndpointExtension={apiEndpoint}
                   numberOfItemsPerPage={10}
@@ -509,7 +513,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                   searchFilterObject={searchObj}
                   recall={recall}
                 />
-              </div>
+              </OpportunityPaginationNavbarContainer>
             </OpportunityLeftColumnContent>
           </OpportunityLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>

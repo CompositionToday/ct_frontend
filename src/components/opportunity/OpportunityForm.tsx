@@ -293,7 +293,7 @@ export function OpportunityForm({
     <OpportunityFormContainer>
       <Paper
         shadow="sm"
-        withBorder={edit ? false : true}
+        withBorder={!edit}
         className={edit ? classes.noShadow : classes.shadow}
         radius="lg"
         sx={{ padding: smallerScreen ? "20px" : "20px 40px" }}
