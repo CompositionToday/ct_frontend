@@ -27,7 +27,6 @@ export function Landing() {
         <Features />
       </Container>
       <RegisterCTA />
-      <Footer data={footerInfo.data} />
     </Container>
   );
 }

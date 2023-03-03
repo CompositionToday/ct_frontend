@@ -1,3 +1,4 @@
+import react, { useState, useEffect } from "react";
 import {
   createStyles,
   Text,
@@ -6,7 +7,7 @@ import {
   Image,
   Title,
 } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const musicNoteIcon = require("../../images/BigMusicNote.png");
 const emailIcon = require("../../images/EmailIcon.png");
@@ -142,6 +143,35 @@ interface FooterLinksProps {
 export function Footer({ data }: FooterLinksProps) {
   const { classes } = useStyles();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [displayFooter, setDisplayFooter] = useState(true);
+
+  useEffect(() => {
+    const validFooterPage = [
+      "/",
+      "/about",
+      "/jobs",
+      "/competitions",
+      "/festivals",
+      "/concerts",
+      "/admin/users",
+      "/create-opportunity",
+      "/admin/recent-posts",
+      "/my-posts",
+    ];
+
+    if (validFooterPage.includes(location.pathname)) {
+      setDisplayFooter(true);
+    } else {
+      setDisplayFooter(false);
+    }
+
+    console.log(
+      "location path in footer:",
+      location.pathname,
+      location.pathname.includes(location.pathname)
+    );
+  }, [location.pathname]);
 
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
@@ -163,7 +193,10 @@ export function Footer({ data }: FooterLinksProps) {
   });
 
   return (
-    <footer className={classes.footer}>
+    <footer
+      className={classes.footer}
+      style={{ display: displayFooter ? "block" : "none" }}
+    >
       <Container className={classes.inner}>
         <div className={classes.logo}>
           <Group className={classes.logoGroup}>

@@ -19,6 +19,8 @@ import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
+import { Footer } from "./components/footer/Footer";
+import { footerInfo } from "./components/footer/FooterInfo";
 
 export default function App() {
   return (
@@ -47,6 +49,7 @@ export default function App() {
               <Route path="/banned" element={<BannedUser />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <Footer data={footerInfo.data} />
           </HashRouter>
         </NotificationsProvider>
       </ModalsProvider>

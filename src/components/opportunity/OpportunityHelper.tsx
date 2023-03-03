@@ -60,7 +60,8 @@ export const PageContainer = styled(Flex)`
 
 export const OpportunityPageContainer = styled.div`
   margin-top: 30px;
-  height: 84vh;
+  // height: 84vh;
+  min-height: 84vh;
   // background-color: red;
   // overflow-wrap: break-word;
   // overflow-x: hidden;

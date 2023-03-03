@@ -54,7 +54,6 @@ export function Users() {
         />
       </MediaQuery>
       <UsersList />
-      <Footer data={footerInfo.data} />
     </Container>
   );
 }
