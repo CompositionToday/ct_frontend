@@ -239,28 +239,60 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     }
   };
 
+  // const handleFlagButton = async () => {
+  //   try {
+  //     let tempOpportunity = currentOpportunity;
+
+  //     if (!tempOpportunity) {
+  //       throw "There is not an opportunity selected";
+  //     }
+
+  //     delete tempOpportunity?.UID;
+  //     delete tempOpportunity?.date_posted;
+
+  //     // Format any number keys as strings since the APIs only accept strings for the request body
+  //     tempOpportunity.end_date = tempOpportunity?.end_date?.toString();
+  //     tempOpportunity.start_date = tempOpportunity?.start_date?.toString();
+  //     tempOpportunity.salary = tempOpportunity?.salary?.toString();
+  //     tempOpportunity.is_flagged = currentOpportunity?.is_flagged ? "0" : "1";
+  //     tempOpportunity.is_deleted = currentOpportunity?.is_deleted?.toString();
+
+  //     let responseJson = await editFunction(tempOpportunity);
+  //     console.log("fake flag resposne: ", responseJson);
+  //     setRecall(recall + 1);
+  //     setDisplayOpportunityInfoModal(false);
+  //     showNotification({
+  //       title: "Post Reported",
+  //       message:
+  //         "You reported this post. It will be reviewed by an administrator",
+  //       color: "green",
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     showNotification({
+  //       title: "Error",
+  //       message: "Something went wrong, please try again later",
+  //       color: "red",
+  //     });
+  //   } finally {
+  //     setDisplayFlagConfirmationModal(false);
+  //   }
+  // };
+
   const handleFlagButton = async () => {
     try {
-      let tempOpportunity = currentOpportunity;
+      let requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      };
 
-      if (!tempOpportunity) {
-        throw "There is not an opportunity selected";
-      }
+      let response = await fetch(
+        `${url}/posts/flag/${currentOpportunity?.idposts}`,
+        requestOptions
+      );
 
-      delete tempOpportunity?.UID;
-      delete tempOpportunity?.date_posted;
-
-      // Format any number keys as strings since the APIs only accept strings for the request body
-      tempOpportunity.end_date = tempOpportunity?.end_date?.toString();
-      tempOpportunity.start_date = tempOpportunity?.start_date?.toString();
-      tempOpportunity.salary = tempOpportunity?.salary?.toString();
-      tempOpportunity.is_flagged = currentOpportunity?.is_flagged ? "0" : "1";
-      tempOpportunity.is_deleted = currentOpportunity?.is_deleted?.toString();
-
-      let responseJson = await editFunction(tempOpportunity);
-      console.log("fake flag resposne: ", responseJson);
-      setRecall(recall + 1);
-      setDisplayOpportunityInfoModal(false);
+      let responseJson = await response.json();
+      console.log("put flag response: ", responseJson.listOfObjects[0]);
       showNotification({
         title: "Post Reported",
         message:
@@ -274,8 +306,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         message: "Something went wrong, please try again later",
         color: "red",
       });
-    } finally {
-      setDisplayFlagConfirmationModal(false);
     }
   };
 
