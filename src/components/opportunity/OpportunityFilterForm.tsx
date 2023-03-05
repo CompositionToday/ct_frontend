@@ -299,18 +299,24 @@ export function OpportunityFilterForm({
       <SubmitButtonContainer justify="center" gap="sm">
         <Button
           onClick={() => {
-            let temp = tempSearchObj;
-            delete temp.salary;
+            let tempFormattedSearchObj = tempSearchObj;
+            delete tempFormattedSearchObj.salary;
 
-            for (const key in temp) {
+            for (const key in tempFormattedSearchObj) {
               if (key === "end_date") {
-                temp = { ...temp, [key]: 0 };
+                tempFormattedSearchObj = {
+                  ...tempFormattedSearchObj,
+                  [key]: 0,
+                };
               } else {
-                temp = { ...temp, [key]: "" };
+                tempFormattedSearchObj = {
+                  ...tempFormattedSearchObj,
+                  [key]: "",
+                };
               }
             }
 
-            setTempSearchObj(temp);
+            setTempSearchObj(tempFormattedSearchObj);
             setCity("");
             setState("");
             setDateRange([null, null]);
@@ -320,31 +326,41 @@ export function OpportunityFilterForm({
         </Button>
         <Button
           onClick={() => {
-            let temp = tempSearchObj;
+            let tempFormattedSearchObj = tempSearchObj;
             console.log("you clicked me");
-            console.log("temp before: ", temp, !!temp.keyword);
-            for (const key in temp) {
-              if (!temp[key as keyof typeof temp]) {
-                delete temp[key as keyof typeof temp];
+            console.log(
+              "temp before: ",
+              tempFormattedSearchObj,
+              !!tempFormattedSearchObj.keyword
+            );
+            for (const key in tempFormattedSearchObj) {
+              if (
+                !tempFormattedSearchObj[
+                  key as keyof typeof tempFormattedSearchObj
+                ]
+              ) {
+                delete tempFormattedSearchObj[
+                  key as keyof typeof tempFormattedSearchObj
+                ];
               }
             }
 
             if (city && state) {
-              temp.city = city;
-              temp.state = state;
+              tempFormattedSearchObj.city = city;
+              tempFormattedSearchObj.state = state;
             } else {
-              delete temp.city;
-              delete temp.state;
+              delete tempFormattedSearchObj.city;
+              delete tempFormattedSearchObj.state;
             }
 
             if (dateRange && dateRange[0] && dateRange[1]) {
-              temp.start_date = dateRange[0].valueOf();
-              temp.end_date = dateRange[1].valueOf();
+              tempFormattedSearchObj.start_date = dateRange[0].valueOf();
+              tempFormattedSearchObj.end_date = dateRange[1].valueOf();
             } else {
-              delete temp.start_date;
-              delete temp.end_date;
+              delete tempFormattedSearchObj.start_date;
+              delete tempFormattedSearchObj.end_date;
             }
-            setSearchObj(temp);
+            setSearchObj(tempFormattedSearchObj);
           }}
         >
           Search

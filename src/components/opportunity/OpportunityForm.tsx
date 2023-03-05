@@ -228,9 +228,9 @@ export function OpportunityForm({
       if (!opportunityKeys.includes(key)) {
         continue;
       } else if (typeof values[formattedKey] === "string") {
-        let temp = values[formattedKey] as string;
-        temp = temp.trim();
-        req = { ...req, [formattedKey]: temp };
+        let tempKeyValue = values[formattedKey] as string;
+        tempKeyValue = tempKeyValue.trim();
+        req = { ...req, [formattedKey]: tempKeyValue };
       } else {
         req = { ...req, [formattedKey]: values[formattedKey] };
       }

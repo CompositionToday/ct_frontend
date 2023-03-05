@@ -12,8 +12,8 @@ export function MyPosts() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        let temp = `posts/${user.uid}`;
-        setPathName(temp);
+        let tempApiEndpoint = `posts/${user.uid}`;
+        setPathName(tempApiEndpoint);
       } else {
         navigate("/");
       }
