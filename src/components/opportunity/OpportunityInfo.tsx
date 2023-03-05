@@ -21,11 +21,13 @@ import {
   IconFlagOff,
   IconBan,
   IconAlertCircle,
+  IconSquareNumber0,
 } from "@tabler/icons";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
 import { openDeletePostModal } from "./modals/DeletePostModal";
 import { openBanPostModal } from "./modals/BanPostModal";
 import { openFlagPostModal } from "./modals/FlagPostModal";
+import { openResetFlagCountPostModal } from "./modals/ResetReportCountModal";
 
 export function OpportunityInfo({
   apiEndpoint,
@@ -36,6 +38,7 @@ export function OpportunityInfo({
   handleDeletePost,
   handleBanPost,
   handleFlagPost,
+  handleResetReportCount,
   deleteComment,
 }: // setHelperDeleteComment,
 OpportunityInfoProp) {
@@ -193,6 +196,26 @@ OpportunityInfoProp) {
             {!opportunity.is_flagged ? <IconFlag /> : <IconFlagOff />}
           </ActionIcon>
         </Tooltip>
+        <Tooltip label="Report Post" withArrow>
+          <ActionIcon
+            color="green"
+            sx={{
+              height: 30,
+              alignSelf: "flex-start",
+              display: isAdmin ? "auto" : "none",
+            }}
+            onClick={() => {
+              openResetFlagCountPostModal(
+                opportunity?.title ? opportunity.title : "",
+                handleResetReportCount
+                  ? handleResetReportCount
+                  : () => console.log("No flag function passed")
+              );
+            }}
+          >
+            <IconSquareNumber0 />
+          </ActionIcon>
+        </Tooltip>
       </ButtonsContainer>
       {apiEndpoint.substring(0, 5) === "posts" && (
         <Badge sx={{ marginTop: "15px" }}>
@@ -215,6 +238,16 @@ OpportunityInfoProp) {
         </Alert>
       ) : null}
       <Flex direction="column">
+        {isAdmin && (
+          <Tooltip label="Amount of Flags">
+            <Flex align="center">
+              <IconFlag size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                {opportunity?.is_flagged}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
         <SpecificOpportunityInfo
           opportunity={opportunity}
           opportunityType={opportunityType}

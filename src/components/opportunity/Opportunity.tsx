@@ -293,12 +293,67 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
       let responseJson = await response.json();
       console.log("put flag response: ", responseJson.listOfObjects[0]);
+
+      let tempCurrentOpportunity = {
+        ...currentOpportunity,
+        is_flagged: currentOpportunity?.is_flagged
+          ? (currentOpportunity?.is_flagged as number) + 1
+          : 1,
+      };
+
+      setCurrentOpportunity(tempCurrentOpportunity);
+
+      let tempDisplayOpportunityArray = displayOpportunityArray;
+
+      for (let i = 0; i < tempDisplayOpportunityArray.length; i++) {
+        if (
+          tempDisplayOpportunityArray[i].idposts ===
+          tempCurrentOpportunity.idposts
+        ) {
+          tempDisplayOpportunityArray[i] = tempCurrentOpportunity;
+          break;
+        }
+      }
+
+      setDisplayOpportunityArray(tempDisplayOpportunityArray);
+
       showNotification({
         title: "Post Reported",
         message:
           "You reported this post. It will be reviewed by an administrator",
         color: "green",
       });
+    } catch (err) {
+      console.log(err);
+      showNotification({
+        title: "Error",
+        message: "Something went wrong, please try again later",
+        color: "red",
+      });
+    }
+  };
+
+  const handleResetReportCountButton = async () => {
+    try {
+      let requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      };
+
+      let response = await fetch(
+        `${url}/posts/flag/reset/${currentOpportunity?.idposts}`,
+        requestOptions
+      );
+
+      let responseJson = await response.json();
+      console.log("put flag response: ", responseJson.listOfObjects[0]);
+      showNotification({
+        title: "Flag Count Reseted",
+        message: "You have successfully reset the flag count on this post",
+        color: "green",
+      });
+
+      setRecall(recall + 1);
     } catch (err) {
       console.log(err);
       showNotification({
@@ -572,6 +627,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                 handleDeletePost={deleteCurrentPost}
                 handleBanPost={handleBanButton}
                 handleFlagPost={handleFlagButton}
+                handleResetReportCount={handleResetReportCountButton}
                 deleteComment={deleteComment}
                 // setHelperDeleteComment={setHelperDeleteComment}
               />
@@ -601,6 +657,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             handleDeletePost={deleteCurrentPost}
             handleBanPost={handleBanButton}
             handleFlagPost={handleFlagButton}
+            handleResetReportCount={handleResetReportCountButton}
             deleteComment={deleteComment}
             // setHelperDeleteComment={setHelperDeleteComment}
           />
