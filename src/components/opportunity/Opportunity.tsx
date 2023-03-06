@@ -24,6 +24,10 @@ import {
   Flex,
   ActionIcon,
   Badge,
+  LoadingOverlay,
+  Skeleton,
+  Container,
+  Divider,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -97,9 +101,9 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const smallerScreen = useMediaQuery("(max-width: 992px)");
   const [recall, setRecall] = useState(0);
-  const [helperDeleteComment, setHelperDeleteComment] = useState("");
   const deleteComment = useRef("");
   const [userUid, setUserUid] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
@@ -131,10 +135,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       handleInputSubmit();
     }
   };
-
-  useEffect(() => {
-    console.log("apiEndpoint", apiEndpoint);
-  }, []);
 
   const deleteCurrentPost = async () => {
     try {
@@ -404,14 +404,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   }, [displayOpportunityArray]);
 
   useEffect(() => {
-    console.log("searchobj: ", searchObj);
-  }, [searchObj]);
-
-  useEffect(() => {
-    console.log("apiEndpiont in oppo: ", apiEndpoint);
-  }, [apiEndpoint]);
-
-  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       try {
         if (user) {
@@ -422,6 +414,46 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       }
     });
   }, []);
+
+  useEffect(() => {
+    console.log("loading", loading);
+  }, [loading]);
+
+  const leftSkeleton = [1, 2, 3, 4, 5].map((item, idx) => (
+    <>
+      <Skeleton height={12} mt={6} width="80%" radius="xl" />
+      <Skeleton height={8} mt={20} width="40%" radius="xl" />
+      <Flex>
+        <Skeleton height={14} mt={12} mr={6} width="30%" radius="xl" />
+        <Skeleton height={14} mt={12} mr={6} width="30%" radius="xl" />
+      </Flex>
+      <Divider sx={{ margin: "30px 0px" }} />
+    </>
+  ));
+
+  const rightSkeleton = [1].map((item, idx) => (
+    <>
+      <Skeleton height={15} mt={6} width="80%" radius="xl" />
+      <Skeleton height={8} mt={18} width="30%" radius="xl" />
+      <Skeleton height={8} mt={18} width="35%" radius="xl" />
+      <Skeleton height={8} mt={18} width="25%" radius="xl" />
+
+      <Skeleton height={20} mt={20} width="20%" radius="xl" />
+
+      <Skeleton height={8} mt={20} width="95%" radius="xl" />
+      <Skeleton height={8} mt={10} width="90%" radius="xl" />
+      <Skeleton height={8} mt={10} width="85%" radius="xl" />
+      <Skeleton height={8} mt={10} width="100%" radius="xl" />
+      <Skeleton height={8} mt={10} width="95%" radius="xl" />
+      <Skeleton height={8} mt={10} width="85%" radius="xl" />
+      <Skeleton height={8} mt={10} width="85%" radius="xl" />
+      <Skeleton height={8} mt={10} width="100%" radius="xl" />
+      <Skeleton height={8} mt={10} width="95%" radius="xl" />
+      <Skeleton height={8} mt={10} width="85%" radius="xl" />
+      <Skeleton height={8} mt={10} width="85%" radius="xl" />
+      <Skeleton height={8} mt={10} width="100%" radius="xl" />
+    </>
+  ));
 
   return (
     <OpportunityPageContainer>
@@ -449,7 +481,9 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                 <IconSearch />
               </ActionIcon>
             }
-            placeholder="Search"
+            placeholder={`Search ${
+              apiEndpoint.includes("posts/") ? "my posts" : apiEndpoint
+            }`}
             onChange={handleSearchInput}
             onKeyDown={handleEnterKeyDown}
             value={keyword}
@@ -471,42 +505,83 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           medianScreen={smallerScreen}
           grow={smallerScreen}
         >
+          <LoadingOverlay
+            visible={loading}
+            overlayOpacity={0.2}
+            overlayBlur={0.2}
+            radius="lg"
+          />
           <OpportunityLeftColumnContainer span={4}>
             <OpportunityLeftColumnContent direction="column" columnGap={0}>
-              {displayOpportunityArray?.map((opportunity: OpportunityItem) => {
-                return (
-                  <OpportunityCard
-                    selected={
-                      currentOpportunity?.idposts === opportunity.idposts &&
-                      !smallerScreen
+              {loading ? (
+                <Container
+                  sx={{
+                    margin: "50px 20px",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
+                  {leftSkeleton}
+                </Container>
+              ) : (
+                <>
+                  {displayOpportunityArray?.map(
+                    (opportunity: OpportunityItem) => {
+                      return (
+                        <OpportunityCard
+                          selected={
+                            currentOpportunity?.idposts ===
+                              opportunity.idposts && !smallerScreen
+                          }
+                          onClick={() => handleOpportunityClick(opportunity)}
+                        >
+                          {apiEndpoint.includes("posts") && (
+                            <Badge sx={{ margin: "15px 5px 3px 0px" }}>
+                              {opportunity.type?.substring(
+                                0,
+                                opportunity.type?.length - 1
+                              )}
+                            </Badge>
+                          )}
+                          {opportunity.is_deleted && apiEndpoint === "posts" ? (
+                            <Badge
+                              sx={{ margin: "15px 5px 3px 0px" }}
+                              color="red"
+                            >
+                              Deleted
+                            </Badge>
+                          ) : null}
+                          {opportunity.is_flagged && apiEndpoint === "posts" ? (
+                            <Badge
+                              sx={{ margin: "15px 5px 3px 0px" }}
+                              color="yellow"
+                            >
+                              Reported
+                            </Badge>
+                          ) : null}
+                          <OpportunityTitle>
+                            {opportunity.title}
+                          </OpportunityTitle>
+                          <p style={{ fontSize: "14px" }}>
+                            {opportunity.organization}
+                          </p>
+                          <SpecificOpportunityBadges
+                            opportunity={opportunity}
+                            opportunityType={opportunity?.type}
+                          ></SpecificOpportunityBadges>
+                        </OpportunityCard>
+                      );
                     }
-                    onClick={() => handleOpportunityClick(opportunity)}
-                  >
-                    {apiEndpoint.substring(0, 5) === "posts" && (
-                      <Badge sx={{ marginTop: "15px" }}>
-                        {opportunity.type?.substring(
-                          0,
-                          opportunity.type?.length - 1
-                        )}
-                      </Badge>
-                    )}
-                    <OpportunityTitle>{opportunity.title}</OpportunityTitle>
-                    <p style={{ fontSize: "14px" }}>
-                      {opportunity.organization}
-                    </p>
-                    <SpecificOpportunityBadges
-                      opportunity={opportunity}
-                      opportunityType={opportunity?.type}
-                    ></SpecificOpportunityBadges>
-                  </OpportunityCard>
-                );
-              })}
+                  )}
+                </>
+              )}
               <div>
                 <PaginationNavbar
                   apiEndpointExtension={apiEndpoint}
                   numberOfItemsPerPage={10}
                   setListOfObjects={setDisplayOpportunityArray}
                   searchFilterObject={searchObj}
+                  setLoading={setLoading}
                   recall={recall}
                 />
               </div>
@@ -514,24 +589,35 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           </OpportunityLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <OpportunityRightColumnContainer span={8}>
-              <OpportunityInfo
-                apiEndpoint={apiEndpoint}
-                opportunity={currentOpportunity}
-                opportunityType={
-                  currentOpportunity && currentOpportunity.type
-                    ? currentOpportunity.type
-                    : opportunityType
-                }
-                setEditModal={setDisplayOpportunityEditModal}
-                setDeleteModal={setDisplayDeleteConfirmationModal}
-                setBannedModal={setDisplayBanConfirmationModal}
-                setFlagModal={setDisplayFlagConfirmationModal}
-                handleDeletePost={deleteCurrentPost}
-                handleBanPost={handleBanButton}
-                handleFlagPost={handleFlagButton}
-                deleteComment={deleteComment}
-                // setHelperDeleteComment={setHelperDeleteComment}
-              />
+              {loading ? (
+                <Container
+                  sx={{
+                    margin: "50px 20px",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
+                  {rightSkeleton}
+                </Container>
+              ) : (
+                <OpportunityInfo
+                  apiEndpoint={apiEndpoint}
+                  opportunity={currentOpportunity}
+                  opportunityType={
+                    currentOpportunity && currentOpportunity.type
+                      ? currentOpportunity.type
+                      : opportunityType
+                  }
+                  setEditModal={setDisplayOpportunityEditModal}
+                  setDeleteModal={setDisplayDeleteConfirmationModal}
+                  setBannedModal={setDisplayBanConfirmationModal}
+                  setFlagModal={setDisplayFlagConfirmationModal}
+                  handleDeletePost={deleteCurrentPost}
+                  handleBanPost={handleBanButton}
+                  handleFlagPost={handleFlagButton}
+                  deleteComment={deleteComment}
+                />
+              )}
             </OpportunityRightColumnContainer>
           </MediaQuery>
         </OpportunityGrid>

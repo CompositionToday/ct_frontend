@@ -24,6 +24,7 @@ import {
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { MultipleInputRow } from "../components/opportunity/OpportunityFormHelper";
+import { motion } from "framer-motion";
 
 export function Register() {
   const navigate = useNavigate();
@@ -130,70 +131,77 @@ export function Register() {
   }, []);
 
   return (
-    <Center style={{ height: "100%" }}>
-      <Container size={420} my={40} style={{ minWidth: 420 }}>
-        <Title
-          align="center"
-          sx={(theme) => ({
-            fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-            fontWeight: 900,
-          })}
-        >
-          Create an account!
-        </Title>
-        <Text color="dimmed" size="sm" align="center" mt={5}>
-          Already have an account?{" "}
-          <Anchor<"a"> size="sm" onClick={() => navigate("/login")}>
-            Login
-          </Anchor>
-        </Text>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Center style={{ height: "100%" }}>
+        <Container size={420} my={40} style={{ minWidth: 420 }}>
+          <Title
+            align="center"
+            sx={(theme) => ({
+              fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+              fontWeight: 900,
+            })}
+          >
+            Create an account!
+          </Title>
+          <Text color="dimmed" size="sm" align="center" mt={5}>
+            Already have an account?{" "}
+            <Anchor<"a"> size="sm" onClick={() => navigate("/login")}>
+              Login
+            </Anchor>
+          </Text>
 
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput
-            label="Email"
-            placeholder="Enter an email"
-            required
-            value={email}
-            onChange={handleEmail}
-          />
-          <MultipleInputRow display gap="10px">
+          <Paper withBorder shadow="md" p={30} mt={30} radius="md">
             <TextInput
-              label="First name"
-              placeholder="Enter your first name"
+              label="Email"
+              placeholder="Enter an email"
               required
-              value={firstName}
-              onChange={handleFirstName}
+              value={email}
+              onChange={handleEmail}
             />
-            <TextInput
-              label="Last Name"
-              placeholder="Enter your last name"
+            <MultipleInputRow display gap="10px">
+              <TextInput
+                label="First name"
+                placeholder="Enter your first name"
+                required
+                value={firstName}
+                onChange={handleFirstName}
+              />
+              <TextInput
+                label="Last Name"
+                placeholder="Enter your last name"
+                required
+                value={lastName}
+                onChange={handleLastName}
+              />
+            </MultipleInputRow>
+            <PasswordInput
+              label="Password"
+              placeholder="Enter a password"
               required
-              value={lastName}
-              onChange={handleLastName}
+              mt="md"
+              value={password}
+              onChange={handlePassword}
             />
-          </MultipleInputRow>
-          <PasswordInput
-            label="Password"
-            placeholder="Enter a password"
-            required
-            mt="md"
-            value={password}
-            onChange={handlePassword}
-          />
-          <PasswordInput
-            label="Confirm Password"
-            placeholder="Retype your password"
-            required
-            mt="md"
-            value={confirmPassword}
-            onChange={handleConfirmPassword}
-          />
-          <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
-          <Button fullWidth mt="xl" onClick={handleRegister}>
-            Register
-          </Button>
-        </Paper>
-      </Container>
-    </Center>
+            <PasswordInput
+              label="Confirm Password"
+              placeholder="Retype your password"
+              required
+              mt="md"
+              value={confirmPassword}
+              onChange={handleConfirmPassword}
+            />
+            <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
+            <Button fullWidth mt="xl" onClick={handleRegister}>
+              Register
+            </Button>
+          </Paper>
+        </Container>
+      </Center>
+    </motion.div>
   );
 }

@@ -22,6 +22,7 @@ import {
 } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -105,53 +106,60 @@ export function ForgotPassword() {
   });
 
   return (
-    <Container size={460} my={30}>
-      <Title className={classes.title} align="center">
-        Forgot your password?
-      </Title>
-      <Text color="dimmed" size="sm" align="center">
-        Enter your email to get a reset link
-      </Text>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Container size={460} my={30}>
+        <Title className={classes.title} align="center">
+          Forgot your password?
+        </Title>
+        <Text color="dimmed" size="sm" align="center">
+          Enter your email to get a reset link
+        </Text>
 
-      <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
-        <TextInput
-          label="Your email"
-          placeholder="me@mantine.dev"
-          required
-          value={email}
-          onChange={handleEmail}
-        />
-        <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
-        {validInput && (
-          <p>
-            If this email is registered, an email has been sent to reset your
-            password. Please make sure to also check your spam box!
-          </p>
-        )}
-        <Group position="apart" mt="lg" className={classes.controls}>
-          <Anchor
-            color="dimmed"
-            size="sm"
-            className={classes.control}
-            onClick={() => navigate("/login")}
-          >
-            <Center inline>
-              <IconArrowLeft size={12} stroke={1.5} />
-              <Box ml={5}>Back to login page</Box>
-            </Center>
-          </Anchor>
+        <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
+          <TextInput
+            label="Your email"
+            placeholder="me@mantine.dev"
+            required
+            value={email}
+            onChange={handleEmail}
+          />
+          <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
           {validInput && (
-            <Anchor onClick={refreshPage}>Send to a different email?</Anchor>
+            <p>
+              If this email is registered, an email has been sent to reset your
+              password. Please make sure to also check your spam box!
+            </p>
           )}
-          <Button
-            className={classes.control}
-            onClick={handlePasswordReset}
-            disabled={validInput}
-          >
-            {validInput ? "✓" : "Reset password"}
-          </Button>
-        </Group>
-      </Paper>
-    </Container>
+          <Group position="apart" mt="lg" className={classes.controls}>
+            <Anchor
+              color="dimmed"
+              size="sm"
+              className={classes.control}
+              onClick={() => navigate("/login")}
+            >
+              <Center inline>
+                <IconArrowLeft size={12} stroke={1.5} />
+                <Box ml={5}>Back to login page</Box>
+              </Center>
+            </Anchor>
+            {validInput && (
+              <Anchor onClick={refreshPage}>Send to a different email?</Anchor>
+            )}
+            <Button
+              className={classes.control}
+              onClick={handlePasswordReset}
+              disabled={validInput}
+            >
+              {validInput ? "✓" : "Reset password"}
+            </Button>
+          </Group>
+        </Paper>
+      </Container>
+    </motion.div>
   );
 }

@@ -19,37 +19,35 @@ import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
+import { useState } from "react";
+
+import { LoadingOverlay } from "@mantine/core";
+import AnimatedRoutes from "./AnimatedRoutes";
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 2500);
   return (
-    <MantineProvider>
-      <ModalsProvider>
-        <NotificationsProvider>
-          <HashRouter>
-            <NavBar links={navItems.links} />
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/forgotpassword" element={<ForgotPassword />} />
-              <Route path="/jobs" element={<Jobs />} />
-              <Route path="/competitions" element={<Competitions />} />
-              <Route path="/festivals" element={<Festivals />} />
-              <Route path="/concerts" element={<Concerts />} />
-              <Route path="/admin/users" element={<Users />} />
-              <Route
-                path="/create-opportunity"
-                element={<CreateOpportunityPage />}
-              />
-              <Route path="/admin/recent-posts" element={<RecentPosts />} />
-              <Route path="/my-posts" element={<MyPosts />} />
-              <Route path="/banned" element={<BannedUser />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </HashRouter>
-        </NotificationsProvider>
-      </ModalsProvider>
-    </MantineProvider>
+    <>
+      <LoadingOverlay
+        visible={loading}
+        overlayOpacity={1}
+        overlayBlur={1}
+        transitionDuration={400}
+        loaderProps={{ variant: "bars" }}
+      />
+      <MantineProvider>
+        <ModalsProvider>
+          <NotificationsProvider>
+            <HashRouter>
+              <NavBar links={navItems.links} />
+              <AnimatedRoutes />
+            </HashRouter>
+          </NotificationsProvider>
+        </ModalsProvider>
+      </MantineProvider>
+    </>
   );
 }

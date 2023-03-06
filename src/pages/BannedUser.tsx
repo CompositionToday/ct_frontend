@@ -11,6 +11,7 @@ import {
   SimpleGrid,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -53,34 +54,43 @@ export function BannedUser() {
   const navigate = useNavigate();
 
   return (
-    <Container className={classes.root}>
-      <SimpleGrid
-        spacing={80}
-        cols={2}
-        breakpoints={[{ maxWidth: "sm", cols: 1, spacing: 40 }]}
-      >
-        <Image src={image} className={classes.mobileImage} />
-        <div>
-          <Title className={classes.title}>This account has been banned.</Title>
-          <Text color="dimmed" size="lg">
-            Your account has been banned for inappropiate or false posts. If you
-            wish, you can continue to browse opportunities as a guest.
-          </Text>
-          <Button
-            variant="outline"
-            size="md"
-            mt="xl"
-            className={classes.control}
-            onClick={async () => {
-              await signOut(auth);
-              navigate("/");
-            }}
-          >
-            Continue as guest
-          </Button>
-        </div>
-        <Image src={image} className={classes.desktopImage} />
-      </SimpleGrid>
-    </Container>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Container className={classes.root}>
+        <SimpleGrid
+          spacing={80}
+          cols={2}
+          breakpoints={[{ maxWidth: "sm", cols: 1, spacing: 40 }]}
+        >
+          <Image src={image} className={classes.mobileImage} />
+          <div>
+            <Title className={classes.title}>
+              This account has been banned.
+            </Title>
+            <Text color="dimmed" size="lg">
+              Your account has been banned for inappropiate or false posts. If
+              you wish, you can continue to browse opportunities as a guest.
+            </Text>
+            <Button
+              variant="outline"
+              size="md"
+              mt="xl"
+              className={classes.control}
+              onClick={async () => {
+                await signOut(auth);
+                navigate("/");
+              }}
+            >
+              Continue as guest
+            </Button>
+          </div>
+          <Image src={image} className={classes.desktopImage} />
+        </SimpleGrid>
+      </Container>
+    </motion.div>
   );
 }

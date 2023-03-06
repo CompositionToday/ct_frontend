@@ -10,7 +10,16 @@ import {
 import { auth } from "../../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
-import { Flex, Button, ActionIcon, Tooltip, Badge, Alert } from "@mantine/core";
+import {
+  Flex,
+  Button,
+  ActionIcon,
+  Tooltip,
+  Badge,
+  Alert,
+  Text,
+  Center,
+} from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import {
@@ -21,6 +30,7 @@ import {
   IconFlagOff,
   IconBan,
   IconAlertCircle,
+  IconMoodSad,
 } from "@tabler/icons";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
 import { openDeletePostModal } from "./modals/DeletePostModal";
@@ -102,9 +112,12 @@ OpportunityInfoProp) {
 
   if (!opportunity) {
     return (
-      <div>
-        <h1>Please select an item</h1>
-      </div>
+      <Center sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <Text color="dimmed" size={30} mb={15}>
+          No results found
+        </Text>
+        <IconMoodSad size={45} color="#868E96" />
+      </Center>
     );
   }
 
@@ -194,26 +207,37 @@ OpportunityInfoProp) {
           </ActionIcon>
         </Tooltip>
       </ButtonsContainer>
-      {apiEndpoint.substring(0, 5) === "posts" && (
-        <Badge sx={{ marginTop: "15px" }}>
-          {opportunity.type?.substring(0, opportunity.type?.length - 1)}
-        </Badge>
-      )}
-      <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
       {opportunity.is_deleted ? (
         <Alert
           icon={<IconAlertCircle size={16} />}
           title="Post Deleted"
           color="red"
+          radius="md"
+          sx={{ marginTop: "20px" }}
         >
           <p>
             {opportunity.deleted_comment
               ? opportunity.deleted_comment
               : "Your post has been deleted"}
           </p>
-          <p>{`this is the key: ${opportunity.deleted_comment}`}</p>
         </Alert>
       ) : null}
+      {apiEndpoint.includes("posts") && (
+        <Badge sx={{ margin: "15px 5px 3px 0px" }}>
+          {opportunity.type?.substring(0, opportunity.type?.length - 1)}
+        </Badge>
+      )}
+      {opportunity.is_deleted && apiEndpoint === "posts" ? (
+        <Badge sx={{ margin: "15px 5px 3px 0px" }} color="red">
+          Deleted
+        </Badge>
+      ) : null}
+      {opportunity.is_flagged && apiEndpoint === "posts" ? (
+        <Badge sx={{ margin: "15px 5px 3px 0px" }} color="yellow">
+          Reported
+        </Badge>
+      ) : null}
+      <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
       <Flex direction="column">
         <SpecificOpportunityInfo
           opportunity={opportunity}

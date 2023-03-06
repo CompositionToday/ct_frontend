@@ -9,6 +9,8 @@ import {
   useMantineTheme,
   Container,
   createStyles,
+  LoadingOverlay,
+  Skeleton,
 } from "@mantine/core";
 import {
   IconBan,
@@ -132,6 +134,7 @@ export function UsersList() {
     current_email: "",
   });
   const [scrolled, setScrolled] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -143,8 +146,11 @@ export function UsersList() {
 
   useEffect(() => {
     convertRawUserDataToTableData();
-    console.log("rawUserList", rawUserList);
   }, [rawUserList, searchParams]);
+
+  useEffect(() => {
+    console.log("loading changed to:", loading);
+  }, [loading]);
 
   const convertRawUserDataToTableData = () => {
     let newUserList: UserTableData[] = [];
@@ -281,13 +287,68 @@ export function UsersList() {
     </tr>
   ));
 
+  const loadingRows = [1, 2, 3, 4, 5].map((item, index) => (
+    <tr key={index}>
+      <td>
+        <Skeleton
+          height={8}
+          width="40%"
+          radius="xl"
+          sx={{ margin: "8px 0px" }}
+        />
+        {mobileScreen && (
+          <Skeleton
+            height={6}
+            width="100%"
+            radius="xl"
+            sx={{ margin: "8px 0px" }}
+          />
+        )}
+      </td>
+      {!mobileScreen && (
+        <td>
+          <Skeleton
+            height={8}
+            width="100%"
+            radius="xl"
+            sx={{ margin: "8px 0px" }}
+          />
+        </td>
+      )}
+      <td>
+        <Skeleton
+          height={16}
+          width="20%"
+          radius="xl"
+          sx={{ margin: "8px 0px" }}
+        />
+      </td>
+      <td>
+        <Skeleton
+          height={8}
+          width="10%"
+          radius="xl"
+          sx={{ margin: "8px 0px" }}
+        />
+      </td>
+    </tr>
+  ));
+
   return (
     <Container fluid className={classes.container}>
       <SearchAndFilterUsers
         email={searchParams.current_email ? searchParams.current_email : ""}
         setSearchObj={setSearchParams}
       />
+
       <Paper withBorder mt={30} radius="lg" className={classes.userContainer}>
+        <LoadingOverlay
+          visible={loading}
+          overlayOpacity={0.2}
+          overlayBlur={0.2}
+          radius="lg"
+        />
+
         <Container className={classes.table}>
           <ScrollArea
             style={{ height: "100%" }}
@@ -300,13 +361,48 @@ export function UsersList() {
                 })}
               >
                 <tr>
-                  <th>Name</th>
-                  {!mobileScreen && <th>Email</th>}
-                  <th>Type</th>
+                  <th>
+                    {loading ? (
+                      <Skeleton
+                        height={12}
+                        width="40%"
+                        radius="xl"
+                        sx={{ margin: "8px 0px" }}
+                      />
+                    ) : (
+                      "Name"
+                    )}
+                  </th>
+                  {!mobileScreen && (
+                    <th>
+                      {loading ? (
+                        <Skeleton
+                          height={12}
+                          width="30%"
+                          radius="xl"
+                          sx={{ margin: "8px 0px" }}
+                        />
+                      ) : (
+                        "Email"
+                      )}
+                    </th>
+                  )}
+                  <th>
+                    {loading ? (
+                      <Skeleton
+                        height={12}
+                        width="30%"
+                        radius="xl"
+                        sx={{ margin: "8px 0px" }}
+                      />
+                    ) : (
+                      "Type"
+                    )}
+                  </th>
                   <th></th>
                 </tr>
               </thead>
-              <tbody>{rows}</tbody>
+              <tbody>{loading ? loadingRows : rows}</tbody>
             </Table>
           </ScrollArea>
         </Container>
@@ -316,6 +412,7 @@ export function UsersList() {
             numberOfItemsPerPage={10}
             setListOfObjects={setRawUserList}
             searchFilterObject={searchParams}
+            setLoading={setLoading}
           />
         </Container>
       </Paper>

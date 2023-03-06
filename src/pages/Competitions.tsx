@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Grid, MediaQuery, Pagination, Flex } from "@mantine/core";
 import { Opportunity } from "../components/opportunity/Opportunity";
+import { motion } from "framer-motion";
 
 export function Competitions() {
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <Opportunity apiEndpoint="competitions" />
-    </div>
+    </motion.div>
   );
 }
