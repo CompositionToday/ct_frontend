@@ -30,11 +30,8 @@ import {
   IconFlagOff,
   IconBan,
   IconAlertCircle,
-<<<<<<< HEAD
   IconSquareNumber0,
-=======
   IconMoodSad,
->>>>>>> kiersten-updates-4
 } from "@tabler/icons";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
 import { openDeletePostModal } from "./modals/DeletePostModal";

@@ -33,13 +33,7 @@ export function Landing() {
           <Features />
         </Container>
         <RegisterCTA />
-        <Footer data={footerInfo.data} />
       </Container>
-<<<<<<< HEAD
-      <RegisterCTA />
-    </Container>
-=======
     </motion.div>
->>>>>>> kiersten-updates-4
   );
 }

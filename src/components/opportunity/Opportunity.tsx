@@ -713,6 +713,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                   handleDeletePost={deleteCurrentPost}
                   handleBanPost={handleBanButton}
                   handleFlagPost={handleFlagButton}
+                  handleResetReportCount={handleResetReportCountButton}
                   deleteComment={deleteComment}
                 />
               )}
@@ -742,7 +743,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             handleDeletePost={deleteCurrentPost}
             handleBanPost={handleBanButton}
             handleFlagPost={handleFlagButton}
-            handleResetReportCount={handleResetReportCountButton}
             handleResetReportCount={handleResetReportCountButton}
             deleteComment={deleteComment}
             // setHelperDeleteComment={setHelperDeleteComment}

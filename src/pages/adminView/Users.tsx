@@ -37,27 +37,6 @@ export function Users() {
   });
 
   return (
-<<<<<<< HEAD
-    <Container fluid style={{ padding: 0 }}>
-      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-        <Image
-          src={String(blueTriangle)}
-          style={{
-            width: "24%",
-            position: "absolute",
-            right: "0px",
-          }}
-        />
-      </MediaQuery>
-      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-        <Image
-          src={String(greenTriangle)}
-          style={{ width: "24%", position: "absolute", bottom: "0px" }}
-        />
-      </MediaQuery>
-      <UsersList />
-    </Container>
-=======
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -82,9 +61,7 @@ export function Users() {
           />
         </MediaQuery>
         <UsersList />
-        <Footer data={footerInfo.data} />
       </Container>
     </motion.div>
->>>>>>> kiersten-updates-4
   );
 }

@@ -19,15 +19,12 @@ import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
-<<<<<<< HEAD
 import { Footer } from "./components/footer/Footer";
 import { footerInfo } from "./components/footer/FooterInfo";
-=======
 import { useState } from "react";
 
 import { LoadingOverlay } from "@mantine/core";
 import AnimatedRoutes from "./AnimatedRoutes";
->>>>>>> kiersten-updates-4
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -35,38 +32,6 @@ export default function App() {
     setLoading(false);
   }, 2500);
   return (
-<<<<<<< HEAD
-    <MantineProvider>
-      <ModalsProvider>
-        <NotificationsProvider>
-          <HashRouter>
-            <NavBar links={navItems.links} />
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/forgotpassword" element={<ForgotPassword />} />
-              <Route path="/jobs" element={<Jobs />} />
-              <Route path="/competitions" element={<Competitions />} />
-              <Route path="/festivals" element={<Festivals />} />
-              <Route path="/concerts" element={<Concerts />} />
-              <Route path="/admin/users" element={<Users />} />
-              <Route
-                path="/create-opportunity"
-                element={<CreateOpportunityPage />}
-              />
-              <Route path="/admin/recent-posts" element={<RecentPosts />} />
-              <Route path="/my-posts" element={<MyPosts />} />
-              <Route path="/banned" element={<BannedUser />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <Footer data={footerInfo.data} />
-          </HashRouter>
-        </NotificationsProvider>
-      </ModalsProvider>
-    </MantineProvider>
-=======
     <>
       <LoadingOverlay
         visible={loading}
@@ -81,11 +46,11 @@ export default function App() {
             <HashRouter>
               <NavBar links={navItems.links} />
               <AnimatedRoutes />
+              <Footer data={footerInfo.data} />
             </HashRouter>
           </NotificationsProvider>
         </ModalsProvider>
       </MantineProvider>
     </>
->>>>>>> kiersten-updates-4
   );
 }
