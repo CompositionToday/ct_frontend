@@ -71,10 +71,11 @@ const useStyles = createStyles((theme) => ({
     borderRadius: "50%",
     width: 225,
     height: 225,
-    border: `6px solid #FFFFFF`,
+    border: `10px solid #228BE6`,
+    borderStyle: "double",
 
     "&:hover": {
-      border: `6px solid #40C057`,
+      border: `6px solid #90CAF9`,
       cursor: `pointer`,
     },
 
@@ -132,7 +133,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   container: {
-    maxWidth: "100%", 
+    maxWidth: "100%",
 
     [theme.fn.smallerThan("sm")]: {
       padding: 0,
@@ -147,7 +148,7 @@ const useStyles = createStyles((theme) => ({
     },
     [theme.fn.smallerThan("sm")]: {
       gap: "40px 16px",
-    },        
+    },
   },
 }));
 

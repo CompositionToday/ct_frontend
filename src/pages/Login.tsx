@@ -21,6 +21,7 @@ import {
   Center,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export function Login() {
   const navigate = useNavigate();
@@ -81,49 +82,56 @@ export function Login() {
   }, []);
 
   return (
-    <Container size={420} my={40}>
-      <Title
-        align="center"
-        sx={(theme) => ({
-          fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-          fontWeight: 900,
-        })}
-      >
-        Welcome back!
-      </Title>
-      <Text color="dimmed" size="sm" align="center" mt={5}>
-        Don't have an account yet?{" "}
-        <Anchor<"a"> size="sm" onClick={() => navigate("/register")}>
-          Create account
-        </Anchor>
-      </Text>
-
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput
-          label="Email"
-          placeholder="Your email"
-          required
-          value={email}
-          onChange={handleEmail}
-        />
-        <PasswordInput
-          label="Password"
-          placeholder="Your password"
-          required
-          mt="md"
-          value={password}
-          onChange={handlePassword}
-        />
-        <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
-        <Group position="center" mt="md">
-          <Anchor<"a"> onClick={() => navigate("/forgotpassword")} size="sm">
-            Forgot password?
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Container size={420} my={40}>
+        <Title
+          align="center"
+          sx={(theme) => ({
+            fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+            fontWeight: 900,
+          })}
+        >
+          Welcome back!
+        </Title>
+        <Text color="dimmed" size="sm" align="center" mt={5}>
+          Don't have an account yet?{" "}
+          <Anchor<"a"> size="sm" onClick={() => navigate("/register")}>
+            Create account
           </Anchor>
-        </Group>
-        <Button fullWidth mt="xl" onClick={handleLogin}>
-          Sign in
-        </Button>
-      </Paper>
-    </Container>
+        </Text>
+
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <TextInput
+            label="Email"
+            placeholder="Your email"
+            required
+            value={email}
+            onChange={handleEmail}
+          />
+          <PasswordInput
+            label="Password"
+            placeholder="Your password"
+            required
+            mt="md"
+            value={password}
+            onChange={handlePassword}
+          />
+          <ErrorMessage error={!!errorMessage}>{errorMessage}</ErrorMessage>
+          <Group position="center" mt="md">
+            <Anchor<"a"> onClick={() => navigate("/forgotpassword")} size="sm">
+              Forgot password?
+            </Anchor>
+          </Group>
+          <Button fullWidth mt="xl" onClick={handleLogin}>
+            Sign in
+          </Button>
+        </Paper>
+      </Container>
+    </motion.div>
   );
 }

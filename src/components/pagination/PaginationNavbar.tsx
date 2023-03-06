@@ -14,6 +14,7 @@ export interface PaginationNavbarProp {
   setListOfObjects:
     | React.Dispatch<React.SetStateAction<RawUserData[]>>
     | React.Dispatch<React.SetStateAction<OpportunityItem[]>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   recall?: number;
 }
 
@@ -61,6 +62,7 @@ export function PaginationNavbar({
   setListOfObjects,
   // An optional object where the keys are the name of the attribute you want to search for and the value is the actual value of the key.
   searchFilterObject,
+  setLoading,
   recall = -99,
 }: PaginationNavbarProp) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,9 +70,12 @@ export function PaginationNavbar({
   const medianScreen = useMediaQuery("(max-width: 992px)");
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 
+  const timeOut = 450;
+
   useEffect(() => {
     const getPageCount = async () => {
       try {
+        setLoading(true);
         console.log("searchFilterObj", searchFilterObject);
         const countUrl = new URL(`${url}/${apiEndpointExtension}/count`);
         if (searchFilterObject) {
@@ -87,6 +92,9 @@ export function PaginationNavbar({
           responseCountJson.count / numberOfItemsPerPage
         );
         setPageCount(numberOfPage);
+        setTimeout(() => {
+          setLoading(false);
+        }, timeOut);
       } catch (err) {
         console.log(err);
       } finally {
@@ -100,6 +108,7 @@ export function PaginationNavbar({
   useEffect(() => {
     const getCurrentPage = async () => {
       try {
+        setLoading(true);
         const getUrl = new URL(`${url}/${apiEndpointExtension}`);
         if (searchFilterObject) {
           for (const [key, value] of Object.entries(searchFilterObject)) {
@@ -113,6 +122,9 @@ export function PaginationNavbar({
 
         let responseJson = await response.json();
         setListOfObjects(responseJson.listOfObjects || []);
+        setTimeout(() => {
+          setLoading(false);
+        }, timeOut);
       } catch (err) {
         console.log(err);
       }

@@ -93,10 +93,24 @@ export function SearchAndFilterUsers({
       bannedChecked,
       regularChecked
     );
-  }, [adminChecked, bannedChecked, regularChecked, searchKeyword]);
+  }, [adminChecked, bannedChecked, regularChecked]);
 
   const isFilterEnabled = () => {
     return adminChecked || bannedChecked || regularChecked;
+  };
+
+  const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      console.log("loading set to true");
+      createSearchObj(
+        setSearchObj,
+        searchKeyword,
+        email,
+        adminChecked,
+        bannedChecked,
+        regularChecked
+      );
+    }
   };
 
   return (
@@ -111,6 +125,7 @@ export function SearchAndFilterUsers({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setSearchKeyword(e.target.value)
         }
+        onKeyDown={handleEnterKeyDown}
         className={classes.search}
       />
       <Menu closeOnItemClick={false}>

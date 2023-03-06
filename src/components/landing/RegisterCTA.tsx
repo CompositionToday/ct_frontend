@@ -56,6 +56,16 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  musicBarsImg: {
+    maxWidth: 470,
+    marginLeft: "-20px",
+    marginBottom: "40px",
+    [theme.fn.smallerThan("sm")]: {
+      marginLeft: "0px",
+      maxWidth: 270,
+    },
+  },
+
   centerText: {
     display: "flex",
     alignItems: "center",
@@ -77,6 +87,8 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const musicBars = require("../../images/MusicBars.png");
+
 export function RegisterCTA() {
   const { classes } = useStyles();
   const navigate = useNavigate();
@@ -91,6 +103,7 @@ export function RegisterCTA() {
           className={classes.container}
         >
           <div className={classes.centerText}>
+            <Image src={String(musicBars)} className={classes.musicBarsImg} />
             <Title className={classes.title}>Want to contribute?</Title>
             <Text color="dimmed" className={classes.subtitle}>
               Create an account with us today to post opportunities you've come

@@ -148,9 +148,6 @@ export function Location({
         placeholder="City, State"
         onItemSubmit={handleDropdownSelect}
         limit={15}
-        // classNames={{
-        //   input: classes.input,
-        // }}
         withAsterisk={withAsterisk}
         error={
           displayError && (!city || !state)
@@ -158,7 +155,6 @@ export function Location({
             : false
         }
         disabled={remoteStatus}
-        // sx={{ width: "50%", display: "inline-block" }}
       />
       <Checkbox
         checked={remoteStatus}

@@ -16,6 +16,15 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     flexWrap: "wrap",
     width: "50%",
+    [theme.fn.smallerThan("md")]: {
+      width: "70%",
+    },
+  },
+
+  members: {
+    [theme.fn.smallerThan("sm")]: {
+      flexDirection: "column",
+    },
   },
 
   icon: {
@@ -29,15 +38,25 @@ const useStyles = createStyles((theme) => ({
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: 28,
     color: "#228BE6",
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 20,
+    },
   },
 
   role: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: 22,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 16,
+    },
   },
 
   image: {
     maxWidth: 250,
+    [theme.fn.smallerThan("sm")]: {
+      maxWidth: 175,
+    },
   },
 }));
 
@@ -75,7 +94,7 @@ export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
     return (
       <div>
         <AnimateIn>
-          <Group noWrap spacing={60} mt={100}>
+          <Group noWrap spacing={60} mt={100} className={classes.members}>
             <Image src={String(photo)} radius="md" className={classes.image} />
             <div>
               <Text weight={500} className={classes.name} mb="xl">

@@ -3,6 +3,7 @@ import { auth } from "../Firebase";
 import React, { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export function MyPosts() {
   const [userUid, setUserUid] = useState("");
@@ -25,8 +26,13 @@ export function MyPosts() {
   }, [pathName]);
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <Opportunity apiEndpoint={pathName} />
-    </div>
+    </motion.div>
   );
 }

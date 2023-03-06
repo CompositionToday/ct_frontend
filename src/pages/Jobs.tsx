@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Location } from "../components/filter/Location";
 import { Opportunity } from "../components/opportunity/Opportunity";
+import { motion } from "framer-motion";
 
 export function Jobs() {
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <Opportunity apiEndpoint="jobs" />
-    </div>
+    </motion.div>
   );
 }

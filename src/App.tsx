@@ -19,11 +19,23 @@ import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
+<<<<<<< HEAD
 import { Footer } from "./components/footer/Footer";
 import { footerInfo } from "./components/footer/FooterInfo";
+=======
+import { useState } from "react";
+
+import { LoadingOverlay } from "@mantine/core";
+import AnimatedRoutes from "./AnimatedRoutes";
+>>>>>>> kiersten-updates-4
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 2500);
   return (
+<<<<<<< HEAD
     <MantineProvider>
       <ModalsProvider>
         <NotificationsProvider>
@@ -54,5 +66,26 @@ export default function App() {
         </NotificationsProvider>
       </ModalsProvider>
     </MantineProvider>
+=======
+    <>
+      <LoadingOverlay
+        visible={loading}
+        overlayOpacity={1}
+        overlayBlur={1}
+        transitionDuration={400}
+        loaderProps={{ variant: "bars" }}
+      />
+      <MantineProvider>
+        <ModalsProvider>
+          <NotificationsProvider>
+            <HashRouter>
+              <NavBar links={navItems.links} />
+              <AnimatedRoutes />
+            </HashRouter>
+          </NotificationsProvider>
+        </ModalsProvider>
+      </MantineProvider>
+    </>
+>>>>>>> kiersten-updates-4
   );
 }

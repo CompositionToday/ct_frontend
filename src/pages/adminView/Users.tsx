@@ -7,6 +7,7 @@ import { Footer } from "../../components/footer/Footer";
 import { UsersList } from "../../components/adminView/UsersList";
 import { Image } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const greenTriangle = require("../../images/GreenTriangle.png");
 const blueTriangle = require("../../images/BlueTriangle.png");
@@ -36,6 +37,7 @@ export function Users() {
   });
 
   return (
+<<<<<<< HEAD
     <Container fluid style={{ padding: 0 }}>
       <MediaQuery smallerThan="md" styles={{ display: "none" }}>
         <Image
@@ -55,5 +57,34 @@ export function Users() {
       </MediaQuery>
       <UsersList />
     </Container>
+=======
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Container fluid style={{ padding: 0 }}>
+        <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+          <Image
+            src={String(blueTriangle)}
+            style={{
+              width: "24%",
+              position: "absolute",
+              right: "0px",
+            }}
+          />
+        </MediaQuery>
+        <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+          <Image
+            src={String(greenTriangle)}
+            style={{ width: "24%", position: "absolute", bottom: "0px" }}
+          />
+        </MediaQuery>
+        <UsersList />
+        <Footer data={footerInfo.data} />
+      </Container>
+    </motion.div>
+>>>>>>> kiersten-updates-4
   );
 }

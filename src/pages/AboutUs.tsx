@@ -39,8 +39,8 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1.2,
     fontWeight: 600,
 
-    [theme.fn.smallerThan("xs")]: {
-      fontSize: 28,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 23,
     },
   },
 
@@ -51,13 +51,17 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1.2,
     fontWeight: 400,
 
-    [theme.fn.smallerThan("xs")]: {
-      fontSize: 23,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 20,
     },
   },
 
   subheading: {
     fontSize: 22,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 16,
+    },
   },
 
   blueText: {
@@ -71,6 +75,11 @@ const useStyles = createStyles((theme) => ({
   image: {
     paddingTop: 8,
     maxWidth: 70,
+
+    [theme.fn.smallerThan("sm")]: {
+      maxWidth: 35,
+      marginLeft: "-10px",
+    },
   },
 
   container: {
