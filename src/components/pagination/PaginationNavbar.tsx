@@ -15,6 +15,7 @@ export interface PaginationNavbarProp {
     | React.Dispatch<React.SetStateAction<RawUserData[]>>
     | React.Dispatch<React.SetStateAction<OpportunityItem[]>>;
   recall?: number;
+  setDisplayLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface PaginationSearchObject {
@@ -62,6 +63,7 @@ export function PaginationNavbar({
   // An optional object where the keys are the name of the attribute you want to search for and the value is the actual value of the key.
   searchFilterObject,
   recall = -99,
+  setDisplayLoading,
 }: PaginationNavbarProp) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
@@ -71,6 +73,9 @@ export function PaginationNavbar({
   useEffect(() => {
     const getPageCount = async () => {
       try {
+        if (setDisplayLoading) {
+          setDisplayLoading(true);
+        }
         console.log("searchFilterObj", searchFilterObject);
         const countUrl = new URL(`${url}/${apiEndpointExtension}/count`);
         if (searchFilterObject) {
@@ -87,6 +92,9 @@ export function PaginationNavbar({
           responseCountJson.count / numberOfItemsPerPage
         );
         setPageCount(numberOfPage);
+        if (setDisplayLoading) {
+          setDisplayLoading(false);
+        }
       } catch (err) {
         console.log(err);
       } finally {
@@ -100,6 +108,9 @@ export function PaginationNavbar({
   useEffect(() => {
     const getCurrentPage = async () => {
       try {
+        if (setDisplayLoading) {
+          setDisplayLoading(true);
+        }
         const getUrl = new URL(`${url}/${apiEndpointExtension}`);
         if (searchFilterObject) {
           for (const [key, value] of Object.entries(searchFilterObject)) {
@@ -113,6 +124,9 @@ export function PaginationNavbar({
 
         let responseJson = await response.json();
         setListOfObjects(responseJson.listOfObjects || []);
+        if (setDisplayLoading) {
+          setDisplayLoading(false);
+        }
       } catch (err) {
         console.log(err);
       }

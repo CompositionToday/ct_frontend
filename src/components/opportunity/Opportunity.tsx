@@ -25,8 +25,9 @@ import {
   Flex,
   ActionIcon,
   Badge,
+  LoadingOverlay,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery, useDisclosure } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
 import { IconFilter, IconSearch } from "@tabler/icons";
@@ -101,6 +102,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   const [helperDeleteComment, setHelperDeleteComment] = useState("");
   const deleteComment = useRef("");
   const [userUid, setUserUid] = useState("");
+  const [displayLoading, setDisplayLoading] = useState(true);
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
@@ -562,6 +564,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           medianScreen={smallerScreen}
           grow={smallerScreen}
         >
+          <LoadingOverlay visible={displayLoading} overlayBlur={2} />
           <OpportunityLeftColumnContainer span={4} medianScreen={smallerScreen}>
             <OpportunityLeftColumnContent
               direction="column"
@@ -606,6 +609,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                   setListOfObjects={setDisplayOpportunityArray}
                   searchFilterObject={searchObj}
                   recall={recall}
+                  setDisplayLoading={setDisplayLoading}
                 />
               </OpportunityPaginationNavbarContainer>
             </OpportunityLeftColumnContent>
