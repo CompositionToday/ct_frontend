@@ -195,7 +195,7 @@ OpportunityInfoProp) {
             sx={{
               height: 30,
               alignSelf: "flex-start",
-              display: isAdmin && opportunity.UID !== userUID ? "auto" : "none",
+              display: opportunity.UID !== userUID ? "auto" : "none",
             }}
             onClick={() => {
               openFlagPostModal(
@@ -257,12 +257,12 @@ OpportunityInfoProp) {
       ) : null}
       {opportunity.is_flagged && apiEndpoint === "posts" ? (
         <Badge sx={{ margin: "15px 5px 3px 0px" }} color="yellow">
-          Reported
+          {opportunity?.is_flagged} Reported
         </Badge>
       ) : null}
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
       <Flex direction="column">
-        {isAdmin && (
+        {/* {isAdmin && (
           <Tooltip label="Amount of Flags">
             <Flex align="center">
               <IconFlag size={30} color="#40C057" />
@@ -271,7 +271,7 @@ OpportunityInfoProp) {
               </span>
             </Flex>
           </Tooltip>
-        )}
+        )} */}
         <SpecificOpportunityInfo
           opportunity={opportunity}
           opportunityType={opportunityType}

@@ -19,9 +19,9 @@ export const openResetFlagCountPostModal = (
   };
 
   const title = "Reset Report Count";
-  const confirmLabel = "Reset Report Count post";
+  const confirmLabel = "Reset report count";
   const cancelLabel = "Cancel";
-  const color = "green";
+  const color = "red";
   const children = createChildren();
 
   openConfirmationModal({

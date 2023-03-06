@@ -651,7 +651,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                               sx={{ margin: "15px 5px 3px 0px" }}
                               color="yellow"
                             >
-                              Reported
+                              {opportunity?.is_flagged} Reported
                             </Badge>
                           ) : null}
                           <OpportunityTitle>
