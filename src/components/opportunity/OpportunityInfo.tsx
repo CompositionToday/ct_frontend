@@ -193,7 +193,7 @@ OpportunityInfoProp) {
               );
             }}
           >
-            {!opportunity.is_flagged ? <IconFlag /> : <IconFlagOff />}
+            <IconFlag />
           </ActionIcon>
         </Tooltip>
         <Tooltip label="Report Post" withArrow>
