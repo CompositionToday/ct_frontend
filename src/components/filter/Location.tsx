@@ -97,14 +97,14 @@ export function Location({
         console.log("value: ", value);
 
         // Send Axios request here
-        let response = await fetch(
+        let temp = await fetch(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${value}.json?country=us&limit=10&types=place&autocomplete=true&access_token=${process.env.REACT_APP_MAPBOX_API_KEY}`
         );
 
-        let responseJson = await response.json();
-        console.log(responseJson);
+        let tmp = await temp.json();
+        console.log(tmp);
         setData(
-          responseJson.features.map((city: any) => {
+          tmp.features.map((city: any) => {
             let arr = city.place_name.split(", ");
             return {
               value: `${arr[0]}, ${arr[1]}`,

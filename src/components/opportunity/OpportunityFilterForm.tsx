@@ -299,24 +299,18 @@ export function OpportunityFilterForm({
       <SubmitButtonContainer justify="center" gap="sm">
         <Button
           onClick={() => {
-            let tempFormattedSearchObj = tempSearchObj;
-            delete tempFormattedSearchObj.salary;
+            let temp = tempSearchObj;
+            delete temp.salary;
 
-            for (const key in tempFormattedSearchObj) {
+            for (const key in temp) {
               if (key === "end_date") {
-                tempFormattedSearchObj = {
-                  ...tempFormattedSearchObj,
-                  [key]: 0,
-                };
+                temp = { ...temp, [key]: 0 };
               } else {
-                tempFormattedSearchObj = {
-                  ...tempFormattedSearchObj,
-                  [key]: "",
-                };
+                temp = { ...temp, [key]: "" };
               }
             }
 
-            setTempSearchObj(tempFormattedSearchObj);
+            setTempSearchObj(temp);
             setCity("");
             setState("");
             setDateRange([null, null]);
@@ -326,41 +320,31 @@ export function OpportunityFilterForm({
         </Button>
         <Button
           onClick={() => {
-            let tempFormattedSearchObj = tempSearchObj;
+            let temp = tempSearchObj;
             console.log("you clicked me");
-            console.log(
-              "temp before: ",
-              tempFormattedSearchObj,
-              !!tempFormattedSearchObj.keyword
-            );
-            for (const key in tempFormattedSearchObj) {
-              if (
-                !tempFormattedSearchObj[
-                  key as keyof typeof tempFormattedSearchObj
-                ]
-              ) {
-                delete tempFormattedSearchObj[
-                  key as keyof typeof tempFormattedSearchObj
-                ];
+            console.log("temp before: ", temp, !!temp.keyword);
+            for (const key in temp) {
+              if (!temp[key as keyof typeof temp]) {
+                delete temp[key as keyof typeof temp];
               }
             }
 
             if (city && state) {
-              tempFormattedSearchObj.city = city;
-              tempFormattedSearchObj.state = state;
+              temp.city = city;
+              temp.state = state;
             } else {
-              delete tempFormattedSearchObj.city;
-              delete tempFormattedSearchObj.state;
+              delete temp.city;
+              delete temp.state;
             }
 
             if (dateRange && dateRange[0] && dateRange[1]) {
-              tempFormattedSearchObj.start_date = dateRange[0].valueOf();
-              tempFormattedSearchObj.end_date = dateRange[1].valueOf();
+              temp.start_date = dateRange[0].valueOf();
+              temp.end_date = dateRange[1].valueOf();
             } else {
-              delete tempFormattedSearchObj.start_date;
-              delete tempFormattedSearchObj.end_date;
+              delete temp.start_date;
+              delete temp.end_date;
             }
-            setSearchObj(tempFormattedSearchObj);
+            setSearchObj(temp);
           }}
         >
           Search
