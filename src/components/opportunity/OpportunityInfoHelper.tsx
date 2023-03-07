@@ -55,7 +55,9 @@ export const Label = styled.h2`
   display: inline;
 `;
 
-export const SpecificOpportunityInfoContainer = styled.div``;
+export const SpecificOpportunityInfoInlineFlex = styled(Flex)`
+  display: inline-flex;
+`;
 
 export const DescriptionContent = styled.p`
   white-space: pre-line;

@@ -108,11 +108,11 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
-    setDisplayOpportunityInfoModal(true);
+    setDisplayOpportunityInfoModal(true && smallerScreen);
   };
 
   const handleCloseModal = () => {
-    setDisplayOpportunityInfoModal(false);
+    setDisplayOpportunityInfoModal(false && smallerScreen);
   };
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {

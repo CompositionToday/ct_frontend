@@ -65,6 +65,7 @@ export const OpportunityPageContainer = styled.div`
   // background-color: red;
   // overflow-wrap: break-word;
   // overflow-x: hidden;
+  position: relative;
 `;
 
 export const GridContainer = styled.div<GridContainer>`

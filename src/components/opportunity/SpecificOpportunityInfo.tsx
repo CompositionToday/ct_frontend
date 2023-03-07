@@ -1,6 +1,6 @@
 import { OpportunityItem } from "./OpportunityHelper";
 import {
-  SpecificOpportunityInfoContainer,
+  SpecificOpportunityInfoInlineFlex,
   CityState,
 } from "./OpportunityInfoHelper";
 import {
@@ -26,7 +26,7 @@ export const SpecificOpportunityInfo = ({
 }: SpecificOpportunityInfoProp) => {
   if (opportunityType === "competitions") {
     return (
-      <SpecificOpportunityInfoContainer>
+      <Flex direction="column" align="flex-start">
         {opportunity?.winner && (
           <Tooltip label="Winner">
             <Flex align="center">
@@ -47,13 +47,13 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
-      </SpecificOpportunityInfoContainer>
+      </Flex>
     );
   }
 
   if (opportunityType === "concerts") {
     return (
-      <SpecificOpportunityInfoContainer>
+      <Flex direction="column" align="flex-start">
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location">
             <Flex align="center">
@@ -109,13 +109,13 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
-      </SpecificOpportunityInfoContainer>
+      </Flex>
     );
   }
 
   if (opportunityType === "jobs") {
     return (
-      <SpecificOpportunityInfoContainer>
+      <Flex direction="column" align="flex-start">
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location">
             <Flex align="center">
@@ -168,13 +168,13 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
-      </SpecificOpportunityInfoContainer>
+      </Flex>
     );
   }
 
   if (opportunityType === "festivals") {
     return (
-      <SpecificOpportunityInfoContainer>
+      <Flex direction="column" align="flex-start">
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location">
             <Flex align="center">
@@ -222,7 +222,7 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
-      </SpecificOpportunityInfoContainer>
+      </Flex>
     );
   }
 
