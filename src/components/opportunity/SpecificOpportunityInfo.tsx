@@ -54,6 +54,19 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
+        {opportunity?.end_date && (
+          <Tooltip label="Date" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconCalendarEvent size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                {new Date(opportunity?.end_date as string).toLocaleDateString(
+                  "en-us",
+                  { year: "numeric", month: "short", day: "numeric" }
+                )}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
       </Flex>
     );
   }

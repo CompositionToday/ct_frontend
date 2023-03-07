@@ -505,6 +505,11 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         console.log(err);
       }
     });
+
+    if (opportunityType === "my-posts") {
+      console.log("in my post");
+      setSearchObj({ ...searchObj, is_deleted: "0" });
+    }
   }, []);
 
   const leftSkeleton = [1, 2, 3, 4, 5].map((item, idx) => (

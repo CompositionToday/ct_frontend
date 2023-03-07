@@ -194,10 +194,7 @@ export function OpportunityFilterForm({
         placeholder={`Select`}
         allowDeselect
         clearable
-        display={
-          opportunityType === "admin/recent-posts" ||
-          opportunityType === "my-posts"
-        }
+        display={opportunityType === "admin/recent-posts"}
         data={[
           { value: "1", label: "Reported posts" },
           {
