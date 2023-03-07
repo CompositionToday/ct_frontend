@@ -32,7 +32,13 @@ export const SpecificOpportunityBadges = ({
                 />
               }
               color="yellow"
-              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+              sx={{
+                height: "25px",
+                margin: "3px 5px 3px 0px",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                maxWidth: "90%",
+              }}
             >
               {opportunity?.winner}
             </Badge>

@@ -1,4 +1,11 @@
-import { ActionIcon, createStyles, Menu, Chip, Flex } from "@mantine/core";
+import {
+  ActionIcon,
+  createStyles,
+  Menu,
+  Chip,
+  Flex,
+  Tooltip,
+} from "@mantine/core";
 import { Input } from "@mantine/core";
 import { IconSearch, IconFilter } from "@tabler/icons";
 import React, { useState, useEffect } from "react";
@@ -130,13 +137,15 @@ export function SearchAndFilterUsers({
       />
       <Menu closeOnItemClick={false}>
         <Menu.Target>
-          <ActionIcon
-            size="lg"
-            color={isFilterEnabled() ? "blue" : "dark.2"}
-            variant={isFilterEnabled() ? "light" : "subtle"}
-          >
-            <IconFilter size={40} stroke={1.5} />
-          </ActionIcon>
+          <Tooltip label="Filter">
+            <ActionIcon
+              size="lg"
+              color={isFilterEnabled() ? "blue" : "dark.2"}
+              variant={isFilterEnabled() ? "light" : "subtle"}
+            >
+              <IconFilter size={40} stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
         </Menu.Target>
 
         <Menu.Dropdown>

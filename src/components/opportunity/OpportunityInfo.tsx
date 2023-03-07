@@ -27,7 +27,7 @@ import {
   IconFlag,
   IconPencil,
   IconTrash,
-  IconFlagOff,
+  IconUser,
   IconBan,
   IconAlertCircle,
   IconSquareNumber0,
@@ -209,9 +209,9 @@ OpportunityInfoProp) {
             <IconFlag />
           </ActionIcon>
         </Tooltip>
-        <Tooltip label="Report Post" withArrow>
+        <Tooltip label="Reset Report Count" withArrow>
           <ActionIcon
-            color="green"
+            color="yellow"
             sx={{
               height: 30,
               alignSelf: "flex-start",
@@ -261,8 +261,11 @@ OpportunityInfoProp) {
         </Badge>
       ) : null}
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
-      <Flex direction="column">
-        {/* {isAdmin && (
+      {opportunity.organization && (
+        <Text mb={15}>{opportunity.organization}</Text>
+      )}
+      {/* <Flex direction="column"> */}
+      {/* {isAdmin && (
           <Tooltip label="Amount of Flags">
             <Flex align="center">
               <IconFlag size={30} color="#40C057" />
@@ -272,11 +275,22 @@ OpportunityInfoProp) {
             </Flex>
           </Tooltip>
         )} */}
-        <SpecificOpportunityInfo
-          opportunity={opportunity}
-          opportunityType={opportunityType}
-        />
-      </Flex>
+      {opportunity?.first_name && opportunity?.last_name && opportunity?.email && (
+        <Tooltip label="Author" position="top-start">
+          <Flex align="center">
+            <IconUser size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {opportunity?.first_name} {opportunity?.last_name}:{" "}
+              {opportunity?.email}
+            </span>
+          </Flex>
+        </Tooltip>
+      )}
+      <SpecificOpportunityInfo
+        opportunity={opportunity}
+        opportunityType={opportunityType}
+      />
+      {/* </Flex> */}
       <a href={opportunity.link} target="blank">
         <Button
           radius="md"

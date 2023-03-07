@@ -72,7 +72,6 @@ export const GridContainer = styled.div<GridContainer>`
   width: ${(props) => (props.medianScreen ? "100vw" : "80vw")};
   height: ${(props) => (props.medianScreen ? "auto" : "75vh")};
   min-height: ${(props) => (props.medianScreen ? "85vh" : "75vh")};
-  // background: red;
   overflow: visible;
   margin: auto;
 `;
@@ -80,7 +79,6 @@ export const GridContainer = styled.div<GridContainer>`
 export const OpportunityGrid = styled(Grid)<GridContainer>`
   position: relative;
   height: 93%;
-  // min-height: ${(props) => (props.medianScreen ? "80vh" : "auto")};
   text-align: left;
   margin: 0 auto;
   background-color: white;
@@ -93,10 +91,7 @@ export const OpportunityGrid = styled(Grid)<GridContainer>`
 export const OpportunityLeftColumnContent = styled(Flex)<GridContainer>`
   height: 100%;
   min-height: ${(props) => (props.medianScreen ? "80vh" : "auto")};
-  // padding-left: 10px;
-  // padding-right: 10px;
   overflow-y: auto;
-  // overflow-x: hidden;
 `;
 
 export const OpportunityLeftColumnContainer = styled(Grid.Col)<GridContainer>`
@@ -126,8 +121,8 @@ export const OpportunityCard = styled.div<PaginationCard>`
 `;
 
 export const PaginationNavbarContainer = styled(Flex)`
-  padding-top: 30px;
-  padding-bottom: 30px;
+  // padding-top: 30px;
+  // padding-bottom: 30px;
 `;
 
 export const CityStateContainer = styled.p`

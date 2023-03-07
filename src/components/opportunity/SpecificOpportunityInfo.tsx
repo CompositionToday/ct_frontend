@@ -28,17 +28,24 @@ export const SpecificOpportunityInfo = ({
     return (
       <Flex direction="column" align="flex-start">
         {opportunity?.winner && (
-          <Tooltip label="Winner">
+          <Tooltip label="Winner" position="top-start">
             <Flex align="center">
               <IconTrophy size={30} color="#FAB005" />
-              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              <span
+                style={{
+                  fontSize: "17px",
+                  marginLeft: "10px",
+                  width: "90%",
+                  overflowWrap: "break-word",
+                }}
+              >
                 {opportunity?.winner}
               </span>
             </Flex>
           </Tooltip>
         )}
         {opportunity?.competition_category && (
-          <Tooltip label="Category">
+          <Tooltip label="Category" position="top-start">
             <Flex align="center">
               <IconCategory size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
@@ -55,7 +62,7 @@ export const SpecificOpportunityInfo = ({
     return (
       <Flex direction="column" align="flex-start">
         {opportunity?.city && opportunity?.state && (
-          <Tooltip label="Location">
+          <Tooltip label="Location" position="top-start">
             <Flex align="center">
               <IconMapPin size={30} color="#40C057" />
               <CityState
@@ -74,17 +81,24 @@ export const SpecificOpportunityInfo = ({
           </Tooltip>
         )}
         {opportunity?.address && (
-          <Tooltip label="Address">
+          <Tooltip label="Address" position="top-start">
             <Flex align="center">
               <IconMap2 size={30} color="#40C057" />
-              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              <span
+                style={{
+                  fontSize: "17px",
+                  marginLeft: "10px",
+                  width: "90%",
+                  overflowWrap: "break-word",
+                }}
+              >
                 {opportunity?.address}
               </span>
             </Flex>
           </Tooltip>
         )}
         {opportunity?.end_date && (
-          <Tooltip label="Date">
+          <Tooltip label="Date" position="top-start">
             <Flex align="center">
               <IconCalendarEvent size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
@@ -97,7 +111,7 @@ export const SpecificOpportunityInfo = ({
           </Tooltip>
         )}
         {opportunity?.start_time && (
-          <Tooltip label="Start Time">
+          <Tooltip label="Start Time" position="top-start">
             <Flex align="center">
               <IconClockHour4 size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
@@ -117,7 +131,7 @@ export const SpecificOpportunityInfo = ({
     return (
       <Flex direction="column" align="flex-start">
         {opportunity?.city && opportunity?.state && (
-          <Tooltip label="Location">
+          <Tooltip label="Location" position="top-start">
             <Flex align="center">
               <IconMapPin size={30} color="#40C057" />
               <CityState
@@ -136,7 +150,7 @@ export const SpecificOpportunityInfo = ({
           </Tooltip>
         )}
         {opportunity?.job_type && (
-          <Tooltip label="Job Type">
+          <Tooltip label="Job Type" position="top-start">
             <Flex align="center">
               <IconBriefcase size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
@@ -146,7 +160,7 @@ export const SpecificOpportunityInfo = ({
           </Tooltip>
         )}
         {opportunity?.job_category && (
-          <Tooltip label="Job Category">
+          <Tooltip label="Job Category" position="top-start">
             <Flex align="center">
               <IconCategory size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
@@ -156,10 +170,17 @@ export const SpecificOpportunityInfo = ({
           </Tooltip>
         )}
         {opportunity?.salary && (
-          <Tooltip label="Salary">
+          <Tooltip label="Salary" position="top-start">
             <Flex align="center">
               <IconMoneybag size={30} color="#40C057" />
-              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              <span
+                style={{
+                  fontSize: "17px",
+                  marginLeft: "10px",
+                  width: "90%",
+                  overflowWrap: "break-word",
+                }}
+              >
                 $
                 {opportunity?.salary
                   .toString()
@@ -176,7 +197,7 @@ export const SpecificOpportunityInfo = ({
     return (
       <Flex direction="column" align="flex-start">
         {opportunity?.city && opportunity?.state && (
-          <Tooltip label="Location">
+          <Tooltip label="Location" position="top-start">
             <Flex align="center">
               <IconMapPin size={30} color="#40C057" />
               <CityState
@@ -195,17 +216,24 @@ export const SpecificOpportunityInfo = ({
           </Tooltip>
         )}
         {opportunity?.address && (
-          <Tooltip label="Address">
+          <Tooltip label="Address" position="top-start">
             <Flex align="center">
               <IconMap2 size={30} color="#40C057" />
-              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              <span
+                style={{
+                  fontSize: "17px",
+                  marginLeft: "10px",
+                  width: "90%",
+                  overflowWrap: "break-word",
+                }}
+              >
                 {opportunity?.address}
               </span>
             </Flex>
           </Tooltip>
         )}
         {opportunity?.start_date && opportunity?.end_date && (
-          <Tooltip label="Date">
+          <Tooltip label="Date" position="top-start">
             <Flex align="center">
               <IconCalendarEvent size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>

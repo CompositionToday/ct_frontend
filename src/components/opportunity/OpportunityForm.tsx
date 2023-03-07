@@ -153,10 +153,14 @@ export function OpportunityForm({
         value.trim() || opportunityType !== "competitions"
           ? null
           : "Please give the category",
+      winner: (value) =>
+        value.trim().length <= 100 ? null : "Please shorten the winner",
       address: (value) =>
         value.trim() ||
         (opportunityType !== "concerts" && opportunityType !== "festivals")
-          ? null
+          ? value.trim().length <= 150
+            ? null
+            : "Please shorten the address"
           : "Please give an address",
       // start_date: (value: Date | string | DateRangePickerValue) =>
       //   value ? null : "Please give a start date",
