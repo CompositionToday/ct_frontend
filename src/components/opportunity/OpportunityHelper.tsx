@@ -16,7 +16,7 @@ export interface OpportunityItem {
   city?: string;
   state?: string;
   // end_date: Date | string | number;
-  end_date?: Date | string | number;
+  end_date?: Date | string | number | null;
   salary?: string | number;
   job_type?: string;
   winner?: string | null;

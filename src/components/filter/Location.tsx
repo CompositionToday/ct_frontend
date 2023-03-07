@@ -134,6 +134,9 @@ export function Location({
       setState("Remote");
       setValue("");
       setData([]);
+    } else {
+      setCity("");
+      setState("");
     }
   }, [remoteStatus]);
 

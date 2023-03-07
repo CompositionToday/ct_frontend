@@ -100,9 +100,7 @@ export function OpportunityForm({
         : new Date(getCurrentDate()),
       city: city,
       state: state,
-      end_date: opportunity?.end_date
-        ? new Date(opportunity?.end_date)
-        : new Date(getCurrentDate()),
+      end_date: opportunity?.end_date ? new Date(opportunity?.end_date) : null,
       salary: +(opportunity?.salary as number) || "",
       job_category: opportunity?.job_category || "",
       job_type: opportunity?.job_type || "",
@@ -141,10 +139,21 @@ export function OpportunityForm({
             ? null
             : "Please shorten the description"
           : "Please give a description",
-      end_date: (value: Date | string) =>
-        value || opportunityType === "festivals"
-          ? null
-          : "Please give an end date",
+      end_date: (value: Date | string) => {
+        if (value && value.valueOf() < getCurrentDate()) {
+          return "Please choose today's or a future date";
+        } else if (!value) {
+          if (opportunityType !== "jobs" && opportunityType !== "festivals") {
+            return "Please give an end date";
+          }
+        }
+
+        return null;
+      },
+      // (value && value.valueOf >= getCurrentDate.valueOf()) ||
+      // opportunityType === "jobs"
+      //   ? null
+      //   : "Please give an end date",
       job_category: (value) =>
         value.trim() || opportunityType !== "jobs"
           ? null
@@ -194,6 +203,12 @@ export function OpportunityForm({
       console.log(
         "There is no date range given for a festival, returning out of function"
       );
+      return;
+    } else if (
+      (dateRange[0] && dateRange[0].valueOf() < getCurrentDate()) ||
+      (dateRange[1] && dateRange[1].valueOf() < getCurrentDate())
+    ) {
+      console.log("One of the date in the date range is in the past");
       return;
     }
 
@@ -248,6 +263,19 @@ export function OpportunityForm({
     ) {
       req.start_date = getCurrentDate(dateRange[0].valueOf());
       req.end_date = getCurrentDate(dateRange[1].valueOf());
+    } else if (opportunityType === "jobs" && !req.end_date) {
+      const getSixMonthFromToday = () => {
+        let tempDate: number | Date = getCurrentDate();
+        tempDate = new Date(tempDate);
+        tempDate.setMonth(tempDate.getMonth() + 6);
+        return tempDate.valueOf();
+      };
+      req.end_date = getSixMonthFromToday();
+      console.log(
+        "getting 6 month from today",
+        req.end_date,
+        new Date(req.end_date)
+      );
     } else {
       req.end_date = getCurrentDate(
         values.end_date instanceof Date ? values.end_date?.valueOf() : undefined
@@ -270,6 +298,20 @@ export function OpportunityForm({
     console.log(req);
 
     handleSubmission(req);
+  };
+
+  const dateRangeErrorFunction = () => {
+    if (displayDateRangeError) {
+      if (!dateRange || !dateRange[0] || !dateRange[1]) {
+        return "Please give a date range";
+      } else if (
+        dateRange[0].valueOf() < getCurrentDate() ||
+        dateRange[1].valueOf() < getCurrentDate()
+      ) {
+        return "Please make sure that the dates given set to today and/or in the future";
+      }
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -434,7 +476,7 @@ export function OpportunityForm({
               placeholder="End Date"
               label="End Date"
               display={opportunityType !== "festivals"}
-              withAsterisk
+              withAsterisk={opportunityType !== "jobs"}
               {...form.getInputProps("end_date")}
             />
             <StartEndDatePicker
@@ -448,12 +490,7 @@ export function OpportunityForm({
                 setDateRange(e);
                 setDisplayDateRangeError(false);
               }}
-              error={
-                displayDateRangeError &&
-                (!dateRange || dateRange[0] === null || dateRange[1] === null)
-                  ? "Please give a date range"
-                  : false
-              }
+              error={dateRangeErrorFunction()}
               // error="this is a test"
               // {...form.getInputProps("dateRange")}
             />

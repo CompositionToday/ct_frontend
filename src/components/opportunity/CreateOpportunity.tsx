@@ -32,6 +32,7 @@ export function CreateOpportunity() {
       opportunity.date_posted = opportunity.date_posted?.toString();
       opportunity.start_time = opportunity.start_time?.toString();
 
+      console.log(opportunity);
       let requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
