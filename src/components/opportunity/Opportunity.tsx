@@ -29,6 +29,7 @@ import {
   Skeleton,
   Container,
   Divider,
+  Tooltip,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -506,10 +507,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     });
   }, []);
 
-  useEffect(() => {
-    console.log("loading", loading);
-  }, [loading]);
-
   const leftSkeleton = [1, 2, 3, 4, 5].map((item, idx) => (
     <>
       <Skeleton height={12} mt={6} width="80%" radius="xl" />
@@ -580,16 +577,18 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             value={keyword}
             className={classes.search}
           />
-          <ActionIcon
-            color={areFiltersEnabled() ? "blue" : "dark.2"}
-            size="lg"
-            variant={areFiltersEnabled() ? "light" : "subtle"}
-            onClick={() => {
-              setDisplayOpportunitySearchFilterModal(true);
-            }}
-          >
-            <IconFilter size={40} stroke={1.5} />
-          </ActionIcon>
+          <Tooltip label="Filter">
+            <ActionIcon
+              color={areFiltersEnabled() ? "blue" : "dark.2"}
+              size="lg"
+              variant={areFiltersEnabled() ? "light" : "subtle"}
+              onClick={() => {
+                setDisplayOpportunitySearchFilterModal(true);
+              }}
+            >
+              <IconFilter size={40} stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
         </Flex>
         <OpportunityGrid
           justify="center"
@@ -657,7 +656,9 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                           <OpportunityTitle>
                             {opportunity.title}
                           </OpportunityTitle>
-                          <p style={{ fontSize: "14px" }}>
+                          <p
+                            style={{ fontSize: "14px", wordWrap: "break-word" }}
+                          >
                             {opportunity.organization}
                           </p>
                           <SpecificOpportunityBadges
@@ -674,14 +675,16 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                 align="flex-end"
                 justify="flex-end"
               >
-                <PaginationNavbar
-                  apiEndpointExtension={apiEndpoint}
-                  numberOfItemsPerPage={10}
-                  setListOfObjects={setDisplayOpportunityArray}
-                  searchFilterObject={searchObj}
-                  setLoading={setLoading}
-                  recall={recall}
-                />
+                <Container sx={{ margin: "30px 0px" }}>
+                  <PaginationNavbar
+                    apiEndpointExtension={apiEndpoint}
+                    numberOfItemsPerPage={10}
+                    setListOfObjects={setDisplayOpportunityArray}
+                    searchFilterObject={searchObj}
+                    setLoading={setLoading}
+                    recall={recall}
+                  />
+                </Container>
               </OpportunityPaginationNavbarContainer>
             </OpportunityLeftColumnContent>
           </OpportunityLeftColumnContainer>

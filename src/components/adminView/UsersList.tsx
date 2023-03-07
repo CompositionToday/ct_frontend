@@ -83,9 +83,7 @@ const useStyles = createStyles((theme) => ({
 
   table: {
     maxWidth: "100%",
-    maxHeight: "70%",
     flexBasis: "100%",
-    padding: "40px 40px 0px 40px",
 
     [theme.fn.smallerThan("md")]: {
       maxHeight: "85%",
@@ -120,7 +118,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   scrolled: {
-    boxShadow: theme.shadows.sm,
+    // boxShadow: theme.shadows.sm,
   },
 }));
 
@@ -341,19 +339,21 @@ export function UsersList() {
         setSearchObj={setSearchParams}
       />
 
-      <Paper withBorder mt={30} radius="lg" className={classes.userContainer}>
+      <Paper
+        withBorder
+        mt={30}
+        radius="lg"
+        className={classes.userContainer}
+        sx={{ padding: "40px 20px" }}
+      >
         <LoadingOverlay
           visible={loading}
           overlayOpacity={0.2}
           overlayBlur={0.2}
           radius="lg"
         />
-
-        <Container className={classes.table}>
-          <ScrollArea
-            style={{ height: "100%" }}
-            onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
-          >
+        <ScrollArea w="100%" h="90%">
+          <Container className={classes.table}>
             <Table verticalSpacing="sm">
               <thead
                 className={cx(classes.header, {
@@ -404,9 +404,9 @@ export function UsersList() {
               </thead>
               <tbody>{loading ? loadingRows : rows}</tbody>
             </Table>
-          </ScrollArea>
-        </Container>
-        <Container>
+          </Container>
+        </ScrollArea>
+        <Container sx={{ alignSelf: "flex-end", marginTop: "30px" }}>
           <PaginationNavbar
             apiEndpointExtension={"users"}
             numberOfItemsPerPage={10}
