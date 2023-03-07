@@ -15,7 +15,7 @@ import { CreateOpportunityPage } from "./pages/CreateOpportunityPage";
 import { Concerts } from "./pages/Concerts";
 import { BannedUser } from "./pages/BannedUser";
 import { NotificationsProvider } from "@mantine/notifications";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, Modal } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
@@ -33,13 +33,20 @@ export default function App() {
   }, 2500);
   return (
     <>
-      <LoadingOverlay
-        visible={loading}
-        overlayOpacity={1}
-        overlayBlur={1}
-        transitionDuration={400}
-        loaderProps={{ variant: "bars" }}
-      />
+      <Modal
+        opened={loading}
+        onClose={() => console.log("closing page load modal")}
+        fullScreen
+      >
+        <LoadingOverlay
+          visible={loading}
+          overlayOpacity={1}
+          overlayBlur={1}
+          transitionDuration={400}
+          loaderProps={{ variant: "bars" }}
+          zIndex={2}
+        />
+      </Modal>
       <MantineProvider>
         <ModalsProvider>
           <NotificationsProvider>

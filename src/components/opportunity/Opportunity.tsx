@@ -600,6 +600,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             overlayOpacity={0.2}
             overlayBlur={0.2}
             radius="lg"
+            zIndex={1}
           />
           <OpportunityLeftColumnContainer span={4} medianScreen={smallerScreen}>
             <OpportunityLeftColumnContent
