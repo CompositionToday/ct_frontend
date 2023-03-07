@@ -29,7 +29,7 @@ export const SpecificOpportunityInfo = ({
       <Flex direction="column" align="flex-start">
         {opportunity?.winner && (
           <Tooltip label="Winner" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconTrophy size={30} color="#FAB005" />
               <span
                 style={{
@@ -46,7 +46,7 @@ export const SpecificOpportunityInfo = ({
         )}
         {opportunity?.competition_category && (
           <Tooltip label="Category" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconCategory size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
                 {opportunity?.competition_category}
@@ -63,7 +63,7 @@ export const SpecificOpportunityInfo = ({
       <Flex direction="column" align="flex-start">
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconMapPin size={30} color="#40C057" />
               <CityState
                 style={{
@@ -82,7 +82,7 @@ export const SpecificOpportunityInfo = ({
         )}
         {opportunity?.address && (
           <Tooltip label="Address" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconMap2 size={30} color="#40C057" />
               <span
                 style={{
@@ -99,7 +99,7 @@ export const SpecificOpportunityInfo = ({
         )}
         {opportunity?.end_date && (
           <Tooltip label="Date" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconCalendarEvent size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
                 {new Date(opportunity?.end_date as string).toLocaleDateString(
@@ -112,7 +112,7 @@ export const SpecificOpportunityInfo = ({
         )}
         {opportunity?.start_time && (
           <Tooltip label="Start Time" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconClockHour4 size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
                 {new Date(opportunity?.start_time as number).toLocaleString(
@@ -132,7 +132,7 @@ export const SpecificOpportunityInfo = ({
       <Flex direction="column" align="flex-start">
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconMapPin size={30} color="#40C057" />
               <CityState
                 style={{
@@ -151,7 +151,7 @@ export const SpecificOpportunityInfo = ({
         )}
         {opportunity?.job_type && (
           <Tooltip label="Job Type" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconBriefcase size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
                 {opportunity?.job_type}
@@ -161,7 +161,7 @@ export const SpecificOpportunityInfo = ({
         )}
         {opportunity?.job_category && (
           <Tooltip label="Job Category" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconCategory size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
                 {opportunity?.job_category}
@@ -171,7 +171,7 @@ export const SpecificOpportunityInfo = ({
         )}
         {opportunity?.salary && (
           <Tooltip label="Salary" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconMoneybag size={30} color="#40C057" />
               <span
                 style={{
@@ -198,7 +198,7 @@ export const SpecificOpportunityInfo = ({
       <Flex direction="column" align="flex-start">
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconMapPin size={30} color="#40C057" />
               <CityState
                 style={{
@@ -217,7 +217,7 @@ export const SpecificOpportunityInfo = ({
         )}
         {opportunity?.address && (
           <Tooltip label="Address" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconMap2 size={30} color="#40C057" />
               <span
                 style={{
@@ -234,7 +234,7 @@ export const SpecificOpportunityInfo = ({
         )}
         {opportunity?.start_date && opportunity?.end_date && (
           <Tooltip label="Date" position="top-start">
-            <Flex align="center">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconCalendarEvent size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
                 {new Date(opportunity?.start_date as string).toLocaleDateString(
