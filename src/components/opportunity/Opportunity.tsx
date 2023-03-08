@@ -106,6 +106,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   const deleteComment = useRef("");
   const [userUid, setUserUid] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
@@ -149,17 +150,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       delete tempOpportunity?.UID;
       delete tempOpportunity?.date_posted;
 
-      console.log(
-        "dlete mark: ",
-        currentOpportunity?.is_deleted,
-        currentOpportunity?.is_deleted === 0,
-        tempOpportunity?.is_deleted,
-        deleteComment
-      );
-      console.log("delete comment value inside function:", deleteComment);
-
       if (currentOpportunity?.is_deleted === 0) {
-        console.log("in the first if");
         if (userUid === currentOpportunity?.UID) {
           tempOpportunity.deleted_comment = "Author has deleted this post";
         } else {
@@ -181,7 +172,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         ...tempOpportunity,
       });
       let responseJson = await editFunction(tempOpportunity);
-      console.log("fake delete resposne: ", responseJson);
       setRecall(recall + 1);
       setDisplayOpportunityInfoModal(false);
       showNotification({
@@ -210,8 +200,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       opportunity.end_date = opportunity.end_date?.toString();
       opportunity.start_date = opportunity.start_date?.toString();
       opportunity.salary = opportunity.salary?.toString();
-
-      console.log("opportunity in opportunity: ", opportunity);
 
       let editedOpportunity = await editFunction(opportunity);
 
@@ -378,7 +366,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       delete opportunity.is_admin;
       delete opportunity.ban_message;
 
-      console.log("before purge:", opportunity.deleted_comment);
       for (let key in opportunity) {
         if (
           !opportunity[key as keyof typeof opportunity] &&
@@ -390,12 +377,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         }
       }
 
-      console.log(
-        "edit button opportunity param: ",
-        opportunity,
-        currentOpportunity?.idposts
-      );
-      console.log("edit url: ", `${url}/${currentOpportunity?.type}/${idpost}`);
       let requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -408,7 +389,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       );
 
       let responseJson = await response.json();
-      console.log("put response: ", responseJson);
 
       let editedOpportunity = responseJson.listOfObjects[0];
 
@@ -421,9 +401,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   // FIXME: need to implement this after the backend people will allow me to ban a user based on UID, or I have a way to get the email based on the UID on the frontend
   const handleBanButton = async () => {
     try {
-      console.log("handleBanButton function");
-      console.log("current opportuntiy: ", currentOpportunity);
-
       let responseUser = await fetch(`${url}/users/${currentOpportunity?.UID}`);
       let responseUserJson = await responseUser.json();
 
@@ -434,8 +411,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       }
 
       let authorOfCurrentOpportunity = responseUserJson.listOfObjects[0];
-
-      console.log("author: ", authorOfCurrentOpportunity.email);
 
       let requestOptions = {
         method: "PUT",
@@ -449,7 +424,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       );
 
       let responseJson = await response.json();
-      console.log("ban responseJson: ", responseJson);
       setRecall(recall + 1);
       showNotification({
         title: "User Banned",
@@ -495,15 +469,29 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     }
   }, [displayOpportunityArray]);
 
+  const getUserInfo = async () => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUserUid(user.uid);
+
+        try {
+          let response = await fetch(
+            `${url}/users?keyword=${user.email}&page_number=1`
+          );
+          let responseJson = await response.json();
+          if (responseJson.listOfObjects[0].is_admin === 1) {
+            setIsAdmin(true);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    });
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      try {
-        if (user) {
-          setUserUid(user.uid);
-        }
-      } catch (err) {
-        console.log(err);
-      }
+      getUserInfo();
     });
 
     if (opportunityType === "my-posts") {
@@ -547,6 +535,20 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       <Skeleton height={8} mt={10} width="100%" radius="xl" />
     </>
   ));
+
+  const isExpired = (endDate: string | number | Date, title?: string) => {
+    let currDate = new Date();
+    // console.log("Opp", "currDate", currDate.valueOf(), "endDate", endDate);
+    console.log(
+      "Opp",
+      title,
+      "currDate aka",
+      currDate,
+      "endDate aka",
+      new Date(endDate)
+    );
+    return endDate <= currDate.valueOf();
+  };
 
   return (
     <OpportunityPageContainer>
@@ -643,7 +645,16 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                               )}
                             </Badge>
                           )}
-                          {opportunity.is_deleted && apiEndpoint === "posts" ? (
+                          {opportunity.UID === userUid && (
+                            <Badge
+                              sx={{ margin: "15px 5px 3px 0px" }}
+                              color="green"
+                            >
+                              My Post
+                            </Badge>
+                          )}
+                          {opportunity.is_deleted &&
+                          apiEndpoint.includes("posts") ? (
                             <Badge
                               sx={{ margin: "15px 5px 3px 0px" }}
                               color="red"
@@ -651,7 +662,17 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                               Deleted
                             </Badge>
                           ) : null}
-                          {opportunity.is_flagged && apiEndpoint === "posts" ? (
+                          {opportunity.end_date &&
+                          isExpired(opportunity.end_date, opportunity.title) &&
+                          apiEndpoint.includes("posts") ? (
+                            <Badge
+                              sx={{ margin: "15px 5px 3px 0px" }}
+                              color="orange"
+                            >
+                              Expired
+                            </Badge>
+                          ) : null}
+                          {opportunity.is_flagged && isAdmin ? (
                             <Badge
                               sx={{ margin: "15px 5px 3px 0px" }}
                               color="yellow"
@@ -764,7 +785,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           setDisplayOpportunitySearchFilterModal(false);
         }}
         fullScreen={smallerScreen}
-        size="60%"
+        size="50%"
       >
         <OpportunityFilterForm
           searchObj={searchObj}

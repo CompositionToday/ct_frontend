@@ -164,12 +164,6 @@ export function Footer({ data }: FooterLinksProps) {
     } else {
       setDisplayFooter(false);
     }
-
-    console.log(
-      "location path in footer:",
-      location.pathname,
-      location.pathname.includes(location.pathname)
-    );
   }, [location.pathname]);
 
   const groups = data.map((group) => {

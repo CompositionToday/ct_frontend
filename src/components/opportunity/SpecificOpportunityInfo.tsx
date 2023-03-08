@@ -30,13 +30,12 @@ export const SpecificOpportunityInfo = ({
         {opportunity?.winner && (
           <Tooltip label="Winner" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
-              <IconTrophy size={30} color="#FAB005" />
+              <IconTrophy size={30} color="#FAB005" style={{ flexShrink: 0 }} />
               <span
                 style={{
                   fontSize: "17px",
                   marginLeft: "10px",
                   width: "90%",
-                  overflowWrap: "break-word",
                 }}
               >
                 {opportunity?.winner}
@@ -96,13 +95,12 @@ export const SpecificOpportunityInfo = ({
         {opportunity?.address && (
           <Tooltip label="Address" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
-              <IconMap2 size={30} color="#40C057" />
+              <IconMap2 size={30} color="#40C057" style={{ flexShrink: 0 }} />
               <span
                 style={{
                   fontSize: "17px",
                   marginLeft: "10px",
                   width: "90%",
-                  overflowWrap: "break-word",
                 }}
               >
                 {opportunity?.address}
@@ -185,13 +183,16 @@ export const SpecificOpportunityInfo = ({
         {opportunity?.salary && (
           <Tooltip label="Salary" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
-              <IconMoneybag size={30} color="#40C057" />
+              <IconMoneybag
+                size={30}
+                color="#40C057"
+                style={{ flexShrink: 0 }}
+              />
               <span
                 style={{
                   fontSize: "17px",
                   marginLeft: "10px",
                   width: "90%",
-                  overflowWrap: "break-word",
                 }}
               >
                 $
@@ -231,13 +232,12 @@ export const SpecificOpportunityInfo = ({
         {opportunity?.address && (
           <Tooltip label="Address" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
-              <IconMap2 size={30} color="#40C057" />
+              <IconMap2 size={30} color="#40C057" style={{ flexShrink: 0 }} />
               <span
                 style={{
                   fontSize: "17px",
                   marginLeft: "10px",
                   width: "90%",
-                  overflowWrap: "break-word",
                 }}
               >
                 {opportunity?.address}

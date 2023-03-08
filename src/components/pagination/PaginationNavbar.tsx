@@ -84,7 +84,6 @@ export function PaginationNavbar({
           }
         }
 
-        console.log("countUrl: ", countUrl.toString());
         let responseCount = await fetch(countUrl);
 
         let responseCountJson = await responseCount.json();
@@ -125,6 +124,7 @@ export function PaginationNavbar({
         setTimeout(() => {
           setLoading(false);
         }, timeOut);
+        console.log("res", responseJson);
       } catch (err) {
         console.log(err);
       }

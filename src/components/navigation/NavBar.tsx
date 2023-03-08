@@ -203,8 +203,8 @@ export function NavBar({ links }: HeaderActionProps) {
         }
 
         if (userData.is_banned) {
-          navigate("/banned");
           setUserBanned(true);
+          navigate("/banned");
         } else {
           setUserBanned(false);
         }
