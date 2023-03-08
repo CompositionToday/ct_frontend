@@ -496,8 +496,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
     if (opportunityType === "my-posts") {
       console.log("in my post");
-      setSearchObj({ ...searchObj, is_deleted: "0" });
-      setSearchObj({ ...searchObj, is_expired: "0" });
+      setSearchObj({ ...searchObj, is_deleted: "0", is_expired: "0" });
     }
   }, []);
 
