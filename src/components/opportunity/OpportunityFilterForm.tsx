@@ -298,6 +298,7 @@ export function OpportunityFilterForm({
       />
       <SubmitButtonContainer justify="center" gap="sm">
         <Button
+          color="red"
           onClick={() => {
             let temp = tempSearchObj;
             delete temp.salary;
@@ -316,7 +317,7 @@ export function OpportunityFilterForm({
             setDateRange([null, null]);
           }}
         >
-          Clear
+          Clear Filters
         </Button>
         <Button
           onClick={() => {
@@ -347,7 +348,7 @@ export function OpportunityFilterForm({
             setSearchObj(temp);
           }}
         >
-          Search
+          Apply Filters
         </Button>
       </SubmitButtonContainer>
     </Container>

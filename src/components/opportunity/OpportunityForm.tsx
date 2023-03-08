@@ -20,6 +20,7 @@ import { Paper, Button, createStyles } from "@mantine/core";
 import { DateRangePickerValue, TimeInput } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
+import { start } from "repl";
 
 interface OpportunityFormProp {
   edit: boolean;
@@ -252,22 +253,26 @@ export function OpportunityForm({
       req.end_date = getCurrentDate(
         values.end_date instanceof Date ? values.end_date?.valueOf() : undefined
       );
+      req.end_date = new Date(req.end_date).setHours(23, 59, 59);
     }
 
     if (opportunityType === "concerts") {
+      const hours = startTime ? startTime?.getHours() : 23;
+      const mins = startTime ? startTime?.getMinutes() : 59;
+
+      const endDate = new Date(req.end_date);
+      // console.log("startTime", startTime, "hours", hours, "mins", mins);
+
+      req.end_date = endDate.setHours(hours, mins, 59);
+
       req.start_time = startTime?.valueOf();
     }
 
-    console.log("chekcing city: ", city, city.length, city === "");
     req.city = city;
     req.state = state;
     req.UID = userUID;
 
     req.date_posted = getCurrentDate();
-
-    console.log(new Date(req.end_date));
-    console.log("showing req:");
-    console.log(req);
 
     handleSubmission(req);
   };

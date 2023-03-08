@@ -25,8 +25,6 @@ export function CreateOpportunity() {
 
   const handleSubmission = async (opportunity: OpportunityItem) => {
     try {
-      console.log("Opportunity:", opportunity);
-
       opportunity.end_date = opportunity.end_date?.toString();
       opportunity.start_date = opportunity.start_date?.toString();
       opportunity.date_posted = opportunity.date_posted?.toString();
@@ -42,9 +40,14 @@ export function CreateOpportunity() {
 
       let responseJson = await response.json();
 
-      console.log("POST response json: ", responseJson);
+      navigate("/my-posts");
+      // setDisplaySuccessModal(true);
 
-      setDisplaySuccessModal(true);
+      showNotification({
+        title: "Post Created",
+        message: "Your post was successfully created!",
+        color: "green",
+      });
     } catch (err) {
       console.log(err);
       showNotification({
@@ -93,7 +96,7 @@ export function CreateOpportunity() {
         onClose={() => console.log("closing unicorn modal")}
         size="80%"
       >
-        <FormHeader>Opportunity Created!</FormHeader>
+        <FormHeader>Post Created!</FormHeader>
         <p>
           Your opportunity has successfully been created! What would you like to
           do next?

@@ -64,7 +64,7 @@ OpportunityInfoProp) {
       ? new Date(opportunity?.start_date)
       : new Date()
   );
-  const largeScreen = useMediaQuery("(min-width: 992px)");
+
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 
   useEffect(() => {
@@ -76,10 +76,6 @@ OpportunityInfoProp) {
             `${url}/users?keyword=${user.email}&page_number=1`
           );
           let responseJson = await response.json();
-          console.log(
-            "user admin return:",
-            responseJson.listOfObjects[0].is_admin
-          );
           if (responseJson.listOfObjects[0].is_admin === 1) {
             setIsAdmin(true);
           }
@@ -123,6 +119,19 @@ OpportunityInfoProp) {
       </Center>
     );
   }
+
+  const isExpired = (endDate: string | number | Date, title?: string) => {
+    let currDate = new Date();
+    // console.log(title, "currDate", currDate.valueOf(), "endDate", endDate);
+    console.log(
+      title,
+      "currDate aka",
+      currDate,
+      "endDate aka",
+      new Date(endDate)
+    );
+    return endDate <= currDate.valueOf();
+  };
 
   return (
     <OpportunityInfoContainer>
@@ -250,12 +259,24 @@ OpportunityInfoProp) {
           {opportunity.type?.substring(0, opportunity.type?.length - 1)}
         </Badge>
       )}
-      {opportunity.is_deleted && apiEndpoint === "posts" ? (
+      {opportunity.UID === userUID && (
+        <Badge sx={{ margin: "15px 5px 3px 0px" }} color="green">
+          My Post
+        </Badge>
+      )}
+      {opportunity.is_deleted && apiEndpoint.includes("posts") ? (
         <Badge sx={{ margin: "15px 5px 3px 0px" }} color="red">
           Deleted
         </Badge>
       ) : null}
-      {opportunity.is_flagged && apiEndpoint === "posts" ? (
+      {opportunity.end_date &&
+      isExpired(opportunity.end_date, opportunity.title) &&
+      apiEndpoint.includes("posts") ? (
+        <Badge sx={{ margin: "15px 5px 3px 0px" }} color="orange">
+          Expired
+        </Badge>
+      ) : null}
+      {opportunity.is_flagged && isAdmin ? (
         <Badge sx={{ margin: "15px 5px 3px 0px" }} color="yellow">
           {opportunity?.is_flagged} Reported
         </Badge>
