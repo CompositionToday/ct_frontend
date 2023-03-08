@@ -529,7 +529,7 @@ export function OpportunityForm({
                 type="submit"
                 onClick={() => {
                   if (
-                    opportunityType === "conerts" ||
+                    opportunityType === "concerts" ||
                     opportunityType === "festivals"
                   ) {
                     setDisplayLocationError(true);
