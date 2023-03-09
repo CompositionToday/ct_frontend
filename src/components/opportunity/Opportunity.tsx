@@ -147,26 +147,30 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         throw "There is not an opportunity selected";
       }
 
+      let authorUID = tempOpportunity?.UID;
       delete tempOpportunity?.UID;
       delete tempOpportunity?.date_posted;
 
+      console.log("checking author", userUid, authorUID);
       if (currentOpportunity?.is_deleted === 0) {
-        if (userUid === currentOpportunity?.UID) {
+        if (userUid === authorUID) {
           tempOpportunity.deleted_comment = "Author has deleted this post";
+          tempOpportunity.is_deleted = "2";
         } else {
           tempOpportunity.deleted_comment =
             deleteComment.current || "Your post has been deleted";
+          tempOpportunity.is_deleted = "1";
         }
       } else {
         tempOpportunity.deleted_comment =
           "default message for not becoming undeleted";
+        tempOpportunity.is_deleted = "0";
       }
 
       tempOpportunity.end_date = tempOpportunity?.end_date?.toString();
       tempOpportunity.start_date = tempOpportunity?.start_date?.toString();
       tempOpportunity.salary = tempOpportunity?.salary?.toString();
       tempOpportunity.is_flagged = currentOpportunity?.is_flagged?.toString();
-      tempOpportunity.is_deleted = currentOpportunity?.is_deleted ? "0" : "1";
 
       console.log("delete function params before calling edit: ", {
         ...tempOpportunity,
@@ -490,8 +494,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      getUserInfo();
+    onAuthStateChanged(auth, async (user) => {
+      await getUserInfo();
     });
 
     if (opportunityType === "my-posts") {
