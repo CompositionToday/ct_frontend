@@ -67,6 +67,7 @@ export function OpportunityForm({
   const [displayDateRangeError, setDisplayDateRangeError] = useState(false);
   const [displayStartTimeError, setDisplayStartTimeError] = useState(false);
   const [displayLocationInput, setDisplayLocationInput] = useState(true);
+  const [pageLoaded, setPageLoaded] = useState(false);
   const [userUID, setUserUID] = useState("");
   const medianScreen = useMediaQuery("(max-width: 992px)");
   const { classes } = useStyles();
@@ -334,6 +335,16 @@ export function OpportunityForm({
 
   useEffect(() => {
     console.log(opportunityType);
+
+    if (opportunityType === "competitions") {
+      setCity("Remote");
+      setState("Remote");
+    } else if (pageLoaded) {
+      setCity("");
+      setState("");
+    }
+
+    setPageLoaded(true);
     setDisplayLocationInput(opportunityType !== "competitions");
     setDisplayLocationError(false);
   }, [opportunityType]);

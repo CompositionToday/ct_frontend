@@ -42,6 +42,7 @@ export function Location({
   const [remoteStatus, setRemoteStatus] = useState(
     city === "Remote" || state === "Remote"
   );
+  const [inputLoaded, setInputLoaded] = useState(false);
 
   // const useStyles = createStyles((theme) => ({
   //   input: {
@@ -134,10 +135,11 @@ export function Location({
       setState("Remote");
       setValue("");
       setData([]);
-    } else {
+    } else if (inputLoaded) {
       setCity("");
       setState("");
     }
+    setInputLoaded(true);
   }, [remoteStatus]);
 
   return (
