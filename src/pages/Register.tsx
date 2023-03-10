@@ -9,6 +9,8 @@ import { FirebaseError } from "@firebase/util";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendEmailVerification,
+  User,
 } from "firebase/auth";
 import {
   TextInput,
@@ -22,7 +24,7 @@ import {
   Group,
   Center,
 } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MultipleInputRow } from "../components/opportunity/OpportunityFormHelper";
 import { motion } from "framer-motion";
 
@@ -35,6 +37,7 @@ export function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
+  const location = useLocation();
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value.trim());
@@ -97,6 +100,40 @@ export function Register() {
       let responseJson = await response.json();
 
       console.log("POST user response json: ", responseJson);
+      console.log("display location path in register", location.pathname);
+      let currentUser: User | null = null;
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          currentUser = user;
+        }
+      });
+
+      // const actionCodeSettings = {
+      //   // URL you want to redirect back to. The domain (www.example.com) for this
+      //   // URL must be in the authorized domains list in the Firebase Console.
+      //   url:
+      //     window.location.hostname === "localhost" ||
+      //     window.location.hostname === "127.0.0.1"
+      //       ? "http://localhost:3000/"
+      //       : "http://compositiontoday.net/",
+      //   // url: "http://compositiontoday.net/",
+      //   // This must be true.
+      //   // handleCodeInApp: true,
+      //   // iOS: {
+      //   //   bundleId: "com.example.ios",
+      //   // },
+      //   // android: {
+      //   //   packageName: "com.example.android",
+      //   //   installApp: true,
+      //   //   minimumVersion: "12",
+      //   // },
+      //   // dynamicLinkDomain: "compositiontoday.net",
+      // };
+
+      // if (currentUser && location.pathname === "/register") {
+      //   await sendEmailVerification(currentUser, actionCodeSettings);
+      //   console.log("register email verification sent");
+      // }
 
       navigate("/");
     } catch (err: unknown) {
