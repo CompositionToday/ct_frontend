@@ -15,6 +15,7 @@ import { BannedUser } from "./pages/BannedUser";
 import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
 import { AnimatePresence } from "framer-motion";
+import { VerifyEmail } from "./pages/VerifyEmail";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -35,6 +36,7 @@ export default function AnimatedRoutes() {
         <Route path="/admin/recent-posts" element={<RecentPosts />} />
         <Route path="/my-posts" element={<MyPosts />} />
         <Route path="/banned" element={<BannedUser />} />
+        <Route path="/verify" element={<VerifyEmail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

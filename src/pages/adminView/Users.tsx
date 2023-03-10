@@ -8,6 +8,7 @@ import { UsersList } from "../../components/adminView/UsersList";
 import { Image } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { setNavigationProgress } from "@mantine/nprogress";
 
 const greenTriangle = require("../../images/GreenTriangle.png");
 const blueTriangle = require("../../images/BlueTriangle.png");
@@ -19,6 +20,10 @@ export function Users() {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
+        if (!user.emailVerified) {
+          navigate("/verify");
+        }
+
         let response = await fetch(
           `${url}/users?page_number=1&keyword=${user.email}`
         );

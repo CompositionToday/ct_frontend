@@ -12,6 +12,9 @@ export function RecentPosts() {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
+        if (!user.emailVerified) {
+          navigate("/verify");
+        }
         let response = await fetch(
           `${url}/users?page_number=1&keyword=${user.email}`
         );
@@ -27,7 +30,7 @@ export function RecentPosts() {
         navigate("/");
       }
     });
-  });
+  }, []);
 
   return (
     <motion.div

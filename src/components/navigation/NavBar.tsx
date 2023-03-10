@@ -187,9 +187,7 @@ export function NavBar({ links }: HeaderActionProps) {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        let response = await fetch(
-          `${url}/users?page_number=1&keyword=${user.email}`
-        );
+        let response = await fetch(`${url}/users/${user.uid}`);
         let responseJson = await response.json();
 
         let userData = responseJson.listOfObjects[0];

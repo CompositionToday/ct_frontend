@@ -63,9 +63,11 @@ export function CreateOpportunity() {
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         navigate("/");
+      } else if (!user.emailVerified) {
+        navigate("/verify");
       }
     });
-  });
+  }, []);
 
   useEffect(() => {
     console.log(opportunityType);

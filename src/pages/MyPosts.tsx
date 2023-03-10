@@ -13,6 +13,9 @@ export function MyPosts() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        if (!user.emailVerified) {
+          navigate("/verify");
+        }
         let temp = `posts/${user.uid}`;
         setPathName(temp);
       } else {
