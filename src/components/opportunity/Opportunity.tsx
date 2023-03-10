@@ -375,11 +375,14 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           !opportunity[key as keyof typeof opportunity] &&
           key !== "winner" &&
           key !== "city" &&
-          key !== "state"
+          key !== "state" &&
+          key !== "address"
         ) {
           delete opportunity[key as keyof typeof opportunity];
         }
       }
+
+      console.log("formatted edit body:", opportunity);
 
       let requestOptions = {
         method: "PUT",

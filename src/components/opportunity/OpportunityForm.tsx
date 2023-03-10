@@ -167,12 +167,30 @@ export function OpportunityForm({
       winner: (value) =>
         value.trim().length <= 100 ? null : "Please shorten the winner",
       address: (value) =>
-        value.trim() ||
-        (opportunityType !== "concerts" && opportunityType !== "festivals")
-          ? value.trim().length <= 150
-            ? null
-            : "Please shorten the address"
-          : "Please give an address",
+        // value.trim() ||
+        // (opportunityType !== "concerts" &&
+        //   opportunityType !== "festivals" &&
+        //   (city !== "Remote" || state !== "Remote"))
+        //   ? value.trim().length <= 150
+        //     ? null
+        //     : "Please shorten the address"
+        //   : "Please give an address",'address'
+        {
+          if (
+            city === "Remote" ||
+            state === "Remote" ||
+            value.trim() ||
+            (opportunityType !== "concerts" && opportunityType !== "festivals")
+          ) {
+            if (value.trim().length <= 150) {
+              return null;
+            } else {
+              return "Please shorten the address";
+            }
+          } else {
+            return "Please give an address";
+          }
+        },
       // start_date: (value: Date | string | DateRangePickerValue) =>
       //   value ? null : "Please give a start date",
     },
@@ -349,6 +367,12 @@ export function OpportunityForm({
     setDisplayLocationError(false);
   }, [opportunityType]);
 
+  useEffect(() => {
+    if (city === "Remote" || state === "Remote") {
+      form.setFieldValue("address", "");
+    }
+  }, [city, state]);
+
   const smallerScreen = useMediaQuery("(max-width: 992px)");
 
   return (
@@ -443,8 +467,9 @@ export function OpportunityForm({
               label="Address"
               placeholder="Address"
               display={
-                opportunityType === "concerts" ||
-                opportunityType === "festivals"
+                (opportunityType === "concerts" ||
+                  opportunityType === "festivals") &&
+                (city !== "Remote" || state != "Remote")
               }
               withAsterisk
               {...form.getInputProps("address")}
