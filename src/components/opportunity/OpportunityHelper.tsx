@@ -35,6 +35,7 @@ export interface OpportunityItem {
   email?: string;
   is_expired?: string;
   is_banned?: number;
+  is_winner?: string;
   is_admin?: number;
   ban_message?: string;
   deleted_comment?: string;

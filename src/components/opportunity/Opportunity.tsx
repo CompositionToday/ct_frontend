@@ -463,7 +463,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     !!searchObj.is_banned ||
     !!searchObj.is_deleted ||
     !!searchObj.is_expired ||
-    !!searchObj.author
+    !!searchObj.author ||
+    !!searchObj.is_winner
       ? true
       : false);
   };

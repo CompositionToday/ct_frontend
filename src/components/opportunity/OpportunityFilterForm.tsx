@@ -44,6 +44,7 @@ export function OpportunityFilterForm({
     author: searchObj.author ? searchObj.author : "",
     is_flagged: searchObj.is_flagged ? searchObj.is_flagged : "",
     is_deleted: searchObj.is_deleted ? searchObj.is_deleted : "",
+    is_winner: searchObj.is_winner ? searchObj.is_winner : "",
     type: searchObj.type ? searchObj.type : "",
     is_expired: searchObj.is_expired ? searchObj.is_expired : "",
     job_type: searchObj.job_type ? searchObj.job_type : "",
@@ -76,6 +77,31 @@ export function OpportunityFilterForm({
         value={
           tempSearchObj.competition_category
             ? tempSearchObj.competition_category
+            : ""
+        }
+      />
+      <DropdownCategory
+        label="Winner"
+        placeholder={`Select`}
+        allowDeselect
+        clearable
+        display={opportunityType === "competitions"}
+        data={[
+          { value: "1", label: "Winners Only" },
+          {
+            value: "0",
+            label: "No Winners",
+          },
+        ]}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            is_winner: e && e !== "-1" ? e : "",
+          })
+        }
+        value={
+          (tempSearchObj.is_winner as string)
+            ? (tempSearchObj.is_winner as string)
             : ""
         }
       />

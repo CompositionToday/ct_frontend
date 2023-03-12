@@ -47,6 +47,7 @@ export interface PaginationSearchObject {
   is_admin?: string;
   is_banned?: string;
   is_regular?: string;
+  is_winner?: string;
   current_email?: string;
   start_time?: Date | string | number | null;
   author?: string;
