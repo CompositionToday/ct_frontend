@@ -509,6 +509,10 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     }
   }, []);
 
+  useEffect(() => {
+    setDisplayOpportunitySearchFilterModal(false);
+  }, [searchObj]);
+
   const leftSkeleton = [1, 2, 3, 4, 5].map((item, idx) => (
     <>
       <Skeleton height={12} mt={6} width="80%" radius="xl" />
