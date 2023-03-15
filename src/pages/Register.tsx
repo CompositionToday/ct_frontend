@@ -77,6 +77,24 @@ export function Register() {
         throw "Passwords do not match";
       }
 
+      // Password regex requires a password to be the following
+      // At least 6 characters
+      // At least one uppercase letter
+      // At least one lowercase letter
+      // At least one number
+      // At least one special character
+      const passwordStrongEnough = (password: string) => {
+        let passwordRegex = new RegExp(
+          "^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{6,}$"
+        );
+
+        return passwordRegex.test(password);
+      };
+
+      if (!passwordStrongEnough(password)) {
+        throw "Password not strong enough";
+      }
+
       let userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
