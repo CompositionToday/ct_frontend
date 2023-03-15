@@ -44,6 +44,11 @@ export function Register() {
   };
 
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(
+      new RegExp(
+        "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$"
+      ).test(e.target.value.trim())
+    );
     setPassword(e.target.value.trim());
   };
 
@@ -85,7 +90,7 @@ export function Register() {
       // At least one special character
       const passwordStrongEnough = (password: string) => {
         let passwordRegex = new RegExp(
-          "^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{6,}$"
+          "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$"
         );
 
         return passwordRegex.test(password);

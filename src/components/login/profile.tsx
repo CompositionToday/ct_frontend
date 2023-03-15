@@ -11,7 +11,7 @@ export const authErrorList = {
   "auth/user-not-found": "You have entered an invalid email or password",
   "auth/invalid-email": "Please give a valid email",
   "auth/weak-password":
-    "Password must contain at least 6 characters, 1 uppercase letter, one number, and one special character",
+    "Password must contain at least 6 characters, 1 uppercase letter, 1 number, and 1 special character",
   "auth/email-already-in-use":
     "This email is already being used. Please us a different email",
   "Passwords do not match": "Passwords do not match",
@@ -19,7 +19,7 @@ export const authErrorList = {
   "Please input an email": "Please input an email",
   "Please give a name": "Please give a name",
   "Password not strong enough":
-    "Password must contain at least 6 characters, 1 uppercase letter, one number, and one special character",
+    "Password must contain at least 6 characters, 1 uppercase letter, 1 number, and 1 special character",
 };
 
 export const defaultErrorMessage =
