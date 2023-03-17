@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { createStyles, Container, Title, Text, Image } from "@mantine/core";
 import { Teeter } from "../animations/AnimateOnHover";
 import { IconScubaMask } from "@tabler/icons";
+import { motion } from "framer-motion";
 import ScubaMask from "../../images/scuba-mask.png";
 import Eyes from "../../images/eyes.png";
 
@@ -93,8 +94,8 @@ const useStyles = createStyles((theme) => ({
 export function Hero() {
   const { classes } = useStyles();
   const [rotateDegree, setRotateDegree] = useState(0);
-  const [mouseX, setMouseX] = useState(0);
-  const [mouseY, setMouseY] = useState(0);
+  const [heroImageClick, setHeroImageClick] = useState(0);
+  const [displayEasterEgg, setDisplayEasterEgg] = useState(0);
 
   function angle(cx: number, cy: number, ex: number, ey: number) {
     const dy = ey - cy;
@@ -104,27 +105,38 @@ export function Hero() {
     return deg;
   }
 
-  const anchor = document.getElementById("anchor");
-  const rect = anchor?.getBoundingClientRect();
+  const handleMouseMove = (e: MouseEvent) => {
+    const anchor = document.getElementById("anchor");
+    const rect = anchor?.getBoundingClientRect();
 
-  const anchorX = rect?.left! + rect?.width! / 2;
-  const anchorY = rect?.top! + rect?.height! / 2;
-  document.addEventListener("mousemove", (e) => {
+    const anchorX = rect?.left! + rect?.width! / 2;
+    const anchorY = rect?.top! + rect?.height! / 2;
     const mouseX = e.clientX;
     const mouseY = e.clientY;
-    setMouseX(mouseX);
-    setMouseY(mouseY);
 
     const angleDeg = angle(mouseX, mouseY, anchorX, anchorY);
-    console.log(angleDeg);
 
-    const eyes = document.querySelectorAll<HTMLElement>(`.eye`);
-    eyes.forEach((eye) => {
-      eye.style.transform! = `rotate(${90 + angleDeg}deg)`;
-    });
-    // setRotateDegree(angleDeg);
-    console.log("here");
-  });
+    // const eyes = document.querySelectorAll<HTMLElement>(`.eye`);
+    // eyes.forEach((eye) => {
+    //   eye.style.transform! = `rotate(${90 + angleDeg}deg)`;
+    // });
+    setRotateDegree(angleDeg);
+    console.log("moving event mouse");
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (heroImageClick >= 23) {
+      setDisplayEasterEgg(1);
+    }
+  }, [heroImageClick]);
 
   return (
     <div>
@@ -157,15 +169,37 @@ export function Hero() {
               An online hub for musicians to find jobs, competitions, festivals,
               and concerts.
             </Text>
-            <Text>
-              MouseX: {mouseX} <br />
-              MouseY: {mouseY}
-            </Text>
           </div>
-          {/* <Teeter rotation={5} timing={120}>
-            <Image src={String(heroLogo)} className={classes.image} />
-          </Teeter> */}
-          <div className={classes.image} style={{ position: "relative" }}>
+          <div
+            style={{
+              display: !displayEasterEgg ? "auto" : "none",
+              opacity: !displayEasterEgg ? 1 : 0,
+            }}
+          >
+            <Teeter rotation={5} timing={120}>
+              <Image
+                src={String(heroLogo)}
+                className={classes.image}
+                onClick={() => setHeroImageClick(heroImageClick + 1)}
+              />
+            </Teeter>
+          </div>
+
+          <motion.div
+            key={displayEasterEgg}
+            initial={{ opacity: 0, scale: 0, rotate: 270 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              rotate: 0,
+              transition: { duration: 1 },
+            }}
+            className={classes.image}
+            style={{
+              position: "relative",
+              display: displayEasterEgg ? "block" : "none",
+            }}
+          >
             <IconScubaMask
               size="lg"
               color="#359fec"
@@ -177,7 +211,7 @@ export function Hero() {
               style={{
                 position: "absolute",
                 padding: "0px",
-                paddingTop: "10px",
+                paddingTop: "9%",
                 borderRadius: "10px",
                 top: "40%",
                 left: "23%",
@@ -189,15 +223,16 @@ export function Hero() {
                 style={{
                   background: "black",
                   borderRadius: "10px",
-                  padding: "4px",
+                  padding: "0.45vw",
                 }}
+                className={classes.image}
               ></div>
             </div>
             <div
               style={{
                 position: "absolute",
                 padding: "0px",
-                paddingTop: "10px",
+                paddingTop: "9%",
                 borderRadius: "10px",
                 top: "40%",
                 right: "39%",
@@ -209,11 +244,12 @@ export function Hero() {
                 style={{
                   background: "black",
                   borderRadius: "10px",
-                  padding: "4px",
+                  padding: "0.45vw",
                 }}
+                className={classes.image}
               ></div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </Container>
     </div>
