@@ -30,6 +30,7 @@ import {
   Container,
   Divider,
   Tooltip,
+  ScrollArea,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -623,143 +624,155 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             zIndex={1}
           />
           <OpportunityLeftColumnContainer span={4} medianScreen={smallerScreen}>
-            <OpportunityLeftColumnContent
-              direction="column"
-              columnGap={0}
-              medianScreen={smallerScreen}
-            >
-              {loading ? (
-                <Container
-                  sx={{
-                    margin: "50px 20px",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  {leftSkeleton}
-                </Container>
-              ) : (
-                <>
-                  {displayOpportunityArray?.map(
-                    (opportunity: OpportunityItem) => {
-                      return (
-                        <OpportunityCard
-                          selected={
-                            currentOpportunity?.idposts ===
-                              opportunity.idposts && !smallerScreen
-                          }
-                          onClick={() => handleOpportunityClick(opportunity)}
-                        >
-                          {apiEndpoint.includes("posts") && (
-                            <Badge sx={{ margin: "15px 5px 3px 0px" }}>
-                              {opportunity.type?.substring(
-                                0,
-                                opportunity.type?.length - 1
-                              )}
-                            </Badge>
-                          )}
-                          {opportunity.UID === userUid && (
-                            <Badge
-                              sx={{ margin: "15px 5px 3px 0px" }}
-                              color="green"
-                            >
-                              My Post
-                            </Badge>
-                          )}
-                          {opportunity.is_deleted &&
-                          apiEndpoint.includes("posts") ? (
-                            <Badge
-                              sx={{ margin: "15px 5px 3px 0px" }}
-                              color="red"
-                            >
-                              Deleted
-                            </Badge>
-                          ) : null}
-                          {opportunity.end_date &&
-                          isExpired(opportunity.end_date, opportunity.title) &&
-                          apiEndpoint.includes("posts") ? (
-                            <Badge
-                              sx={{ margin: "15px 5px 3px 0px" }}
-                              color="orange"
-                            >
-                              Expired
-                            </Badge>
-                          ) : null}
-                          {opportunity.is_flagged && isAdmin ? (
-                            <Badge
-                              sx={{ margin: "15px 5px 3px 0px" }}
-                              color="yellow"
-                            >
-                              {opportunity?.is_flagged} Reported
-                            </Badge>
-                          ) : null}
-                          <OpportunityTitle>
-                            {opportunity.title}
-                          </OpportunityTitle>
-                          <p
-                            style={{ fontSize: "14px", wordWrap: "break-word" }}
-                          >
-                            {opportunity.organization}
-                          </p>
-                          <SpecificOpportunityBadges
-                            opportunity={opportunity}
-                            opportunityType={opportunity?.type}
-                          ></SpecificOpportunityBadges>
-                        </OpportunityCard>
-                      );
-                    }
-                  )}
-                </>
-              )}
-              <OpportunityPaginationNavbarContainer
-                align="flex-end"
-                justify="flex-end"
+            <ScrollArea style={{ padding: 0, margin: 0, height: "100%" }}>
+              <OpportunityLeftColumnContent
+                direction="column"
+                columnGap={0}
+                medianScreen={smallerScreen}
               >
-                <Container sx={{ margin: "30px 0px" }}>
-                  <PaginationNavbar
-                    apiEndpointExtension={apiEndpoint}
-                    numberOfItemsPerPage={10}
-                    setListOfObjects={setDisplayOpportunityArray}
-                    searchFilterObject={searchObj}
-                    setLoading={setLoading}
-                    recall={recall}
-                  />
-                </Container>
-              </OpportunityPaginationNavbarContainer>
-            </OpportunityLeftColumnContent>
+                {loading ? (
+                  <Container
+                    sx={{
+                      margin: "50px 20px",
+                      position: "relative",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {leftSkeleton}
+                  </Container>
+                ) : (
+                  <>
+                    {displayOpportunityArray?.map(
+                      (opportunity: OpportunityItem) => {
+                        return (
+                          <OpportunityCard
+                            selected={
+                              currentOpportunity?.idposts ===
+                                opportunity.idposts && !smallerScreen
+                            }
+                            onClick={() => handleOpportunityClick(opportunity)}
+                          >
+                            {apiEndpoint.includes("posts") && (
+                              <Badge sx={{ margin: "15px 5px 3px 0px" }}>
+                                {opportunity.type?.substring(
+                                  0,
+                                  opportunity.type?.length - 1
+                                )}
+                              </Badge>
+                            )}
+                            {opportunity.UID === userUid && (
+                              <Badge
+                                sx={{ margin: "15px 5px 3px 0px" }}
+                                color="green"
+                              >
+                                My Post
+                              </Badge>
+                            )}
+                            {opportunity.is_deleted &&
+                            apiEndpoint.includes("posts") ? (
+                              <Badge
+                                sx={{ margin: "15px 5px 3px 0px" }}
+                                color="red"
+                              >
+                                Deleted
+                              </Badge>
+                            ) : null}
+                            {opportunity.end_date &&
+                            isExpired(
+                              opportunity.end_date,
+                              opportunity.title
+                            ) &&
+                            apiEndpoint.includes("posts") ? (
+                              <Badge
+                                sx={{ margin: "15px 5px 3px 0px" }}
+                                color="orange"
+                              >
+                                Expired
+                              </Badge>
+                            ) : null}
+                            {opportunity.is_flagged && isAdmin ? (
+                              <Badge
+                                sx={{ margin: "15px 5px 3px 0px" }}
+                                color="yellow"
+                              >
+                                {opportunity?.is_flagged} Reported
+                              </Badge>
+                            ) : null}
+                            <OpportunityTitle>
+                              {opportunity.title}
+                            </OpportunityTitle>
+                            <p
+                              style={{
+                                fontSize: "14px",
+                                wordWrap: "break-word",
+                              }}
+                            >
+                              {opportunity.organization}
+                            </p>
+                            <SpecificOpportunityBadges
+                              opportunity={opportunity}
+                              opportunityType={opportunity?.type}
+                            ></SpecificOpportunityBadges>
+                          </OpportunityCard>
+                        );
+                      }
+                    )}
+                  </>
+                )}
+                <OpportunityPaginationNavbarContainer
+                  align="flex-end"
+                  justify="flex-end"
+                >
+                  <Container sx={{ margin: "30px 0px" }}>
+                    <PaginationNavbar
+                      apiEndpointExtension={apiEndpoint}
+                      numberOfItemsPerPage={10}
+                      setListOfObjects={setDisplayOpportunityArray}
+                      searchFilterObject={searchObj}
+                      setLoading={setLoading}
+                      recall={recall}
+                    />
+                  </Container>
+                </OpportunityPaginationNavbarContainer>
+              </OpportunityLeftColumnContent>
+            </ScrollArea>
           </OpportunityLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <OpportunityRightColumnContainer span={8}>
-              {loading ? (
-                <Container
-                  sx={{
-                    margin: "50px 20px",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  {rightSkeleton}
-                </Container>
-              ) : (
-                <OpportunityInfo
-                  apiEndpoint={apiEndpoint}
-                  opportunity={currentOpportunity}
-                  opportunityType={
-                    currentOpportunity && currentOpportunity.type
-                      ? currentOpportunity.type
-                      : opportunityType
-                  }
-                  setEditModal={setDisplayOpportunityEditModal}
-                  setDeleteModal={setDisplayDeleteConfirmationModal}
-                  setBannedModal={setDisplayBanConfirmationModal}
-                  setFlagModal={setDisplayFlagConfirmationModal}
-                  handleDeletePost={deleteCurrentPost}
-                  handleBanPost={handleBanButton}
-                  handleFlagPost={handleFlagButton}
-                  handleResetReportCount={handleResetReportCountButton}
-                  deleteComment={deleteComment}
-                />
-              )}
+              <ScrollArea
+                style={{ margin: 0, padding: 0, width: "100%", height: "100%" }}
+              >
+                {loading ? (
+                  <Container
+                    sx={{
+                      margin: "50px 20px",
+                      position: "relative",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {rightSkeleton}
+                  </Container>
+                ) : (
+                  <OpportunityInfo
+                    apiEndpoint={apiEndpoint}
+                    opportunity={currentOpportunity}
+                    opportunityType={
+                      currentOpportunity && currentOpportunity.type
+                        ? currentOpportunity.type
+                        : opportunityType
+                    }
+                    setEditModal={setDisplayOpportunityEditModal}
+                    setDeleteModal={setDisplayDeleteConfirmationModal}
+                    setBannedModal={setDisplayBanConfirmationModal}
+                    setFlagModal={setDisplayFlagConfirmationModal}
+                    handleDeletePost={deleteCurrentPost}
+                    handleBanPost={handleBanButton}
+                    handleFlagPost={handleFlagButton}
+                    handleResetReportCount={handleResetReportCountButton}
+                    deleteComment={deleteComment}
+                  />
+                )}
+              </ScrollArea>
             </OpportunityRightColumnContainer>
           </MediaQuery>
         </OpportunityGrid>
