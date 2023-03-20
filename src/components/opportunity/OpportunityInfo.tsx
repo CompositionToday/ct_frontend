@@ -319,17 +319,14 @@ OpportunityInfoProp) {
           size="md"
           rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
         >
-          Apply
+          {opportunityType === "competitions" || opportunityType === "jobs"
+            ? "Apply"
+            : "More Info"}
         </Button>
       </a>
       <DescriptionContainer>
         <Label>Description:</Label>
         <DescriptionContent>{opportunity.description}</DescriptionContent>
-        <p>
-          {typeof opportunity.start_date === "number"
-            ? new Date(opportunity.start_date).toString()
-            : `${new Date().toString()} deafulted`}
-        </p>
       </DescriptionContainer>
     </OpportunityInfoContainer>
   );

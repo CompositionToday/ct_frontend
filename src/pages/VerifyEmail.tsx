@@ -104,7 +104,7 @@ export function VerifyEmail() {
         color: "green",
       });
 
-      setTimeout(() => setDisableButton(false), 5000);
+      setTimeout(() => setDisableButton(false), 20000);
     } catch (err) {
       console.log(err);
       showNotification({
@@ -121,6 +121,10 @@ export function VerifyEmail() {
       if (user) {
         setUserEmail(`${user?.email}`);
         setCurrentUser(user);
+
+        if (user.emailVerified) {
+          navigate("/");
+        }
       } else {
         navigate("/");
       }
@@ -161,7 +165,7 @@ export function VerifyEmail() {
               onClick={onSubmit}
             >
               {disableButton
-                ? "Please wait 5 seconds before getting another link"
+                ? "Please wait 20 seconds before getting another link"
                 : "Send Email Verification"}
             </Button>
           </div>
