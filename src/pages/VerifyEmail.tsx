@@ -149,12 +149,14 @@ export function VerifyEmail() {
           <div>
             <Title className={classes.title}>Verify Email</Title>
             <Text color="dimmed" size="lg">
-              In order to proceed to the next page, please verify your email.
+              To proceed to the next page, please verify your email. It may take
+              around 10 minutes before the verification email is sent in your
+              inbox. Please also make sure to check your spam box.
             </Text>
             <Text color="dimmed" size="lg">
               Please note that after verifying your email, if you keep seeing
-              the this page, you may need to manually sign out and then re-login
-              again
+              this page, you may need to manually sign out and then re-login
+              again.
             </Text>
             <Button
               variant="outline"
