@@ -177,7 +177,11 @@ OpportunityInfoProp) {
         </div>
         <div
           style={{
-            display: opportunity.UID === userUID || isAdmin ? "block" : "none",
+            display:
+              (opportunity.UID === userUID || isAdmin) &&
+              opportunity.is_deleted === 0
+                ? "block"
+                : "none",
           }}
         >
           <Tooltip label="Delete Post" withArrow>
@@ -187,7 +191,10 @@ OpportunityInfoProp) {
                 height: 30,
                 alignSelf: "flex-start",
                 display:
-                  opportunity.UID === userUID || isAdmin ? "block" : "none",
+                  (opportunity.UID === userUID || isAdmin) &&
+                  opportunity.is_deleted === 0
+                    ? "block"
+                    : "none",
               }}
               onClick={() =>
                 openDeletePostModal(
