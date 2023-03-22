@@ -119,7 +119,7 @@ OpportunityInfoProp) {
   useEffect(() => {
     console.log("Users Uid: ", userUID);
     console.log("isAdmin: ", isAdmin);
-  }, [userUID, setIsAdmin]);
+  }, [userUID, isAdmin]);
 
   if (!opportunity) {
     return (
