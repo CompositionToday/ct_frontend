@@ -213,7 +213,10 @@ OpportunityInfoProp) {
         </div>
         <div
           style={{
-            display: isAdmin && opportunity.UID !== userUID ? "block" : "none",
+            display:
+              isAdmin && opportunity.UID !== userUID && !opportunity.is_banned
+                ? "block"
+                : "none",
           }}
         >
           <Tooltip label="Ban User" withArrow>
@@ -223,7 +226,11 @@ OpportunityInfoProp) {
                 height: 30,
                 alignSelf: "flex-start",
                 display:
-                  isAdmin && opportunity.UID !== userUID ? "block" : "none",
+                  isAdmin &&
+                  opportunity.UID !== userUID &&
+                  !opportunity.is_banned
+                    ? "block"
+                    : "none",
               }}
               onClick={() =>
                 openBanPostModal(
