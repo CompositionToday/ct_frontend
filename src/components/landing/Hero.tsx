@@ -172,7 +172,7 @@ export function Hero() {
           </div>
           <div
             style={{
-              display: !displayEasterEgg ? "auto" : "none",
+              display: !displayEasterEgg ? "block" : "none",
               opacity: !displayEasterEgg ? 1 : 0,
             }}
           >

@@ -72,13 +72,25 @@ OpportunityInfoProp) {
       if (user) {
         setUserUID(user.uid);
         try {
-          let response = await fetch(
-            `${url}/users?keyword=${user.email}&page_number=1`
-          );
+          let response = await fetch(`${url}/users/${user.uid}`);
           let responseJson = await response.json();
-          if (responseJson.listOfObjects[0].is_admin === 1) {
+
+          let userData = responseJson.listOfObjects[0];
+
+          if (userData.is_admin) {
             setIsAdmin(true);
+          } else {
+            setIsAdmin(false);
           }
+          // console.log(
+          //   "get users signed info",
+          //   responseJson,
+          //   responseJson.listOfObjects[0],
+          //   responseJson.listOfObjects[0].is_admin === 1
+          // );
+          // if (responseJson.listOfObjects[0].is_admin === 1) {
+          //   setIsAdmin(true);
+          // }
         } catch (err) {
           console.log(err);
         }
@@ -141,103 +153,130 @@ OpportunityInfoProp) {
         wrap="wrap"
         direction={"row"}
       >
-        <Tooltip label="Edit Post" withArrow>
-          <ActionIcon
-            color="green"
-            sx={{
-              height: 30,
-              alignSelf: "flex-start",
-              display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
-            }}
-            onClick={() => {
-              setEditModal(true);
-            }}
-          >
-            <IconPencil />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip label="Delete Post" withArrow>
-          <ActionIcon
-            color="red"
-            sx={{
-              height: 30,
-              alignSelf: "flex-start",
-              display: opportunity.UID === userUID || isAdmin ? "auto" : "none",
-            }}
-            onClick={() =>
-              openDeletePostModal(
-                opportunity?.title ? opportunity.title : "",
-                handleDeletePost
-                  ? handleDeletePost
-                  : () => console.log("No delete function passed"),
-                isAdmin && opportunity.UID !== userUID ? true : false,
-                deleteComment
-              )
-            }
-          >
-            <IconTrash />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip label="Ban User" withArrow>
-          <ActionIcon
-            color="red"
-            sx={{
-              height: 30,
-              alignSelf: "flex-start",
-              display: isAdmin && opportunity.UID !== userUID ? "auto" : "none",
-            }}
-            onClick={() =>
-              openBanPostModal(
-                opportunity?.title ? opportunity.title : "",
-                handleBanPost
-                  ? handleBanPost
-                  : () => console.log("No ban function passed")
-              )
-            }
-          >
-            <IconBan />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip label="Report Post" withArrow>
-          <ActionIcon
-            color="yellow"
-            sx={{
-              height: 30,
-              alignSelf: "flex-start",
-              display: opportunity.UID !== userUID ? "auto" : "none",
-            }}
-            onClick={() => {
-              openFlagPostModal(
-                opportunity?.title ? opportunity.title : "",
-                handleFlagPost
-                  ? handleFlagPost
-                  : () => console.log("No flag function passed")
-              );
-            }}
-          >
-            <IconFlag />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip label="Reset Report Count" withArrow>
-          <ActionIcon
-            color="yellow"
-            sx={{
-              height: 30,
-              alignSelf: "flex-start",
-              display: isAdmin ? "auto" : "none",
-            }}
-            onClick={() => {
-              openResetFlagCountPostModal(
-                opportunity?.title ? opportunity.title : "",
-                handleResetReportCount
-                  ? handleResetReportCount
-                  : () => console.log("No flag function passed")
-              );
-            }}
-          >
-            <IconSquareNumber0 />
-          </ActionIcon>
-        </Tooltip>
+        <div
+          style={{
+            display: opportunity.UID === userUID || isAdmin ? "block" : "none",
+          }}
+        >
+          <Tooltip label="Edit Post" withArrow>
+            <ActionIcon
+              color="green"
+              sx={{
+                height: 30,
+                alignSelf: "flex-start",
+                display:
+                  opportunity.UID === userUID || isAdmin ? "block" : "none",
+              }}
+              onClick={() => {
+                setEditModal(true);
+              }}
+            >
+              <IconPencil />
+            </ActionIcon>
+          </Tooltip>
+        </div>
+        <div
+          style={{
+            display: opportunity.UID === userUID || isAdmin ? "block" : "none",
+          }}
+        >
+          <Tooltip label="Delete Post" withArrow>
+            <ActionIcon
+              color="red"
+              sx={{
+                height: 30,
+                alignSelf: "flex-start",
+                display:
+                  opportunity.UID === userUID || isAdmin ? "block" : "none",
+              }}
+              onClick={() =>
+                openDeletePostModal(
+                  opportunity?.title ? opportunity.title : "",
+                  handleDeletePost
+                    ? handleDeletePost
+                    : () => console.log("No delete function passed"),
+                  isAdmin && opportunity.UID !== userUID ? true : false,
+                  deleteComment
+                )
+              }
+            >
+              <IconTrash />
+            </ActionIcon>
+          </Tooltip>
+        </div>
+        <div
+          style={{
+            display: isAdmin && opportunity.UID !== userUID ? "block" : "none",
+          }}
+        >
+          <Tooltip label="Ban User" withArrow>
+            <ActionIcon
+              color="red"
+              sx={{
+                height: 30,
+                alignSelf: "flex-start",
+                display:
+                  isAdmin && opportunity.UID !== userUID ? "block" : "none",
+              }}
+              onClick={() =>
+                openBanPostModal(
+                  opportunity?.title ? opportunity.title : "",
+                  handleBanPost
+                    ? handleBanPost
+                    : () => console.log("No ban function passed")
+                )
+              }
+            >
+              <IconBan />
+            </ActionIcon>
+          </Tooltip>
+        </div>
+        <div
+          style={{ display: opportunity.UID !== userUID ? "block" : "none" }}
+        >
+          <Tooltip label="Report Post" withArrow>
+            <ActionIcon
+              color="yellow"
+              sx={{
+                height: 30,
+                alignSelf: "flex-start",
+                display: opportunity.UID !== userUID ? "block" : "none",
+              }}
+              onClick={() => {
+                openFlagPostModal(
+                  opportunity?.title ? opportunity.title : "",
+                  handleFlagPost
+                    ? handleFlagPost
+                    : () => console.log("No flag function passed")
+                );
+              }}
+            >
+              <IconFlag />
+            </ActionIcon>
+          </Tooltip>
+        </div>
+        <div style={{ display: isAdmin ? "block" : "none" }}>
+          <Tooltip label="Reset Report Count" withArrow>
+            <ActionIcon
+              color="yellow"
+              sx={{
+                height: 30,
+                alignSelf: "flex-start",
+                display: isAdmin ? "block" : "none",
+              }}
+              onClick={() => {
+                openResetFlagCountPostModal(
+                  opportunity?.title ? opportunity.title : "",
+                  handleResetReportCount
+                    ? handleResetReportCount
+                    : () => console.log("No flag function passed")
+                );
+              }}
+            >
+              <IconSquareNumber0 />
+            </ActionIcon>
+          </Tooltip>
+        </div>
       </ButtonsContainer>
       {opportunity.is_deleted ? (
         <Alert

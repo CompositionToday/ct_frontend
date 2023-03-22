@@ -23,13 +23,13 @@ export const OpportunityFormContentContainer = styled.div`
 
 export const MultipleInputRow = styled(Flex)<OpportunityInput>`
   margin-top: 10px;
-  display: ${(props) => (props.display ? "auto" : "none")};
+  display: ${(props) => (props.display ? "flex" : "none")};
 `;
 
 export const TextInputFullWidth = styled(TextInput)<OpportunityInput>`
   margin-top: 10px;
   width: 100%;
-  display: ${(props) => (props.display ? "auto" : "none")};
+  display: ${(props) => (props.display ? "block" : "none")};
 `;
 
 export const DescriptionInput = styled(Textarea)`
@@ -38,17 +38,17 @@ export const DescriptionInput = styled(Textarea)`
 
 export const EndDateInput = styled(DatePicker)<OpportunityInput>`
   margin-top: 10px;
-  display: ${(props) => (props.display ? "auto" : "none")};
+  display: ${(props) => (props.display ? "block" : "none")};
 `;
 
 export const StartEndDatePicker = styled(DateRangePicker)<OpportunityInput>`
   margin-top: 10px;
-  display: ${(props) => (props.display ? "auto" : "none")};
+  display: ${(props) => (props.display ? "block" : "none")};
 `;
 
 export const SalaryInput = styled(NumberInput)<OpportunityInput>`
   margin-top: 10px;
-  display: ${(props) => (props.display ? "auto" : "none")};
+  display: ${(props) => (props.display ? "block" : "none")};
   width: 100%;
 `;
 
@@ -58,12 +58,12 @@ export const SubmitButtonContainer = styled(Flex)`
 `;
 
 export const DropdownCategory = styled(Select)<OpportunityInput>`
-  display: ${(props) => (props.display ? "auto" : "none")};
+  display: ${(props) => (props.display ? "block" : "none")};
   width: 100%;
   margin-top: 10px;
 `;
 
 export const StartTimeInput = styled(TimeInput)<OpportunityInput>`
-  display: ${(props) => (props.display ? "auto" : "none")};
+  display: ${(props) => (props.display ? "block" : "none")};
   margin-top: 10px;
 `;

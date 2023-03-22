@@ -394,14 +394,14 @@ export function OpportunityFilterForm({
             })
           }
         /> */}
-      <StartEndDatePicker
+      {/* <StartEndDatePicker
         label="Date Range"
         display={opportunityType === "festivals"}
         value={dateRange}
         onChange={(e) => {
           setDateRange(e);
         }}
-      />
+      /> */}
       <SubmitButtonContainer justify="center" gap="sm">
         <Button
           color="red"
