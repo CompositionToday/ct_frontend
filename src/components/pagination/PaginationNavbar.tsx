@@ -141,14 +141,16 @@ export function PaginationNavbar({
   ]);
 
   return (
-    <PaginationNavbarContainer justify="center" align="flex-end">
-      <Pagination
-        page={currentPage}
-        onChange={setCurrentPage}
-        total={pageCount}
-        size={medianScreen ? "xs" : "sm"}
-        radius="xl"
-      />
-    </PaginationNavbarContainer>
+    <div style={{ display: pageCount ? "block" : "none" }}>
+      <PaginationNavbarContainer justify="center" align="flex-end">
+        <Pagination
+          page={currentPage}
+          onChange={setCurrentPage}
+          total={pageCount}
+          size={medianScreen ? "xs" : "sm"}
+          radius="xl"
+        />
+      </PaginationNavbarContainer>
+    </div>
   );
 }
