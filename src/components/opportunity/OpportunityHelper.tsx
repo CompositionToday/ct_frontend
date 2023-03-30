@@ -39,6 +39,7 @@ export interface OpportunityItem {
   is_admin?: number;
   ban_message?: string;
   deleted_comment?: string;
+  fee?: string | number;
 }
 
 interface PaginationCard {

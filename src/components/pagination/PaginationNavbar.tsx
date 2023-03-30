@@ -51,6 +51,7 @@ export interface PaginationSearchObject {
   current_email?: string;
   start_time?: Date | string | number | null;
   author?: string;
+  fee?: string | number;
 }
 
 export function PaginationNavbar({

@@ -16,7 +16,7 @@ import { Location } from "../filter/Location";
 import { auth } from "../../Firebase";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { Paper, Button, createStyles } from "@mantine/core";
+import { Paper, Button, createStyles, Checkbox } from "@mantine/core";
 import { DateRangePickerValue, TimeInput } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
@@ -69,6 +69,7 @@ export function OpportunityForm({
   const [displayLocationInput, setDisplayLocationInput] = useState(true);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [userUID, setUserUID] = useState("");
+  const [isFee, setIsFee] = useState(opportunity?.fee === 0);
   const medianScreen = useMediaQuery("(max-width: 992px)");
   const { classes } = useStyles();
 
@@ -115,6 +116,7 @@ export function OpportunityForm({
       start_time: opportunity?.start_time
         ? new Date(opportunity?.start_time)
         : null,
+      fee: +(opportunity?.fee as number) ? +(opportunity?.fee as number) : "",
     },
     validate: {
       title: (value) =>
@@ -193,6 +195,12 @@ export function OpportunityForm({
         },
       // start_date: (value: Date | string | DateRangePickerValue) =>
       //   value ? null : "Please give a start date",
+      fee: (value: string | number) =>
+        value ||
+        isFee ||
+        (opportunityType !== "competitions" && opportunityType !== "festivals")
+          ? null
+          : "Please give a fee amount",
     },
   });
   const essentialOpportunityKey = [
@@ -208,9 +216,9 @@ export function OpportunityForm({
     "end_date",
   ];
   const jobOpportunityKey = ["salary", "job_type", "job_category"];
-  const competitionOpportunityKey = ["winner", "competition_category"];
+  const competitionOpportunityKey = ["winner", "competition_category", "fee"];
   const concertOpportunityKey = ["address", "start_time"];
-  const festivalOpportunityKey = ["start_date", "address"];
+  const festivalOpportunityKey = ["start_date", "address", "fee"];
 
   // FIXME: When creating the request object, need to make sure that we use keyword
   // instead of explicitly using title and organization
@@ -320,8 +328,9 @@ export function OpportunityForm({
     req.UID = userUID;
 
     req.date_posted = getCurrentDate();
+    console.log("fee type:", req.fee, typeof req.fee, req);
 
-    handleSubmission(req);
+    // handleSubmission(req);
   };
 
   const dateRangeErrorFunction = () => {
@@ -463,6 +472,42 @@ export function OpportunityForm({
                 {...form.getInputProps("salary")}
               />
             </MultipleInputRow>
+            <SalaryInput
+              label="Fee"
+              precision={2}
+              placeholder="Enter a fee amount"
+              withAsterisk
+              display={
+                opportunityType === "competitions" ||
+                opportunityType === "festivals"
+              }
+              min={0}
+              disabled={isFee}
+              icon={<p style={{ color: "black" }}>$</p>}
+              parser={(value) => value?.replace(/\$\s?|(,*)/g, "")}
+              formatter={(value) =>
+                !Number.isNaN(parseFloat(value ? value : ""))
+                  ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  : ""
+              }
+              {...form.getInputProps("fee")}
+            />
+            <Checkbox
+              checked={isFee}
+              onChange={(e) => {
+                setIsFee(e.currentTarget.checked);
+                form.setFieldValue("fee", 0);
+              }}
+              label="No Fee"
+              sx={{
+                marginTop: "10px",
+                display:
+                  opportunityType === "competitions" ||
+                  opportunityType === "festivals"
+                    ? "auto"
+                    : "none",
+              }}
+            />
             <TextInputFullWidth
               label="Address"
               placeholder="Address"
@@ -691,6 +736,7 @@ export function OpportunityForm({
                   console.log(form.isValid("job_type"));
                   console.log(form.isValid("competition_category"));
                   console.log(form.isValid("address"));
+                  console.log("fee: ", form.isValid("fee"));
 
                   console.log(displayLocationError);
                   console.log(displayDateRangeError);

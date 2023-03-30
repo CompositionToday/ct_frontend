@@ -201,10 +201,11 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       delete opportunity.UID;
       delete opportunity.date_posted;
 
-      // Format any number keys as strings since the APIs only accept strings for the request body
+      // Format any keys of type number to be as type strings since the APIs only accept strings for the request body
       opportunity.end_date = opportunity.end_date?.toString();
       opportunity.start_date = opportunity.start_date?.toString();
       opportunity.salary = opportunity.salary?.toString();
+      opportunity.fee = opportunity.fee?.toString();
 
       let editedOpportunity = await editFunction(opportunity);
 
