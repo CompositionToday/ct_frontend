@@ -439,13 +439,50 @@ export function OpportunityForm({
                 clearable
                 display={opportunityType === "jobs"}
                 data={[
-                  "Faculty",
-                  "Instruction",
-                  "Publishing",
-                  "Performance",
-                  "Composing",
-                  "Other",
+                  { value: "Faculty", label: "Faculty" },
+                  {
+                    value: "Pre-K Instruction",
+                    label: "Pre-K Instruction",
+                    group: "Instruction",
+                  },
+                  {
+                    value: "Elementary Instruction",
+                    label: "Elementary Instruction",
+                    group: "Instruction",
+                  },
+                  {
+                    value: "Junior High Instruction",
+                    label: "Junior High Instruction",
+                    group: "Instruction",
+                  },
+                  {
+                    value: "High School Instruction",
+                    label: "High School Instruction",
+                    group: "Instruction",
+                  },
+                  {
+                    value: "Post-Secondary Instruction",
+                    label: "Post-Secondary Instruction",
+                    group: "Instruction",
+                  },
+                  {
+                    value: "Other Instruction",
+                    label: "Other Instruction",
+                    group: "Instruction",
+                  },
+                  { value: "Publishing", label: "Publishing" },
+                  { value: "Performance", label: "Performance" },
+                  { value: "Composing", label: "Composing" },
+                  { value: "Other", label: "Other" },
                 ]}
+                // data={[
+                //   "Faculty",
+                //   "Instruction",
+                //   "Publishing",
+                //   "Performance",
+                //   "Composing",
+                //   "Other",
+                // ]}
                 {...form.getInputProps("job_category")}
               />
               <SalaryInput
@@ -507,11 +544,16 @@ export function OpportunityForm({
             />
             <DropdownCategory
               label="Category"
-              placeholder={`Select competitions category`}
+              placeholder={`Select competition category`}
               withAsterisk
               display={opportunityType === "competitions"}
               searchable
               data={[
+                {
+                  value: "All Woodwind",
+                  label: "All Woodwind",
+                  group: "Woodwind",
+                },
                 { value: "Flute", label: "Flute", group: "Woodwind" },
                 { value: "Folk Flute", label: "Folk Flute", group: "Woodwind" },
                 { value: "Oboe", label: "Oboe", group: "Woodwind" },
@@ -520,15 +562,24 @@ export function OpportunityForm({
                 { value: "Saxophone", label: "Saxophone", group: "Woodwind" },
                 { value: "Recorder", label: "Recorder", group: "Woodwind" },
                 {
-                  value: "General Brass",
-                  label: "General Brass",
-                  group: "Brass",
+                  value: "Other Woodwind",
+                  label: "Other Woodwind",
+                  group: "Woodwind",
                 },
+
+                { value: "All Brass", label: "All Brass", group: "Brass" },
                 { value: "French Horn", label: "French Horn", group: "Brass" },
                 { value: "Trumpet", label: "Trumpet", group: "Brass" },
                 { value: "Trombone", label: "Trombone", group: "Brass" },
                 { value: "Tuba", label: "Tuba", group: "Brass" },
                 { value: "Euphonium", label: "Euphonium", group: "Brass" },
+                { value: "Other Brass", label: "Other Brass", group: "Brass" },
+
+                {
+                  value: "All Strings",
+                  label: "All Strings",
+                  group: "Strings",
+                },
                 { value: "Violin", label: "Violin", group: "Strings" },
                 {
                   value: "Folk Fiddle",
@@ -551,6 +602,17 @@ export function OpportunityForm({
                 },
                 { value: "Lute", label: "Lute", group: "Strings" },
                 { value: "Theorbo", label: "Theorbo", group: "Strings" },
+                {
+                  value: "Other Strings",
+                  label: "Other Strings",
+                  group: "Strings",
+                },
+
+                {
+                  value: "All Keyboard",
+                  label: "All Keyboard",
+                  group: "Keyboard",
+                },
                 { value: "Piano", label: "Piano", group: "Keyboard" },
                 {
                   value: "Piano Accompaniment",
@@ -564,6 +626,12 @@ export function OpportunityForm({
                   group: "Keyboard",
                 },
                 { value: "Accordian", label: "Accordian", group: "Keyboard" },
+                {
+                  value: "Other Keyboard",
+                  label: "Other Keyboard",
+                  group: "Keyboard",
+                },
+
                 {
                   value: "Percussion",
                   label: "Percussion",
@@ -605,6 +673,12 @@ export function OpportunityForm({
                   label: "Piano Duo",
                   group: "Chamber Music",
                 },
+                {
+                  value: "Other Chamber",
+                  label: "Other Chamber",
+                  group: "Chamber Music",
+                },
+
                 {
                   value: "Conductor",
                   label: "Conductor",
