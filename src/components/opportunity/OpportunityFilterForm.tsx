@@ -48,6 +48,7 @@ export function OpportunityFilterForm({
     type: searchObj.type ? searchObj.type : "",
     is_expired: searchObj.is_expired ? searchObj.is_expired : "",
     job_type: searchObj.job_type ? searchObj.job_type : "",
+    sort: searchObj.sort ? searchObj.sort : 0,
   });
   const opportunityType = useLocation().pathname.slice(1);
 
@@ -182,6 +183,33 @@ export function OpportunityFilterForm({
           (tempSearchObj.is_winner as string)
             ? (tempSearchObj.is_winner as string)
             : ""
+        }
+      />
+      <DropdownCategory
+        label="Sort by"
+        placeholder={`Select`}
+        allowDeselect
+        clearable
+        display={
+          opportunityType === "competitions" ||
+          opportunityType === "festivals" ||
+          opportunityType === "concerts"
+        }
+        data={[
+          { value: "1", label: "End Date" },
+          {
+            value: "0",
+            label: "Date Posted",
+          },
+        ]}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            sort: e && e !== "-1" ? e : "",
+          })
+        }
+        value={
+          (tempSearchObj.sort as string) ? (tempSearchObj.sort as string) : ""
         }
       />
       <DropdownCategory

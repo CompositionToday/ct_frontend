@@ -466,7 +466,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     !!searchObj.is_deleted ||
     !!searchObj.is_expired ||
     !!searchObj.author ||
-    !!searchObj.is_winner
+    !!searchObj.is_winner ||
+    !!searchObj.sort
       ? true
       : false);
   };
@@ -507,6 +508,12 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     if (opportunityType === "my-posts") {
       console.log("in my post");
       setSearchObj({ ...searchObj, is_deleted: "0", is_expired: "0" });
+    } else if (
+      opportunityType === "competitions" ||
+      opportunityType === "festivals" ||
+      opportunityType === "concerts"
+    ) {
+      setSearchObj({ ...searchObj, sort: "0" });
     }
   }, []);
 
