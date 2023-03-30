@@ -127,7 +127,9 @@ export function OpportunityForm({
             : "Please shorten the title"
           : "Please give a title",
       organization: (value) =>
-        value.trim()
+        value.trim() ||
+        opportunityType === "festivals" ||
+        opportunityType === "concerts"
           ? value.trim().length <= 100
             ? null
             : "Please shorten the organization"
@@ -429,7 +431,10 @@ export function OpportunityForm({
                 label="Organization"
                 placeholder="Organization"
                 display
-                withAsterisk
+                withAsterisk={
+                  opportunityType !== "festivals" &&
+                  opportunityType !== "concerts"
+                }
                 {...form.getInputProps("organization")}
               />
             </MultipleInputRow>
