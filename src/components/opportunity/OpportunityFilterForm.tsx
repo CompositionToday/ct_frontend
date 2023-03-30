@@ -7,7 +7,7 @@ import {
   TextInputFullWidth,
 } from "./OpportunityFormHelper";
 import React, { useState, useEffect } from "react";
-import { Button, Container } from "@mantine/core";
+import { Button, Container, Checkbox } from "@mantine/core";
 import { FormHeader } from "./CreateOpportunityHelper";
 import { useLocation } from "react-router-dom";
 import { PaginationSearchObject } from "../pagination/PaginationNavbar";
@@ -64,9 +64,10 @@ export function OpportunityFilterForm({
       <FormHeader>Filters</FormHeader>
       <DropdownCategory
         label="Competition Category"
-        placeholder={`Select competitions category`}
+        placeholder={`Select competition category`}
         searchable
         data={[
+          { value: "All Woodwind", label: "All Woodwind", group: "Woodwind" },
           { value: "Flute", label: "Flute", group: "Woodwind" },
           { value: "Folk Flute", label: "Folk Flute", group: "Woodwind" },
           { value: "Oboe", label: "Oboe", group: "Woodwind" },
@@ -74,12 +75,21 @@ export function OpportunityFilterForm({
           { value: "Bassoon", label: "Bassoon", group: "Woodwind" },
           { value: "Saxophone", label: "Saxophone", group: "Woodwind" },
           { value: "Recorder", label: "Recorder", group: "Woodwind" },
-          { value: "General Brass", label: "General Brass", group: "Brass" },
+          {
+            value: "Other Woodwind",
+            label: "Other Woodwind",
+            group: "Woodwind",
+          },
+
+          { value: "All Brass", label: "All Brass", group: "Brass" },
           { value: "French Horn", label: "French Horn", group: "Brass" },
           { value: "Trumpet", label: "Trumpet", group: "Brass" },
           { value: "Trombone", label: "Trombone", group: "Brass" },
           { value: "Tuba", label: "Tuba", group: "Brass" },
           { value: "Euphonium", label: "Euphonium", group: "Brass" },
+          { value: "Other Brass", label: "Other Brass", group: "Brass" },
+
+          { value: "All Strings", label: "All Strings", group: "Strings" },
           { value: "Violin", label: "Violin", group: "Strings" },
           { value: "Folk Fiddle", label: "Folk Fiddle", group: "Strings" },
           { value: "Viola", label: "Viola", group: "Strings" },
@@ -90,6 +100,9 @@ export function OpportunityFilterForm({
           { value: "Early Guitar", label: "Early Guitar", group: "Strings" },
           { value: "Lute", label: "Lute", group: "Strings" },
           { value: "Theorbo", label: "Theorbo", group: "Strings" },
+          { value: "Other Strings", label: "Other Strings", group: "Strings" },
+
+          { value: "All Keyboard", label: "All Keyboard", group: "Keyboard" },
           { value: "Piano", label: "Piano", group: "Keyboard" },
           {
             value: "Piano Accompaniment",
@@ -99,6 +112,12 @@ export function OpportunityFilterForm({
           { value: "Organ", label: "Organ", group: "Keyboard" },
           { value: "Harpsichord", label: "Harpsichord", group: "Keyboard" },
           { value: "Accordian", label: "Accordian", group: "Keyboard" },
+          {
+            value: "Other Keyboard",
+            label: "Other Keyboard",
+            group: "Keyboard",
+          },
+
           { value: "Percussion", label: "Percussion", group: "Percussion" },
           { value: "Voice", label: "Voice", group: "Voice" },
           {
@@ -136,6 +155,12 @@ export function OpportunityFilterForm({
             label: "Piano Duo",
             group: "Chamber Music",
           },
+          {
+            value: "Other Chamber",
+            label: "Other Chamber",
+            group: "Chamber Music",
+          },
+
           { value: "Conductor", label: "Conductor", group: "Music Direction" },
           {
             value: "Repetiteur",
@@ -160,17 +185,17 @@ export function OpportunityFilterForm({
             : ""
         }
       />
-      <DropdownCategory
-        label="Winner"
+      {/* <DropdownCategory
+        label="Winners"
         placeholder={`Select`}
         allowDeselect
         clearable
         display={opportunityType === "competitions"}
         data={[
-          { value: "1", label: "Winners Only" },
+          { value: "1", label: "Show Posted Winners" },
           {
             value: "0",
-            label: "No Winners",
+            label: "Show Ongoing Competitions",
           },
         ]}
         onChange={(e) =>
@@ -184,7 +209,7 @@ export function OpportunityFilterForm({
             ? (tempSearchObj.is_winner as string)
             : ""
         }
-      />
+      /> */}
       <DropdownCategory
         label="Sort by"
         placeholder={`Select`}
@@ -219,13 +244,50 @@ export function OpportunityFilterForm({
         clearable
         display={opportunityType === "jobs"}
         data={[
-          "Faculty",
-          "Instruction",
-          "Publishing",
-          "Performance",
-          "Composing",
-          "Other",
+          { value: "Faculty", label: "Faculty" },
+          {
+            value: "Pre-K Instruction",
+            label: "Pre-K Instruction",
+            group: "Instruction",
+          },
+          {
+            value: "Elementary Instruction",
+            label: "Elementary Instruction",
+            group: "Instruction",
+          },
+          {
+            value: "Junior High Instruction",
+            label: "Junior High Instruction",
+            group: "Instruction",
+          },
+          {
+            value: "High School Instruction",
+            label: "High School Instruction",
+            group: "Instruction",
+          },
+          {
+            value: "Post-Secondary Instruction",
+            label: "Post-Secondary Instruction",
+            group: "Instruction",
+          },
+          {
+            value: "Other Instruction",
+            label: "Other Instruction",
+            group: "Instruction",
+          },
+          { value: "Publishing", label: "Publishing" },
+          { value: "Performance", label: "Performance" },
+          { value: "Composing", label: "Composing" },
+          { value: "Other", label: "Other" },
         ]}
+        // data={[
+        //   "Faculty",
+        //   "Instruction",
+        //   "Publishing",
+        //   "Performance",
+        //   "Composing",
+        //   "Other",
+        // ]}
         onChange={(e) =>
           setTempSearchObj({
             ...tempSearchObj,
@@ -355,7 +417,6 @@ export function OpportunityFilterForm({
         }
         placeholder={`Select`}
         allowDeselect
-        clearable
         display={
           opportunityType === "admin/recent-posts" ||
           opportunityType === "my-posts"
@@ -383,7 +444,6 @@ export function OpportunityFilterForm({
         label="Expired Status"
         placeholder={`Select`}
         allowDeselect
-        clearable
         display={
           opportunityType === "admin/recent-posts" ||
           opportunityType === "my-posts"

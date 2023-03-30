@@ -30,12 +30,18 @@ import {
   Container,
   Divider,
   Tooltip,
-  ScrollArea,
+  Grid,
+  Button,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
-import { IconFilter, IconSearch } from "@tabler/icons";
+import {
+  IconFilter,
+  IconSearch,
+  IconTrophy,
+  IconArrowLeft,
+} from "@tabler/icons";
 import { OpportunityFilterForm } from "./OpportunityFilterForm";
 import { OpportunityForm } from "./OpportunityForm";
 import { FormHeader } from "./CreateOpportunityHelper";
@@ -52,9 +58,17 @@ const blueTriangle = require("../../images/BlueTriangle.png");
 
 const useStyles = createStyles((theme) => ({
   container: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: 40,
+    marginBottom: 20,
+  },
+
+  searchAndFilterContainer: {
     padding: "0px",
-    marginTop: "40px",
-    marginBottom: "20px",
+    // marginTop: "40px",
+    // marginBottom: "20px",
+    flexGrow: 1,
 
     [theme.fn.smallerThan("md")]: {
       marginLeft: "15px",
@@ -69,7 +83,13 @@ const useStyles = createStyles((theme) => ({
     marginRight: "15px",
 
     [theme.fn.largerThan("md")]: {
-      flexBasis: "40%",
+      flexBasis: "450px",
+    },
+  },
+
+  winnersBtn: {
+    [theme.fn.smallerThan("md")]: {
+      marginRight: "15px",
     },
   },
 }));
@@ -103,11 +123,15 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   });
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const smallerScreen = useMediaQuery("(max-width: 992px)");
+  const mobileScreen = useMediaQuery("(max-width: 36em)");
+
   const [recall, setRecall] = useState(0);
   const deleteComment = useRef("");
   const [userUid, setUserUid] = useState("");
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const [winnersShown, setWinnersShown] = useState(false);
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
@@ -467,7 +491,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     !!searchObj.is_deleted ||
     !!searchObj.is_expired ||
     !!searchObj.author ||
-    !!searchObj.is_winner ||
     !!searchObj.sort
       ? true
       : false);
@@ -480,6 +503,19 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       setCurrentOpportunity(null);
     }
   }, [displayOpportunityArray]);
+
+  useEffect(() => {
+    if (opportunityType === "competitions") {
+      setSearchObj({
+        ...searchObj,
+        is_winner: winnersShown ? "1" : "",
+      });
+    }
+  }, [winnersShown]);
+
+  // useEffect(() => {
+  //   console.log("searchObj now", searchObj);
+  // }, [searchObj]);
 
   const getUserInfo = async () => {
     onAuthStateChanged(auth, async (user) => {
@@ -560,15 +596,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
   const isExpired = (endDate: string | number | Date, title?: string) => {
     let currDate = new Date();
-    // console.log("Opp", "currDate", currDate.valueOf(), "endDate", endDate);
-    console.log(
-      "Opp",
-      title,
-      "currDate aka",
-      currDate,
-      "endDate aka",
-      new Date(endDate)
-    );
     return endDate <= currDate.valueOf();
   };
 
@@ -591,34 +618,65 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         />
       </MediaQuery>
       <GridContainer medianScreen={smallerScreen}>
-        <Flex className={classes.container}>
-          <Input
-            icon={
-              <ActionIcon color="dark.2" onClick={handleInputSubmit}>
-                <IconSearch />
+        <div className={classes.container}>
+          <Flex className={classes.searchAndFilterContainer}>
+            <Input
+              icon={
+                <ActionIcon color="dark.2" onClick={handleInputSubmit}>
+                  <IconSearch />
+                </ActionIcon>
+              }
+              placeholder={`Search ${
+                apiEndpoint.includes("posts/") ? "my posts" : apiEndpoint
+              }`}
+              onChange={handleSearchInput}
+              onKeyDown={handleEnterKeyDown}
+              value={keyword}
+              className={classes.search}
+            />
+            <Tooltip label="Filter">
+              <ActionIcon
+                color={areFiltersEnabled() ? "blue" : "dark.2"}
+                size="lg"
+                variant={areFiltersEnabled() ? "light" : "subtle"}
+                onClick={() => {
+                  setDisplayOpportunitySearchFilterModal(true);
+                }}
+              >
+                <IconFilter size={40} stroke={1.5} />
               </ActionIcon>
-            }
-            placeholder={`Search ${
-              apiEndpoint.includes("posts/") ? "my posts" : apiEndpoint
-            }`}
-            onChange={handleSearchInput}
-            onKeyDown={handleEnterKeyDown}
-            value={keyword}
-            className={classes.search}
-          />
-          <Tooltip label="Filter">
-            <ActionIcon
-              color={areFiltersEnabled() ? "blue" : "dark.2"}
-              size="lg"
-              variant={areFiltersEnabled() ? "light" : "subtle"}
-              onClick={() => {
-                setDisplayOpportunitySearchFilterModal(true);
+            </Tooltip>
+          </Flex>
+          {mobileScreen ? (
+            <Button
+              variant="light"
+              color={winnersShown ? "blue" : "yellow"}
+              sx={{
+                display: opportunityType === "competitions" ? "block" : "none",
               }}
+              className={classes.winnersBtn}
+              onClick={() => setWinnersShown((e) => !e)}
             >
-              <IconFilter size={40} stroke={1.5} />
-            </ActionIcon>
-          </Tooltip>
-        </Flex>
+              {winnersShown ? <IconArrowLeft /> : <IconTrophy />}
+            </Button>
+          ) : (
+            <Button
+              rightIcon={winnersShown ? <IconArrowLeft /> : <IconTrophy />}
+              variant="light"
+              color={winnersShown ? "blue" : "yellow"}
+              sx={{
+                display: opportunityType === "competitions" ? "block" : "none",
+              }}
+              className={classes.winnersBtn}
+              onClick={() => setWinnersShown((e) => !e)}
+            >
+              {winnersShown
+                ? "See Current Competitions"
+                : "See Previous Winners"}
+            </Button>
+          )}
+        </div>
+
         <OpportunityGrid
           justify="center"
           medianScreen={smallerScreen}
