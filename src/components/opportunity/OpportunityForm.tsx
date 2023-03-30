@@ -117,6 +117,7 @@ export function OpportunityForm({
         ? new Date(opportunity?.start_time)
         : null,
       fee: +(opportunity?.fee as number) ? +(opportunity?.fee as number) : "",
+      deadline: opportunity?.deadline ? new Date(opportunity?.deadline) : null,
     },
     validate: {
       title: (value) =>
@@ -201,6 +202,17 @@ export function OpportunityForm({
         (opportunityType !== "competitions" && opportunityType !== "festivals")
           ? null
           : "Please give a fee amount",
+      deadline: (value: Date | string) => {
+        if (value && value.valueOf() < getCurrentDate()) {
+          return "Please choose today's or a future date";
+        } else if (!value) {
+          if (opportunityType === "festivals") {
+            return "Please give an submission date";
+          }
+        }
+
+        return null;
+      },
     },
   });
   const essentialOpportunityKey = [
@@ -218,7 +230,7 @@ export function OpportunityForm({
   const jobOpportunityKey = ["salary", "job_type", "job_category"];
   const competitionOpportunityKey = ["winner", "competition_category", "fee"];
   const concertOpportunityKey = ["address", "start_time"];
-  const festivalOpportunityKey = ["start_date", "address", "fee"];
+  const festivalOpportunityKey = ["start_date", "address", "fee", "deadline"];
 
   // FIXME: When creating the request object, need to make sure that we use keyword
   // instead of explicitly using title and organization
@@ -291,6 +303,9 @@ export function OpportunityForm({
     ) {
       req.start_date = getCurrentDate(dateRange[0].valueOf());
       req.end_date = getCurrentDate(dateRange[1].valueOf());
+      req.deadline = getCurrentDate(
+        values.deadline instanceof Date ? values.deadline?.valueOf() : undefined
+      );
     } else if (opportunityType === "jobs" && !req.end_date) {
       const getSixMonthFromToday = () => {
         let tempDate: number | Date = getCurrentDate();
@@ -330,7 +345,7 @@ export function OpportunityForm({
     req.date_posted = getCurrentDate();
     console.log("fee type:", req.fee, typeof req.fee, req);
 
-    // handleSubmission(req);
+    handleSubmission(req);
   };
 
   const dateRangeErrorFunction = () => {
@@ -664,6 +679,13 @@ export function OpportunityForm({
                 { value: "Arranger", label: "Arranger", group: "Composition" },
               ]}
               {...form.getInputProps("competition_category")}
+            />
+            <EndDateInput
+              placeholder="Submission Deadline"
+              label="Submission Deadline"
+              display={opportunityType === "festivals"}
+              withAsterisk={opportunityType === "festivals"}
+              {...form.getInputProps("deadline")}
             />
             <EndDateInput
               placeholder="End Date"

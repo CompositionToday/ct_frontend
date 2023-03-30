@@ -53,6 +53,7 @@ export interface PaginationSearchObject {
   author?: string;
   fee?: string | number;
   sort?: string | number;
+  deadline?: Date | string | number;
 }
 
 export function PaginationNavbar({

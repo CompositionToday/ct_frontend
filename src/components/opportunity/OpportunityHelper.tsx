@@ -40,6 +40,7 @@ export interface OpportunityItem {
   ban_message?: string;
   deleted_comment?: string;
   fee?: string | number;
+  deadline?: Date | string | number | null;
 }
 
 interface PaginationCard {

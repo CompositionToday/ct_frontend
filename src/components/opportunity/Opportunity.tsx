@@ -204,6 +204,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       // Format any keys of type number to be as type strings since the APIs only accept strings for the request body
       opportunity.end_date = opportunity.end_date?.toString();
       opportunity.start_date = opportunity.start_date?.toString();
+      opportunity.deadline = opportunity.deadline?.toString();
       opportunity.salary = opportunity.salary?.toString();
       opportunity.fee = opportunity.fee?.toString();
 
