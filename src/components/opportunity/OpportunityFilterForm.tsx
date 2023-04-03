@@ -2,7 +2,6 @@ import { Location } from "../filter/Location";
 import {
   DropdownCategory,
   SalaryInput,
-  StartEndDatePicker,
   SubmitButtonContainer,
   TextInputFullWidth,
 } from "./OpportunityFormHelper";
@@ -57,11 +56,50 @@ export function OpportunityFilterForm({
     console.log(searchObj);
   }, [searchObj]);
 
+  const getLabel = () => {
+    if (opportunityType === "festivals") {
+      return "Start Date";
+    } else if (opportunityType === "competitions") {
+      return "Deadline";
+    }
+    return "Date";
+  };
+
   const smallerScreen = useMediaQuery("(max-width: 992px)");
 
   return (
     <Container sx={{ padding: smallerScreen ? "20px" : "20px 40px" }}>
       <FormHeader>Filters</FormHeader>
+      <DropdownCategory
+        label="Sort By"
+        placeholder={`Select`}
+        allowDeselect
+        clearable
+        display={
+          opportunityType === "competitions" ||
+          opportunityType === "festivals" ||
+          opportunityType === "concerts"
+        }
+        data={[
+          {
+            value: "1",
+            label: getLabel(),
+          },
+          {
+            value: "0",
+            label: "Most Recent",
+          },
+        ]}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            sort: e && e !== "-1" ? e : "",
+          })
+        }
+        value={
+          (tempSearchObj.sort as string) ? (tempSearchObj.sort as string) : ""
+        }
+      />
       <DropdownCategory
         label="Competition Category"
         placeholder={`Select competition category`}
@@ -210,33 +248,6 @@ export function OpportunityFilterForm({
             : ""
         }
       /> */}
-      <DropdownCategory
-        label="Sort by"
-        placeholder={`Select`}
-        allowDeselect
-        clearable
-        display={
-          opportunityType === "competitions" ||
-          opportunityType === "festivals" ||
-          opportunityType === "concerts"
-        }
-        data={[
-          { value: "1", label: "End Date" },
-          {
-            value: "0",
-            label: "Date Posted",
-          },
-        ]}
-        onChange={(e) =>
-          setTempSearchObj({
-            ...tempSearchObj,
-            sort: e && e !== "-1" ? e : "",
-          })
-        }
-        value={
-          (tempSearchObj.sort as string) ? (tempSearchObj.sort as string) : ""
-        }
-      />
       <DropdownCategory
         label="Job Category"
         placeholder={`Select job category`}

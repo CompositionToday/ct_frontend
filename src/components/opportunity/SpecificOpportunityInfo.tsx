@@ -1,8 +1,5 @@
 import { OpportunityItem } from "./OpportunityHelper";
-import {
-  SpecificOpportunityInfoInlineFlex,
-  CityState,
-} from "./OpportunityInfoHelper";
+import { CityState } from "./OpportunityInfoHelper";
 import {
   IconMoneybag,
   IconBriefcase,
@@ -12,8 +9,11 @@ import {
   IconCalendarEvent,
   IconClockHour4,
   IconMapPin,
+  IconCurrencyDollar,
+  IconAlarm,
 } from "@tabler/icons";
 import { Flex, Tooltip } from "@mantine/core";
+import { useEffect } from "react";
 
 interface SpecificOpportunityInfoProp {
   opportunity: OpportunityItem;
@@ -66,6 +66,16 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
+        <Tooltip label="Fee" position="top-start">
+          <Flex align="center" sx={{ maxWidth: "100%" }}>
+            <IconCurrencyDollar size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {opportunity?.fee
+                ? parseFloat(opportunity?.fee as string).toFixed(2)
+                : "Free"}
+            </span>
+          </Flex>
+        </Tooltip>
       </Flex>
     );
   }
@@ -263,6 +273,28 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
+        <Tooltip label="Application Deadline" position="top-start">
+          <Flex align="center" sx={{ maxWidth: "100%" }}>
+            <IconAlarm size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {new Date(opportunity?.deadline as string).toLocaleDateString(
+                "en-us",
+                { year: "numeric", month: "short", day: "numeric" }
+              )}
+            </span>
+          </Flex>
+        </Tooltip>
+        <Tooltip label="Fee" position="top-start">
+          <Flex align="center" sx={{ maxWidth: "100%" }}>
+            <IconCurrencyDollar size={30} color="#40C057" />
+            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+              {/* {opportunity?.fee ? opportunity?.fee : "Free"} */}
+              {opportunity?.fee
+                ? parseFloat(opportunity?.fee as string).toFixed(2)
+                : "Free"}
+            </span>
+          </Flex>
+        </Tooltip>
       </Flex>
     );
   }

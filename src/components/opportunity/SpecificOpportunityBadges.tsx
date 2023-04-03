@@ -6,6 +6,8 @@ import {
   IconCategory,
   IconTrophy,
   IconMapPin,
+  IconCurrencyDollar,
+  IconAlarm,
 } from "@tabler/icons";
 import { Tooltip, Badge } from "@mantine/core";
 
@@ -61,6 +63,41 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
+        <Tooltip label="Deadline">
+          <Badge
+            leftSection={
+              <IconAlarm
+                size={18}
+                color="#40C057"
+                style={{ marginBottom: "-3px" }}
+              />
+            }
+            color="gray"
+            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+          >
+            {new Date(opportunity?.end_date as string).toLocaleDateString(
+              "en-us",
+              { year: "numeric", month: "short", day: "numeric" }
+            )}
+          </Badge>
+        </Tooltip>
+        <Tooltip label="Fee">
+          <Badge
+            leftSection={
+              <IconCurrencyDollar
+                size={18}
+                color="#40C057"
+                style={{ marginBottom: "-3px" }}
+              />
+            }
+            color="gray"
+            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+          >
+            {opportunity?.fee
+              ? parseFloat(opportunity?.fee as string).toFixed(2)
+              : "Free"}
+          </Badge>
+        </Tooltip>
       </>
     );
   }
@@ -246,6 +283,41 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
+        <Tooltip label="Application Deadline">
+          <Badge
+            leftSection={
+              <IconAlarm
+                size={18}
+                color="#40C057"
+                style={{ marginBottom: "-3px" }}
+              />
+            }
+            color="gray"
+            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+          >
+            {new Date(opportunity?.deadline as string).toLocaleDateString(
+              "en-us",
+              { year: "numeric", month: "short", day: "numeric" }
+            )}
+          </Badge>
+        </Tooltip>
+        <Tooltip label="Fee">
+          <Badge
+            leftSection={
+              <IconCurrencyDollar
+                size={18}
+                color="#40C057"
+                style={{ marginBottom: "-3px" }}
+              />
+            }
+            color="gray"
+            sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+          >
+            {opportunity?.fee
+              ? parseFloat(opportunity?.fee as string).toFixed(2)
+              : "Free"}
+          </Badge>
+        </Tooltip>
       </>
     );
   }
