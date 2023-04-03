@@ -21,7 +21,6 @@ export const openDeleteModal = (
       );
 
       let resJSON = await res.json();
-      console.log("resJSON", resJSON);
 
       setRawUserList((existingData) => {
         return [
@@ -30,7 +29,6 @@ export const openDeleteModal = (
         ];
       });
     } catch (err) {
-      console.log(err);
     }
   };
 

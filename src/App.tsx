@@ -35,7 +35,7 @@ export default function App() {
     <>
       <Modal
         opened={loading}
-        onClose={() => console.log("closing page load modal")}
+        onClose={close}
         fullScreen
       >
         <LoadingOverlay

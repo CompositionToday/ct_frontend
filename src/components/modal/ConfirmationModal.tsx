@@ -18,14 +18,12 @@ export const openConfirmationModal = ({
   color,
   handleOnConfirm,
 }: ConfirmationModalProps) => {
-  console.log(title, children, confirmLabel, cancelLabel, color);
   openConfirmModal({
     title: title,
     centered: true,
     children: children,
     labels: { confirm: confirmLabel, cancel: cancelLabel },
     confirmProps: { color: color },
-    onCancel: () => console.log("Cancel"),
     onConfirm: () => handleOnConfirm(),
   });
 };

@@ -215,25 +215,19 @@ export function OpportunityForm({
   // FIXME: When creating the request object, need to make sure that we use keyword
   // instead of explicitly using title and organization
   const handleFormSubmission = (values: OpportunityItem) => {
-    console.log("these are the values: ", values);
     if (
       opportunityType === "festivals" &&
       (!dateRange || !dateRange[0] || !dateRange[1])
     ) {
-      console.log(
-        "There is no date range given for a festival, returning out of function"
-      );
       return;
     } else if (
       (dateRange[0] && dateRange[0].valueOf() < getCurrentDate()) ||
       (dateRange[1] && dateRange[1].valueOf() < getCurrentDate())
     ) {
-      console.log("One of the date in the date range is in the past");
       return;
     }
 
     if (opportunityType === "concerts" && !startTime) {
-      console.log("There is no start time given, returning out of function");
       return;
     }
 
@@ -241,9 +235,6 @@ export function OpportunityForm({
       (opportunityType === "concerts" || opportunityType === "festivals") &&
       (!city || !state)
     ) {
-      console.log(
-        "there is no location that was selected, now returning out of function"
-      );
       return;
     }
 
@@ -291,11 +282,6 @@ export function OpportunityForm({
         return tempDate.valueOf();
       };
       req.end_date = getSixMonthFromToday();
-      console.log(
-        "getting 6 month from today",
-        req.end_date,
-        new Date(req.end_date)
-      );
     } else {
       req.end_date = getCurrentDate(
         values.end_date instanceof Date ? values.end_date?.valueOf() : undefined
@@ -308,7 +294,6 @@ export function OpportunityForm({
       const mins = startTime ? startTime?.getMinutes() : 59;
 
       const endDate = new Date(req.end_date);
-      // console.log("startTime", startTime, "hours", hours, "mins", mins);
 
       req.end_date = endDate.setHours(hours, mins, 59);
 
@@ -344,15 +329,10 @@ export function OpportunityForm({
         setUserUID(user.uid);
       }
     });
-
-    console.log("Here is the opportunity passed into the form: ", opportunity);
     let sal = opportunity?.salary as number;
-    console.log(+sal);
-    console.log(sal);
   }, []);
 
   useEffect(() => {
-    console.log(opportunityType);
 
     if (opportunityType === "competitions") {
       setCity("Remote");
@@ -494,7 +474,6 @@ export function OpportunityForm({
               clearable
               display={opportunityType === "concerts"}
               onChange={(e) => {
-                console.log("timeinput: ", e);
                 setStartTime(e);
                 setDisplayStartTimeError(false);
               }}
@@ -634,7 +613,6 @@ export function OpportunityForm({
               withAsterisk
               value={dateRange}
               onChange={(e) => {
-                console.log(e);
                 setDateRange(e);
                 setDisplayDateRangeError(false);
               }}
@@ -679,21 +657,6 @@ export function OpportunityForm({
                   }
                   setDisplayDateRangeError(true);
                   setDisplayStartTimeError(true);
-                  console.log(form.isValid());
-                  console.log(form.isValid("title"));
-                  console.log(form.isValid("organization"));
-                  console.log(form.isValid("link"));
-                  console.log(form.isValid("description"));
-                  console.log(form.isValid("end_date"));
-                  console.log(form.isValid("salary"));
-                  console.log(form.isValid("job_category"));
-                  console.log(form.isValid("job_type"));
-                  console.log(form.isValid("job_type"));
-                  console.log(form.isValid("competition_category"));
-                  console.log(form.isValid("address"));
-
-                  console.log(displayLocationError);
-                  console.log(displayDateRangeError);
                 }}
               >
                 Submit

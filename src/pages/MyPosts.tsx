@@ -25,7 +25,6 @@ export function MyPosts() {
   }, []);
 
   useEffect(() => {
-    console.log("pathname: ", pathName);
   }, [pathName]);
 
   return (

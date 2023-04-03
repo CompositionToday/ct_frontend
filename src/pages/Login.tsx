@@ -69,7 +69,6 @@ export function Login() {
         setErrorMessage(defaultErrorMessage);
       }
 
-      console.log(err);
     }
   };
 

@@ -77,7 +77,6 @@ export function PaginationNavbar({
     const getPageCount = async () => {
       try {
         setLoading(true);
-        console.log("searchFilterObj", searchFilterObject);
         const countUrl = new URL(`${url}/${apiEndpointExtension}/count`);
         if (searchFilterObject) {
           for (const [key, value] of Object.entries(searchFilterObject)) {
@@ -96,10 +95,8 @@ export function PaginationNavbar({
           setLoading(false);
         }, timeOut);
       } catch (err) {
-        console.log(err);
       } finally {
         setCurrentPage(1);
-        console.log(recall);
       }
     };
     getPageCount();
@@ -117,7 +114,6 @@ export function PaginationNavbar({
         }
 
         getUrl.searchParams.set("page_number", String(currentPage));
-        console.log("geturl: ", getUrl.toString());
         let response = await fetch(getUrl);
 
         let responseJson = await response.json();
@@ -125,9 +121,7 @@ export function PaginationNavbar({
         setTimeout(() => {
           setLoading(false);
         }, timeOut);
-        console.log("res", responseJson);
       } catch (err) {
-        console.log(err);
       }
     };
 

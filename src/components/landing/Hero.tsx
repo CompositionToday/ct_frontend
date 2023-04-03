@@ -121,7 +121,6 @@ export function Hero() {
     //   eye.style.transform! = `rotate(${90 + angleDeg}deg)`;
     // });
     setRotateDegree(angleDeg);
-    console.log("moving event mouse");
   };
 
   useEffect(() => {

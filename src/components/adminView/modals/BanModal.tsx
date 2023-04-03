@@ -24,7 +24,6 @@ export const openBanModal = (
       );
 
       let resJSON = await res.json();
-      console.log(resJSON);
 
       setRawUserList((existingData) => {
         return [
@@ -34,7 +33,6 @@ export const openBanModal = (
         ];
       });
     } catch (err) {
-      console.log(err);
     }
   };
 

@@ -120,11 +120,9 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleInputSubmit = () => {
-    console.log(keyword);
     if (keyword) {
       setSearchObj({ ...searchObj, keyword: keyword });
     } else {
@@ -152,7 +150,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       delete tempOpportunity?.UID;
       delete tempOpportunity?.date_posted;
 
-      console.log("checking author", userUid, authorUID);
       if (currentOpportunity?.is_deleted === 0) {
         if (userUid === authorUID) {
           tempOpportunity.deleted_comment = "Author has deleted this post";
@@ -173,9 +170,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       tempOpportunity.salary = tempOpportunity?.salary?.toString();
       tempOpportunity.is_flagged = currentOpportunity?.is_flagged?.toString();
 
-      console.log("delete function params before calling edit: ", {
-        ...tempOpportunity,
-      });
       let responseJson = await editFunction(tempOpportunity);
       setRecall(recall + 1);
       setDisplayOpportunityInfoModal(false);
@@ -185,7 +179,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         color: "green",
       });
     } catch (err) {
-      console.log(err);
       showNotification({
         title: "Error",
         message: "Something went wrong, please try again later",
@@ -224,7 +217,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       });
       setDisplayOpportunityEditModal(false);
     } catch (err) {
-      console.log(err);
       showNotification({
         title: "Error",
         message: "There was a problem, please try again later",
@@ -252,7 +244,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   //     tempOpportunity.is_deleted = currentOpportunity?.is_deleted?.toString();
 
   //     let responseJson = await editFunction(tempOpportunity);
-  //     console.log("fake flag resposne: ", responseJson);
   //     setRecall(recall + 1);
   //     setDisplayOpportunityInfoModal(false);
   //     showNotification({
@@ -262,7 +253,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   //       color: "green",
   //     });
   //   } catch (err) {
-  //     console.log(err);
   //     showNotification({
   //       title: "Error",
   //       message: "Something went wrong, please try again later",
@@ -286,7 +276,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       );
 
       let responseJson = await response.json();
-      console.log("put flag response: ", responseJson.listOfObjects[0]);
 
       let tempCurrentOpportunity = {
         ...currentOpportunity,
@@ -318,7 +307,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         color: "green",
       });
     } catch (err) {
-      console.log(err);
       showNotification({
         title: "Error",
         message: "Something went wrong, please try again later",
@@ -340,7 +328,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       );
 
       let responseJson = await response.json();
-      console.log("put flag response: ", responseJson.listOfObjects[0]);
       showNotification({
         title: "Flag Count Reseted",
         message: "You have successfully reset the flag count on this post",
@@ -349,7 +336,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
       setRecall(recall + 1);
     } catch (err) {
-      console.log(err);
       showNotification({
         title: "Error",
         message: "Something went wrong, please try again later",
@@ -383,8 +369,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         }
       }
 
-      console.log("formatted edit body:", opportunity);
-
       let requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -402,7 +386,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
       return editedOpportunity;
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -411,8 +394,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     try {
       let responseUser = await fetch(`${url}/users/${currentOpportunity?.UID}`);
       let responseUserJson = await responseUser.json();
-
-      console.log(responseUserJson);
 
       if (responseUserJson.listOfObjects.length < 1) {
         throw "Auther of post does not exist in database";
@@ -440,7 +421,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         color: "green",
       });
     } catch (err) {
-      console.log(err);
       showNotification({
         title: "Error",
         message: "There was a problem, please try again later",
@@ -492,7 +472,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             setIsAdmin(true);
           }
         } catch (err) {
-          console.log(err);
         }
       }
     });
@@ -504,7 +483,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     });
 
     if (opportunityType === "my-posts") {
-      console.log("in my post");
       setSearchObj({ ...searchObj, is_deleted: "0", is_expired: "0" });
     }
   }, []);
@@ -551,15 +529,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
   const isExpired = (endDate: string | number | Date, title?: string) => {
     let currDate = new Date();
-    // console.log("Opp", "currDate", currDate.valueOf(), "endDate", endDate);
-    console.log(
-      "Opp",
-      title,
-      "currDate aka",
-      currDate,
-      "endDate aka",
-      new Date(endDate)
-    );
     return endDate <= currDate.valueOf();
   };
 

@@ -52,8 +52,6 @@ export function OpportunityFilterForm({
   const opportunityType = useLocation().pathname.slice(1);
 
   useEffect(() => {
-    console.log("user effect is triggered: ", searchObj);
-    console.log(searchObj);
   }, [searchObj]);
 
   const smallerScreen = useMediaQuery("(max-width: 992px)");
@@ -270,7 +268,6 @@ export function OpportunityFilterForm({
         display={opportunityType === "jobs"}
         value={tempSearchObj.salary}
         onChange={(e) => {
-          console.log(e);
           setTempSearchObj({
             ...tempSearchObj,
             salary: e,
@@ -428,8 +425,6 @@ export function OpportunityFilterForm({
         <Button
           onClick={() => {
             let temp = tempSearchObj;
-            console.log("you clicked me");
-            console.log("temp before: ", temp, !!temp.keyword);
             for (const key in temp) {
               if (!temp[key as keyof typeof temp]) {
                 delete temp[key as keyof typeof temp];

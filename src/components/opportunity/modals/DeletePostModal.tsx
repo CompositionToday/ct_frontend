@@ -24,7 +24,6 @@ export const openDeletePostModal = (
           <Textarea
             onChange={(e) => {
               deleteComment.current = e.target.value;
-              console.log("delete comment input:", e.target.value);
             }}
             placeholder="Tell the user why you deleted their post"
             label="Why are you deleting this post?"

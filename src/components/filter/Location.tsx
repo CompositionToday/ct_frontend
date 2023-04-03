@@ -52,7 +52,6 @@ export function Location({
   // const { classes } = useStyles();
 
   const handleChange = async (val: string) => {
-    console.log("I am triggered");
     setLoading(true);
     setValue(val);
     setData([]);
@@ -73,9 +72,6 @@ export function Location({
   }, []);
 
   useEffect(() => {
-    console.log("Chose a location");
-    console.log("city: ", city);
-    console.log("state: ", state);
     if (!city || !state) {
       setValue("");
       setRemoteStatus(false);
@@ -83,7 +79,6 @@ export function Location({
   }, [city, state]);
 
   useEffect(() => {
-    console.log(value);
     if (value === "") {
       setLoading(false);
       return;
@@ -95,7 +90,6 @@ export function Location({
 
     const delayDebounceFn = setTimeout(async () => {
       try {
-        console.log("value: ", value);
 
         // Send Axios request here
         let temp = await fetch(
@@ -103,7 +97,6 @@ export function Location({
         );
 
         let tmp = await temp.json();
-        console.log(tmp);
         setData(
           tmp.features.map((city: any) => {
             let arr = city.place_name.split(", ");
@@ -115,7 +108,6 @@ export function Location({
           })
         );
       } catch (err) {
-        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -125,11 +117,9 @@ export function Location({
   }, [value]);
 
   useEffect(() => {
-    console.log("data", data);
   }, [data]);
 
   useEffect(() => {
-    console.log("remote status: ", remoteStatus);
     if (remoteStatus) {
       setCity("Remote");
       setState("Remote");

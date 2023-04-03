@@ -89,14 +89,12 @@ export function VerifyEmail() {
         // dynamicLinkDomain: "compositiontoday.net",
       };
 
-      console.log("user email", currentUser?.email);
       await sendEmailVerification(currentUser!, actionCodeSettings);
       // await sendSignInLinkToEmail(
       //   auth,
       //   currentUser?.email!,
       //   actionCodeSettings
       // );
-      console.log("after await");
 
       showNotification({
         title: "Email Verification Sent",
@@ -106,7 +104,6 @@ export function VerifyEmail() {
 
       setTimeout(() => setDisableButton(false), 20000);
     } catch (err) {
-      console.log(err);
       showNotification({
         title: "Error",
         message: "Something went wrong, please try again later",
@@ -130,7 +127,6 @@ export function VerifyEmail() {
       }
     });
 
-    console.log("location host", window.location.hostname);
   }, []);
 
   return (

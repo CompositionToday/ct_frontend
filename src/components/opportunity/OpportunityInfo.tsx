@@ -92,7 +92,6 @@ OpportunityInfoProp) {
           //   setIsAdmin(true);
           // }
         } catch (err) {
-          console.log(err);
         }
       }
     });
@@ -110,15 +109,9 @@ OpportunityInfoProp) {
   }, []);
 
   useEffect(() => {
-    console.log("start: ", startDate);
-    console.log("end: ", endDate);
-    console.log(opportunity);
-    console.log(typeof opportunity?.end_date);
   }, [endDate, startDate, opportunity]);
 
   useEffect(() => {
-    console.log("Users Uid: ", userUID);
-    console.log("isAdmin: ", isAdmin);
   }, [userUID, isAdmin]);
 
   if (!opportunity) {
@@ -134,14 +127,6 @@ OpportunityInfoProp) {
 
   const isExpired = (endDate: string | number | Date, title?: string) => {
     let currDate = new Date();
-    // console.log(title, "currDate", currDate.valueOf(), "endDate", endDate);
-    console.log(
-      title,
-      "currDate aka",
-      currDate,
-      "endDate aka",
-      new Date(endDate)
-    );
     return endDate <= currDate.valueOf();
   };
 

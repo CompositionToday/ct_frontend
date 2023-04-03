@@ -66,14 +66,12 @@ export function ForgotPassword() {
       setErrorMessage("");
       setValidInput(true);
     } catch (err: unknown) {
-      console.log(err);
       if (err instanceof FirebaseError) {
         if (authErrorList[err.code as keyof typeof authErrorList]) {
           setErrorMessage(
             authErrorList[err.code as keyof typeof authErrorList]
           );
         } else if (err.code === "auth/user-not-found") {
-          console.log("here");
           setValidInput(true);
           setErrorMessage("");
           return;

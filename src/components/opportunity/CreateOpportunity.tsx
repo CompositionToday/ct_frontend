@@ -30,7 +30,6 @@ export function CreateOpportunity() {
       opportunity.date_posted = opportunity.date_posted?.toString();
       opportunity.start_time = opportunity.start_time?.toString();
 
-      console.log(opportunity);
       let requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -50,7 +49,6 @@ export function CreateOpportunity() {
         color: "green",
       });
     } catch (err) {
-      console.log(err);
       showNotification({
         title: "Error",
         message: "Something went wrong, please try again later",
@@ -70,7 +68,6 @@ export function CreateOpportunity() {
   }, []);
 
   useEffect(() => {
-    console.log(opportunityType);
   }, [opportunityType]);
 
   const smallerScreen = useMediaQuery("(max-width: 992px)");
@@ -96,7 +93,7 @@ export function CreateOpportunity() {
       <Modal
         opened={displaySuccessModal}
         withCloseButton={false}
-        onClose={() => console.log("closing unicorn modal")}
+        onClose={close}
         size="80%"
       >
         <FormHeader>Post Created!</FormHeader>
