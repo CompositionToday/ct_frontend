@@ -82,12 +82,6 @@ OpportunityInfoProp) {
           } else {
             setIsAdmin(false);
           }
-          // console.log(
-          //   "get users signed info",
-          //   responseJson,
-          //   responseJson.listOfObjects[0],
-          //   responseJson.listOfObjects[0].is_admin === 1
-          // );
           // if (responseJson.listOfObjects[0].is_admin === 1) {
           //   setIsAdmin(true);
           // }
