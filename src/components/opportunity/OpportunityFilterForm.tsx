@@ -363,7 +363,11 @@ export function OpportunityFilterForm({
         state={state}
         setState={setState}
         withAsterisk={false}
-        display={opportunityType !== "competitions"}
+        display={
+          opportunityType !== "competitions" &&
+          opportunityType !== "admin/recent-posts" &&
+          opportunityType !== "my-posts"
+        }
       />
       <SalaryInput
         label="Minimum Salary"

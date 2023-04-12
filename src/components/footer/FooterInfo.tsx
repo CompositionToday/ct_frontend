@@ -9,14 +9,5 @@ export const footerInfo = {
         },
       ],
     },
-    {
-      title: "Project",
-      links: [
-        {
-          label: "GitHub",
-          link: "/",
-        },
-      ],
-    },
   ],
 };

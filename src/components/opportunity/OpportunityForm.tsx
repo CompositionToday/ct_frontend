@@ -147,11 +147,15 @@ export function OpportunityForm({
             : "Please shorten the description"
           : "Please give a description",
       end_date: (value: Date | string) => {
-        if (value && value.valueOf() < getCurrentDate()) {
-          return "Please choose today's or a future date";
-        } else if (!value) {
-          if (opportunityType !== "jobs" && opportunityType !== "festivals") {
-            return "Please give an end date";
+        if (opportunityType !== "festivals") {
+          if (value && (value.valueOf() as number) < getCurrentDate()) {
+            return "Please choose today's or a future date";
+          } else if (!value) {
+            if (opportunityType !== "jobs" && opportunityType !== "festivals") {
+              return opportunityType !== "concerts"
+                ? "Please give an application deadline"
+                : "Please give a date";
+            }
           }
         }
 
@@ -205,7 +209,7 @@ export function OpportunityForm({
           ? null
           : "Please give a fee amount",
       deadline: (value: Date | string) => {
-        if (value && value.valueOf() < getCurrentDate()) {
+        if (value && (value.valueOf() as number) < getCurrentDate()) {
           return "Please choose today's or a future date";
         } else if (!value) {
           if (opportunityType === "festivals") {
@@ -247,8 +251,9 @@ export function OpportunityForm({
       );
       return;
     } else if (
-      (dateRange[0] && dateRange[0].valueOf() < getCurrentDate()) ||
-      (dateRange[1] && dateRange[1].valueOf() < getCurrentDate())
+      opportunityType === "festivals" &&
+      ((dateRange[0] && dateRange[0].valueOf() < getCurrentDate()) ||
+        (dateRange[1] && dateRange[1].valueOf() < getCurrentDate()))
     ) {
       console.log("One of the date in the date range is in the past");
       return;
@@ -767,8 +772,12 @@ export function OpportunityForm({
               {...form.getInputProps("deadline")}
             />
             <EndDateInput
-              placeholder="End Date"
-              label="End Date"
+              placeholder={
+                opportunityType !== "concerts" ? "Application Deadline" : "Date"
+              }
+              label={
+                opportunityType !== "concerts" ? "Application Deadline" : "Date"
+              }
               display={opportunityType !== "festivals"}
               withAsterisk={opportunityType !== "jobs"}
               {...form.getInputProps("end_date")}
@@ -837,7 +846,7 @@ export function OpportunityForm({
                   console.log(form.isValid("job_type"));
                   console.log(form.isValid("competition_category"));
                   console.log(form.isValid("address"));
-                  console.log("fee: ", form.isValid("fee"));
+                  console.log(form.isValid("fee"));
 
                   console.log(displayLocationError);
                   console.log(displayDateRangeError);

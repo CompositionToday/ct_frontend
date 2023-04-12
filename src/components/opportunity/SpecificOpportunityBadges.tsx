@@ -63,7 +63,7 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
-        <Tooltip label="Deadline">
+        <Tooltip label="Application Deadline">
           <Badge
             leftSection={
               <IconAlarm
