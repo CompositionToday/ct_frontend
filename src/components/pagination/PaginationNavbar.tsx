@@ -91,10 +91,12 @@ export function PaginationNavbar({
         let responseCount = await fetch(countUrl);
 
         let responseCountJson = await responseCount.json();
+        console.log("number of posts count", responseCountJson.count);
         let numberOfPage = Math.ceil(
           responseCountJson.count / numberOfItemsPerPage
         );
         setPageCount(numberOfPage);
+        console.log("number of pages", numberOfPage);
         setTimeout(() => {
           setLoading(false);
         }, timeOut);

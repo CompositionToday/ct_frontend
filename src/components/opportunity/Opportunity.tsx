@@ -596,7 +596,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
 
   const isExpired = (endDate: string | number | Date, title?: string) => {
     let currDate = new Date();
-    return endDate <= currDate.valueOf();
+    return (endDate.valueOf() as number) <= currDate.valueOf();
   };
 
   return (

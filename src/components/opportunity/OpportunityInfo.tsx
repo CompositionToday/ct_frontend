@@ -134,15 +134,7 @@ OpportunityInfoProp) {
 
   const isExpired = (endDate: string | number | Date, title?: string) => {
     let currDate = new Date();
-    // console.log(title, "currDate", currDate.valueOf(), "endDate", endDate);
-    console.log(
-      title,
-      "currDate aka",
-      currDate,
-      "endDate aka",
-      new Date(endDate)
-    );
-    return endDate <= currDate.valueOf();
+    return (endDate.valueOf() as number) <= currDate.valueOf();
   };
 
   return (
