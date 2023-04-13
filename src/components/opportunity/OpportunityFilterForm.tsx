@@ -105,6 +105,10 @@ export function OpportunityFilterForm({
         placeholder={`Select competition category`}
         searchable
         data={[
+          {
+            value: "Multiple Categories",
+            label: "Multiple Categories",
+          },
           { value: "All Woodwind", label: "All Woodwind", group: "Woodwind" },
           { value: "Flute", label: "Flute", group: "Woodwind" },
           { value: "Folk Flute", label: "Folk Flute", group: "Woodwind" },

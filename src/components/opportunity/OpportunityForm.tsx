@@ -620,6 +620,10 @@ export function OpportunityForm({
               searchable
               data={[
                 {
+                  value: "Multiple Categories",
+                  label: "Multiple Categories",
+                },
+                {
                   value: "All Woodwind",
                   label: "All Woodwind",
                   group: "Woodwind",
