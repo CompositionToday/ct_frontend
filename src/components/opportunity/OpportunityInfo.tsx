@@ -132,7 +132,7 @@ OpportunityInfoProp) {
     );
   }
 
-  const isExpired = (endDate: string | number | Date, title?: string) => {
+  const isExpired = (endDate: string | number | Date) => {
     let currDate = new Date();
     return (endDate.valueOf() as number) <= currDate.valueOf();
   };
@@ -315,7 +315,7 @@ OpportunityInfoProp) {
         </Badge>
       ) : null}
       {opportunity.end_date &&
-      isExpired(opportunity.end_date, opportunity.title) &&
+      isExpired(opportunity.end_date) &&
       apiEndpoint.includes("posts") ? (
         <Badge sx={{ margin: "15px 5px 3px 0px" }} color="orange">
           Expired
