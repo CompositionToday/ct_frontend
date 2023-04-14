@@ -93,20 +93,20 @@ export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
 
     return (
       <div>
-        <AnimateIn>
-          <Group noWrap spacing={60} mt={100} className={classes.members}>
-            <Image src={String(photo)} radius="md" className={classes.image} />
-            <div>
-              <Text weight={500} className={classes.name} mb="xl">
-                {member.name}
-              </Text>
+        {/* <AnimateIn> */}
+        <Group noWrap spacing={60} mt={100} className={classes.members}>
+          <Image src={String(photo)} radius="md" className={classes.image} />
+          <div>
+            <Text weight={500} className={classes.name} mb="xl">
+              {member.name}
+            </Text>
 
-              <Text weight={500} className={classes.role} color="dimmed">
-                {member.role}
-              </Text>
-            </div>
-          </Group>
-        </AnimateIn>
+            <Text weight={500} className={classes.role} color="dimmed">
+              {member.role}
+            </Text>
+          </div>
+        </Group>
+        {/* </AnimateIn> */}
       </div>
     );
   });
