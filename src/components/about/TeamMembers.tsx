@@ -1,4 +1,5 @@
 import { AnimateIn } from "../animations/AnimateOnScroll";
+import {Teeter} from "../animations/AnimateOnHover";
 
 import {
   createStyles,
@@ -112,8 +113,12 @@ export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
 
     return (
       <div>
-        <Group noWrap spacing={60} mt={100} className={classes.members}>
-          <Image src={String(photo)} radius="md" className={classes.image} />
+        <Group noWrap spacing={30} mt={100} className={classes.members}>
+
+          <Teeter rotation={15} timing={120}>
+            <Image src={String(photo)} radius="xl" className={classes.image} />
+          </Teeter>
+
           <div>
             <Text weight={500} className={classes.name} mb="xl">
               {member.name}
