@@ -1,4 +1,5 @@
 import { AnimateIn } from "../animations/AnimateOnScroll";
+import { Teeter } from "../animations/AnimateOnHover";
 
 import {
   createStyles,
@@ -183,7 +184,11 @@ export function Features() {
         onClick={() => navigate(feature.link)}
       >
         <Container className={classes.featureCards}>
-          <Image src={String(feature.icon)} className={classes.image} />
+
+          <Teeter rotation={10} timing={120}>
+            <Image src={String(feature.icon)} className={classes.image} />
+          </Teeter>
+
           <Text className={classes.cardTitle} mt="md">
             {feature.title}
           </Text>
