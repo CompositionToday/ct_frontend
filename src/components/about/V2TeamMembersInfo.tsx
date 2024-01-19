@@ -1,4 +1,4 @@
-export const teamMemberInfo = {
+export const V2TeamMembersInfo = {
   teamMembers: [
     {
       avatar: "kiersten",
