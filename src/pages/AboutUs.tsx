@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { NavBar } from "../components/navigation/NavBar";
 import { navItems } from "../components/navigation/NavItems";
+import { AnimateIn } from "../components/animations/AnimateOnScroll";
 
 // Team Members Info for each SD Team
 // V2: Fall 2022 - Spring 2023
@@ -79,6 +80,12 @@ const useStyles = createStyles((theme) => ({
     color: "#40C057",
   },
 
+  tabLabel: {
+    fontSize:16,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontWeight: 600,
+  },
+
   image: {
     paddingTop: 8,
     maxWidth: 70,
@@ -93,6 +100,8 @@ const useStyles = createStyles((theme) => ({
     marginTop: 120,
   },
 }));
+
+
 
 export function About() {
   const { classes } = useStyles();
@@ -140,38 +149,31 @@ export function About() {
               project.
             </Text>
 
-            {/*<Menu.Dropdown>*/}
+            <p></p>
 
-            {/*  <Menu.Item*/}
-            {/*  >*/}
-            {/*    V2*/}
-            {/*    <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers} />*/}
-            {/*  </Menu.Item>*/}
-            {/*</Menu.Dropdown>*/}
+            <Tabs variant ="pills" radius="md" aria-label="Senior Design Teams" defaultValue="V2">
+              <Tabs.List grow>
 
-            {/*<Tabs aria-label="Senior Design Teams">*/}
-            {/*  /!*<Tab></Tab>*!/*/}
-            {/*  <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers} />*/}
-            {/*</Tabs>*/}
-
-            <Tabs aria-label="Senior Design Teams">
-              <Tabs.List>
-
-                <Tabs.Tab value="V2">
-                  V2
+                <Tabs.Tab value="V2" className={classes.tabLabel}>
+                  CompositionToday V2 (2022-2023)
                 </Tabs.Tab>
 
-                <Tabs.Tab value="V3">
-                  V3
+                <Tabs.Tab value="V3" className={classes.tabLabel}>
+                  CompositionToday V3 (2023-2024)
                 </Tabs.Tab>
 
-                <Tabs.Panel value="V2">
-                  <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers}/>
-                </Tabs.Panel>
+                  <Tabs.Panel value="V2">
+                    <AnimateIn>
+                      <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers}/>
+                    </AnimateIn>
+                  </Tabs.Panel>
 
-                <Tabs.Panel value="V3">
-                  <TeamMembers teamMembers={V3TeamMembersInfo.teamMembers}/>
-                </Tabs.Panel>
+                  <Tabs.Panel value="V3">
+                    <AnimateIn>
+                      <TeamMembers teamMembers={V3TeamMembersInfo.teamMembers}/>
+                    </AnimateIn>
+                  </Tabs.Panel>
+
 
 
               </Tabs.List>

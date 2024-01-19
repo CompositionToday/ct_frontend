@@ -112,7 +112,6 @@ export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
 
     return (
       <div>
-        {/* <AnimateIn> */}
         <Group noWrap spacing={60} mt={100} className={classes.members}>
           <Image src={String(photo)} radius="md" className={classes.image} />
           <div>
@@ -125,7 +124,6 @@ export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
             </Text>
           </div>
         </Group>
-        {/* </AnimateIn> */}
       </div>
     );
   });
