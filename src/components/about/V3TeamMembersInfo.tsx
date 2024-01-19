@@ -1,29 +1,29 @@
 export const V3TeamMembersInfo = {
     teamMembers: [
         {
-            avatar: "kiersten",
-            name: "Test",
-            role: "Test",
+            avatar: "michaelV3",
+            name: "Michael Ritcher",
+            role: "Michael was the Project Manager and a Lead Content Curator for the project.",
         },
         {
-            avatar: "joseph",
-            name: "Joseph Yim",
-            role: "Joseph was the Lead Front-End Developer for the project.",
+            avatar: "johnV3",
+            name: "John Pacheco",
+            role: "John was the Lead Front-End Developer and worked on SEO for the project.",
         },
         {
-            avatar: "ragen",
-            name: "Ragen Holybee",
-            role: "Ragen was the Project Manager and a Back-End Developer for the project.",
+            avatar: "justinV3",
+            name: "Justin Gonzalez",
+            role: "Justin was the Lead API Developer and Database Manager for the project",
         },
         {
-            avatar: "amber",
-            name: "Amber Hoekstra",
-            role: "Amber was the Content Coordinator and a Back-End Developer for the project.",
+            avatar: "treyV3",
+            name: "Trey Zaccour",
+            role: "Trey was the Lead Mobile Application Developer for the project.",
         },
         {
-            avatar: "justin",
-            name: "Justin King",
-            role: "Justin was the UX Lead and a Front-End Developer for the project.",
+            avatar: "valentinoV3",
+            name: "Valentino Rozzi",
+            role: "Valentino was the Head SEO Specialist for the project",
         },
     ],
 };

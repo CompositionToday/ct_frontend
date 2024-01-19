@@ -68,27 +68,46 @@ interface UserInfoIconsProps {
   }[];
 }
 
-const kiersten = require("../../images/Kiersten.png");
-const joseph = require("../../images/Joseph.png");
-const ragen = require("../../images/Ragen.png");
-const amber = require("../../images/Amber.png");
-const justin = require("../../images/Justin.png");
+// CompositionToday V2 Team Members
+const kierstenV2 = require("../../images/KierstenV2.png");
+const josephV2 = require("../../images/JosephV2.png");
+const ragenV2 = require("../../images/RagenV2.png");
+const amberV2 = require("../../images/AmberV2.png");
+const justinV2 = require("../../images/JustinV2.png");
+
+// CompositionToday V3 Team Members
+const johnV3 = require("../../images/JohnV3.png");
+const michaelV3 = require("../../images/MichaelV3.png");
+const justinV3 = require("../../images/JustinV3.png");
+const treyV3 = require("../../images/TreyV3.png");
+const valentinoV3 = require("../../images/ValentinoV3.png");
 
 export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
   const { classes } = useStyles();
 
   const team = teamMembers.map((member) => {
-    let photo = kiersten;
-    if (member.avatar === "kiersten") {
-      photo = kiersten;
-    } else if (member.avatar === "joseph") {
-      photo = joseph;
-    } else if (member.avatar === "ragen") {
-      photo = ragen;
-    } else if (member.avatar === "amber") {
-      photo = amber;
-    } else if (member.avatar === "justin") {
-      photo = justin;
+    let photo = kierstenV2;
+
+    if (member.avatar === "kierstenV2") {
+      photo = kierstenV2;
+    } else if (member.avatar === "josephV2") {
+      photo = josephV2;
+    } else if (member.avatar === "ragenV2") {
+      photo = ragenV2;
+    } else if (member.avatar === "amberV2") {
+      photo = amberV2;
+    } else if (member.avatar === "justinV2") {
+      photo = justinV2;
+    } else if (member.avatar === "michaelV3") {
+      photo = michaelV3;
+    } else if (member.avatar === "johnV3") {
+      photo = johnV3;
+    } else if (member.avatar === "treyV3") {
+      photo = treyV3;
+    } else if (member.avatar === "justinV3") {
+      photo = justinV3;
+    } else if (member.avatar === "valentinoV3") {
+      photo = valentinoV3;
     }
 
     return (

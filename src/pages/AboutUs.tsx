@@ -16,7 +16,7 @@ import {
   Title,
   Text,
   Image,
-  Group, Tabs,
+  Group, Tabs, Menu,
 } from "@mantine/core";
 
 
@@ -140,8 +140,41 @@ export function About() {
               project.
             </Text>
 
+            {/*<Menu.Dropdown>*/}
+
+            {/*  <Menu.Item*/}
+            {/*  >*/}
+            {/*    V2*/}
+            {/*    <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers} />*/}
+            {/*  </Menu.Item>*/}
+            {/*</Menu.Dropdown>*/}
+
+            {/*<Tabs aria-label="Senior Design Teams">*/}
+            {/*  /!*<Tab></Tab>*!/*/}
+            {/*  <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers} />*/}
+            {/*</Tabs>*/}
+
             <Tabs aria-label="Senior Design Teams">
-              <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers} />
+              <Tabs.List>
+
+                <Tabs.Tab value="V2">
+                  V2
+                </Tabs.Tab>
+
+                <Tabs.Tab value="V3">
+                  V3
+                </Tabs.Tab>
+
+                <Tabs.Panel value="V2">
+                  <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers}/>
+                </Tabs.Panel>
+
+                <Tabs.Panel value="V3">
+                  <TeamMembers teamMembers={V3TeamMembersInfo.teamMembers}/>
+                </Tabs.Panel>
+
+
+              </Tabs.List>
             </Tabs>
 
           </div>
