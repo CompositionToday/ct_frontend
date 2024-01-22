@@ -15,8 +15,6 @@ const jobIcon = require("../../images/JobIcon.png");
 const ticketIcon = require("../../images/TicketIcon.png");
 const trophyIcon = require("../../images/TrophyIcon.png");
 const instrumentIcon = require("../../images/InstrumentIcon.png");
-const BlogIcon = require("../../images/BlogIcon.png");
-const NewsIcon = require("../../images/NewsIcon.png");
 
 const mockdata = [
   {
@@ -37,21 +35,6 @@ const mockdata = [
   {
     link: "/concerts",
     title: "Concerts",
-    icon: instrumentIcon,
-  },
-  {
-    link: "/news",
-    title: "News",
-    icon: NewsIcon,
-  },
-  {
-    link: "/blog",
-    title: "Blog",
-    icon: BlogIcon,
-  },
-  {
-    link: "/competitions",
-    title: "Compositions",
     icon: instrumentIcon,
   },
 ];
@@ -197,20 +180,16 @@ export function Features() {
       style={{ paddingTop: 100, paddingBottom: 100 }}
       className={classes.container}
     >
-
-      {/*Button List of all the Tabs on the Homepage*/}
       <AnimateIn>
         <Title order={2} className={classes.title} align="center" mt="xl">
-          Explore Opportunities and Events on <br />{" "}
+          Explore Opportunities on <br />{" "}
           <span style={{ color: "#90CAF9" }}>Composition Today</span>
         </Title>
       </AnimateIn>
-
-      {/*4x1 Row of the Buttons for each category*/}
       <AnimateIn>
         <Container mb="xl" className={classes.featureContainer}>
           <SimpleGrid
-            cols={7}
+            cols={4}
             mt={50}
             className={classes.grid}
             breakpoints={[{ maxWidth: "md", cols: 2 }]}
@@ -219,7 +198,6 @@ export function Features() {
           </SimpleGrid>
         </Container>
       </AnimateIn>
-
     </Container>
   );
 }

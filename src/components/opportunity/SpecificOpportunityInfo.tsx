@@ -12,7 +12,7 @@ import {
   IconCurrencyDollar,
   IconAlarm,
 } from "@tabler/icons";
-import { Flex, Tooltip } from "@mantine/core";
+import { Badge, Flex, Tooltip } from "@mantine/core";
 import { useEffect } from "react";
 
 interface SpecificOpportunityInfoProp {
@@ -295,6 +295,60 @@ export const SpecificOpportunityInfo = ({
             </span>
           </Flex>
         </Tooltip>
+      </Flex>
+    );
+  }
+  if (opportunityType === "composition") {
+    return (
+      <Flex direction="column" align="flex-start">
+        {opportunity?.title && (
+          <Tooltip label="Title" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconMapPin size={30} color="#40C057" />
+              <Badge
+                style={{
+                  display: "inline",
+                  fontSize: "17px",
+                  margin: "0px 0px 0px 10px",
+                }}
+              >
+                {opportunity?.title}
+              </Badge>
+            </Flex>
+          </Tooltip>
+        )}
+        {opportunity?.genre && (
+          <Tooltip label="Genre" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconMap2 size={30} color="#40C057" style={{ flexShrink: 0 }} />
+              <span
+                style={{
+                  fontSize: "17px",
+                  marginLeft: "10px",
+                  width: "90%",
+                }}
+              >
+                {opportunity?.genre}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
+        {opportunity?.link && (
+          <Tooltip label="Link" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconMap2 size={30} color="#40C057" style={{ flexShrink: 0 }} />
+              <span
+                style={{
+                  fontSize: "17px",
+                  marginLeft: "10px",
+                  width: "90%",
+                }}
+              >
+                {opportunity?.link}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
       </Flex>
     );
   }

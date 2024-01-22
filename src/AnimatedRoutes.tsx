@@ -16,9 +16,7 @@ import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
 import { AnimatePresence } from "framer-motion";
 import { VerifyEmail } from "./pages/VerifyEmail";
-
-import { News } from "./pages/News";
-import { Blog } from "./pages/Blog";
+import { Compositions } from "./pages/Compositions";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -34,16 +32,13 @@ export default function AnimatedRoutes() {
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/festivals" element={<Festivals />} />
         <Route path="/concerts" element={<Concerts />} />
+        <Route path="/compositions" element={<Compositions />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/create-opportunity" element={<CreateOpportunityPage />} />
         <Route path="/admin/recent-posts" element={<RecentPosts />} />
         <Route path="/my-posts" element={<MyPosts />} />
         <Route path="/banned" element={<BannedUser />} />
         <Route path="/verify" element={<VerifyEmail />} />
-
-        <Route path="/news" element={<News />} />
-        <Route path="/blog" element={<Blog />} />
-
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
