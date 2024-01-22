@@ -16,7 +16,7 @@ import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
 import { AnimatePresence } from "framer-motion";
 import { VerifyEmail } from "./pages/VerifyEmail";
-
+import { Reported } from "./pages/adminView/Reported";
 import { News } from "./pages/News";
 import { Blog } from "./pages/Blog";
 
@@ -33,6 +33,7 @@ export default function AnimatedRoutes() {
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/festivals" element={<Festivals />} />
+        <Route path="/admin/reported" element={<Reported />} />
         <Route path="/concerts" element={<Concerts />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/create-opportunity" element={<CreateOpportunityPage />} />
