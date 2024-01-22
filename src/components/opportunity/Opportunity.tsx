@@ -96,9 +96,8 @@ const useStyles = createStyles((theme) => ({
 
 export function Opportunity({ apiEndpoint }: OpportunityProp) {
   const { classes } = useStyles();
-  // Get the opportunity type by splitting the type from the current URL
+
   const opportunityType = useLocation().pathname.slice(1);
-  // Get the current opportunity
   const [currentOpportunity, setCurrentOpportunity] =
     useState<OpportunityItem | null>(null);
   const [displayOpportunityArray, setDisplayOpportunityArray] = useState<
@@ -488,7 +487,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     !!searchObj.job_category ||
     !!searchObj.job_type ||
     !!searchObj.type ||
-    !!searchObj.genre ||
     !!searchObj.is_banned ||
     !!searchObj.is_deleted ||
     !!searchObj.is_expired ||
@@ -550,8 +548,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     } else if (
       opportunityType === "competitions" ||
       opportunityType === "festivals" ||
-      opportunityType === "concerts" ||
-      opportunityType === "compositions"
+      opportunityType === "concerts"
     ) {
       setSearchObj({ ...searchObj, sort: "0" });
     }
@@ -598,7 +595,6 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   ));
 
   const isExpired = (endDate: string | number | Date) => {
-    if (opportunityType === "compositions") return false;
     let currDate = new Date();
     return (endDate.valueOf() as number) <= currDate.valueOf();
   };

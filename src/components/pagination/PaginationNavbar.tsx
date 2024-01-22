@@ -54,9 +54,6 @@ export interface PaginationSearchObject {
   fee?: string | number;
   sort?: string | number;
   deadline?: Date | string | number;
-  genre?: string;
-  hasbeenfeatured?: boolean;
-  likecount?: number;
 }
 
 export function PaginationNavbar({

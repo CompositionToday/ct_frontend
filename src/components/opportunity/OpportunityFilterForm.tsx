@@ -19,21 +19,19 @@ export interface OpportunityFilterFormProp {
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
-// For filtering
+
 export function OpportunityFilterForm({
   searchObj,
   setSearchObj,
   keyword,
   setKeyword,
 }: OpportunityFilterFormProp) {
-  // Declaration of the various search parameters
   const [city, setCity] = useState(searchObj.city ? searchObj.city : "");
   const [state, setState] = useState(searchObj.state ? searchObj.state : "");
   const [dateRange, setDateRange] = useState<DateRangePickerValue>([
     searchObj.start_date ? new Date(searchObj.start_date) : null,
     searchObj.end_date ? new Date(searchObj.end_date) : null,
   ]);
-  // Create a temporary obj to use for the search
   const [tempSearchObj, setTempSearchObj] = useState<PaginationSearchObject>({
     keyword: keyword ? keyword : "",
     salary: searchObj.salary,

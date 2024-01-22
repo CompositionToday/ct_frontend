@@ -16,7 +16,7 @@ import { useMediaQuery } from "@mantine/hooks";
 export function CreateOpportunity() {
   const [opportunityType, setOpportunityType] = useState("Jobs");
   const [displaySuccessModal, setDisplaySuccessModal] = useState(false);
-  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday"; //const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const navigate = useNavigate();
 
   const handleOpportunityTypeChange = (e: string) => {
@@ -25,16 +25,11 @@ export function CreateOpportunity() {
 
   const handleSubmission = async (opportunity: OpportunityItem) => {
     try {
-      console.log("handling submission");
-      if (opportunityType !== "compositions")
-        opportunity.end_date = opportunity.end_date?.toString();
-      if (opportunityType !== "compositions")
-        opportunity.start_date = opportunity.start_date?.toString();
+      opportunity.end_date = opportunity.end_date?.toString();
+      opportunity.start_date = opportunity.start_date?.toString();
       opportunity.date_posted = opportunity.date_posted?.toString();
-      if (opportunityType !== "compositions")
-        opportunity.start_time = opportunity.start_time?.toString();
-      if (opportunityType !== "compositions")
-        opportunity.deadline = opportunity.deadline?.toString();
+      opportunity.start_time = opportunity.start_time?.toString();
+      opportunity.deadline = opportunity.deadline?.toString();
 
       console.log("create post body:", opportunity);
       let requestOptions = {
@@ -91,7 +86,7 @@ export function CreateOpportunity() {
         placeholder="Select opportunity type"
         value={opportunityType.substring(0, opportunityType.length - 1)}
         onChange={handleOpportunityTypeChange}
-        data={["Job", "Competition", "Festival", "Concert", "Composition"]}
+        data={["Job", "Competition", "Festival", "Concert"]}
         sx={{ marginBottom: "25px" }}
       />
       <OpportunityForm
@@ -107,12 +102,12 @@ export function CreateOpportunity() {
       >
         <FormHeader>Post Created!</FormHeader>
         <p>
-          Your post has successfully been created! What would you like to do
-          next?
+          Your opportunity has successfully been created! What would you like to
+          do next?
         </p>
         <Flex justify="flex-end" gap={20} wrap="wrap">
           <Button onClick={() => window.location.reload()}>
-            Make another post
+            Make another opportunity
           </Button>
           <Button onClick={() => navigate("/")}>Go to the home page</Button>
         </Flex>

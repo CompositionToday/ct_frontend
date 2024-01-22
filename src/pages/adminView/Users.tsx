@@ -14,7 +14,7 @@ const greenTriangle = require("../../images/GreenTriangle.png");
 const blueTriangle = require("../../images/BlueTriangle.png");
 
 export function Users() {
-  const url = "http://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const navigate = useNavigate();
 
   useEffect(() => {

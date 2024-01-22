@@ -26,6 +26,8 @@ import { useState } from "react";
 import { LoadingOverlay } from "@mantine/core";
 import AnimatedRoutes from "./AnimatedRoutes";
 
+import { BrowserRouter } from "react-router-dom";
+
 export default function App() {
   const [loading, setLoading] = useState(true);
   setTimeout(() => {
@@ -38,6 +40,8 @@ export default function App() {
         onClose={() => console.log("closing page load modal")}
         fullScreen
       >
+
+        {/* This is the loading screen when the website is first loaded */}
         <LoadingOverlay
           visible={loading}
           overlayOpacity={1}
@@ -47,13 +51,21 @@ export default function App() {
           zIndex={2}
         />
       </Modal>
+
       <MantineProvider>
         <ModalsProvider>
           <NotificationsProvider>
             <HashRouter>
+
+                {/* This is the Navbar at the top of every Page*/}
               <NavBar links={navItems.links} />
+
+                {/*This is the Container with all the event Listings*/}
               <AnimatedRoutes />
+
+                {/*This is the footer at the bottom of the Webpage */}
               <Footer data={footerInfo.data} />
+
             </HashRouter>
           </NotificationsProvider>
         </ModalsProvider>
