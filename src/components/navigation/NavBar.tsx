@@ -380,6 +380,18 @@ export function NavBar({ links }: HeaderActionProps) {
             >
               Manage Users
             </Menu.Item>
+            
+            <Menu.Item
+              className={cx(classes.menuLink, {
+                [classes.linkActive]: active === "/admin/reported",
+              })}
+              onClick={() => {
+                navigate("/admin/reported");
+              }}
+            >
+              Reported
+            </Menu.Item>
+            
             <Menu.Item
               className={cx(classes.menuLink, {
                 [classes.linkActive]: active === "/admin/recent-posts",
