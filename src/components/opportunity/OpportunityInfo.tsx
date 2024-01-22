@@ -66,7 +66,6 @@ OpportunityInfoProp) {
   );
 
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
-
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -366,7 +365,7 @@ OpportunityInfoProp) {
         >
           {opportunityType === "competitions" || opportunityType === "jobs"
             ? "Apply"
-            : "More Info"}
+            : "Link"}
         </Button>
       </a>
       <DescriptionContainer>
