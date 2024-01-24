@@ -15,8 +15,9 @@ const jobIcon = require("../../images/JobIcon.png");
 const ticketIcon = require("../../images/TicketIcon.png");
 const trophyIcon = require("../../images/TrophyIcon.png");
 const instrumentIcon = require("../../images/InstrumentIcon.png");
-const BlogIcon = require("../../images/BlogIcon.png");
-const NewsIcon = require("../../images/NewsIcon.png");
+const compositionsIcon = require("../../images/CompositionsIcon.png");
+const blogIcon = require("../../images/BlogIcon.png");
+const newsIcon = require("../../images/NewsIcon.png");
 
 const mockdata = [
   {
@@ -42,17 +43,17 @@ const mockdata = [
   {
     link: "/news",
     title: "News",
-    icon: NewsIcon,
+    icon: newsIcon,
   },
   {
     link: "/blog",
     title: "Blog",
-    icon: BlogIcon,
+    icon: blogIcon,
   },
   {
     link: "/competitions",
     title: "Compositions",
-    icon: instrumentIcon,
+    icon: compositionsIcon,
   },
 ];
 
