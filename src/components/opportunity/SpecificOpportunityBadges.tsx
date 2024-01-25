@@ -95,7 +95,7 @@ export const SpecificOpportunityBadges = ({
           >
             {opportunity?.fee
               ? parseFloat(opportunity?.fee as string).toFixed(2)
-              : "Free"}
+              : "N/A"}
           </Badge>
         </Tooltip>
       </>
@@ -315,7 +315,7 @@ export const SpecificOpportunityBadges = ({
           >
             {opportunity?.fee
               ? parseFloat(opportunity?.fee as string).toFixed(2)
-              : "Free"}
+              : "N/A"}
           </Badge>
         </Tooltip>
       </>
