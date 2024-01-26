@@ -52,7 +52,9 @@ export default function App() {
         />
       </Modal>
 
-      <MantineProvider>
+      <MantineProvider theme={{
+          colorScheme: 'dark',
+      }} withGlobalStyles withNormalizeCSS>
         <ModalsProvider>
           <NotificationsProvider>
             <HashRouter>

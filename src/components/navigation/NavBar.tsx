@@ -14,6 +14,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { IconUserCircle } from "@tabler/icons";
 import { useMediaQuery } from "@mantine/hooks";
+import { useMantineTheme } from '@mantine/core';
 
 const musicNoteIcon = require("../../images/MusicNote.png");
 
@@ -86,7 +87,11 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    color: "#454545",
+  color:
+      theme.colorScheme === "dark"
+          ? theme.colors.gray[0]
+          : "#454545",
+    // color: "#454545",
     fontSize: 18,
     textDecoration: "none",
     fontWeight: 600,
@@ -95,6 +100,10 @@ const useStyles = createStyles((theme) => ({
       fontSize: 14,
     },
   },
+
+  // button: {
+  //     color:theme.colorScheme === "dark" ? theme.colors.gray[0] : "#454545"
+  // },
 
   grayText: {
     color: "#454545",
@@ -156,6 +165,7 @@ export function NavBar({ links }: HeaderActionProps) {
   const [userAdmin, setUserAdmin] = useState(false);
 
   const [active, setActive] = useState("/");
+  const theme = useMantineTheme();
 
   const items = links.map((link) => {
     return (
@@ -431,7 +441,9 @@ export function NavBar({ links }: HeaderActionProps) {
               sx={{ height: 30 }}
               size="md"
               leftIcon={<IconUserCircle />}
-              color="gray.7"
+              color={theme.colorScheme === "dark" ? 'dark.0' : 'gray.7'}
+              className = "hiName"
+
             >
               Hi, {userFirstName}
             </Button>
