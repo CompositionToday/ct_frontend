@@ -10,6 +10,7 @@ import {
   IconAlarm,
 } from "@tabler/icons";
 import { Tooltip, Badge } from "@mantine/core";
+import { Opportunity } from "./Opportunity";
 
 interface SpecificOpportunityInfoProp {
   opportunity: OpportunityItem;
@@ -344,7 +345,7 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
-        {opportunity?.link && (
+        {/* {opportunity?.link && (
           <Tooltip label="Link">
             <Badge
               leftSection={
@@ -360,9 +361,9 @@ export const SpecificOpportunityBadges = ({
               {opportunity?.link}
             </Badge>
           </Tooltip>
-        )}
+        )} */}
         {/* {opportunity?.likecount && (
-          <Tooltip label="LikeCount">
+          <Tooltip label="Like Count">
             <Badge
               leftSection={
                 <IconCategory
@@ -374,7 +375,9 @@ export const SpecificOpportunityBadges = ({
               color="gray"
               sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
             >
-              {opportunity?.likecount}
+              {opportunity?.likecount != "0"
+                ? "Likes: " + opportunity?.likecount
+                : null}
             </Badge>
           </Tooltip>
         )} */}

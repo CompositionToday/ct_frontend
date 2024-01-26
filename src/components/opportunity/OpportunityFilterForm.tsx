@@ -229,6 +229,129 @@ export function OpportunityFilterForm({
             : ""
         }
       />
+      <DropdownCategory
+        label="Genre"
+        placeholder={`Select Genre`}
+        searchable
+        data={[
+          {
+            value: "Multiple Categories",
+            label: "Multiple Categories",
+          },
+          { value: "All Woodwind", label: "All Woodwind", group: "Woodwind" },
+          { value: "Flute", label: "Flute", group: "Woodwind" },
+          { value: "Folk Flute", label: "Folk Flute", group: "Woodwind" },
+          { value: "Oboe", label: "Oboe", group: "Woodwind" },
+          { value: "Clarinet", label: "Clarinet", group: "Woodwind" },
+          { value: "Bassoon", label: "Bassoon", group: "Woodwind" },
+          { value: "Saxophone", label: "Saxophone", group: "Woodwind" },
+          { value: "Recorder", label: "Recorder", group: "Woodwind" },
+          {
+            value: "Other Woodwind",
+            label: "Other Woodwind",
+            group: "Woodwind",
+          },
+
+          { value: "All Brass", label: "All Brass", group: "Brass" },
+          { value: "French Horn", label: "French Horn", group: "Brass" },
+          { value: "Trumpet", label: "Trumpet", group: "Brass" },
+          { value: "Trombone", label: "Trombone", group: "Brass" },
+          { value: "Tuba", label: "Tuba", group: "Brass" },
+          { value: "Euphonium", label: "Euphonium", group: "Brass" },
+          { value: "Other Brass", label: "Other Brass", group: "Brass" },
+
+          { value: "All Strings", label: "All Strings", group: "Strings" },
+          { value: "Violin", label: "Violin", group: "Strings" },
+          { value: "Folk Fiddle", label: "Folk Fiddle", group: "Strings" },
+          { value: "Viola", label: "Viola", group: "Strings" },
+          { value: "Cello", label: "Cello", group: "Strings" },
+          { value: "Double Bass", label: "Double Bass", group: "Strings" },
+          { value: "Harp", label: "Harp", group: "Strings" },
+          { value: "Guitar", label: "Guitar", group: "Strings" },
+          { value: "Early Guitar", label: "Early Guitar", group: "Strings" },
+          { value: "Lute", label: "Lute", group: "Strings" },
+          { value: "Theorbo", label: "Theorbo", group: "Strings" },
+          { value: "Other Strings", label: "Other Strings", group: "Strings" },
+
+          { value: "All Keyboard", label: "All Keyboard", group: "Keyboard" },
+          { value: "Piano", label: "Piano", group: "Keyboard" },
+          {
+            value: "Piano Accompaniment",
+            label: "Piano Accompaniment",
+            group: "Keyboard",
+          },
+          { value: "Organ", label: "Organ", group: "Keyboard" },
+          { value: "Harpsichord", label: "Harpsichord", group: "Keyboard" },
+          { value: "Accordian", label: "Accordian", group: "Keyboard" },
+          {
+            value: "Other Keyboard",
+            label: "Other Keyboard",
+            group: "Keyboard",
+          },
+
+          { value: "Percussion", label: "Percussion", group: "Percussion" },
+          { value: "Voice", label: "Voice", group: "Voice" },
+          {
+            value: "All Chamber",
+            label: "All Chamber",
+            group: "Chamber Music",
+          },
+          {
+            value: "Strings Chamber",
+            label: "Strings Chamber",
+            group: "Chamber Music",
+          },
+          {
+            value: "Woodwind Chamber",
+            label: "Woodwind Chamber",
+            group: "Chamber Music",
+          },
+          {
+            value: "Brass Chamber",
+            label: "Brass Chamber",
+            group: "Chamber Music",
+          },
+          {
+            value: "Mixed Chamber Ensemble",
+            label: "Mixed Chamber Ensemble",
+            group: "Chamber Music",
+          },
+          {
+            value: "Vocal Ensemble",
+            label: "Vocal Ensemble",
+            group: "Chamber Music",
+          },
+          {
+            value: "Piano Duo",
+            label: "Piano Duo",
+            group: "Chamber Music",
+          },
+          {
+            value: "Other Chamber",
+            label: "Other Chamber",
+            group: "Chamber Music",
+          },
+
+          { value: "Conductor", label: "Conductor", group: "Music Direction" },
+          {
+            value: "Repetiteur",
+            label: "Repetiteur",
+            group: "Music Direction",
+          },
+          { value: "Composer", label: "Composer", group: "Composition" },
+          { value: "Arranger", label: "Arranger", group: "Composition" },
+        ]}
+        allowDeselect
+        clearable
+        display={opportunityType === "compositions"}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            genre: e ? e : "",
+          })
+        }
+        value={tempSearchObj.genre ? tempSearchObj.genre : ""}
+      />
       {/* <DropdownCategory
         label="Winners"
         placeholder={`Select`}
@@ -372,6 +495,7 @@ export function OpportunityFilterForm({
         display={
           opportunityType !== "competitions" &&
           opportunityType !== "admin/recent-posts" &&
+          opportunityType !== "compositions" &&
           opportunityType !== "my-posts"
         }
       />

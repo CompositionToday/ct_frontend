@@ -938,7 +938,7 @@ export function OpportunityForm({
                 { value: "Composer", label: "Composer", group: "Composition" },
                 { value: "Arranger", label: "Arranger", group: "Composition" },
               ]}
-              {...form.getInputProps("genre_category")}
+              {...form.getInputProps("genre")}
             />
             <EndDateInput
               placeholder="Submission Deadline"
