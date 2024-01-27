@@ -15,6 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { IconUserCircle } from "@tabler/icons";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMantineTheme } from '@mantine/core';
+import { ToggleThemeButton } from '../button/ToogleThemeButton'
 
 const musicNoteIcon = require("../../images/MusicNote.png");
 
@@ -310,7 +311,7 @@ export function NavBar({ links }: HeaderActionProps) {
           <DisplaySignedIn />
         ) : (
           <>
-            {/* <Menu.Label>Account</Menu.Label> */}
+             {/*<Menu.Label>Account</Menu.Label>*/}
             <Menu.Item
               className={cx(classes.menuLink, {
                 [classes.linkActive]: active === "/login",
@@ -321,6 +322,7 @@ export function NavBar({ links }: HeaderActionProps) {
             >
               Login
             </Menu.Item>
+
             <Menu.Item
               className={cx(classes.menuLink, {
                 [classes.linkActive]: active === "/register",
@@ -434,7 +436,10 @@ export function NavBar({ links }: HeaderActionProps) {
   const DisplayMenuButton: React.FC = () => {
     return signedIn ? (
       <Group>
-        <Menu shadow="md" width={150} withArrow>
+
+          <ToggleThemeButton/>
+
+          <Menu shadow="md" width={150} withArrow>
           <Menu.Target>
             <Button
               variant="subtle"
@@ -455,7 +460,10 @@ export function NavBar({ links }: HeaderActionProps) {
       </Group>
     ) : (
       <Group style={{ paddingRight: 25 }} className={classes.links}>
-        <Button
+
+          <ToggleThemeButton/>
+
+          <Button
           variant="subtle"
           sx={{ height: 30 }}
           size="md"
@@ -466,11 +474,12 @@ export function NavBar({ links }: HeaderActionProps) {
         >
           Login
         </Button>
+
         <Button
           radius="md"
           sx={{ height: 30 }}
           size="md"
-          // variant="gradient"
+          variant={theme.colorScheme==='dark'?'outline':'filled'}
           // gradient={{ from: 'green', to: 'blue', deg: 60 }}
           onClick={() => {
             navigate("/register");

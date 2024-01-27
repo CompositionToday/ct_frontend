@@ -9,12 +9,12 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-    <MantineProvider theme={{
-        colorScheme: 'dark'}}>
+    // <MantineProvider theme={{
+    //     colorScheme: 'dark'}}>
         <React.StrictMode>
                 <App />
         </React.StrictMode>
-    </MantineProvider>
+    // </MantineProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
