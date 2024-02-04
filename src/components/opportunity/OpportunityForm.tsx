@@ -458,8 +458,7 @@ export function OpportunityForm({
                 data={[
                   "Full-time",
                   "Part-time",
-                  "Contract",
-                  "Temporary",
+                  "Contract/Temporary",
                   "Volunteer",
                   "Internship",
                 ]}
