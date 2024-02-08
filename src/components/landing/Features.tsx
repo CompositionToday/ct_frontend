@@ -45,11 +45,11 @@ const mockdata = [
     title: "News",
     icon: newsIcon,
   },
-  {
-    link: "/blog",
-    title: "Blog",
-    icon: blogIcon,
-  },
+  // {
+  //   link: "/blog",
+  //   title: "Blog",
+  //   icon: blogIcon,
+  // },
   {
     link: "/competitions",
     title: "Compositions",
