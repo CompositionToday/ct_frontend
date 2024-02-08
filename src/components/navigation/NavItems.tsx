@@ -6,10 +6,10 @@ export const navItems = {
       label: "News",
     },
 
-    {
-      link: "/blog",
-      label: "Blog",
-    },
+    // {
+    //   link: "/blog",
+    //   label: "Blog",
+    // },
 
     {
       link: "/jobs",
