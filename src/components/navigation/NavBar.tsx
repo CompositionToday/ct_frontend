@@ -389,7 +389,7 @@ export function NavBar({ links }: HeaderActionProps) {
                 navigate("/admin/reported");
               }}
             >
-              Reported
+              Reported Posts
             </Menu.Item>
             
             <Menu.Item
@@ -401,6 +401,17 @@ export function NavBar({ links }: HeaderActionProps) {
               }}
             >
               Recent Posts
+            </Menu.Item>
+
+            <Menu.Item
+                className={cx(classes.menuLink, {
+                  [classes.linkActive]: active === "/admin/recent-posts",
+                })}
+                onClick={() => {
+                  navigate("/admin/create-blog-post");
+                }}
+            >
+              Create Blog Post
             </Menu.Item>
           </>
         )}

@@ -30,3 +30,4 @@ yarn-error.log*
 .idea/.name
 src/Firebase.ts
 src/Firebase.ts
+src/Firebase.ts

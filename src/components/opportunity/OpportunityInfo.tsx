@@ -364,9 +364,7 @@ OpportunityInfoProp) {
           size="md"
           rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
         >
-          {opportunityType === "competitions" || opportunityType === "jobs"
-            ? "Apply"
-            : "More Info"}
+          {opportunityType === "competitions" || opportunityType === "jobs" ? "Apply" : "More Info"}
         </Button>
       </a>
       <DescriptionContainer>

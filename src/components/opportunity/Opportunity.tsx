@@ -721,7 +721,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                             <Badge sx={{ margin: "15px 5px 3px 0px" }}>
                               {opportunity.type?.substring(
                                 0,
-                                opportunity.type?.length - 1
+                                opportunity.type?.length
                               )}
                             </Badge>
                           )}
