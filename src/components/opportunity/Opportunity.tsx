@@ -885,7 +885,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         fullScreen={smallerScreen}
         size="60%"
       >
-        <FormHeader>Edit Post</FormHeader>
+        <FormHeader>{opportunityType === 'blog' ? "Edit Blog Post" : "Edit Post"}</FormHeader>
         <OpportunityForm
           edit={true}
           opportunityType={

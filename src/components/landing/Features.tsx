@@ -45,11 +45,11 @@ const mockdata = [
     title: "News",
     icon: newsIcon,
   },
-  // {
-  //   link: "/blog",
-  //   title: "Blog",
-  //   icon: blogIcon,
-  // },
+  {
+    link: "/blog",
+    title: "Blog",
+    icon: blogIcon,
+  },
   {
     link: "/competitions",
     title: "Compositions",
@@ -87,8 +87,8 @@ const useStyles = createStyles((theme) => ({
 
   card: {
     borderRadius: "50%",
-    width: 225,
-    height: 225,
+    width: 200,
+    height: 200,
     border: `10px solid #228BE6`,
     borderStyle: "double",
 
@@ -105,7 +105,7 @@ const useStyles = createStyles((theme) => ({
 
   cardTitle: {
     width: "100%",
-    fontSize: 23,
+    fontSize: 18,
     fontWeight: 500,
     color: "#454545",
     textAlign: "center",

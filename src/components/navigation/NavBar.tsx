@@ -152,6 +152,7 @@ export function NavBar({ links }: HeaderActionProps) {
 
   const { classes, cx } = useStyles();
   const [signedIn, setSignedIn] = useState(false);
+
   const [userFirstName, setUserFirstName] = useState("Welcome");
   const [userAdmin, setUserAdmin] = useState(false);
 

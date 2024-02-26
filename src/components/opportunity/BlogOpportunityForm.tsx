@@ -73,6 +73,8 @@ export function BlogOpportunityForm({
   const [isFee, setIsFee] = useState(opportunity?.fee === 0);
   const medianScreen = useMediaQuery("(max-width: 992px)");
   const { classes } = useStyles();
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
+  const [authorName, setAuthorName] = useState("N/A");
 
   const getCurrentDate = (time = new Date().valueOf()) => {
     let tempDate: Date;
@@ -87,11 +89,13 @@ export function BlogOpportunityForm({
     return currentDate.valueOf();
   };
 
+
   function validateUrl(value: string) {
     return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(
       value
     );
   }
+
 
   const form = useForm({
     initialValues: {
@@ -117,6 +121,7 @@ export function BlogOpportunityForm({
     },
   });
 
+
   const essentialOpportunityKey = [
     "UID",
     "idposts",
@@ -135,9 +140,9 @@ export function BlogOpportunityForm({
   const concertOpportunityKey = ["address", "start_time"];
   const festivalOpportunityKey = ["start_date", "address", "fee", "deadline"];
 
-  // FIXME: When creating the request object, need to make sure that we use keyword
+
   // instead of explicitly using title and organization
-  const handleFormSubmission = (values: OpportunityItem) => {
+  const handleFormSubmission = async (values: OpportunityItem) => {
     console.log("these are the values: ", values);
     // if (
     //   opportunityType === "festivals" &&
@@ -161,15 +166,17 @@ export function BlogOpportunityForm({
       return;
     }
 
+
     if (
-      (opportunityType === "concerts" || opportunityType === "festivals") &&
-      (!city || !state)
+        (opportunityType === "concerts" || opportunityType === "festivals") &&
+        (!city || !state)
     ) {
       console.log(
-        "there is no location that was selected, now returning out of function"
+          "there is no location that was selected, now returning out of function"
       );
       return;
     }
+
 
     let opportunityKeys: string[] = [...essentialOpportunityKey];
     console.log("oppurtnuityKeys = " + opportunityKeys);
@@ -187,70 +194,39 @@ export function BlogOpportunityForm({
       } else if (typeof values[formattedKey] === "string") {
         let temp = values[formattedKey] as string;
         temp = temp.trim();
-        req = { ...req, [formattedKey]: temp };
+        req = {...req, [formattedKey]: temp};
       } else {
-        req = { ...req, [formattedKey]: values[formattedKey] };
+        req = {...req, [formattedKey]: values[formattedKey]};
       }
     }
 
-    // if (
-    //   opportunityType === "festivals" &&
-    //   dateRange &&
-    //   dateRange[0] &&
-    //   dateRange[1]
-    // ) {
-    //   req.start_date = getCurrentDate(dateRange[0].valueOf());
-    //   req.end_date = getCurrentDate(dateRange[1].valueOf());
-    //   req.deadline = getCurrentDate(
-    //     values.deadline instanceof Date ? values.deadline?.valueOf() : undefined
-    //   );
-    // }
-
-    // if (opportunityType === "jobs" && !req.end_date) {
-    //   const getSixMonthFromToday = () => {
-    //     let tempDate: number | Date = getCurrentDate();
-    //     tempDate = new Date(tempDate);
-    //     tempDate.setMonth(tempDate.getMonth() + 6);
-    //     return tempDate.valueOf();
-    //   };
-    //   req.end_date = getSixMonthFromToday();
-    //   console.log(
-    //     "getting 6 month from today",
-    //     req.end_date,
-    //     new Date(req.end_date)
-    //   );
-    // }
-
-    // else {
-    //   req.end_date = getCurrentDate(
-    //     values.end_date instanceof Date ? values.end_date?.valueOf() : undefined
-    //   );
-    //   req.end_date = new Date(req.end_date).setHours(23, 59, 59);
-    // }
-
-    // if (opportunityType === "concerts") {
-    //   const hours = startTime ? startTime?.getHours() : 23;
-    //   const mins = startTime ? startTime?.getMinutes() : 59;
-    //
-    //   const endDate = new Date(req.end_date);
-    //   // console.log("startTime", startTime, "hours", hours, "mins", mins);
-    //
-    //   req.end_date = endDate.setHours(hours, mins, 59);
-    //
-    //   req.start_time = startTime?.valueOf();
-    // }
-
-
-    const TenYearsFromToday = () => {
+    const HundredYearsFromToday = () => {
       let tempDate: number | Date = getCurrentDate();
       tempDate = new Date(tempDate);
-      tempDate.setMonth(tempDate.getMonth() + 120);
+      tempDate.setMonth(tempDate.getMonth() + 1200);
       return tempDate.valueOf();
     };
 
+    const date = new Date();
+    const formatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'short' });
+    const formattedDate = formatter.format(date);
+    console.log(formattedDate);
+
+    let response = await fetch(`${url}/users/${userUID}`);
+    let responseJson = await response.json();
+
+    let userData = responseJson.listOfObjects[0];
+    console.log(userData);
+
+    // this line of code does not work without the redundant pair of parenthesis (do not remove)
+    setAuthorName(userData.first_name + ' ' + userData.last_name);
+    console.log(authorName)
+
+    req.title = req.title + " - " + formattedDate;
     req.UID = userUID;
-    req.end_date = TenYearsFromToday();
+    req.end_date = HundredYearsFromToday();
     req.link = "http://compositionToday.net"
+    req.organization = "Posted by: " + userData.first_name + " " + userData.last_name;
     // console.log("getting 6 month from today", req.end_date, new Date(req.end_date);
 
     req.date_posted = getCurrentDate();
@@ -260,23 +236,10 @@ export function BlogOpportunityForm({
     handleSubmission(req);
   };
 
-  // const dateRangeErrorFunction = () => {
-  //   if (displayDateRangeError) {
-  //     if (!dateRange || !dateRange[0] || !dateRange[1]) {
-  //       return "Please give a date range";
-  //     } else if (
-  //       dateRange[0].valueOf() < getCurrentDate() ||
-  //       dateRange[1].valueOf() < getCurrentDate()
-  //     ) {
-  //       return "Please make sure that the dates given set to today and/or in the future";
-  //     }
-  //   }
-  //   return false;
-  // };
-
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
+        console.log(user)
         setUserUID(user.uid);
       }
     });
@@ -287,13 +250,16 @@ export function BlogOpportunityForm({
     console.log(sal);
   }, []);
 
+
   useEffect(() => {
     console.log(opportunityType);
 
     if (opportunityType === "competitions") {
       setCity("Remote");
       setState("Remote");
-    } else if (pageLoaded) {
+    }
+    else if (pageLoaded)
+    {
       setCity("");
       setState("");
     }
@@ -303,13 +269,16 @@ export function BlogOpportunityForm({
     setDisplayLocationError(false);
   }, [opportunityType]);
 
+
   useEffect(() => {
     if (city === "Remote" || state === "Remote") {
       form.setFieldValue("address", "");
     }
   }, [city, state]);
 
+
   const smallerScreen = useMediaQuery("(max-width: 992px)");
+
 
   return (
     <OpportunityFormContainer>
