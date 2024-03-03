@@ -983,6 +983,12 @@ export function OpportunityForm({
               withAsterisk
               {...form.getInputProps("link")}
             />
+            <TextInputFullWidth
+              label="Awards (if any)"
+              placeholder="Awards"
+              display
+              {...form.getInputProps("awards")}
+            />
             <DescriptionInput
               label="Description"
               placeholder="Description"

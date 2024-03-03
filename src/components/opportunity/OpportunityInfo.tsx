@@ -38,6 +38,11 @@ import { openDeletePostModal } from "./modals/DeletePostModal";
 import { openBanPostModal } from "./modals/BanPostModal";
 import { openFlagPostModal } from "./modals/FlagPostModal";
 import { openResetFlagCountPostModal } from "./modals/ResetReportCountModal";
+import { openLikePostModal } from "./modals/LikePostModal";
+import heart from "./likeButton.png";
+import filledHeart from "./filledLike.png";
+import { openComposerModal } from "./modals/ComposerInfoModal";
+import { FeaturedComposition } from "../../FeaturedComposition";
 
 export function OpportunityInfo({
   apiEndpoint,
@@ -48,12 +53,15 @@ export function OpportunityInfo({
   handleDeletePost,
   handleBanPost,
   handleFlagPost,
+  handleLikeButton,
   handleResetReportCount,
   deleteComment,
 }: // setHelperDeleteComment,
 OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
   const [endDate, setEndDate] = useState(
     typeof opportunity?.end_date === "number"
       ? new Date(opportunity?.end_date)
@@ -107,19 +115,36 @@ OpportunityInfoProp) {
         : new Date()
     );
   }, []);
-
+  useEffect(() => {
+    console.log("Users Uid: ", userUID);
+    console.log("isAdmin: ", isAdmin);
+  }, [userUID, isAdmin]);
   useEffect(() => {
     console.log("start: ", startDate);
     console.log("end: ", endDate);
     console.log(opportunity);
     console.log(typeof opportunity?.end_date);
+    const getLiked = async () => {
+      console.log("called getliked");
+      let request1 = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      };
+      let likedresponse = await fetch(
+        `${url}/liked/${userUID}/${opportunity?.idposts}`,
+        request1
+      );
+      let jsonLiked = await likedresponse.json();
+      const deepCopyOfObject = JSON.parse(
+        JSON.stringify(jsonLiked.listOfObjects)
+      );
+      console.log(deepCopyOfObject.length);
+      if (deepCopyOfObject.length == 1) setLiked(true);
+      else setLiked(false);
+      console.log(liked);
+    };
+    if (userUID != "" && userUID != null) getLiked();
   }, [endDate, startDate, opportunity]);
-
-  useEffect(() => {
-    console.log("Users Uid: ", userUID);
-    console.log("isAdmin: ", isAdmin);
-  }, [userUID, isAdmin]);
-
   if (!opportunity) {
     return (
       <Center sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -260,6 +285,59 @@ OpportunityInfoProp) {
             </ActionIcon>
           </Tooltip>
         </div>
+        <div></div>
+        <div
+          style={{ display: opportunity.UID !== userUID ? "block" : "none" }}
+        >
+          <Tooltip label="Like Composition" withArrow>
+            <ActionIcon
+              color="blue"
+              sx={{
+                height: 30,
+                alignSelf: "flex-start",
+                // display:
+                //   opportunity.UID !== userUID &&
+                //   opportunityType === "composition"
+                //     ? "block"
+                //     : "none",
+              }}
+              disabled={userUID == "" || userUID == null}
+              onClick={async () => {
+                console.log("clicked like button");
+                // let request1 = {
+                //   method: "GET",
+                //   headers: { "Content-Type": "application/json" },
+                // };
+                // let likedresponse = await fetch(
+                //   `${url}/liked/${userUID}/${opportunity?.idposts}`,
+                //   request1
+                // );
+                // let jsonLiked = await likedresponse.json();
+                // const deepCopyOfObject = JSON.parse(
+                //   JSON.stringify(jsonLiked.listOfObjects)
+                // );
+                // console.log(deepCopyOfObject.length);
+                // let liked = false;
+                // if (deepCopyOfObject.length == 1) liked = true;
+                console.log(liked);
+                openLikePostModal(
+                  opportunity?.title ? opportunity.title : "",
+                  handleLikeButton
+                    ? handleLikeButton
+                    : () => console.log("No like function passed"),
+                  liked
+                );
+              }}
+            >
+              {liked ? (
+                <img src={filledHeart} width={"25px"} />
+              ) : (
+                <img src={heart} width="25px" />
+              )}
+              {/* <IconFlag /> */}
+            </ActionIcon>
+          </Tooltip>
+        </div>
         <div style={{ display: isAdmin ? "block" : "none" }}>
           <Tooltip label="Reset Report Count" withArrow>
             <ActionIcon
@@ -276,6 +354,63 @@ OpportunityInfoProp) {
                     ? handleResetReportCount
                     : () => console.log("No flag function passed")
                 );
+              }}
+            >
+              <IconSquareNumber0 />
+            </ActionIcon>
+          </Tooltip>
+        </div>
+        <div style={{ display: "block" }}>
+          <Tooltip label="Composer Information">
+            <ActionIcon
+              color="blue"
+              sx={{
+                height: 30,
+                alignSelf: "flex-start",
+                display: "block",
+              }}
+              onClick={async () => {
+                // Get the composer information
+                let response = await fetch(
+                  `${url}/getcomposer/${opportunity?.UID}`
+                );
+                let responseJson = await response.json();
+                // Store the information in a parsed object
+                const deepCopyOfObject = JSON.parse(
+                  JSON.stringify(responseJson.listOfObjects)
+                );
+                // Get the list of awards from the composer's submitted songs
+                let awardsresponse = await fetch(
+                  `${url}/getawards/${opportunity?.UID}`
+                );
+                let awardsJson = await awardsresponse.json();
+                // Store the information in a parsed object
+                const awardsDeepCopyOfObject = JSON.parse(
+                  JSON.stringify(awardsJson.listOfObjects)
+                );
+                let awards = new Array<FeaturedComposition>();
+                for (let i = 0; i < awardsDeepCopyOfObject.length; i++) {
+                  awards.push(
+                    new FeaturedComposition(
+                      awardsDeepCopyOfObject[i].title,
+                      awardsDeepCopyOfObject[i].link,
+                      awardsDeepCopyOfObject[i].first_name,
+                      awardsDeepCopyOfObject[i].last_name,
+                      awardsDeepCopyOfObject[i].genre,
+                      awardsDeepCopyOfObject[i].description,
+                      awardsDeepCopyOfObject[i].awards
+                    )
+                  );
+                }
+                // Get the necessary info
+                let fullName =
+                  deepCopyOfObject[0].first_name +
+                  " " +
+                  deepCopyOfObject[0].last_name;
+                //
+                // Open the modal
+                openComposerModal(opportunity?.UID, fullName, awards);
+                //opportunity?.title ? opportunity.title : "",
               }}
             >
               <IconSquareNumber0 />

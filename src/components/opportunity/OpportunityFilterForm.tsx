@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import { PaginationSearchObject } from "../pagination/PaginationNavbar";
 import { DateRangePickerValue } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
+import { Composer } from "../../FeaturedComposition";
 
 export interface OpportunityFilterFormProp {
   searchObj: PaginationSearchObject;
@@ -26,9 +27,12 @@ export function OpportunityFilterForm({
   keyword,
   setKeyword,
 }: OpportunityFilterFormProp) {
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   // Declaration of the various search parameters
+  let [test, setTest] = useState([{ value: "", label: "" }]);
   const [city, setCity] = useState(searchObj.city ? searchObj.city : "");
   const [state, setState] = useState(searchObj.state ? searchObj.state : "");
+  const [composersList, setComposersList] = useState<Composer[]>([]);
   const [dateRange, setDateRange] = useState<DateRangePickerValue>([
     searchObj.start_date ? new Date(searchObj.start_date) : null,
     searchObj.end_date ? new Date(searchObj.end_date) : null,
@@ -56,6 +60,26 @@ export function OpportunityFilterForm({
   useEffect(() => {
     console.log("user effect is triggered: ", searchObj);
     console.log(searchObj);
+    const getComposersList = async () => {
+      console.log("in composers method");
+      let list = new Array<{ value: string; label: string }>();
+      let testing = new Array<{ value: string; label: string }>();
+      let composers = await fetch(`${url}/getcomposers`);
+      let composersJson = await composers.json();
+      const deepCopyOfObject = JSON.parse(
+        JSON.stringify(composersJson.listOfObjects)
+      );
+      for (let i = 0; i < deepCopyOfObject.length; i++) {
+        let uid = deepCopyOfObject[i].UID.toString();
+        let firstName = deepCopyOfObject[i].first_name.toString();
+        let lastName = deepCopyOfObject[i].last_name.toString();
+        list.push({ value: uid, label: firstName + " " + lastName });
+        //testing.push({ value: val.UID, label: val.firstName + val.lastName });
+        //setTest([...test, { value: uid, label: firstName + " " + lastName }]);
+      }
+      setTest([...test, ...list]);
+    };
+    getComposersList();
   }, [searchObj]);
 
   const getLabel = () => {
@@ -351,6 +375,22 @@ export function OpportunityFilterForm({
           })
         }
         value={tempSearchObj.genre ? tempSearchObj.genre : ""}
+      />
+      <DropdownCategory
+        label="Composers"
+        placeholder={`Select Composer`}
+        searchable
+        data={test}
+        allowDeselect
+        clearable
+        display={opportunityType === "compositions"}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            UID: e ? e : "",
+          })
+        }
+        value={tempSearchObj.UID ? tempSearchObj.UID : ""}
       />
       {/* <DropdownCategory
         label="Winners"

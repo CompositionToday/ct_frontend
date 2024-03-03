@@ -92,7 +92,7 @@ export function PaginationNavbar({
         }
 
         let responseCount = await fetch(countUrl);
-
+        console.log(responseCount);
         let responseCountJson = await responseCount.json();
         console.log(
           "number of " + apiEndpointExtension + " count",

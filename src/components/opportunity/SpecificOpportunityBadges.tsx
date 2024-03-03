@@ -11,6 +11,7 @@ import {
 } from "@tabler/icons";
 import { Tooltip, Badge } from "@mantine/core";
 import { Opportunity } from "./Opportunity";
+import genreIcon from "../../images/BigMusicNote.png";
 
 interface SpecificOpportunityInfoProp {
   opportunity: OpportunityItem;
@@ -329,11 +330,12 @@ export const SpecificOpportunityBadges = ({
           <Tooltip label="Genre">
             <Badge
               leftSection={
-                <IconBriefcase
-                  size={18}
-                  color="#40C057"
-                  style={{ marginBottom: "-3px" }}
-                />
+                // <IconBriefcase
+                //   size={18}
+                //   color="#40C057"
+                //   style={{ marginBottom: "-3px" }}
+                // />
+                <img src={genreIcon} width={"20px"} />
               }
               color="gray"
               sx={{
