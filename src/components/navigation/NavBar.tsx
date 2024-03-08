@@ -240,16 +240,16 @@ export function NavBar({ links }: HeaderActionProps) {
           News
         </Menu.Item>
 
-        {/*<Menu.Item*/}
-        {/*    className={cx(classes.menuLink, {*/}
-        {/*      [classes.linkActive]: active === "/blog",*/}
-        {/*    })}*/}
-        {/*    onClick={() => {*/}
-        {/*      navigate("/blog");*/}
-        {/*    }}*/}
-        {/*>*/}
-        {/*  Blog*/}
-        {/*</Menu.Item>*/}
+        <Menu.Item
+            className={cx(classes.menuLink, {
+              [classes.linkActive]: active === "/blog",
+            })}
+            onClick={() => {
+              navigate("/blog");
+            }}
+        >
+          Blog
+        </Menu.Item>
 
         <Menu.Item
           className={cx(classes.menuLink, {
