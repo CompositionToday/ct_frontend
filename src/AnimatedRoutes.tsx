@@ -20,6 +20,7 @@ import { Reported } from "./pages/adminView/Reported";
 import { News } from "./pages/News";
 import { Blog } from "./pages/Blog";
 import {CreateBlogOpportunityPage} from "./pages/CreateBlogOpportunityPage";
+import { ScrapedPostApproval } from "./pages/adminView/ScrapedPostApproval";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -36,6 +37,7 @@ export default function AnimatedRoutes() {
         <Route path="/festivals" element={<Festivals />} />
         <Route path="/admin/reported" element={<Reported />} />
         <Route path="/concerts" element={<Concerts />} />
+        <Route path="/admin/scrapedPosts" element={<ScrapedPostApproval />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/create-opportunity" element={<CreateOpportunityPage />} />
         <Route path="/admin/recent-posts" element={<RecentPosts />} />
