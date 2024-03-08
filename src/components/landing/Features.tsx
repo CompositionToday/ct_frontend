@@ -45,11 +45,11 @@ const mockdata = [
     title: "News",
     icon: newsIcon,
   },
-  // {
-  //   link: "/blog",
-  //   title: "Blog",
-  //   icon: blogIcon,
-  // },
+  {
+    link: "/blog",
+    title: "Blog",
+    icon: blogIcon,
+  },
   {
     link: "/competitions",
     title: "Compositions",
@@ -87,8 +87,8 @@ const useStyles = createStyles((theme) => ({
 
   card: {
     borderRadius: "50%",
-    width: 225,
-    height: 225,
+    width: 200,
+    height: 200,
     border: `10px solid #228BE6`,
     borderStyle: "double",
 
@@ -105,7 +105,7 @@ const useStyles = createStyles((theme) => ({
 
   cardTitle: {
     width: "100%",
-    fontSize: 23,
+    fontSize: 18,
     fontWeight: 500,
     color: "#454545",
     textAlign: "center",
@@ -207,16 +207,26 @@ export function Features() {
         </Title>
       </AnimateIn>
 
-      {/*4x1 Row of the Buttons for each category*/}
+      {/*7x1 Row of the Buttons for each category*/}
       <AnimateIn>
         <Container mb="xl" className={classes.featureContainer}>
           <SimpleGrid
-            cols={7}
+            cols={4}
             mt={50}
             className={classes.grid}
             breakpoints={[{ maxWidth: "md", cols: 2 }]}
           >
-            {features}
+            {features.slice(0,4)}
+          </SimpleGrid>
+
+        </Container>
+        <Container mb="xl" className={classes.featureContainer}>
+          <SimpleGrid
+              cols={3}
+              className={classes.grid}
+              breakpoints={[{ maxWidth: "md", cols: 2 }]}
+          >
+            {features.slice(4,7)}
           </SimpleGrid>
         </Container>
       </AnimateIn>

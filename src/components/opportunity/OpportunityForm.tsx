@@ -16,7 +16,7 @@ import { Location } from "../filter/Location";
 import { auth } from "../../Firebase";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { Paper, Button, createStyles, Checkbox } from "@mantine/core";
+import {Paper, Button, createStyles, Checkbox, Group} from "@mantine/core";
 import { DateRangePickerValue, TimeInput } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
@@ -433,9 +433,9 @@ export function OpportunityForm({
                 {...form.getInputProps("title")}
               />
               <TextInputFullWidth
-                label="Organization"
+                label={opportunityType === 'blog' ? "Author" : "Organization"}
                 placeholder="Organization"
-                display
+                display={opportunityType !== 'blog'}
                 withAsterisk={
                   opportunityType !== "festivals" &&
                   opportunityType !== "concerts"
@@ -591,7 +591,7 @@ export function OpportunityForm({
                 opportunityType === "festivals" ||
                 opportunityType === "concerts"
               }
-              display={displayLocationInput}
+              display={displayLocationInput && opportunityType != 'blog'}
             />
             <StartTimeInput
               label="Start Time"
@@ -781,7 +781,7 @@ export function OpportunityForm({
               label={
                 opportunityType !== "concerts" ? "Application Deadline" : "Date"
               }
-              display={opportunityType !== "festivals"}
+              display={opportunityType !== "festivals" && opportunityType !== "blog"}
               withAsterisk={opportunityType !== "jobs"}
               {...form.getInputProps("end_date")}
             />
@@ -803,7 +803,7 @@ export function OpportunityForm({
             <TextInputFullWidth
               label="Link"
               placeholder="Link"
-              display
+              display={opportunityType!=='blog'}
               withAsterisk
               {...form.getInputProps("link")}
             />
@@ -826,38 +826,58 @@ export function OpportunityForm({
               justify="center"
               sx={{ marginBottom: "20px" }}
             >
-              <Button
-                type="submit"
-                onClick={() => {
-                  if (
-                    opportunityType === "concerts" ||
-                    opportunityType === "festivals"
-                  ) {
-                    setDisplayLocationError(true);
-                  }
-                  setDisplayDateRangeError(true);
-                  setDisplayStartTimeError(true);
-                  console.log(form.isValid());
-                  console.log(form.isValid("title"));
-                  console.log(form.isValid("organization"));
-                  console.log(form.isValid("link"));
-                  console.log(form.isValid("description"));
-                  console.log(form.isValid("end_date"));
-                  console.log(form.isValid("salary"));
-                  console.log(form.isValid("job_category"));
-                  console.log(form.isValid("job_type"));
-                  console.log(form.isValid("job_type"));
-                  console.log(form.isValid("competition_category"));
-                  console.log(form.isValid("address"));
-                  console.log(form.isValid("fee"));
 
-                  console.log(displayLocationError);
-                  console.log(displayDateRangeError);
-                }}
-              >
-                Submit
-              </Button>
+              <Group>
+                <Button
+                  type="submit"
+                  onClick={() => {
+                    if (
+                      opportunityType === "concerts" ||
+                      opportunityType === "festivals"
+                    ) {
+                      setDisplayLocationError(true);
+                    }
+                    setDisplayDateRangeError(true);
+                    setDisplayStartTimeError(true);
+                    // console.log(form.isValid());
+                    // console.log(form.isValid("title"));
+                    // console.log(form.isValid("organization"));
+                    // console.log(form.isValid("link"));
+                    // console.log(form.isValid("description"));
+                    // console.log(form.isValid("end_date"));
+                    // console.log(form.isValid("salary"));
+                    // console.log(form.isValid("job_category"));
+                    // console.log(form.isValid("job_type"));
+                    // console.log(form.isValid("job_type"));
+                    // console.log(form.isValid("competition_category"));
+                    // console.log(form.isValid("address"));
+                    // console.log(form.isValid("fee"));
+                    //
+                    // console.log(displayLocationError);
+                    // console.log(displayDateRangeError);
+                  }}
+                >
+                  Submit
+                </Button>
+
+                {/*<Button*/}
+                {/*    color={"red"}*/}
+                {/*    onClick={() => {*/}
+                {/*      if (*/}
+                {/*          opportunityType === "concerts" ||*/}
+                {/*          opportunityType === "festivals"*/}
+                {/*      ) {*/}
+                {/*        setDisplayLocationError(true);*/}
+                {/*      }*/}
+                {/*      setDisplayDateRangeError(true);*/}
+                {/*      setDisplayStartTimeError(true);*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*  Cancel*/}
+                {/*</Button>*/}
+              </Group>
             </SubmitButtonContainer>
+
           </form>
         </OpportunityFormContentContainer>
       </Paper>

@@ -19,6 +19,7 @@ import { VerifyEmail } from "./pages/VerifyEmail";
 import { Reported } from "./pages/adminView/Reported";
 import { News } from "./pages/News";
 import { Blog } from "./pages/Blog";
+import {CreateBlogOpportunityPage} from "./pages/CreateBlogOpportunityPage";
 import { ScrapedPostApproval } from "./pages/adminView/ScrapedPostApproval";
 
 export default function AnimatedRoutes() {
@@ -40,7 +41,8 @@ export default function AnimatedRoutes() {
         <Route path="/admin/users" element={<Users />} />
         <Route path="/create-opportunity" element={<CreateOpportunityPage />} />
         <Route path="/admin/recent-posts" element={<RecentPosts />} />
-        <Route path="/my-posts" element={<MyPosts />} />
+        <Route path="/admin/create-blog-post" element={<CreateBlogOpportunityPage/>} />
+        <Route path="/my-posts" element={<MyPosts/>} />
         <Route path="/banned" element={<BannedUser />} />
         <Route path="/verify" element={<VerifyEmail />} />
 

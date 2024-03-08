@@ -152,6 +152,7 @@ export function NavBar({ links }: HeaderActionProps) {
 
   const { classes, cx } = useStyles();
   const [signedIn, setSignedIn] = useState(false);
+
   const [userFirstName, setUserFirstName] = useState("Welcome");
   const [userAdmin, setUserAdmin] = useState(false);
 
@@ -239,16 +240,16 @@ export function NavBar({ links }: HeaderActionProps) {
           News
         </Menu.Item>
 
-        {/*<Menu.Item*/}
-        {/*    className={cx(classes.menuLink, {*/}
-        {/*      [classes.linkActive]: active === "/blog",*/}
-        {/*    })}*/}
-        {/*    onClick={() => {*/}
-        {/*      navigate("/blog");*/}
-        {/*    }}*/}
-        {/*>*/}
-        {/*  Blog*/}
-        {/*</Menu.Item>*/}
+        <Menu.Item
+            className={cx(classes.menuLink, {
+              [classes.linkActive]: active === "/blog",
+            })}
+            onClick={() => {
+              navigate("/blog");
+            }}
+        >
+          Blog
+        </Menu.Item>
 
         <Menu.Item
           className={cx(classes.menuLink, {
@@ -399,7 +400,7 @@ export function NavBar({ links }: HeaderActionProps) {
                 navigate("/admin/reported");
               }}
             >
-              Reported
+              Reported Posts
             </Menu.Item>
             
             <Menu.Item
@@ -411,6 +412,17 @@ export function NavBar({ links }: HeaderActionProps) {
               }}
             >
               Recent Posts
+            </Menu.Item>
+
+            <Menu.Item
+                className={cx(classes.menuLink, {
+                  [classes.linkActive]: active === "/admin/recent-posts",
+                })}
+                onClick={() => {
+                  navigate("/admin/create-blog-post");
+                }}
+            >
+              Create Blog Post
             </Menu.Item>
           </>
         )}
