@@ -31,7 +31,7 @@ import {
   Divider,
   Tooltip,
   Grid,
-  Button,
+  Button, useMantineTheme,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -62,6 +62,16 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-between",
     marginTop: 40,
     marginBottom: 20,
+  },
+
+  // Left Side of Opportunity --> List Selector
+  leftColContainer: {
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : "white"
+  },
+
+  // Right Side of Opportunity --> Main Body
+  rightColContainer: {
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : "white"
   },
 
   searchAndFilterContainer: {
@@ -132,6 +142,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   const [winnersShown, setWinnersShown] = useState(false);
+  const theme = useMantineTheme()
 
   const handleOpportunityClick = (opportunity: OpportunityItem) => {
     setCurrentOpportunity(opportunity);
@@ -622,7 +633,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           <Flex className={classes.searchAndFilterContainer}>
             <Input
               icon={
-                <ActionIcon color="dark.2" onClick={handleInputSubmit}>
+                <ActionIcon color="dark.7" onClick={handleInputSubmit}>
                   <IconSearch />
                 </ActionIcon>
               }
@@ -689,7 +700,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             radius="lg"
             zIndex={1}
           />
-          <OpportunityLeftColumnContainer span={4} medianScreen={smallerScreen}>
+          <OpportunityLeftColumnContainer span={4} medianScreen={smallerScreen} className={classes.leftColContainer}>
             <OpportunityLeftColumnContent
               direction="column"
               columnGap={0}
