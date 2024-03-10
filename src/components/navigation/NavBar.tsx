@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { auth } from "../../Firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import {
-  createStyles,
-  Header,
-  Container,
-  Group,
-  Button,
-  Burger,
-  Image,
-  Menu,
+    createStyles,
+    Header,
+    Container,
+    Group,
+    Button,
+    Burger,
+    Image,
+    Menu, Grid,
 } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IconUserCircle } from "@tabler/icons";
@@ -551,13 +551,21 @@ export function NavBar({ links }: HeaderActionProps) {
                 setOpened(false);
               }}
             >
-              <Menu.Target>
-                <Burger
-                  opened={opened}
-                  onClick={() => setOpened((o) => !o)}
-                  size="sm"
-                />
-              </Menu.Target>
+                <Grid justify="flex-end" align="center">
+                    <Grid.Col span={"auto"}>
+                        <ToggleThemeButton/>
+                    </Grid.Col>
+
+                    <Grid.Col span={"auto"}>
+                        <Menu.Target>
+                            <Burger
+                                opened={opened}
+                                onClick={() => setOpened((o) => !o)}
+                                size="sm"
+                            />
+                        </Menu.Target>
+                    </Grid.Col>
+                </Grid>
               <DisplayBurger />
             </Menu>
           ) : (

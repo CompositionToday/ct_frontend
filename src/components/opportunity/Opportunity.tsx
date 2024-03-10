@@ -810,14 +810,14 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             </OpportunityLeftColumnContent>
           </OpportunityLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-            <OpportunityRightColumnContainer span={8}>
+            <OpportunityRightColumnContainer className={classes.rightColContainer} span={8}>
               {loading ?
               (
                 <Container
                   sx={{
                     margin: "50px 20px",
                     position: "relative",
-                    overflow: "hidden",
+                    overflow: "hidden"
                   }}
                 >
                   {rightSkeleton}

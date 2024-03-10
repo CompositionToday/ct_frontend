@@ -155,6 +155,6 @@ export const SearchBar = styled(TextInput)<GridContainer>`
 
 export const OpportunityPaginationNavbarContainer = styled(Flex)`
   margin: auto;
-  background: "white";
+  //background: "white";
   flex-grow: 1;
 `;
