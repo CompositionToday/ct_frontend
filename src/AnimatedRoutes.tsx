@@ -21,6 +21,7 @@ import { News } from "./pages/News";
 import { Blog } from "./pages/Blog";
 import {CreateBlogOpportunityPage} from "./pages/CreateBlogOpportunityPage";
 import { ScrapedPostApproval } from "./pages/adminView/ScrapedPostApproval";
+import {NewsOpportunity} from "./components/opportunity/NewsOpportunity";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -46,7 +47,7 @@ export default function AnimatedRoutes() {
         <Route path="/banned" element={<BannedUser />} />
         <Route path="/verify" element={<VerifyEmail />} />
 
-        <Route path="/news" element={<News />} />
+        <Route path="/news" element={<NewsOpportunity apiEndpoint={"news"}/>} />
         <Route path="/blog" element={<Blog />} />
 
         <Route path="*" element={<NotFound />} />

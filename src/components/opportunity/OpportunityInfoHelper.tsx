@@ -33,6 +33,16 @@ export const OpportunityTitle = styled.h1`
   font-size: 20px;
   // overflow-wrap: break-word;
   word-wrap: break-word;
+  text-decoration: none;
+  text-underline: none;
+`;
+
+export const OpportunityLinkTitle = styled.a`
+  color: #228be6;
+  font-size: 20px;
+  text-decoration: none;
+  // overflow-wrap: break-word;
+  word-wrap: break-word;
 `;
 
 export const MoreInfoOpportunityTitle = styled.h1`
