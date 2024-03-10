@@ -42,6 +42,13 @@ export interface OpportunityItem {
   deleted_comment?: string;
   fee?: string | number;
   deadline?: Date | string | number | null;
+  is_scraped?: number | null;
+  genre?: string | null;
+  published_date?: number | string | null;
+  hasbeenfeatured?: number | string | boolean | null;
+  likecount?: number | string | null;
+  writer?: string | number;
+  awards?: string | number | boolean | null;
 }
 
 interface PaginationCard {

@@ -301,7 +301,7 @@ OpportunityInfoProp) {
       ) : null}
       {apiEndpoint.includes("posts") && (
         <Badge sx={{ margin: "15px 5px 3px 0px" }}>
-          {opportunity.type?.substring(0, opportunity.type?.length - 1)}
+          {opportunity.type?.substring(0, opportunity.type?.length)}
         </Badge>
       )}
       {opportunity.UID === userUID && (
@@ -357,20 +357,36 @@ OpportunityInfoProp) {
         opportunityType={opportunityType}
       />
       {/* </Flex> */}
-      <a href={opportunity.link} target="blank">
-        <Button
-          radius="md"
-          sx={{ height: 30, alignSelf: "flex-start", margin: "15px 0px" }}
-          size="md"
-          rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
-        >
-          {opportunityType === "competitions" || opportunityType === "jobs"
-            ? "Apply"
-            : "More Info"}
-        </Button>
-      </a>
+      {opportunityType !== 'blog' ?
+          <a href={opportunity.link} target="blank">
+
+            <Button
+                radius="md"
+                sx={{ height: 30, alignSelf: "flex-start", margin: "15px 0px" }}
+                size="md"
+                rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
+            >
+              {opportunityType === "competitions" || opportunityType === "jobs" ? "Apply" : "More Info"}
+            </Button>
+
+          </a>
+          :
+          <a></a>
+      }
+      {/*<a href={opportunity.link} target="blank">*/}
+
+      {/*  <Button*/}
+      {/*    radius="md"*/}
+      {/*    sx={{ height: 30, alignSelf: "flex-start", margin: "15px 0px" }}*/}
+      {/*    size="md"*/}
+      {/*    rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}*/}
+      {/*  >*/}
+      {/*    {opportunityType === "competitions" || opportunityType === "jobs" ? "Apply" : "More Info"}*/}
+      {/*  </Button>*/}
+
+      {/*</a>*/}
       <DescriptionContainer>
-        <Label>Description:</Label>
+        <Label>{opportunityType === "blog" ? "" : "Description:"}</Label>
         <DescriptionContent>{opportunity.description}</DescriptionContent>
       </DescriptionContainer>
     </OpportunityInfoContainer>
