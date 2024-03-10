@@ -225,6 +225,7 @@ export function BlogOpportunityForm({
     req.title = req.title + " - " + formattedDate;
     req.UID = userUID;
     req.end_date = HundredYearsFromToday();
+    req.published_date = getCurrentDate();
     req.link = "http://compositionToday.net"
     req.organization = "Posted by: " + userData.first_name + " " + userData.last_name;
     // console.log("getting 6 month from today", req.end_date, new Date(req.end_date);

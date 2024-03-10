@@ -31,6 +31,7 @@ export function CreateBlogOpportunity() {
       opportunity.date_posted = opportunity.date_posted?.toString();
       opportunity.start_time = opportunity.start_time?.toString();
       opportunity.deadline = opportunity.deadline?.toString();
+      opportunity.published_date = opportunity.published_date?.toString();
 
       console.log("create post body:", opportunity);
       let requestOptions = {
