@@ -357,22 +357,22 @@ OpportunityInfoProp) {
         opportunityType={opportunityType}
       />
       {/* </Flex> */}
-      {opportunityType !== 'blog' ?
-          <a href={opportunity.link} target="blank">
-
-            <Button
-                radius="md"
-                sx={{ height: 30, alignSelf: "flex-start", margin: "15px 0px" }}
-                size="md"
-                rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
-            >
-              {opportunityType === "competitions" || opportunityType === "jobs" ? "Apply" : "More Info"}
-            </Button>
-
-          </a>
-          :
-          <a></a>
-      }
+      {opportunityType !== "blog" ? (
+        <a href={opportunity.link} target="blank">
+          <Button
+            radius="md"
+            sx={{ height: 30, alignSelf: "flex-start", margin: "15px 0px" }}
+            size="md"
+            rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
+          >
+            {opportunityType === "competitions" || opportunityType === "jobs"
+              ? "Apply"
+              : "More Info"}
+          </Button>
+        </a>
+      ) : (
+        <a></a>
+      )}
       {/*<a href={opportunity.link} target="blank">*/}
 
       {/*  <Button*/}

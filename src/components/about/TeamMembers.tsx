@@ -1,4 +1,7 @@
-import { AnimateIn } from "../animations/AnimateOnScroll";
+/**
+ * List of Team Member Portraits and Descriptions
+ * in the About Us Section
+ */
 
 import {
   createStyles,
@@ -9,18 +12,22 @@ import {
   Space,
 } from "@mantine/core";
 
+
 const useStyles = createStyles((theme) => ({
+
+  // container where all of the teamMember objects are dispalyed
   container: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
-    width: "50%",
+    width: "80%",
     [theme.fn.smallerThan("md")]: {
       width: "70%",
     },
   },
 
+  // group component for team members lists (vertical list growth)
   members: {
     [theme.fn.smallerThan("sm")]: {
       flexDirection: "column",
@@ -34,16 +41,17 @@ const useStyles = createStyles((theme) => ({
         : theme.colors.gray[5],
   },
 
+  // team member name
   name: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: 28,
     color: "#228BE6",
-
     [theme.fn.smallerThan("sm")]: {
       fontSize: 20,
     },
   },
 
+  // team member role description
   role: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: 22,
@@ -52,6 +60,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  // team member portrait
   image: {
     maxWidth: 250,
     [theme.fn.smallerThan("sm")]: {
@@ -60,6 +69,8 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+
+// Props for teamMember object
 interface UserInfoIconsProps {
   teamMembers: {
     avatar: string;
@@ -68,52 +79,46 @@ interface UserInfoIconsProps {
   }[];
 }
 
-const kiersten = require("../../images/Kiersten.png");
-const joseph = require("../../images/Joseph.png");
-const ragen = require("../../images/Ragen.png");
-const amber = require("../../images/Amber.png");
-const justin = require("../../images/Justin.png");
 
 export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
   const { classes } = useStyles();
 
-  const team = teamMembers.map((member) => {
-    let photo = kiersten;
-    if (member.avatar === "kiersten") {
-      photo = kiersten;
-    } else if (member.avatar === "joseph") {
-      photo = joseph;
-    } else if (member.avatar === "ragen") {
-      photo = ragen;
-    } else if (member.avatar === "amber") {
-      photo = amber;
-    } else if (member.avatar === "justin") {
-      photo = justin;
-    }
+  // Generates a teamMember component for each member in the list, See V[x]TeamMembersInfo.tsx for the data
+  const teamMemberList = teamMembers.map((member) => {
 
+    // Get the correct team member photo file (.png)
+    let photo = require("../../images/" + member.avatar +".png")
+    // console.log("photo = " + photo)
+    
+    // Returns a single team member component
     return (
       <div>
-        {/* <AnimateIn> */}
         <Group noWrap spacing={60} mt={100} className={classes.members}>
+
+          {/*Potrait*/}
           <Image src={String(photo)} radius="md" className={classes.image} />
+
           <div>
+            {/*Team Member Name*/}
             <Text weight={500} className={classes.name} mb="xl">
               {member.name}
             </Text>
 
+            {/*Team Member Description*/}
             <Text weight={500} className={classes.role} color="dimmed">
               {member.role}
             </Text>
           </div>
+
         </Group>
-        {/* </AnimateIn> */}
       </div>
     );
   });
 
+  // Returns the list of teamMembers
   return (
     <Container className={classes.container}>
-      {team}
+      {teamMemberList}
       <Space h={100} />
     </Container>
   );

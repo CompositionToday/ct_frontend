@@ -16,7 +16,7 @@ import { Location } from "../filter/Location";
 import { auth } from "../../Firebase";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import {Paper, Button, createStyles, Checkbox, Group} from "@mantine/core";
+import { Paper, Button, createStyles, Checkbox, Group } from "@mantine/core";
 import { DateRangePickerValue, TimeInput } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
@@ -433,9 +433,9 @@ export function OpportunityForm({
                 {...form.getInputProps("title")}
               />
               <TextInputFullWidth
-                label={opportunityType === 'blog' ? "Author" : "Organization"}
+                label={opportunityType === "blog" ? "Author" : "Organization"}
                 placeholder="Organization"
-                display={opportunityType !== 'blog'}
+                display={opportunityType !== "blog"}
                 withAsterisk={
                   opportunityType !== "festivals" &&
                   opportunityType !== "concerts"
@@ -591,7 +591,7 @@ export function OpportunityForm({
                 opportunityType === "festivals" ||
                 opportunityType === "concerts"
               }
-              display={displayLocationInput && opportunityType != 'blog'}
+              display={displayLocationInput && opportunityType != "blog"}
             />
             <StartTimeInput
               label="Start Time"
@@ -781,7 +781,9 @@ export function OpportunityForm({
               label={
                 opportunityType !== "concerts" ? "Application Deadline" : "Date"
               }
-              display={opportunityType !== "festivals" && opportunityType !== "blog"}
+              display={
+                opportunityType !== "festivals" && opportunityType !== "blog"
+              }
               withAsterisk={opportunityType !== "jobs"}
               {...form.getInputProps("end_date")}
             />
@@ -803,7 +805,7 @@ export function OpportunityForm({
             <TextInputFullWidth
               label="Link"
               placeholder="Link"
-              display={opportunityType!=='blog'}
+              display={opportunityType !== "blog"}
               withAsterisk
               {...form.getInputProps("link")}
             />
@@ -826,7 +828,6 @@ export function OpportunityForm({
               justify="center"
               sx={{ marginBottom: "20px" }}
             >
-
               <Group>
                 <Button
                   type="submit"
@@ -877,7 +878,6 @@ export function OpportunityForm({
                 {/*</Button>*/}
               </Group>
             </SubmitButtonContainer>
-
           </form>
         </OpportunityFormContentContainer>
       </Paper>

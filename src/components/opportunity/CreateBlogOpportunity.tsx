@@ -12,7 +12,7 @@ import { OpportunityItem } from "./OpportunityHelper";
 import { useNavigate } from "react-router-dom";
 import { showNotification } from "@mantine/notifications";
 import { useMediaQuery } from "@mantine/hooks";
-import {BlogOpportunityForm} from "./BlogOpportunityForm";
+import { BlogOpportunityForm } from "./BlogOpportunityForm";
 
 export function CreateBlogOpportunity() {
   const [opportunityType, setOpportunityType] = useState("blog");
