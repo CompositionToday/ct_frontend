@@ -1,5 +1,6 @@
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { UpdateInfo } from "./pages/UpdateInfo";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Landing } from "./pages/Landing";
 import { About } from "./pages/AboutUs";
@@ -26,6 +27,7 @@ export default function AnimatedRoutes() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/updateinfo" element={<UpdateInfo />} />
         <Route path="/about" element={<About />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/jobs" element={<Jobs />} />

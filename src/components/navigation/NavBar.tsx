@@ -360,6 +360,16 @@ export function NavBar({ links }: HeaderActionProps) {
             </Menu.Item>
           </>
         )}
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/updateinfo",
+          })}
+          onClick={() => {
+            navigate("/updateinfo");
+          }}
+        >
+          Update Profile
+        </Menu.Item>
         <Menu.Divider />
         <Menu.Item
           style={{ fontSize: "12pt" }}

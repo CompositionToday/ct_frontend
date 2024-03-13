@@ -7,7 +7,9 @@ import { IconExternalLink } from "@tabler/icons";
 export function openComposerModal(
   UID: string | undefined,
   fullName: string,
-  awards: Array<FeaturedComposition> | undefined
+  awards: Array<FeaturedComposition> | undefined,
+  bio: string | null,
+  link: string | null
 ) {
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   function createTable() {
@@ -36,7 +38,7 @@ export function openComposerModal(
       // );
       return awards.map((song) => {
         return (
-          <div>
+          <div key={song.link}>
             {song.title}, awards: {song.awards}
             <br />
             <a href={song.link} target="blank">
@@ -59,13 +61,52 @@ export function openComposerModal(
     } else return <div></div>;
   }
 
-  const filled = createTable();
+  const awardsSection = createTable();
   const createChildren = () => {
     return (
       <div>
         <p>Composer: {fullName}</p>
         <br />
-        {filled}
+        {awards ? (
+          <p>
+            Songs:
+            <br />
+          </p>
+        ) : (
+          <div />
+        )}
+        {awardsSection}
+        <br />
+        {bio ? (
+          <p>
+            Biography: <br />
+            {bio}{" "}
+          </p>
+        ) : (
+          <div />
+        )}
+        {link ? (
+          <p>
+            Website link: <br />
+            <a href={link} target="blank">
+              <Button
+                radius="md"
+                sx={{
+                  height: 30,
+                  alignSelf: "flex-start",
+                  margin: "15px 0px",
+                }}
+                size="md"
+                rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
+              >
+                Composer Website
+              </Button>
+            </a>
+          </p>
+        ) : (
+          <div />
+        )}
+        <br />
       </div>
     );
   };

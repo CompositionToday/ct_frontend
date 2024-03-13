@@ -72,7 +72,25 @@ OpportunityInfoProp) {
       ? new Date(opportunity?.start_date)
       : new Date()
   );
-
+  const getLiked = async () => {
+    console.log("called getliked");
+    let request1 = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    let likedresponse = await fetch(
+      `${url}/liked/${userUID}/${opportunity?.idposts}`,
+      request1
+    );
+    let jsonLiked = await likedresponse.json();
+    const deepCopyOfObject = JSON.parse(
+      JSON.stringify(jsonLiked.listOfObjects)
+    );
+    console.log(deepCopyOfObject.length);
+    if (deepCopyOfObject.length == 1) setLiked(true);
+    else setLiked(false);
+    console.log(liked);
+  };
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -124,25 +142,6 @@ OpportunityInfoProp) {
     console.log("end: ", endDate);
     console.log(opportunity);
     console.log(typeof opportunity?.end_date);
-    const getLiked = async () => {
-      console.log("called getliked");
-      let request1 = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      let likedresponse = await fetch(
-        `${url}/liked/${userUID}/${opportunity?.idposts}`,
-        request1
-      );
-      let jsonLiked = await likedresponse.json();
-      const deepCopyOfObject = JSON.parse(
-        JSON.stringify(jsonLiked.listOfObjects)
-      );
-      console.log(deepCopyOfObject.length);
-      if (deepCopyOfObject.length == 1) setLiked(true);
-      else setLiked(false);
-      console.log(liked);
-    };
     if (userUID != "" && userUID != null) getLiked();
   }, [endDate, startDate, opportunity]);
   if (!opportunity) {
@@ -301,24 +300,13 @@ OpportunityInfoProp) {
                 //     ? "block"
                 //     : "none",
               }}
+              onLoad={() => {
+                if (userUID != "" && userUID != null) getLiked();
+                console.log("onLoad called, liked = " + liked);
+              }}
               disabled={userUID == "" || userUID == null}
               onClick={async () => {
                 console.log("clicked like button");
-                // let request1 = {
-                //   method: "GET",
-                //   headers: { "Content-Type": "application/json" },
-                // };
-                // let likedresponse = await fetch(
-                //   `${url}/liked/${userUID}/${opportunity?.idposts}`,
-                //   request1
-                // );
-                // let jsonLiked = await likedresponse.json();
-                // const deepCopyOfObject = JSON.parse(
-                //   JSON.stringify(jsonLiked.listOfObjects)
-                // );
-                // console.log(deepCopyOfObject.length);
-                // let liked = false;
-                // if (deepCopyOfObject.length == 1) liked = true;
                 console.log(liked);
                 openLikePostModal(
                   opportunity?.title ? opportunity.title : "",
@@ -407,9 +395,29 @@ OpportunityInfoProp) {
                   deepCopyOfObject[0].first_name +
                   " " +
                   deepCopyOfObject[0].last_name;
-                //
+                // Get the bio and link of the composer
+                // Get the list of awards from the composer's submitted songs
+                let inforesponse = await fetch(
+                  `${url}/userinfo/${opportunity?.UID}`
+                );
+                let infoJson = await inforesponse.json();
+                // Store the information in a parsed object
+                const infoObj = JSON.parse(
+                  JSON.stringify(infoJson.listOfObjects)
+                );
+                let bio = infoObj[0].bio;
+                let link = infoObj[0].link;
+                if (bio == "") bio = null;
+                if (link == "") link = null;
+                console.log("Bio: " + bio + ", Link: " + link);
                 // Open the modal
-                openComposerModal(opportunity?.UID, fullName, awards);
+                openComposerModal(
+                  opportunity?.UID,
+                  fullName,
+                  awards,
+                  bio,
+                  link
+                );
                 //opportunity?.title ? opportunity.title : "",
               }}
             >

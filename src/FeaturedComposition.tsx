@@ -36,3 +36,14 @@ export class Composer {
     this.lastName = lastname;
   }
 }
+
+export class UserInfo {
+  description: string | null;
+  link: string | null;
+  UID: string;
+  constructor(bio: string | null, link: string | null, UID: string) {
+    this.description = bio;
+    this.link = link;
+    this.UID = UID;
+  }
+}
