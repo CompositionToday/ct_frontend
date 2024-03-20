@@ -146,40 +146,66 @@ export function Hero() {
     setRotateDegree(angleDeg);
     console.log("moving event mouse");
   };
-  useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          let response = await fetch(`${url}/featuredcompositions`);
-          let responseJson = await response.json();
-          const deepCopyOfObject = JSON.parse(
-            JSON.stringify(responseJson.listOfObjects)
-          );
-          let x = deepCopyOfObject.length;
-          let list = new Array<FeaturedComposition>();
-          if (firstPass == true) {
-            for (let i = 0; i < x; i++) {
-              let val = new FeaturedComposition(
-                deepCopyOfObject[i].title,
-                deepCopyOfObject[i].link,
-                deepCopyOfObject[i].first_name,
-                deepCopyOfObject[i].last_name,
-                deepCopyOfObject[i].genre,
-                deepCopyOfObject[i].description
-              );
-              list.push(val);
-            }
-            firstPass = false;
-            setList([...featuredlist, ...list]);
-            console.log(featuredlist);
-          }
-        } catch (err) {
-          console.log(err);
-        }
+  const getFeaturedList = async () => {
+    let response = await fetch(`${url}/featuredcompositions`);
+    let responseJson = await response.json();
+    const deepCopyOfObject = JSON.parse(
+      JSON.stringify(responseJson.listOfObjects)
+    );
+    let x = deepCopyOfObject.length;
+    let list = new Array<FeaturedComposition>();
+    if (firstPass == true) {
+      for (let i = 0; i < x; i++) {
+        let val = new FeaturedComposition(
+          deepCopyOfObject[i].title,
+          deepCopyOfObject[i].link,
+          deepCopyOfObject[i].first_name,
+          deepCopyOfObject[i].last_name,
+          deepCopyOfObject[i].genre,
+          deepCopyOfObject[i].description
+        );
+        list.push(val);
       }
-    });
-  }, []);
+      firstPass = false;
+      setList([...featuredlist, ...list]);
+      console.log(featuredlist);
+    }
+  };
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, async (user) => {
+  //     if (user) {
+  //       try {
+  //         let response = await fetch(`${url}/featuredcompositions`);
+  //         let responseJson = await response.json();
+  //         const deepCopyOfObject = JSON.parse(
+  //           JSON.stringify(responseJson.listOfObjects)
+  //         );
+  //         let x = deepCopyOfObject.length;
+  //         let list = new Array<FeaturedComposition>();
+  //         if (firstPass == true) {
+  //           for (let i = 0; i < x; i++) {
+  //             let val = new FeaturedComposition(
+  //               deepCopyOfObject[i].title,
+  //               deepCopyOfObject[i].link,
+  //               deepCopyOfObject[i].first_name,
+  //               deepCopyOfObject[i].last_name,
+  //               deepCopyOfObject[i].genre,
+  //               deepCopyOfObject[i].description
+  //             );
+  //             list.push(val);
+  //           }
+  //           firstPass = false;
+  //           setList([...featuredlist, ...list]);
+  //           console.log(featuredlist);
+  //         }
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     }
+  //   });
+  // }, []);
   useEffect(() => {
+    getFeaturedList();
     document.addEventListener("mousemove", handleMouseMove);
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
@@ -332,9 +358,9 @@ export function Hero() {
             <Slider {...settings}>
               {featuredlist.map((featuredList) => (
                 <div key={featuredList.title}>
-                  <h1>{featuredList.title}</h1>
+                  <h1 style={{ height: "2px" }}>{featuredList.title}</h1>
                   <br />
-                  <h3>
+                  <h3 style={{ height: "2px" }}>
                     <Badge
                       leftSection={
                         // <IconBriefcase
@@ -354,9 +380,11 @@ export function Hero() {
                   </h3>
                   <br />
                   {featuredList.awards ? (
-                    <h3>Award/s: {featuredList.awards}</h3>
+                    <h3 style={{ height: "2px" }}>
+                      Award/s: {featuredList.awards}
+                    </h3>
                   ) : null}
-                  <h3>
+                  <h3 style={{ height: "10px" }}>
                     <a href={featuredList.link} target="blank">
                       <Button
                         radius="md"
@@ -375,11 +403,11 @@ export function Hero() {
                     </a>
                   </h3>
                   <br />
-                  <h3>
+                  <h3 style={{ height: "3px" }}>
                     by {featuredList.firstName} {featuredList.lastName}
                   </h3>
                   <br />
-                  <h3>{featuredList.description}</h3>
+                  <h3 style={{ height: "3px" }}>{featuredList.description}</h3>
                 </div>
               ))}
             </Slider>

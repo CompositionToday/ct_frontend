@@ -1,15 +1,24 @@
-import { Button, Text } from "@mantine/core";
 import { openConfirmationModal } from "../../modal/ConfirmationModal";
 import { openModal } from "@mantine/modals";
 import { FeaturedComposition } from "../../../FeaturedComposition";
 import { IconExternalLink } from "@tabler/icons";
-
+import {
+  createStyles,
+  Container,
+  Title,
+  Text,
+  Image,
+  Button,
+  Badge,
+} from "@mantine/core";
+import MantineTheme from "@mantine/core";
 export function openComposerModal(
   UID: string | undefined,
   fullName: string,
   awards: Array<FeaturedComposition> | undefined,
   bio: string | null,
-  link: string | null
+  link: string | null,
+  classes: any
 ) {
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   function createTable() {
@@ -39,8 +48,15 @@ export function openComposerModal(
       return awards.map((song) => {
         return (
           <div key={song.link}>
-            {song.title}, awards: {song.awards}
-            <br />
+            <div>
+              {song.awards ? (
+                <p>
+                  {song.title}, awards: {song.awards}
+                </p>
+              ) : (
+                <div>{song.title}</div>
+              )}
+            </div>
             <a href={song.link} target="blank">
               <Button
                 radius="md"
@@ -65,65 +81,72 @@ export function openComposerModal(
   const createChildren = () => {
     return (
       <div>
-        <p>Composer: {fullName}</p>
-        <br />
-        {awards ? (
-          <p>
-            Songs:
+        <Container>
+          <div>
+            {awards ? (
+              <p className={classes.subheading}>
+                Songs:
+                <br />
+              </p>
+            ) : (
+              <div />
+            )}
+            {awardsSection}
             <br />
-          </p>
-        ) : (
-          <div />
-        )}
-        {awardsSection}
-        <br />
-        {bio ? (
-          <p>
-            Biography: <br />
-            {bio}{" "}
-          </p>
-        ) : (
-          <div />
-        )}
-        {link ? (
-          <p>
-            Website link: <br />
-            <a href={link} target="blank">
-              <Button
-                radius="md"
-                sx={{
-                  height: 30,
-                  alignSelf: "flex-start",
-                  margin: "15px 0px",
-                }}
-                size="md"
-                rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
-              >
-                Composer Website
-              </Button>
-            </a>
-          </p>
-        ) : (
-          <div />
-        )}
-        <br />
+            {bio ? (
+              <div>
+                <p className={classes.subheading}>
+                  Biography: <br />
+                </p>
+                {bio}
+              </div>
+            ) : (
+              <div />
+            )}
+            {link ? (
+              <div>
+                <p className={classes.subheading}>
+                  Website link: <br />
+                </p>
+                <a href={link} target="blank">
+                  <Button
+                    radius="md"
+                    sx={{
+                      height: 30,
+                      alignSelf: "flex-start",
+                      margin: "15px 0px",
+                    }}
+                    size="md"
+                    rightIcon={
+                      <IconExternalLink style={{ marginLeft: "-5px" }} />
+                    }
+                  >
+                    Composer Website
+                  </Button>
+                </a>
+              </div>
+            ) : (
+              <div />
+            )}
+            <br />
+          </div>
+        </Container>
       </div>
     );
   };
 
-  const title = "Composer Information";
+  const title = fullName;
   const confirmLabel = "Close";
   const cancelLabel = "";
   const color = "blue";
   const children = createChildren();
 
-  //   openConfirmationModal({
-  //     title,
-  //     children,
-  //     confirmLabel,
-  //     cancelLabel,
-  //     color,
-  //     handleOnConfirm,
-  //   });
-  openModal({ title, children, color, closeButtonLabel: "Close" });
+  openModal({
+    title,
+    children,
+    color,
+    closeButtonLabel: "Close",
+    size: "auto",
+    classNames: { title: classes.modalTitle },
+  });
 }

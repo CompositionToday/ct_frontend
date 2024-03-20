@@ -58,12 +58,11 @@ export function OpportunityFilterForm({
   const opportunityType = useLocation().pathname.slice(1);
 
   useEffect(() => {
-    console.log("user effect is triggered: ", searchObj);
-    console.log(searchObj);
+    //console.log("user effect is triggered: ", searchObj);
+    //console.log(searchObj);
     const getComposersList = async () => {
-      console.log("in composers method");
+      //console.log("in composers method");
       let list = new Array<{ value: string; label: string }>();
-      let testing = new Array<{ value: string; label: string }>();
       let composers = await fetch(`${url}/getcomposers`);
       let composersJson = await composers.json();
       const deepCopyOfObject = JSON.parse(
@@ -77,7 +76,7 @@ export function OpportunityFilterForm({
         //testing.push({ value: val.UID, label: val.firstName + val.lastName });
         //setTest([...test, { value: uid, label: firstName + " " + lastName }]);
       }
-      setTest([...test, ...list]);
+      setTest([...list]);
     };
     getComposersList();
   }, [searchObj]);

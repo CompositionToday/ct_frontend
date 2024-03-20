@@ -107,6 +107,7 @@ export function OpportunityForm({
       city: city,
       state: state,
       genre: opportunity?.genre || "",
+      awards: opportunity?.awards || "",
       end_date: opportunity?.end_date ? new Date(opportunity?.end_date) : null,
       salary: +(opportunity?.salary as number) || "",
       job_category: opportunity?.job_category || "",
@@ -243,7 +244,7 @@ export function OpportunityForm({
   const competitionOpportunityKey = ["winner", "competition_category", "fee"];
   const concertOpportunityKey = ["address", "start_time"];
   const festivalOpportunityKey = ["start_date", "address", "fee", "deadline"];
-  const compositionsOpportunityKey = ["genre"];
+  const compositionsOpportunityKey = ["genre", "awards"];
 
   // FIXME: When creating the request object, need to make sure that we use keyword
   // instead of explicitly using title and organization

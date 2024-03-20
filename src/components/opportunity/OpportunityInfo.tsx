@@ -19,6 +19,7 @@ import {
   Alert,
   Text,
   Center,
+  createStyles,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -43,7 +44,100 @@ import heart from "./likeButton.png";
 import filledHeart from "./filledLike.png";
 import { openComposerModal } from "./modals/ComposerInfoModal";
 import { FeaturedComposition } from "../../FeaturedComposition";
+const useStyles = createStyles((theme) => ({
+  inner: {
+    display: "flex",
+    justifyContent: "space-between",
+    // paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing.xl * 6,
+  },
 
+  content: {
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    flexWrap: "wrap",
+
+    maxWidth: 480,
+    marginRight: theme.spacing.xl * 3,
+
+    [theme.fn.smallerThan("md")]: {
+      maxWidth: "100%",
+      marginRight: 0,
+    },
+  },
+
+  title: {
+    color: theme.colorScheme === "dark" ? theme.white : "#454545",
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontSize: 55,
+    lineHeight: 1.2,
+    fontWeight: 800,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 36,
+    },
+  },
+  control: {
+    [theme.fn.smallerThan("xs")]: {
+      flex: 1,
+    },
+  },
+
+  image: {
+    flex: 1,
+    // maxWidth: "40vw",
+    // marginLeft: 40,
+
+    [theme.fn.smallerThan("md")]: {
+      display: "none",
+    },
+  },
+
+  highlight: {
+    position: "relative",
+    backgroundColor: theme.fn.variant({
+      variant: "light",
+      color: theme.primaryColor,
+    }).background,
+    borderRadius: theme.radius.sm,
+    padding: "4px 12px",
+  },
+
+  textHighlight: {
+    lineHeight: 0,
+  },
+
+  container: {
+    maxWidth: "75vw",
+
+    [theme.fn.smallerThan("md")]: {
+      maxWidth: "85vw",
+    },
+  },
+
+  subheading: {
+    fontSize: 22,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 19,
+    },
+  },
+  text: {
+    fontSize: 15,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 10,
+    },
+  },
+  featuredList: {
+    justifyContent: "center",
+    background: "white",
+  },
+  modalTitle: {
+    fontSize: 25,
+    color: "#228be6",
+  },
+}));
 export function OpportunityInfo({
   apiEndpoint,
   opportunity,
@@ -62,6 +156,7 @@ OpportunityInfoProp) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [liked, setLiked] = useState(false);
   const [firstRender, setFirstRender] = useState(true);
+  const { classes } = useStyles();
   const [endDate, setEndDate] = useState(
     typeof opportunity?.end_date === "number"
       ? new Date(opportunity?.end_date)
@@ -416,7 +511,8 @@ OpportunityInfoProp) {
                   fullName,
                   awards,
                   bio,
-                  link
+                  link,
+                  classes
                 );
                 //opportunity?.title ? opportunity.title : "",
               }}
