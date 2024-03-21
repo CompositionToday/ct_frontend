@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import { PaginationSearchObject } from "../pagination/PaginationNavbar";
 import { DateRangePickerValue } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
+import { Composer } from "../../FeaturedComposition";
 
 export interface OpportunityFilterFormProp {
   searchObj: PaginationSearchObject;
@@ -19,19 +20,24 @@ export interface OpportunityFilterFormProp {
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
-
+// For filtering
 export function OpportunityFilterForm({
   searchObj,
   setSearchObj,
   keyword,
   setKeyword,
 }: OpportunityFilterFormProp) {
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
+  // Declaration of the various search parameters
+  let [test, setTest] = useState([{ value: "", label: "" }]);
   const [city, setCity] = useState(searchObj.city ? searchObj.city : "");
   const [state, setState] = useState(searchObj.state ? searchObj.state : "");
+  const [composersList, setComposersList] = useState<Composer[]>([]);
   const [dateRange, setDateRange] = useState<DateRangePickerValue>([
     searchObj.start_date ? new Date(searchObj.start_date) : null,
     searchObj.end_date ? new Date(searchObj.end_date) : null,
   ]);
+  // Create a temporary obj to use for the search
   const [tempSearchObj, setTempSearchObj] = useState<PaginationSearchObject>({
     keyword: keyword ? keyword : "",
     salary: searchObj.salary,
@@ -52,8 +58,27 @@ export function OpportunityFilterForm({
   const opportunityType = useLocation().pathname.slice(1);
 
   useEffect(() => {
-    console.log("user effect is triggered: ", searchObj);
-    console.log(searchObj);
+    //console.log("user effect is triggered: ", searchObj);
+    //console.log(searchObj);
+    const getComposersList = async () => {
+      //console.log("in composers method");
+      let list = new Array<{ value: string; label: string }>();
+      let composers = await fetch(`${url}/getcomposers`);
+      let composersJson = await composers.json();
+      const deepCopyOfObject = JSON.parse(
+        JSON.stringify(composersJson.listOfObjects)
+      );
+      for (let i = 0; i < deepCopyOfObject.length; i++) {
+        let uid = deepCopyOfObject[i].UID.toString();
+        let firstName = deepCopyOfObject[i].first_name.toString();
+        let lastName = deepCopyOfObject[i].last_name.toString();
+        list.push({ value: uid, label: firstName + " " + lastName });
+        //testing.push({ value: val.UID, label: val.firstName + val.lastName });
+        //setTest([...test, { value: uid, label: firstName + " " + lastName }]);
+      }
+      setTest([...list]);
+    };
+    getComposersList();
   }, [searchObj]);
 
   const getLabel = () => {
@@ -227,6 +252,145 @@ export function OpportunityFilterForm({
             : ""
         }
       />
+      <DropdownCategory
+        label="Genre"
+        placeholder={`Select Genre`}
+        searchable
+        data={[
+          {
+            value: "Multiple Categories",
+            label: "Multiple Categories",
+          },
+          { value: "All Woodwind", label: "All Woodwind", group: "Woodwind" },
+          { value: "Flute", label: "Flute", group: "Woodwind" },
+          { value: "Folk Flute", label: "Folk Flute", group: "Woodwind" },
+          { value: "Oboe", label: "Oboe", group: "Woodwind" },
+          { value: "Clarinet", label: "Clarinet", group: "Woodwind" },
+          { value: "Bassoon", label: "Bassoon", group: "Woodwind" },
+          { value: "Saxophone", label: "Saxophone", group: "Woodwind" },
+          { value: "Recorder", label: "Recorder", group: "Woodwind" },
+          {
+            value: "Other Woodwind",
+            label: "Other Woodwind",
+            group: "Woodwind",
+          },
+
+          { value: "All Brass", label: "All Brass", group: "Brass" },
+          { value: "French Horn", label: "French Horn", group: "Brass" },
+          { value: "Trumpet", label: "Trumpet", group: "Brass" },
+          { value: "Trombone", label: "Trombone", group: "Brass" },
+          { value: "Tuba", label: "Tuba", group: "Brass" },
+          { value: "Euphonium", label: "Euphonium", group: "Brass" },
+          { value: "Other Brass", label: "Other Brass", group: "Brass" },
+
+          { value: "All Strings", label: "All Strings", group: "Strings" },
+          { value: "Violin", label: "Violin", group: "Strings" },
+          { value: "Folk Fiddle", label: "Folk Fiddle", group: "Strings" },
+          { value: "Viola", label: "Viola", group: "Strings" },
+          { value: "Cello", label: "Cello", group: "Strings" },
+          { value: "Double Bass", label: "Double Bass", group: "Strings" },
+          { value: "Harp", label: "Harp", group: "Strings" },
+          { value: "Guitar", label: "Guitar", group: "Strings" },
+          { value: "Early Guitar", label: "Early Guitar", group: "Strings" },
+          { value: "Lute", label: "Lute", group: "Strings" },
+          { value: "Theorbo", label: "Theorbo", group: "Strings" },
+          { value: "Other Strings", label: "Other Strings", group: "Strings" },
+
+          { value: "All Keyboard", label: "All Keyboard", group: "Keyboard" },
+          { value: "Piano", label: "Piano", group: "Keyboard" },
+          {
+            value: "Piano Accompaniment",
+            label: "Piano Accompaniment",
+            group: "Keyboard",
+          },
+          { value: "Organ", label: "Organ", group: "Keyboard" },
+          { value: "Harpsichord", label: "Harpsichord", group: "Keyboard" },
+          { value: "Accordian", label: "Accordian", group: "Keyboard" },
+          {
+            value: "Other Keyboard",
+            label: "Other Keyboard",
+            group: "Keyboard",
+          },
+
+          { value: "Percussion", label: "Percussion", group: "Percussion" },
+          { value: "Voice", label: "Voice", group: "Voice" },
+          {
+            value: "All Chamber",
+            label: "All Chamber",
+            group: "Chamber Music",
+          },
+          {
+            value: "Strings Chamber",
+            label: "Strings Chamber",
+            group: "Chamber Music",
+          },
+          {
+            value: "Woodwind Chamber",
+            label: "Woodwind Chamber",
+            group: "Chamber Music",
+          },
+          {
+            value: "Brass Chamber",
+            label: "Brass Chamber",
+            group: "Chamber Music",
+          },
+          {
+            value: "Mixed Chamber Ensemble",
+            label: "Mixed Chamber Ensemble",
+            group: "Chamber Music",
+          },
+          {
+            value: "Vocal Ensemble",
+            label: "Vocal Ensemble",
+            group: "Chamber Music",
+          },
+          {
+            value: "Piano Duo",
+            label: "Piano Duo",
+            group: "Chamber Music",
+          },
+          {
+            value: "Other Chamber",
+            label: "Other Chamber",
+            group: "Chamber Music",
+          },
+
+          { value: "Conductor", label: "Conductor", group: "Music Direction" },
+          {
+            value: "Repetiteur",
+            label: "Repetiteur",
+            group: "Music Direction",
+          },
+          { value: "Composer", label: "Composer", group: "Composition" },
+          { value: "Arranger", label: "Arranger", group: "Composition" },
+        ]}
+        allowDeselect
+        clearable
+        display={opportunityType === "compositions"}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            genre: e ? e : "",
+          })
+        }
+        value={tempSearchObj.genre ? tempSearchObj.genre : ""}
+      />
+      <DropdownCategory
+        label="Composers"
+        placeholder={`Select Composer`}
+        searchable
+        data={test}
+        allowDeselect
+        clearable
+        display={opportunityType === "compositions"}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            UID: e ? e : "",
+          })
+        }
+        value={tempSearchObj.UID ? tempSearchObj.UID : ""}
+      />
       {/* <DropdownCategory
         label="Winners"
         placeholder={`Select`}
@@ -369,6 +533,7 @@ export function OpportunityFilterForm({
         display={
           opportunityType !== "competitions" &&
           opportunityType !== "admin/recent-posts" &&
+          opportunityType !== "compositions" &&
           opportunityType !== "my-posts"
         }
       />

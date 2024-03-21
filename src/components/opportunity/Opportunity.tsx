@@ -96,8 +96,9 @@ const useStyles = createStyles((theme) => ({
 
 export function Opportunity({ apiEndpoint }: OpportunityProp) {
   const { classes } = useStyles();
-
+  // Get the opportunity type by splitting the type from the current URL
   const opportunityType = useLocation().pathname.slice(1);
+  // Get the current opportunity
   const [currentOpportunity, setCurrentOpportunity] =
     useState<OpportunityItem | null>(null);
   const [displayOpportunityArray, setDisplayOpportunityArray] = useState<
@@ -353,6 +354,110 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     }
   };
 
+  const handleLikeButton = async () => {
+    try {
+      let request1 = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      };
+      console.log(userUid);
+      let likedresponse = await fetch(
+        `${url}/liked/${userUid}/${currentOpportunity?.idposts}`,
+        request1
+      );
+      let jsonLiked = await likedresponse.json();
+      let liked = false;
+      const deepCopyOfObject = JSON.parse(
+        JSON.stringify(jsonLiked.listOfObjects)
+      );
+      if (deepCopyOfObject.length == 1) liked = true;
+      let requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      };
+      // Create a temp opportunity to hold the updated value for the likecount of the current opportunity.
+      let tempCurrentOpportunity = {
+        ...currentOpportunity,
+        likecount:
+          (currentOpportunity?.likecount as number) > 0
+            ? liked
+              ? (currentOpportunity?.likecount as number) - 1
+              : (currentOpportunity?.likecount as number) + 1
+            : 1,
+      };
+      console.log(
+        url +
+          "/posts/like/" +
+          tempCurrentOpportunity.idposts +
+          "/" +
+          tempCurrentOpportunity.likecount
+      );
+      // Update the likecount for the opportunity
+      let response = await fetch(
+        `${url}/posts/like/${tempCurrentOpportunity?.idposts}/${tempCurrentOpportunity?.likecount}`,
+        requestOptions
+      );
+      console.log(response);
+      // If the post was already liked, remove the like entry from the LikedCompositions DB
+      console.log(liked);
+      if (liked) {
+        console.log("removing like");
+        let removeoptions = {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        };
+        let removelike = await fetch(
+          `${url}/removeliked/${userUid}/${tempCurrentOpportunity.idposts}`,
+          removeoptions
+        );
+      }
+      // Else add the entry to the LikedCompositions DB
+      else {
+        console.log("adding like");
+        let addliked = await fetch(
+          `${url}/addliked/${userUid}/${tempCurrentOpportunity.idposts}`,
+          requestOptions
+        );
+      }
+      // let responseJson = await response.json();
+      // console.log("put like response: ", responseJson.listOfObjects[0]);
+
+      setCurrentOpportunity(tempCurrentOpportunity);
+
+      let tempDisplayOpportunityArray = displayOpportunityArray;
+
+      for (let i = 0; i < tempDisplayOpportunityArray.length; i++) {
+        if (
+          tempDisplayOpportunityArray[i].idposts ===
+          tempCurrentOpportunity.idposts
+        ) {
+          tempDisplayOpportunityArray[i] = tempCurrentOpportunity;
+          break;
+        }
+      }
+
+      setDisplayOpportunityArray(tempDisplayOpportunityArray);
+      let Title = "";
+      let Message = "";
+      liked ? (Title = "Composition Uniked") : (Title = "Composition Liked");
+      liked
+        ? (Message = "You unliked this composition.")
+        : (Message = "You Liked this composition!");
+      showNotification({
+        title: Title,
+        message: Message,
+        color: "green",
+      });
+    } catch (err) {
+      console.log(err);
+      showNotification({
+        title: "Error",
+        message: "Something went wrong, please try again later",
+        color: "red",
+      });
+    }
+  };
+
   const handleResetReportCountButton = async () => {
     try {
       let requestOptions = {
@@ -487,6 +592,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     !!searchObj.job_category ||
     !!searchObj.job_type ||
     !!searchObj.type ||
+    !!searchObj.genre ||
     !!searchObj.is_banned ||
     !!searchObj.is_deleted ||
     !!searchObj.is_expired ||
@@ -548,7 +654,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
     } else if (
       opportunityType === "competitions" ||
       opportunityType === "festivals" ||
-      opportunityType === "concerts"
+      opportunityType === "concerts" ||
+      opportunityType === "compositions"
     ) {
       setSearchObj({ ...searchObj, sort: "0" });
     }
@@ -595,6 +702,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
   ));
 
   const isExpired = (endDate: string | number | Date) => {
+    if (opportunityType === "compositions") return false;
     let currDate = new Date();
     return (endDate.valueOf() as number) <= currDate.valueOf();
   };
@@ -781,6 +889,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                   )}
                 </>
               )}
+              {/* navigation bar at the bottom of the data grids */}
               <OpportunityPaginationNavbarContainer
                 align="flex-end"
                 justify="flex-end"
@@ -828,6 +937,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                   handleDeletePost={deleteCurrentPost}
                   handleBanPost={handleBanButton}
                   handleFlagPost={handleFlagButton}
+                  handleLikeButton={handleLikeButton}
                   handleResetReportCount={handleResetReportCountButton}
                   deleteComment={deleteComment}
                 />
@@ -858,6 +968,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
             handleDeletePost={deleteCurrentPost}
             handleBanPost={handleBanButton}
             handleFlagPost={handleFlagButton}
+            handleLikeButton={handleLikeButton}
             handleResetReportCount={handleResetReportCountButton}
             deleteComment={deleteComment}
             // setHelperDeleteComment={setHelperDeleteComment}

@@ -1,14 +1,32 @@
 import { useState, useRef, useEffect } from "react";
-import { createStyles, Container, Title, Text, Image } from "@mantine/core";
+import {
+  createStyles,
+  Container,
+  Title,
+  Text,
+  Image,
+  Button,
+  Badge,
+} from "@mantine/core";
 import { Teeter } from "../animations/AnimateOnHover";
-import { IconScubaMask } from "@tabler/icons";
+import { IconExternalLink, IconScubaMask } from "@tabler/icons";
 import { motion } from "framer-motion";
 import ScubaMask from "../../images/scuba-mask.png";
 import Eyes from "../../images/eyes.png";
 
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { onAuthStateChanged } from "firebase/auth";
+import { FeaturedComposition } from "../../FeaturedComposition";
+import { auth } from "../../Firebase";
+import genreIcon from "../../images/BigMusicNote.png";
+
+let firstPass = true;
 const heroLogo = require("../../images/HeroLogo.png");
 const scubaLogo = require("../../images/scuba-mask.png");
-
+const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
@@ -89,6 +107,10 @@ const useStyles = createStyles((theme) => ({
       fontSize: 22,
     },
   },
+  featuredList: {
+    justifyContent: "center",
+    background: "white",
+  },
 }));
 
 export function Hero() {
@@ -96,6 +118,7 @@ export function Hero() {
   const [rotateDegree, setRotateDegree] = useState(0);
   const [heroImageClick, setHeroImageClick] = useState(0);
   const [displayEasterEgg, setDisplayEasterEgg] = useState(0);
+  const [featuredlist, setList] = useState<FeaturedComposition[]>([]);
 
   function angle(cx: number, cy: number, ex: number, ey: number) {
     const dy = ey - cy;
@@ -123,21 +146,95 @@ export function Hero() {
     setRotateDegree(angleDeg);
     console.log("moving event mouse");
   };
-
+  const getFeaturedList = async () => {
+    let response = await fetch(`${url}/featuredcompositions`);
+    let responseJson = await response.json();
+    const deepCopyOfObject = JSON.parse(
+      JSON.stringify(responseJson.listOfObjects)
+    );
+    let x = deepCopyOfObject.length;
+    let list = new Array<FeaturedComposition>();
+    if (firstPass == true) {
+      for (let i = 0; i < x; i++) {
+        let val = new FeaturedComposition(
+          deepCopyOfObject[i].title,
+          deepCopyOfObject[i].link,
+          deepCopyOfObject[i].first_name,
+          deepCopyOfObject[i].last_name,
+          deepCopyOfObject[i].genre,
+          deepCopyOfObject[i].description
+        );
+        list.push(val);
+      }
+      firstPass = false;
+      setList([...featuredlist, ...list]);
+      console.log(featuredlist);
+    }
+  };
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, async (user) => {
+  //     if (user) {
+  //       try {
+  //         let response = await fetch(`${url}/featuredcompositions`);
+  //         let responseJson = await response.json();
+  //         const deepCopyOfObject = JSON.parse(
+  //           JSON.stringify(responseJson.listOfObjects)
+  //         );
+  //         let x = deepCopyOfObject.length;
+  //         let list = new Array<FeaturedComposition>();
+  //         if (firstPass == true) {
+  //           for (let i = 0; i < x; i++) {
+  //             let val = new FeaturedComposition(
+  //               deepCopyOfObject[i].title,
+  //               deepCopyOfObject[i].link,
+  //               deepCopyOfObject[i].first_name,
+  //               deepCopyOfObject[i].last_name,
+  //               deepCopyOfObject[i].genre,
+  //               deepCopyOfObject[i].description
+  //             );
+  //             list.push(val);
+  //           }
+  //           firstPass = false;
+  //           setList([...featuredlist, ...list]);
+  //           console.log(featuredlist);
+  //         }
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     }
+  //   });
+  // }, []);
   useEffect(() => {
+    getFeaturedList();
     document.addEventListener("mousemove", handleMouseMove);
-
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousemove", handleMouseMove);
 
+  //   return () => {
+  //     document.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, []);
   useEffect(() => {
     if (heroImageClick >= 23) {
       setDisplayEasterEgg(1);
     }
   }, [heroImageClick]);
-
+  var settings = {
+    dots: true,
+    dotsColor: "#00000",
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+  const featuredListStyle = {
+    textalign: "center",
+    backgroundColor: "blue",
+  };
   return (
     <div>
       <Container className={classes.container}>
@@ -250,6 +347,75 @@ export function Hero() {
               ></div>
             </div>
           </motion.div>
+        </div>
+        <div>
+          <h2 style={{ textAlign: "center" }} className={classes.title}>
+            Featured Compositions Of The Week
+          </h2>
+        </div>
+        <div>
+          <section className={classes.featuredList}>
+            <Slider {...settings}>
+              {featuredlist.map((featuredList) => (
+                <div key={featuredList.title}>
+                  <h1 style={{ height: "2px" }}>{featuredList.title}</h1>
+                  <br />
+                  <h3 style={{ height: "2px" }}>
+                    <Badge
+                      leftSection={
+                        // <IconBriefcase
+                        //   size={18}
+                        //   color="#40C057"
+                        //   style={{ marginBottom: "-3px" }}
+                        // />
+                        <img src={genreIcon} width={"20px"} />
+                      }
+                      color="gray"
+                      sx={{
+                        height: "25px",
+                        margin: "3px 5px 3px 0px",
+                      }}
+                    ></Badge>
+                    {featuredList.genre}
+                  </h3>
+                  <br />
+                  {featuredList.awards ? (
+                    <h3 style={{ height: "2px" }}>
+                      Award/s: {featuredList.awards}
+                    </h3>
+                  ) : null}
+                  <h3 style={{ height: "10px" }}>
+                    <a href={featuredList.link} target="blank">
+                      <Button
+                        radius="md"
+                        sx={{
+                          height: 30,
+                          alignSelf: "flex-start",
+                          margin: "15px 0px",
+                        }}
+                        size="md"
+                        rightIcon={
+                          <IconExternalLink style={{ marginLeft: "-5px" }} />
+                        }
+                      >
+                        Link
+                      </Button>
+                    </a>
+                  </h3>
+                  <br />
+                  <h3 style={{ height: "3px" }}>
+                    by {featuredList.firstName} {featuredList.lastName}
+                  </h3>
+                  <br />
+                  <h3 style={{ height: "3px" }}>{featuredList.description}</h3>
+                </div>
+              ))}
+            </Slider>
+            <div style={{ width: "100px" }}>
+              <p style={{ color: "white" }}></p>
+              <br />
+            </div>
+          </section>
         </div>
       </Container>
     </div>

@@ -1,5 +1,6 @@
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { UpdateInfo } from "./pages/UpdateInfo";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Landing } from "./pages/Landing";
 import { About } from "./pages/AboutUs";
@@ -16,6 +17,7 @@ import { RecentPosts } from "./pages/adminView/RecentPosts";
 import { MyPosts } from "./pages/MyPosts";
 import { AnimatePresence } from "framer-motion";
 import { VerifyEmail } from "./pages/VerifyEmail";
+import { Compositions } from "./pages/Compositions";
 import { Reported } from "./pages/adminView/Reported";
 import { News } from "./pages/News";
 import { Blog } from "./pages/Blog";
@@ -31,6 +33,7 @@ export default function AnimatedRoutes() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/updateinfo" element={<UpdateInfo />} />
         <Route path="/about" element={<About />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/jobs" element={<Jobs />} />
@@ -38,6 +41,7 @@ export default function AnimatedRoutes() {
         <Route path="/festivals" element={<Festivals />} />
         <Route path="/admin/reported" element={<Reported />} />
         <Route path="/concerts" element={<Concerts />} />
+        <Route path="/compositions" element={<Compositions />} />
         <Route path="/admin/scrapedPosts" element={<ScrapedPostApproval />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/create-opportunity" element={<CreateOpportunityPage />} />
@@ -46,10 +50,8 @@ export default function AnimatedRoutes() {
         <Route path="/my-posts" element={<MyPosts/>} />
         <Route path="/banned" element={<BannedUser />} />
         <Route path="/verify" element={<VerifyEmail />} />
-
         <Route path="/news" element={<NewsOpportunity apiEndpoint={"news"}/>} />
         <Route path="/blog" element={<Blog />} />
-
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

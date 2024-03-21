@@ -1,13 +1,7 @@
 import React, { useEffect } from "react";
 import { NavBar } from "../components/navigation/NavBar";
 import { navItems } from "../components/navigation/NavItems";
-
-// Team Members Info for each SD Team
-// V2: Fall 2022 - Spring 2023
-// V3: Fall 2023 - Spring 2024
-import { V2TeamMembersInfo } from "../components/about/V2TeamMembersInfo";
-import { V3TeamMembersInfo } from "../components/about/V3TeamMembersInfo";
-
+import { teamMemberInfo } from "../components/about/TeamMemberInfo";
 import { TeamMembers } from "../components/about/TeamMembers";
 
 import {
@@ -16,9 +10,8 @@ import {
   Title,
   Text,
   Image,
-  Group, Tabs,
+  Group,
 } from "@mantine/core";
-
 
 const musicNoteIcon = require("../images/BigMusicNote.png");
 const greenTriangle = require("../images/GreenTriangle.png");
@@ -108,21 +101,17 @@ export function About() {
           top: "80px",
         }}
       />
-
       <Image
         src={String(greenTriangle)}
         style={{ width: "24%", position: "absolute", top: "650px" }}
       />
-
       <Container sx={{ maxWidth: "75vw" }}>
         <div className={classes.inner}>
           <div className={classes.content}>
-
             <Title className={classes.subtitle}>
               Meet the team of talented{" "}
               <span className={classes.greenText}>college students</span> behind
             </Title>
-
             <Group>
               <Title className={classes.title} mt="xl">
                 COMPOSITION:<span className={classes.blueText}>TODAY</span>
@@ -133,22 +122,15 @@ export function About() {
                 mt="xl"
               />
             </Group>
-
             <Text color="dimmed" mt="md" className={classes.subheading}>
               This website was revamped by a group of computer science students
               at the University of Central Florida for their senior design
               project.
             </Text>
-
-            <Tabs aria-label="Senior Design Teams">
-              <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers} />
-            </Tabs>
-
           </div>
         </div>
       </Container>
-
-
+      <TeamMembers teamMembers={teamMemberInfo.teamMembers} />
     </div>
   );
 }

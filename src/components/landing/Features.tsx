@@ -15,6 +15,7 @@ const jobIcon = require("../../images/JobIcon.png");
 const ticketIcon = require("../../images/TicketIcon.png");
 const trophyIcon = require("../../images/TrophyIcon.png");
 const instrumentIcon = require("../../images/InstrumentIcon.png");
+
 const compositionsIcon = require("../../images/CompositionsIcon.png");
 const blogIcon = require("../../images/BlogIcon.png");
 const newsIcon = require("../../images/NewsIcon.png");
@@ -198,16 +199,12 @@ export function Features() {
       style={{ paddingTop: 100, paddingBottom: 100 }}
       className={classes.container}
     >
-
-      {/*Button List of all the Tabs on the Homepage*/}
       <AnimateIn>
         <Title order={2} className={classes.title} align="center" mt="xl">
-          Explore Opportunities and Events on <br />{" "}
+          Explore Opportunities on <br />{" "}
           <span style={{ color: "#90CAF9" }}>Composition Today</span>
         </Title>
       </AnimateIn>
-
-      {/*7x1 Row of the Buttons for each category*/}
       <AnimateIn>
         <Container mb="xl" className={classes.featureContainer}>
           <SimpleGrid
@@ -230,7 +227,6 @@ export function Features() {
           </SimpleGrid>
         </Container>
       </AnimateIn>
-
     </Container>
   );
 }
