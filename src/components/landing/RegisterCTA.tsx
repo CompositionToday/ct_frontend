@@ -9,8 +9,18 @@ import {
   Button,
   SimpleGrid,
 } from "@mantine/core";
+
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { FeaturedComposition } from "../../FeaturedComposition";
+
 import image from "../../images/SignUp.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../Firebase";
+import { IconExternalLink } from "@tabler/icons";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -98,7 +108,6 @@ const musicBars = require("../../images/MusicBars.png");
 export function RegisterCTA() {
   const { classes } = useStyles();
   const navigate = useNavigate();
-
   return (
     <Container className={classes.root}>
       <AnimateIn>

@@ -42,8 +42,10 @@ export interface OpportunityItem {
   deleted_comment?: string;
   fee?: string | number;
   deadline?: Date | string | number | null;
-  is_scraped?: number | null;
   genre?: string | null;
+  // awards?: string | null;
+  hasbeenliked?: boolean;
+  is_scraped?: number | null;
   published_date?: number | string | null;
   hasbeenfeatured?: number | string | boolean | null;
   likecount?: number | string | null;

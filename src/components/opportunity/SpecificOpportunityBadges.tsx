@@ -10,6 +10,8 @@ import {
   IconAlarm,
 } from "@tabler/icons";
 import { Tooltip, Badge } from "@mantine/core";
+import { Opportunity } from "./Opportunity";
+import genreIcon from "../../images/BigMusicNote.png";
 
 interface SpecificOpportunityInfoProp {
   opportunity: OpportunityItem;
@@ -321,6 +323,68 @@ export const SpecificOpportunityBadges = ({
       </>
     );
   }
-
+  if (opportunityType === "compositions") {
+    return (
+      <>
+        {opportunity?.genre && (
+          <Tooltip label="Genre">
+            <Badge
+              leftSection={
+                // <IconBriefcase
+                //   size={18}
+                //   color="#40C057"
+                //   style={{ marginBottom: "-3px" }}
+                // />
+                <img src={genreIcon} width={"20px"} />
+              }
+              color="gray"
+              sx={{
+                height: "25px",
+                margin: "3px 5px 3px 0px",
+              }}
+            >
+              {opportunity?.genre}
+            </Badge>
+          </Tooltip>
+        )}
+        {/* {opportunity?.link && (
+          <Tooltip label="Link">
+            <Badge
+              leftSection={
+                <IconCategory
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {opportunity?.link}
+            </Badge>
+          </Tooltip>
+        )} */}
+        {/* {opportunity?.likecount && (
+          <Tooltip label="Like Count">
+            <Badge
+              leftSection={
+                <IconCategory
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {opportunity?.likecount != "0"
+                ? "Likes: " + opportunity?.likecount
+                : null}
+            </Badge>
+          </Tooltip>
+        )} */}
+      </>
+    );
+  }
   return null;
 };

@@ -19,6 +19,7 @@ import {
   Alert,
   Text,
   Center,
+  createStyles,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -38,7 +39,105 @@ import { openDeletePostModal } from "./modals/DeletePostModal";
 import { openBanPostModal } from "./modals/BanPostModal";
 import { openFlagPostModal } from "./modals/FlagPostModal";
 import { openResetFlagCountPostModal } from "./modals/ResetReportCountModal";
+import { openLikePostModal } from "./modals/LikePostModal";
+import heart from "./likeButton.png";
+import filledHeart from "./filledLike.png";
+import { openComposerModal } from "./modals/ComposerInfoModal";
+import { FeaturedComposition } from "../../FeaturedComposition";
+const useStyles = createStyles((theme) => ({
+  inner: {
+    display: "flex",
+    justifyContent: "space-between",
+    // paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing.xl * 6,
+  },
 
+  content: {
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    flexWrap: "wrap",
+
+    maxWidth: 480,
+    marginRight: theme.spacing.xl * 3,
+
+    [theme.fn.smallerThan("md")]: {
+      maxWidth: "100%",
+      marginRight: 0,
+    },
+  },
+
+  title: {
+    color: theme.colorScheme === "dark" ? theme.white : "#454545",
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontSize: 55,
+    lineHeight: 1.2,
+    fontWeight: 800,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 36,
+    },
+  },
+  control: {
+    [theme.fn.smallerThan("xs")]: {
+      flex: 1,
+    },
+  },
+
+  image: {
+    flex: 1,
+    // maxWidth: "40vw",
+    // marginLeft: 40,
+
+    [theme.fn.smallerThan("md")]: {
+      display: "none",
+    },
+  },
+
+  highlight: {
+    position: "relative",
+    backgroundColor: theme.fn.variant({
+      variant: "light",
+      color: theme.primaryColor,
+    }).background,
+    borderRadius: theme.radius.sm,
+    padding: "4px 12px",
+  },
+
+  textHighlight: {
+    lineHeight: 0,
+  },
+
+  container: {
+    maxWidth: "75vw",
+
+    [theme.fn.smallerThan("md")]: {
+      maxWidth: "85vw",
+    },
+  },
+
+  subheading: {
+    fontSize: 22,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 19,
+    },
+  },
+  text: {
+    fontSize: 15,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 10,
+    },
+  },
+  featuredList: {
+    justifyContent: "center",
+    background: "white",
+  },
+  modalTitle: {
+    fontSize: 25,
+    color: "#228be6",
+  },
+}));
 export function OpportunityInfo({
   apiEndpoint,
   opportunity,
@@ -48,12 +147,16 @@ export function OpportunityInfo({
   handleDeletePost,
   handleBanPost,
   handleFlagPost,
+  handleLikeButton,
   handleResetReportCount,
   deleteComment,
 }: // setHelperDeleteComment,
 OpportunityInfoProp) {
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
+  const { classes } = useStyles();
   const [endDate, setEndDate] = useState(
     typeof opportunity?.end_date === "number"
       ? new Date(opportunity?.end_date)
@@ -64,9 +167,26 @@ OpportunityInfoProp) {
       ? new Date(opportunity?.start_date)
       : new Date()
   );
-
+  const getLiked = async () => {
+    console.log("called getliked");
+    let request1 = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    let likedresponse = await fetch(
+      `${url}/liked/${userUID}/${opportunity?.idposts}`,
+      request1
+    );
+    let jsonLiked = await likedresponse.json();
+    const deepCopyOfObject = JSON.parse(
+      JSON.stringify(jsonLiked.listOfObjects)
+    );
+    console.log(deepCopyOfObject.length);
+    if (deepCopyOfObject.length == 1) setLiked(true);
+    else setLiked(false);
+    console.log(liked);
+  };
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
-
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -108,19 +228,17 @@ OpportunityInfoProp) {
         : new Date()
     );
   }, []);
-
+  useEffect(() => {
+    console.log("Users Uid: ", userUID);
+    console.log("isAdmin: ", isAdmin);
+  }, [userUID, isAdmin]);
   useEffect(() => {
     console.log("start: ", startDate);
     console.log("end: ", endDate);
     console.log(opportunity);
     console.log(typeof opportunity?.end_date);
+    if (userUID != "" && userUID != null) getLiked();
   }, [endDate, startDate, opportunity]);
-
-  useEffect(() => {
-    console.log("Users Uid: ", userUID);
-    console.log("isAdmin: ", isAdmin);
-  }, [userUID, isAdmin]);
-
   if (!opportunity) {
     return (
       <Center sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -261,6 +379,48 @@ OpportunityInfoProp) {
             </ActionIcon>
           </Tooltip>
         </div>
+        <div></div>
+        <div
+          style={{ display: opportunity.UID !== userUID ? "block" : "none" }}
+        >
+          <Tooltip label="Like Composition" withArrow>
+            <ActionIcon
+              color="blue"
+              sx={{
+                height: 30,
+                alignSelf: "flex-start",
+                // display:
+                //   opportunity.UID !== userUID &&
+                //   opportunityType === "composition"
+                //     ? "block"
+                //     : "none",
+              }}
+              onLoad={() => {
+                if (userUID != "" && userUID != null) getLiked();
+                console.log("onLoad called, liked = " + liked);
+              }}
+              disabled={userUID == "" || userUID == null}
+              onClick={async () => {
+                console.log("clicked like button");
+                console.log(liked);
+                openLikePostModal(
+                  opportunity?.title ? opportunity.title : "",
+                  handleLikeButton
+                    ? handleLikeButton
+                    : () => console.log("No like function passed"),
+                  liked
+                );
+              }}
+            >
+              {liked ? (
+                <img src={filledHeart} width={"25px"} />
+              ) : (
+                <img src={heart} width="25px" />
+              )}
+              {/* <IconFlag /> */}
+            </ActionIcon>
+          </Tooltip>
+        </div>
         <div style={{ display: isAdmin ? "block" : "none" }}>
           <Tooltip label="Reset Report Count" withArrow>
             <ActionIcon
@@ -277,6 +437,84 @@ OpportunityInfoProp) {
                     ? handleResetReportCount
                     : () => console.log("No flag function passed")
                 );
+              }}
+            >
+              <IconSquareNumber0 />
+            </ActionIcon>
+          </Tooltip>
+        </div>
+        <div style={{ display: "block" }}>
+          <Tooltip label="Composer Information">
+            <ActionIcon
+              color="blue"
+              sx={{
+                height: 30,
+                alignSelf: "flex-start",
+                display: "block",
+              }}
+              onClick={async () => {
+                // Get the composer information
+                let response = await fetch(
+                  `${url}/getcomposer/${opportunity?.UID}`
+                );
+                let responseJson = await response.json();
+                // Store the information in a parsed object
+                const deepCopyOfObject = JSON.parse(
+                  JSON.stringify(responseJson.listOfObjects)
+                );
+                // Get the list of awards from the composer's submitted songs
+                let awardsresponse = await fetch(
+                  `${url}/getawards/${opportunity?.UID}`
+                );
+                let awardsJson = await awardsresponse.json();
+                // Store the information in a parsed object
+                const awardsDeepCopyOfObject = JSON.parse(
+                  JSON.stringify(awardsJson.listOfObjects)
+                );
+                let awards = new Array<FeaturedComposition>();
+                for (let i = 0; i < awardsDeepCopyOfObject.length; i++) {
+                  awards.push(
+                    new FeaturedComposition(
+                      awardsDeepCopyOfObject[i].title,
+                      awardsDeepCopyOfObject[i].link,
+                      awardsDeepCopyOfObject[i].first_name,
+                      awardsDeepCopyOfObject[i].last_name,
+                      awardsDeepCopyOfObject[i].genre,
+                      awardsDeepCopyOfObject[i].description,
+                      awardsDeepCopyOfObject[i].awards
+                    )
+                  );
+                }
+                // Get the necessary info
+                let fullName =
+                  deepCopyOfObject[0].first_name +
+                  " " +
+                  deepCopyOfObject[0].last_name;
+                // Get the bio and link of the composer
+                // Get the list of awards from the composer's submitted songs
+                let inforesponse = await fetch(
+                  `${url}/userinfo/${opportunity?.UID}`
+                );
+                let infoJson = await inforesponse.json();
+                // Store the information in a parsed object
+                const infoObj = JSON.parse(
+                  JSON.stringify(infoJson.listOfObjects)
+                );
+                let bio = infoObj[0].bio;
+                let link = infoObj[0].link;
+                if (bio == "") bio = null;
+                if (link == "") link = null;
+                console.log("Bio: " + bio + ", Link: " + link);
+                // Open the modal
+                openComposerModal(
+                  opportunity?.UID,
+                  fullName,
+                  awards,
+                  bio,
+                  link,
+                  classes
+                );
+                //opportunity?.title ? opportunity.title : "",
               }}
             >
               <IconSquareNumber0 />
@@ -373,18 +611,6 @@ OpportunityInfoProp) {
           :
           <a></a>
       }
-      {/*<a href={opportunity.link} target="blank">*/}
-
-      {/*  <Button*/}
-      {/*    radius="md"*/}
-      {/*    sx={{ height: 30, alignSelf: "flex-start", margin: "15px 0px" }}*/}
-      {/*    size="md"*/}
-      {/*    rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}*/}
-      {/*  >*/}
-      {/*    {opportunityType === "competitions" || opportunityType === "jobs" ? "Apply" : "More Info"}*/}
-      {/*  </Button>*/}
-
-      {/*</a>*/}
       <DescriptionContainer>
         <Label>{opportunityType === "blog" ? "" : "Description:"}</Label>
         <DescriptionContent>{opportunity.description}</DescriptionContent>

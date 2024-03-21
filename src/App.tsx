@@ -30,7 +30,6 @@ import { BrowserRouter } from "react-router-dom";
 import {useColorScheme, useHotkeys} from "@mantine/hooks";
 import { ColorSchemeProvider, ColorScheme } from '@mantine/core';
 
-
 export default function App() {
     const preferredColorScheme = useColorScheme();
     const [colorScheme, setColorScheme] = useState<ColorScheme>(preferredColorScheme);
@@ -53,8 +52,6 @@ export default function App() {
         onClose={() => console.log("closing page load modal")}
         fullScreen
       >
-
-        {/* This is the loading screen when the website is first loaded */}
         <LoadingOverlay
           visible={loading}
           overlayOpacity={1}

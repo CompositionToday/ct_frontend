@@ -13,6 +13,7 @@ export interface OpportunityInfoProp {
   handleDeletePost?: () => void;
   handleBanPost?: () => void;
   handleFlagPost?: () => void;
+  handleLikeButton?: () => void;
   handleResetReportCount?: () => void;
   deleteComment: React.MutableRefObject<string>;
   // setHelperDeleteComment: React.Dispatch<React.SetStateAction<string>>;

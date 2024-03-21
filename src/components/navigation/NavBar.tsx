@@ -239,29 +239,6 @@ export function NavBar({ links }: HeaderActionProps) {
   const DisplayBurger: React.FC = () => {
     return (
       <Menu.Dropdown>
-
-        <Menu.Item
-            className={cx(classes.menuLink, {
-              [classes.linkActive]: active === "/news",
-            })}
-            onClick={() => {
-              navigate("/news");
-            }}
-        >
-          News
-        </Menu.Item>
-
-        <Menu.Item
-            className={cx(classes.menuLink, {
-              [classes.linkActive]: active === "/blog",
-            })}
-            onClick={() => {
-              navigate("/blog");
-            }}
-        >
-          Blog
-        </Menu.Item>
-
         <Menu.Item
           className={cx(classes.menuLink, {
             [classes.linkActive]: active === "/jobs",
@@ -272,7 +249,6 @@ export function NavBar({ links }: HeaderActionProps) {
         >
           Jobs
         </Menu.Item>
-
         <Menu.Item
           className={cx(classes.menuLink, {
             [classes.linkActive]: active === "/competitions",
@@ -283,7 +259,6 @@ export function NavBar({ links }: HeaderActionProps) {
         >
           Competitions
         </Menu.Item>
-
         <Menu.Item
           className={cx(classes.menuLink, {
             [classes.linkActive]: active === "/festivals",
@@ -294,7 +269,6 @@ export function NavBar({ links }: HeaderActionProps) {
         >
           Festivals
         </Menu.Item>
-
         <Menu.Item
           className={cx(classes.menuLink, {
             [classes.linkActive]: active === "/concerts",
@@ -305,7 +279,16 @@ export function NavBar({ links }: HeaderActionProps) {
         >
           Concerts
         </Menu.Item>
-
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/compositions",
+          })}
+          onClick={() => {
+            navigate("/compositions");
+          }}
+        >
+          Compositions
+        </Menu.Item>
         <Menu.Divider />
 
         {signedIn ? (
@@ -344,7 +327,6 @@ export function NavBar({ links }: HeaderActionProps) {
     return (
       <>
         <Menu.Label>Posts</Menu.Label>
-
         <Menu.Item
           className={cx(classes.menuLink, {
             [classes.linkActive]: active === "/my-posts",
@@ -355,7 +337,6 @@ export function NavBar({ links }: HeaderActionProps) {
         >
           My Posts
         </Menu.Item>
-
         <Menu.Item
           className={cx(classes.menuLink, {
             [classes.linkActive]: active === "/create-opportunity",
@@ -366,19 +347,6 @@ export function NavBar({ links }: HeaderActionProps) {
         >
           Create a Post
         </Menu.Item>
-
-        {/*Dropdown Button to User Feedback Survey*/}
-      <Menu.Item
-          className={cx(classes.menuLink, {
-              [classes.linkActive]: active === "/survey",
-          })}
-          onClick={() => {
-              navigate("/survey");
-          }}
-      >
-          User Feedback
-      </Menu.Item>
-
         {userAdmin && (
           <>
             <Menu.Divider />
@@ -438,8 +406,17 @@ export function NavBar({ links }: HeaderActionProps) {
             </Menu.Item>
           </>
         )}
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/updateinfo",
+          })}
+          onClick={() => {
+            navigate("/updateinfo");
+          }}
+        >
+          Update Profile
+        </Menu.Item>
         <Menu.Divider />
-
         <Menu.Item
           style={{ fontSize: "12pt" }}
           color="red"

@@ -52,6 +52,9 @@ export function OpportunityForm({
   const [state, setState] = useState(
     opportunity?.state ? opportunity.state : ""
   );
+  const [genre, setGenre] = useState(
+    opportunity?.genre ? opportunity.genre : ""
+  );
   const [dateRange, setDateRange] = useState<DateRangePickerValue>([
     opportunity && opportunity?.start_date
       ? new Date(opportunity?.start_date)
@@ -103,6 +106,8 @@ export function OpportunityForm({
         : new Date(getCurrentDate()),
       city: city,
       state: state,
+      genre: opportunity?.genre || "",
+      awards: opportunity?.awards || "",
       end_date: opportunity?.end_date ? new Date(opportunity?.end_date) : null,
       salary: +(opportunity?.salary as number) || "",
       job_category: opportunity?.job_category || "",
@@ -129,7 +134,8 @@ export function OpportunityForm({
       organization: (value) =>
         value.trim() ||
         opportunityType === "festivals" ||
-        opportunityType === "concerts"
+        opportunityType === "concerts" ||
+        opportunityType === "compositions"
           ? value.trim().length <= 100
             ? null
             : "Please shorten the organization"
@@ -147,7 +153,8 @@ export function OpportunityForm({
             : "Please shorten the description"
           : "Please give a description",
       end_date: (value: Date | string) => {
-        if (opportunityType !== "festivals") {
+        if (opportunityType === "compositions") {
+        } else if (opportunityType !== "festivals") {
           if (value && (value.valueOf() as number) < getCurrentDate()) {
             return "Please choose today's or a future date";
           } else if (!value) {
@@ -237,6 +244,7 @@ export function OpportunityForm({
   const competitionOpportunityKey = ["winner", "competition_category", "fee"];
   const concertOpportunityKey = ["address", "start_time"];
   const festivalOpportunityKey = ["start_date", "address", "fee", "deadline"];
+  const compositionsOpportunityKey = ["genre", "awards"];
 
   // FIXME: When creating the request object, need to make sure that we use keyword
   // instead of explicitly using title and organization
@@ -285,6 +293,10 @@ export function OpportunityForm({
       opportunityKeys = essentialOpportunityKey.concat(concertOpportunityKey);
     } else if (opportunityType === "festivals") {
       opportunityKeys = essentialOpportunityKey.concat(festivalOpportunityKey);
+    } else if (opportunityType === "compositions") {
+      opportunityKeys = essentialOpportunityKey.concat(
+        compositionsOpportunityKey
+      );
     }
 
     let req: OpportunityItem = {};
@@ -351,7 +363,7 @@ export function OpportunityForm({
 
     req.date_posted = getCurrentDate();
     console.log("fee type:", req.fee, typeof req.fee, req);
-
+    console.log("test");
     handleSubmission(req);
   };
 
@@ -385,7 +397,10 @@ export function OpportunityForm({
   useEffect(() => {
     console.log(opportunityType);
 
-    if (opportunityType === "competitions") {
+    if (
+      opportunityType === "competitions" ||
+      opportunityType === "compositions"
+    ) {
       setCity("Remote");
       setState("Remote");
     } else if (pageLoaded) {
@@ -394,7 +409,9 @@ export function OpportunityForm({
     }
 
     setPageLoaded(true);
-    setDisplayLocationInput(opportunityType !== "competitions");
+    setDisplayLocationInput(
+      opportunityType !== "competitions" && opportunityType !== "compositions"
+    );
     setDisplayLocationError(false);
   }, [opportunityType]);
 
@@ -435,7 +452,7 @@ export function OpportunityForm({
               <TextInputFullWidth
                 label={opportunityType === 'blog' ? "Author" : "Organization"}
                 placeholder="Organization"
-                display={opportunityType !== 'blog'}
+                display={opportunityType !== 'blog' && opportunityType !== "compositions"}
                 withAsterisk={
                   opportunityType !== "festivals" &&
                   opportunityType !== "concerts"
@@ -767,6 +784,162 @@ export function OpportunityForm({
               ]}
               {...form.getInputProps("competition_category")}
             />
+            <DropdownCategory
+              label="Genre"
+              placeholder={`Select composition genre`}
+              withAsterisk
+              display={opportunityType === "compositions"}
+              searchable
+              data={[
+                {
+                  value: "Multiple Categories",
+                  label: "Multiple Categories",
+                },
+                {
+                  value: "All Woodwind",
+                  label: "All Woodwind",
+                  group: "Woodwind",
+                },
+                { value: "Flute", label: "Flute", group: "Woodwind" },
+                { value: "Folk Flute", label: "Folk Flute", group: "Woodwind" },
+                { value: "Oboe", label: "Oboe", group: "Woodwind" },
+                { value: "Clarinet", label: "Clarinet", group: "Woodwind" },
+                { value: "Bassoon", label: "Bassoon", group: "Woodwind" },
+                { value: "Saxophone", label: "Saxophone", group: "Woodwind" },
+                { value: "Recorder", label: "Recorder", group: "Woodwind" },
+                {
+                  value: "Other Woodwind",
+                  label: "Other Woodwind",
+                  group: "Woodwind",
+                },
+
+                { value: "All Brass", label: "All Brass", group: "Brass" },
+                { value: "French Horn", label: "French Horn", group: "Brass" },
+                { value: "Trumpet", label: "Trumpet", group: "Brass" },
+                { value: "Trombone", label: "Trombone", group: "Brass" },
+                { value: "Tuba", label: "Tuba", group: "Brass" },
+                { value: "Euphonium", label: "Euphonium", group: "Brass" },
+                { value: "Other Brass", label: "Other Brass", group: "Brass" },
+
+                {
+                  value: "All Strings",
+                  label: "All Strings",
+                  group: "Strings",
+                },
+                { value: "Violin", label: "Violin", group: "Strings" },
+                {
+                  value: "Folk Fiddle",
+                  label: "Folk Fiddle",
+                  group: "Strings",
+                },
+                { value: "Viola", label: "Viola", group: "Strings" },
+                { value: "Cello", label: "Cello", group: "Strings" },
+                {
+                  value: "Double Bass",
+                  label: "Double Bass",
+                  group: "Strings",
+                },
+                { value: "Harp", label: "Harp", group: "Strings" },
+                { value: "Guitar", label: "Guitar", group: "Strings" },
+                {
+                  value: "Early Guitar",
+                  label: "Early Guitar",
+                  group: "Strings",
+                },
+                { value: "Lute", label: "Lute", group: "Strings" },
+                { value: "Theorbo", label: "Theorbo", group: "Strings" },
+                {
+                  value: "Other Strings",
+                  label: "Other Strings",
+                  group: "Strings",
+                },
+
+                {
+                  value: "All Keyboard",
+                  label: "All Keyboard",
+                  group: "Keyboard",
+                },
+                { value: "Piano", label: "Piano", group: "Keyboard" },
+                {
+                  value: "Piano Accompaniment",
+                  label: "Piano Accompaniment",
+                  group: "Keyboard",
+                },
+                { value: "Organ", label: "Organ", group: "Keyboard" },
+                {
+                  value: "Harpsichord",
+                  label: "Harpsichord",
+                  group: "Keyboard",
+                },
+                { value: "Accordian", label: "Accordian", group: "Keyboard" },
+                {
+                  value: "Other Keyboard",
+                  label: "Other Keyboard",
+                  group: "Keyboard",
+                },
+
+                {
+                  value: "Percussion",
+                  label: "Percussion",
+                  group: "Percussion",
+                },
+                { value: "Voice", label: "Voice", group: "Voice" },
+                {
+                  value: "All Chamber",
+                  label: "All Chamber",
+                  group: "Chamber Music",
+                },
+                {
+                  value: "Strings Chamber",
+                  label: "Strings Chamber",
+                  group: "Chamber Music",
+                },
+                {
+                  value: "Woodwind Chamber",
+                  label: "Woodwind Chamber",
+                  group: "Chamber Music",
+                },
+                {
+                  value: "Brass Chamber",
+                  label: "Brass Chamber",
+                  group: "Chamber Music",
+                },
+                {
+                  value: "Mixed Chamber Ensemble",
+                  label: "Mixed Chamber Ensemble",
+                  group: "Chamber Music",
+                },
+                {
+                  value: "Vocal Ensemble",
+                  label: "Vocal Ensemble",
+                  group: "Chamber Music",
+                },
+                {
+                  value: "Piano Duo",
+                  label: "Piano Duo",
+                  group: "Chamber Music",
+                },
+                {
+                  value: "Other Chamber",
+                  label: "Other Chamber",
+                  group: "Chamber Music",
+                },
+
+                {
+                  value: "Conductor",
+                  label: "Conductor",
+                  group: "Music Direction",
+                },
+                {
+                  value: "Repetiteur",
+                  label: "Repetiteur",
+                  group: "Music Direction",
+                },
+                { value: "Composer", label: "Composer", group: "Composition" },
+                { value: "Arranger", label: "Arranger", group: "Composition" },
+              ]}
+              {...form.getInputProps("genre")}
+            />
             <EndDateInput
               placeholder="Submission Deadline"
               label="Submission Deadline"
@@ -781,7 +954,11 @@ export function OpportunityForm({
               label={
                 opportunityType !== "concerts" ? "Application Deadline" : "Date"
               }
-              display={opportunityType !== "festivals" && opportunityType !== "blog"}
+              display={
+                opportunityType !== "festivals" &&
+                opportunityType !== "compositions" &&
+                opportunityType !== "blog"
+              }
               withAsterisk={opportunityType !== "jobs"}
               {...form.getInputProps("end_date")}
             />
@@ -807,6 +984,12 @@ export function OpportunityForm({
               withAsterisk
               {...form.getInputProps("link")}
             />
+            <TextInputFullWidth
+              label="Awards (if any)"
+              placeholder="Awards"
+              display
+              {...form.getInputProps("awards")}
+            />
             <DescriptionInput
               label="Description"
               placeholder="Description"
@@ -826,56 +1009,58 @@ export function OpportunityForm({
               justify="center"
               sx={{ marginBottom: "20px" }}
             >
-
-              <Group>
-                <Button
-                  type="submit"
-                  onClick={() => {
-                    if (
-                      opportunityType === "concerts" ||
-                      opportunityType === "festivals"
-                    ) {
-                      setDisplayLocationError(true);
-                    }
+              <Button
+                type="submit"
+                onClick={() => {
+                  if (
+                    opportunityType === "concerts" ||
+                    opportunityType === "festivals"
+                  ) {
+                    setDisplayLocationError(true);
+                  }
+                  if (opportunityType !== "compositions") {
                     setDisplayDateRangeError(true);
                     setDisplayStartTimeError(true);
-                    // console.log(form.isValid());
-                    // console.log(form.isValid("title"));
-                    // console.log(form.isValid("organization"));
-                    // console.log(form.isValid("link"));
-                    // console.log(form.isValid("description"));
-                    // console.log(form.isValid("end_date"));
-                    // console.log(form.isValid("salary"));
-                    // console.log(form.isValid("job_category"));
-                    // console.log(form.isValid("job_type"));
-                    // console.log(form.isValid("job_type"));
-                    // console.log(form.isValid("competition_category"));
-                    // console.log(form.isValid("address"));
-                    // console.log(form.isValid("fee"));
-                    //
-                    // console.log(displayLocationError);
-                    // console.log(displayDateRangeError);
-                  }}
-                >
-                  Submit
-                </Button>
+                  }
+                  console.log(
+                    "Is the org valid: " + form.isValid("organization")
+                  );
+                  console.log(
+                    "Is the end date valid: " + form.isValid("end_date")
+                  );
+                  console.log("Is the salary valid: " + form.isValid("salary"));
+                  console.log(
+                    "Is the job cat valid: " + form.isValid("job_category")
+                  );
+                  console.log(
+                    "Is the job type valid: " + form.isValid("job_type")
+                  );
+                  //console.log(form.isValid("job_type"));
+                  console.log(
+                    "Is the comp cat valid: " +
+                      form.isValid("competition_category")
+                  );
+                  console.log(
+                    "Is the address valid: " + form.isValid("address")
+                  );
+                  console.log("Is the fee valid: " + form.isValid("fee"));
+                  console.log("Is the form valid: " + form.isValid());
+                  console.log("Is the title valid: " + form.isValid("title"));
+                  if (opportunityType === "compositions")
+                    console.log("Is the genre valid: " + form.isValid("genre"));
+                  console.log("Is the link valid: " + form.isValid("link"));
+                  console.log(
+                    "Is the desc valid: " + form.isValid("description")
+                  );
+                  console.log(form.errors);
 
-                {/*<Button*/}
-                {/*    color={"red"}*/}
-                {/*    onClick={() => {*/}
-                {/*      if (*/}
-                {/*          opportunityType === "concerts" ||*/}
-                {/*          opportunityType === "festivals"*/}
-                {/*      ) {*/}
-                {/*        setDisplayLocationError(true);*/}
-                {/*      }*/}
-                {/*      setDisplayDateRangeError(true);*/}
-                {/*      setDisplayStartTimeError(true);*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*  Cancel*/}
-                {/*</Button>*/}
-              </Group>
+                  if (opportunityType !== "compositions")
+                    console.log(displayLocationError);
+                  console.log(displayDateRangeError);
+                }}
+              >
+                Submit
+              </Button>
             </SubmitButtonContainer>
 
           </form>
