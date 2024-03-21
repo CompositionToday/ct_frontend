@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Grid, Flex, Button, TextInput, ActionIcon } from "@mantine/core";
+import {Grid, Flex, Button, TextInput, ActionIcon, useMantineTheme} from "@mantine/core";
 import { DateRangePickerValue } from "@mantine/dates";
+
 
 // FIXME: Need to get rid of or make optional title and organization here
 export interface OpportunityItem {
@@ -120,12 +121,15 @@ export const OpportunityRightColumnContainer = styled(Grid.Col)`
 `;
 
 export const OpportunityCard = styled.div<PaginationCard>`
-  border-bottom: 1px solid;
+  border-bottom: 2px solid;
   // width: 100%;
   padding-left: 25px;
   padding-right: 10px;
   padding-bottom: 15px;
-  background-color: ${(props) => (props.selected ? "#e2f0fe" : "auto")};
+  background-color: ${(props) => (props.selected ?
+      (useMantineTheme().colorScheme === "dark" ? useMantineTheme().colors.dark[4] : '#e2f0fe')
+      : 'auto')
+  };
   border-top-left-radius: 8px;
   // overflow-wrap: break-word;
   // word-wrap: break-word;
@@ -153,6 +157,6 @@ export const SearchBar = styled(TextInput)<GridContainer>`
 
 export const OpportunityPaginationNavbarContainer = styled(Flex)`
   margin: auto;
-  background: "white";
+  //background: "white";
   flex-grow: 1;
 `;

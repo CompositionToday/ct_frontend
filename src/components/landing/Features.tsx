@@ -7,7 +7,7 @@ import {
   Card,
   SimpleGrid,
   Container,
-  Image,
+  Image, useMantineTheme,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 
@@ -59,7 +59,8 @@ const mockdata = [
 ];
 
 const useStyles = createStyles((theme) => ({
-  title: {
+  title:
+      {
     fontSize: 32,
     fontWeight: 900,
     letterSpacing: 2,
@@ -92,6 +93,10 @@ const useStyles = createStyles((theme) => ({
     height: 200,
     border: `10px solid #228BE6`,
     borderStyle: "double",
+    backgroundColor:
+        theme.colorScheme === "dark"
+            ? theme.colors.dark[6]
+            : 'white',
 
     "&:hover": {
       border: `6px solid #90CAF9`,
@@ -108,7 +113,11 @@ const useStyles = createStyles((theme) => ({
     width: "100%",
     fontSize: 18,
     fontWeight: 500,
-    color: "#454545",
+    // color: "#454545",
+    color:
+        theme.colorScheme === "dark"
+            ? theme.colors.dark[0]
+            : theme.colors.gray[7],
     textAlign: "center",
 
     [theme.fn.smallerThan("sm")]: {
@@ -174,6 +183,7 @@ const useStyles = createStyles((theme) => ({
 export function Features() {
   const { classes } = useStyles();
   const navigate = useNavigate();
+  const theme = useMantineTheme();
 
   const features = mockdata.map((feature) => (
     <Container className={classes.feature}>

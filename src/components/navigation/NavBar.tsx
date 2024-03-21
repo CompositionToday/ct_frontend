@@ -2,18 +2,20 @@ import { useState, useEffect } from "react";
 import { auth } from "../../Firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import {
-  createStyles,
-  Header,
-  Container,
-  Group,
-  Button,
-  Burger,
-  Image,
-  Menu,
+    createStyles,
+    Header,
+    Container,
+    Group,
+    Button,
+    Burger,
+    Image,
+    Menu, Grid,
 } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IconUserCircle } from "@tabler/icons";
 import { useMediaQuery } from "@mantine/hooks";
+import { useMantineTheme } from '@mantine/core';
+import { ToggleThemeButton } from '../button/ToogleThemeButton'
 
 const musicNoteIcon = require("../../images/MusicNote.png");
 
@@ -86,7 +88,11 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    color: "#454545",
+  color:
+      theme.colorScheme === "dark"
+          ? theme.colors.gray[0]
+          : "#454545",
+    // color: "#454545",
     fontSize: 18,
     textDecoration: "none",
     fontWeight: 600,
@@ -95,6 +101,10 @@ const useStyles = createStyles((theme) => ({
       fontSize: 14,
     },
   },
+
+  // button: {
+  //     color:theme.colorScheme === "dark" ? theme.colors.gray[0] : "#454545"
+  // },
 
   grayText: {
     color: "#454545",
@@ -157,6 +167,7 @@ export function NavBar({ links }: HeaderActionProps) {
   const [userAdmin, setUserAdmin] = useState(false);
 
   const [active, setActive] = useState("/");
+  const theme = useMantineTheme();
 
   const items = links.map((link) => {
     return (
@@ -284,7 +295,7 @@ export function NavBar({ links }: HeaderActionProps) {
           <DisplaySignedIn />
         ) : (
           <>
-            {/* <Menu.Label>Account</Menu.Label> */}
+             {/*<Menu.Label>Account</Menu.Label>*/}
             <Menu.Item
               className={cx(classes.menuLink, {
                 [classes.linkActive]: active === "/login",
@@ -295,6 +306,7 @@ export function NavBar({ links }: HeaderActionProps) {
             >
               Login
             </Menu.Item>
+
             <Menu.Item
               className={cx(classes.menuLink, {
                 [classes.linkActive]: active === "/register",
@@ -423,14 +435,19 @@ export function NavBar({ links }: HeaderActionProps) {
   const DisplayMenuButton: React.FC = () => {
     return signedIn ? (
       <Group>
-        <Menu shadow="md" width={150} withArrow>
+
+          <ToggleThemeButton/>
+
+          <Menu shadow="md" width={150} withArrow>
           <Menu.Target>
             <Button
               variant="subtle"
               sx={{ height: 30 }}
               size="md"
               leftIcon={<IconUserCircle />}
-              color="gray.7"
+              color={theme.colorScheme === "dark" ? 'dark.0' : 'gray.7'}
+              className = "hiName"
+
             >
               Hi, {userFirstName}
             </Button>
@@ -442,7 +459,10 @@ export function NavBar({ links }: HeaderActionProps) {
       </Group>
     ) : (
       <Group style={{ paddingRight: 25 }} className={classes.links}>
-        <Button
+
+          <ToggleThemeButton/>
+
+          <Button
           variant="subtle"
           sx={{ height: 30 }}
           size="md"
@@ -453,11 +473,12 @@ export function NavBar({ links }: HeaderActionProps) {
         >
           Login
         </Button>
+
         <Button
           radius="md"
           sx={{ height: 30 }}
           size="md"
-          // variant="gradient"
+          variant={theme.colorScheme==='dark'?'outline':'filled'}
           // gradient={{ from: 'green', to: 'blue', deg: 60 }}
           onClick={() => {
             navigate("/register");
@@ -507,13 +528,21 @@ export function NavBar({ links }: HeaderActionProps) {
                 setOpened(false);
               }}
             >
-              <Menu.Target>
-                <Burger
-                  opened={opened}
-                  onClick={() => setOpened((o) => !o)}
-                  size="sm"
-                />
-              </Menu.Target>
+                <Grid justify="flex-end" align="center">
+                    <Grid.Col span={"auto"}>
+                        <ToggleThemeButton/>
+                    </Grid.Col>
+
+                    <Grid.Col span={"auto"}>
+                        <Menu.Target>
+                            <Burger
+                                opened={opened}
+                                onClick={() => setOpened((o) => !o)}
+                                size="sm"
+                            />
+                        </Menu.Target>
+                    </Grid.Col>
+                </Grid>
               <DisplayBurger />
             </Menu>
           ) : (

@@ -32,6 +32,7 @@ import {
     Tooltip,
     Grid,
     Button,
+    useMantineTheme,useMantineColorScheme
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -95,7 +96,11 @@ const useStyles = createStyles((theme) => ({
 
     a: {
         color: "green"
-    }
+    },
+    // Right Side of Opportunity --> Main Body
+    leftColContainer: {
+        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : "white"
+    },
 }));
 
 export function NewsOpportunity({ apiEndpoint }: OpportunityProp) {
@@ -657,7 +662,7 @@ export function NewsOpportunity({ apiEndpoint }: OpportunityProp) {
                         radius="lg"
                         zIndex={1}
                     />
-                    <OpportunityLeftColumnContainer span={12} medianScreen={smallerScreen}>
+                    <OpportunityLeftColumnContainer className={classes.leftColContainer} span={12} medianScreen={smallerScreen}>
                         <OpportunityLeftColumnContent
                             direction="column"
                             columnGap={0}
