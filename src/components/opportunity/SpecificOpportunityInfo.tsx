@@ -12,8 +12,9 @@ import {
   IconCurrencyDollar,
   IconAlarm,
 } from "@tabler/icons";
-import { Flex, Tooltip } from "@mantine/core";
+import { Badge, Flex, Tooltip } from "@mantine/core";
 import { useEffect } from "react";
+import genreIcon from "../../images/BigMusicNote.png";
 
 interface SpecificOpportunityInfoProp {
   opportunity: OpportunityItem;
@@ -24,6 +25,7 @@ export const SpecificOpportunityInfo = ({
   opportunity,
   opportunityType,
 }: SpecificOpportunityInfoProp) => {
+  console.log(opportunity?.genre);
   if (opportunityType === "competitions") {
     return (
       <Flex direction="column" align="flex-start">
@@ -295,6 +297,60 @@ export const SpecificOpportunityInfo = ({
         {/*    </span>*/}
         {/*  </Flex>*/}
         {/*</Tooltip>*/}
+      </Flex>
+    );
+  }
+  if (opportunityType === "composition") {
+    return (
+      <Flex direction="column" align="flex-start">
+        {opportunity?.title && (
+          <Tooltip label="Title" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconMapPin size={30} color="#40C057" />
+              <Badge
+                style={{
+                  display: "inline",
+                  fontSize: "17px",
+                  margin: "0px 0px 0px 10px",
+                }}
+              >
+                {opportunity?.title}
+              </Badge>
+            </Flex>
+          </Tooltip>
+        )}
+        {opportunity?.genre && (
+          <Tooltip label="Genre" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <Badge
+                leftSection={<img src={genreIcon} width={"20px"} />}
+                color="gray"
+                sx={{
+                  height: "25px",
+                  margin: "3px 5px 3px 0px",
+                }}
+              >
+                {opportunity?.genre}
+              </Badge>
+            </Flex>
+          </Tooltip>
+        )}
+        {opportunity?.link && (
+          <Tooltip label="Link" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconMap2 size={30} color="#40C057" style={{ flexShrink: 0 }} />
+              <span
+                style={{
+                  fontSize: "17px",
+                  marginLeft: "10px",
+                  width: "90%",
+                }}
+              >
+                {opportunity?.link}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
       </Flex>
     );
   }
