@@ -829,7 +829,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                             <Badge sx={{ margin: "15px 5px 3px 0px" }}>
                               {opportunity.type?.substring(
                                 0,
-                                opportunity.type?.length - 1
+                                opportunity.type?.length
                               )}
                             </Badge>
                           )}
@@ -909,7 +909,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
           </OpportunityLeftColumnContainer>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <OpportunityRightColumnContainer span={8}>
-              {loading ? (
+              {loading ?
+              (
                 <Container
                   sx={{
                     margin: "50px 20px",
@@ -919,7 +920,8 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
                 >
                   {rightSkeleton}
                 </Container>
-              ) : (
+              ) :
+              (
                 <OpportunityInfo
                   apiEndpoint={apiEndpoint}
                   opportunity={currentOpportunity}
@@ -996,7 +998,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
         fullScreen={smallerScreen}
         size="60%"
       >
-        <FormHeader>Edit Post</FormHeader>
+        <FormHeader>{opportunityType === 'blog' ? "Edit Blog Post" : "Edit Post"}</FormHeader>
         <OpportunityForm
           edit={true}
           opportunityType={

@@ -68,16 +68,16 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
-        <Tooltip label="Fee" position="top-start">
-          <Flex align="center" sx={{ maxWidth: "100%" }}>
-            <IconCurrencyDollar size={30} color="#40C057" />
-            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-              {opportunity?.fee
-                ? parseFloat(opportunity?.fee as string).toFixed(2)
-                : "Free"}
-            </span>
-          </Flex>
-        </Tooltip>
+        {/*<Tooltip label="Fee" position="top-start">*/}
+        {/*  <Flex align="center" sx={{ maxWidth: "100%" }}>*/}
+        {/*    <IconCurrencyDollar size={30} color="#40C057" />*/}
+        {/*    <span style={{ fontSize: "17px", marginLeft: "10px" }}>*/}
+        {/*      {opportunity?.fee*/}
+        {/*        ? parseFloat(opportunity?.fee as string).toFixed(2)*/}
+        {/*        : "N/A"}*/}
+        {/*    </span>*/}
+        {/*  </Flex>*/}
+        {/*</Tooltip>*/}
       </Flex>
     );
   }
@@ -286,17 +286,17 @@ export const SpecificOpportunityInfo = ({
             </span>
           </Flex>
         </Tooltip>
-        <Tooltip label="Fee" position="top-start">
-          <Flex align="center" sx={{ maxWidth: "100%" }}>
-            <IconCurrencyDollar size={30} color="#40C057" />
-            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-              {/* {opportunity?.fee ? opportunity?.fee : "Free"} */}
-              {opportunity?.fee
-                ? parseFloat(opportunity?.fee as string).toFixed(2)
-                : "Free"}
-            </span>
-          </Flex>
-        </Tooltip>
+        {/*<Tooltip label="Fee" position="top-start">*/}
+        {/*  <Flex align="center" sx={{ maxWidth: "100%" }}>*/}
+        {/*    <IconCurrencyDollar size={30} color="#40C057" />*/}
+        {/*    <span style={{ fontSize: "17px", marginLeft: "10px" }}>*/}
+        {/*      /!* {opportunity?.fee ? opportunity?.fee : "Free"} *!/*/}
+        {/*      {opportunity?.fee*/}
+        {/*        ? parseFloat(opportunity?.fee as string).toFixed(2)*/}
+        {/*        : "N/A"}*/}
+        {/*    </span>*/}
+        {/*  </Flex>*/}
+        {/*</Tooltip>*/}
       </Flex>
     );
   }

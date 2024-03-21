@@ -16,6 +16,10 @@ const ticketIcon = require("../../images/TicketIcon.png");
 const trophyIcon = require("../../images/TrophyIcon.png");
 const instrumentIcon = require("../../images/InstrumentIcon.png");
 
+const compositionsIcon = require("../../images/CompositionsIcon.png");
+const blogIcon = require("../../images/BlogIcon.png");
+const newsIcon = require("../../images/NewsIcon.png");
+
 const mockdata = [
   {
     link: "/jobs",
@@ -36,6 +40,21 @@ const mockdata = [
     link: "/concerts",
     title: "Concerts",
     icon: instrumentIcon,
+  },
+  {
+    link: "/news",
+    title: "News",
+    icon: newsIcon,
+  },
+  {
+    link: "/blog",
+    title: "Blog",
+    icon: blogIcon,
+  },
+  {
+    link: "/competitions",
+    title: "Compositions",
+    icon: compositionsIcon,
   },
 ];
 
@@ -69,8 +88,8 @@ const useStyles = createStyles((theme) => ({
 
   card: {
     borderRadius: "50%",
-    width: 225,
-    height: 225,
+    width: 200,
+    height: 200,
     border: `10px solid #228BE6`,
     borderStyle: "double",
 
@@ -87,7 +106,7 @@ const useStyles = createStyles((theme) => ({
 
   cardTitle: {
     width: "100%",
-    fontSize: 23,
+    fontSize: 18,
     fontWeight: 500,
     color: "#454545",
     textAlign: "center",
@@ -194,7 +213,17 @@ export function Features() {
             className={classes.grid}
             breakpoints={[{ maxWidth: "md", cols: 2 }]}
           >
-            {features}
+            {features.slice(0,4)}
+          </SimpleGrid>
+
+        </Container>
+        <Container mb="xl" className={classes.featureContainer}>
+          <SimpleGrid
+              cols={3}
+              className={classes.grid}
+              breakpoints={[{ maxWidth: "md", cols: 2 }]}
+          >
+            {features.slice(4,7)}
           </SimpleGrid>
         </Container>
       </AnimateIn>

@@ -16,7 +16,10 @@ export function MyPosts() {
         if (!user.emailVerified) {
           navigate("/verify");
         }
-        let temp = `posts/${user.uid}`;
+        console.log('auth = ' + auth.toString());
+        console.log('user = ' + user.toString());
+        let temp = 'posts/'+user.uid;
+        console.log("HERE!");
         setPathName(temp);
       } else {
         navigate("/");

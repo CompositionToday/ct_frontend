@@ -43,8 +43,13 @@ export interface OpportunityItem {
   deadline?: Date | string | number | null;
   genre?: string | null;
   awards?: string | null;
-  likecount?: string | number;
   hasbeenliked?: boolean;
+  is_scraped?: number | null;
+  published_date?: number | string | null;
+  hasbeenfeatured?: number | string | boolean | null;
+  likecount?: number | string | null;
+  writer?: string | number;
+  awards?: string | number | boolean | null;
 }
 
 interface PaginationCard {
