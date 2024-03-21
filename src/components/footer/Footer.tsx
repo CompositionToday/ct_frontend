@@ -5,12 +5,19 @@ import {
   Container,
   Group,
   Image,
-  Title,
+  Title, ActionIcon, Space, Button,
 } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 
+//
 const musicNoteIcon = require("../../images/BigMusicNote.png");
 const emailIcon = require("../../images/EmailIcon.png");
+const iosIcon = require("../../images/AppStore.png");
+const androidIcon = require("../../images/GooglePlay.png");
+
+// FIXME: Replace these dummy links with the actual ones once avaiblable
+const androidLink = "https://www.serebii.net"
+const iosLink = "https://www.ucf.edu"
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -69,6 +76,11 @@ const useStyles = createStyles((theme) => ({
     width: 160,
   },
 
+  button: {
+    paddingLeft:0,
+    paddingRight:0,
+  },
+
   link: {
     display: "block",
     color:
@@ -110,10 +122,23 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  appLinks: {
+    display: "flex",
+    // justifyContent: "space-between",
+    marginTop: 5,
+    [theme.fn.smallerThan("sm")]: {
+      marginTop: theme.spacing.xs,
+      textAlign: "center",
+    },
+    paddingLeft: 0
+  },
+
   social: {
     [theme.fn.smallerThan("sm")]: {
       marginTop: theme.spacing.xs,
     },
+    paddingLeft:5,
+    paddingRight:5,
   },
 
   blueText: {
@@ -206,18 +231,57 @@ export function Footer({ data }: FooterLinksProps) {
             An online hub for musicians to find jobs, competitions, festivals,
             and concerts.
           </Text>
+
+          <Container className={classes.appLinks}>
+
+            <Text size="sm" color="dimmed" className={classes.description}>
+              Download the app on iOS
+            </Text>
+
+            <Group spacing={0} className={classes.social} position="right" noWrap>
+              <Button
+                  // @ts-ignore
+                  variant="transparent"
+                  className={classes.button}
+                  // @ts-ignore
+                  onClick={()=>window.location=iosLink}
+              >
+                <Image src={String(iosIcon)} className={classes.emailIcon}/>
+              </Button>
+            </Group>
+
+            <Text size="sm" color="dimmed" className={classes.description}>
+              or Android
+            </Text>
+
+            <Group spacing={0} className={classes.social} position="right" noWrap>
+              <Button
+                  // @ts-ignore
+                  variant="transparent"
+                  className={classes.button}
+                  // @ts-ignore
+                  onClick={()=>window.location=androidLink}
+              >
+                <Image src={String(androidIcon)} className={classes.emailIcon} />
+              </Button>
+            </Group>
+
+          </Container>
+
         </div>
         <div className={classes.groups}>{groups}</div>
       </Container>
+
       <Container className={classes.afterFooter}>
         <Text color="dimmed" size="sm">
-          © 2022 Composition Today. All rights reserved.
+          © 2024 Composition Today. All rights reserved.
         </Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
-          <Image src={String(emailIcon)} className={classes.emailIcon} />
+          <Image src={String(emailIcon)} className={classes.emailIcon}/>
         </Group>
       </Container>
+
     </footer>
   );
 }
