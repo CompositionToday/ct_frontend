@@ -42,7 +42,7 @@ export interface OpportunityItem {
   fee?: string | number;
   deadline?: Date | string | number | null;
   genre?: string | null;
-  awards?: string | null;
+  // awards?: string | null;
   hasbeenliked?: boolean;
   is_scraped?: number | null;
   published_date?: number | string | null;

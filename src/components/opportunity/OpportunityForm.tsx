@@ -957,7 +957,7 @@ export function OpportunityForm({
               display={
                 opportunityType !== "festivals" &&
                 opportunityType !== "compositions" &&
-                opportunityType !== "blog
+                opportunityType !== "blog"
               }
               withAsterisk={opportunityType !== "jobs"}
               {...form.getInputProps("end_date")}

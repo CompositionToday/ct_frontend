@@ -610,6 +610,7 @@ OpportunityInfoProp) {
           </a>
           :
           <a></a>
+      }
       <DescriptionContainer>
         <Label>{opportunityType === "blog" ? "" : "Description:"}</Label>
         <DescriptionContent>{opportunity.description}</DescriptionContent>
