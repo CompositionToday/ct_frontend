@@ -52,7 +52,7 @@ const mockdata = [
     icon: blogIcon,
   },
   {
-    link: "/competitions",
+    link: "/compositions",
     title: "Compositions",
     icon: compositionsIcon,
   },

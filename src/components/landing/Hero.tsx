@@ -92,6 +92,11 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 0,
   },
 
+  h3: {
+    height: "2px",
+    color: theme.colorScheme === "dark" ? "#909296" : "#454545",
+  },
+
   container: {
     maxWidth: "75vw",
 
@@ -109,7 +114,7 @@ const useStyles = createStyles((theme) => ({
   },
   featuredList: {
     justifyContent: "center",
-    background: "white",
+    background: theme.colorScheme === "dark" ? theme.colors.dark[7] : "white",
   },
 }));
 
@@ -225,11 +230,14 @@ export function Hero() {
   }, [heroImageClick]);
   var settings = {
     dots: true,
-    dotsColor: "#00000",
+    dotsColor: "00000",
+    centerMode: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    centerPadding: "0px",
+    
   };
   const featuredListStyle = {
     textalign: "center",
@@ -358,9 +366,9 @@ export function Hero() {
             <Slider {...settings}>
               {featuredlist.map((featuredList) => (
                 <div key={featuredList.title}>
-                  <h1 style={{ height: "2px" }}>{featuredList.title}</h1>
+                  <h1 className={classes.h3}>{featuredList.title}</h1>
                   <br />
-                  <h3 style={{ height: "2px" }}>
+                  <h3 className={classes.h3}>
                     <Badge
                       leftSection={
                         // <IconBriefcase
@@ -380,7 +388,7 @@ export function Hero() {
                   </h3>
                   <br />
                   {featuredList.awards ? (
-                    <h3 style={{ height: "2px" }}>
+                    <h3 className={classes.h3}>
                       Award/s: {featuredList.awards}
                     </h3>
                   ) : null}
@@ -393,7 +401,7 @@ export function Hero() {
                           alignSelf: "flex-start",
                           margin: "15px 0px",
                         }}
-                        size="md"
+                        size="sm"
                         rightIcon={
                           <IconExternalLink style={{ marginLeft: "-5px" }} />
                         }
@@ -403,11 +411,11 @@ export function Hero() {
                     </a>
                   </h3>
                   <br />
-                  <h3 style={{ height: "3px" }}>
+                  <h3 className={classes.h3}>
                     by {featuredList.firstName} {featuredList.lastName}
                   </h3>
                   <br />
-                  <h3 style={{ height: "3px" }}>{featuredList.description}</h3>
+                  <h3 className={classes.h3}>{featuredList.description}</h3>
                 </div>
               ))}
             </Slider>

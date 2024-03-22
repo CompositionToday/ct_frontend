@@ -26,6 +26,12 @@ const useStyles = createStyles((theme) => ({
     }`,
   },
 
+  serpLink: {
+    textDecoration:"none",
+    color:"#643dea",
+    fontWeight:700,
+  },
+
   logo: {
     maxWidth: 400,
 
@@ -131,6 +137,10 @@ const useStyles = createStyles((theme) => ({
   emailIcon: {
     maxWidth: 20,
   },
+
+  serpIcon: {
+    maxWidth: 20,
+  },
 }));
 
 interface FooterLinksProps {
@@ -212,6 +222,13 @@ export function Footer({ data }: FooterLinksProps) {
       <Container className={classes.afterFooter}>
         <Text color="dimmed" size="sm">
           © 2022 Composition Today. All rights reserved.
+        </Text>
+
+        <Text color="dimmed" size="sm">
+            Resource for Event Listings:{" "}
+            <a href="https://serpapi.com" target="_blank" className={classes.serpLink}>
+              SerpAPI
+            </a>
         </Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
