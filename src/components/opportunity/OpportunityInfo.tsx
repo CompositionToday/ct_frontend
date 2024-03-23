@@ -389,11 +389,7 @@ OpportunityInfoProp) {
               sx={{
                 height: 30,
                 alignSelf: "flex-start",
-                // display:
-                //   opportunity.UID !== userUID &&
-                //   opportunityType === "composition"
-                //     ? "block"
-                //     : "none",
+                display: opportunityType === "compositions" ? "block" : "none",
               }}
               onLoad={() => {
                 if (userUID != "" && userUID != null) getLiked();
@@ -450,7 +446,7 @@ OpportunityInfoProp) {
               sx={{
                 height: 30,
                 alignSelf: "flex-start",
-                display: "block",
+                display: opportunityType === "compositions" ? "block" : "none",
               }}
               onClick={async () => {
                 // Get the composer information
