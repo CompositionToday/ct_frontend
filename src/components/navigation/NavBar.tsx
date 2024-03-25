@@ -102,10 +102,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  // button: {
-  //     color:theme.colorScheme === "dark" ? theme.colors.gray[0] : "#454545"
-  // },
-
   grayText: {
     color: "#454545",
   },
