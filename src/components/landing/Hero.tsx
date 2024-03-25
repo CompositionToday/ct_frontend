@@ -6,7 +6,7 @@ import {
   Text,
   Image,
   Button,
-  Badge,
+  Badge, Group,
 } from "@mantine/core";
 import { Teeter } from "../animations/AnimateOnHover";
 import { IconExternalLink, IconScubaMask } from "@tabler/icons";
@@ -26,6 +26,8 @@ import genreIcon from "../../images/BigMusicNote.png";
 let firstPass = true;
 const heroLogo = require("../../images/HeroLogo.png");
 const scubaLogo = require("../../images/scuba-mask.png");
+const appStoreButton = require("../../images/iosAppButton.png");
+const googleplayStoreButton = require("../../images/androidAppButton.png");
 const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -95,6 +97,12 @@ const useStyles = createStyles((theme) => ({
   h3: {
     height: "2px",
     color: theme.colorScheme === "dark" ? "#909296" : "#454545",
+  },
+
+  a: {
+    // width:"200px",
+    width:"45%",
+    height:"52px",
   },
 
   container: {
@@ -270,10 +278,66 @@ export function Hero() {
                 Opportunities
               </Text>
             </Title>
+
             <Text color="dimmed" mt="xl" className={classes.subheading}>
               An online hub for musicians to find jobs, competitions, festivals,
               and concerts.
             </Text>
+
+            <Text mt="xl" className={classes.subheading}>
+              Now available on {" "}
+
+              <Text
+                  span
+                  fw={800}
+                  className={classes.textHighlight}
+                  variant="gradient"
+                  gradient={{ from: 'teal', to: 'lime', deg: 45 }}
+              >
+                Android
+              </Text>
+
+
+              {" "} and {" "}
+
+              <Text
+                  span
+                  fw={800}
+                  className={classes.textHighlight}
+                  variant="gradient"
+                  gradient={{ from: 'grape', to: 'indigo', deg: 45 }}
+              >
+                iOS
+              </Text>
+              !
+            </Text>
+
+
+            <Group spacing={"xs"} className={classes.subheading}>
+              <a
+                  href={"https://play.google.com"}
+                  className={classes.a}
+              >
+                <img
+                    src={googleplayStoreButton}
+                    height={"auto"}
+                    width={"100%"}
+                />
+              </a>
+
+              <a
+                  href={"https://www.apple.com/app-store/"}
+                  className={classes.a}
+              >
+                <img
+                    src={appStoreButton}
+                    height={"auto"}
+                    width={"100%"}
+                />
+              </a>
+            </Group>
+
+
           </div>
           <div
             style={{
