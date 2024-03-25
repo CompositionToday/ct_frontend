@@ -484,7 +484,7 @@ export function OpportunityFilterForm({
         data={[
           "Full-time",
           "Part-time",
-          "Contract/Temporary",
+          "Contractor and Temp work",
           "Volunteer",
           "Internship",
         ]}
