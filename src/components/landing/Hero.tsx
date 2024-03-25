@@ -167,22 +167,19 @@ export function Hero() {
     );
     let x = deepCopyOfObject.length;
     let list = new Array<FeaturedComposition>();
-    if (firstPass == true) {
-      for (let i = 0; i < x; i++) {
-        let val = new FeaturedComposition(
-          deepCopyOfObject[i].title,
-          deepCopyOfObject[i].link,
-          deepCopyOfObject[i].first_name,
-          deepCopyOfObject[i].last_name,
-          deepCopyOfObject[i].genre,
-          deepCopyOfObject[i].description
-        );
-        list.push(val);
-      }
-      firstPass = false;
-      setList([...featuredlist, ...list]);
-      console.log(featuredlist);
+    for (let i = 0; i < x; i++) {
+      let val = new FeaturedComposition(
+        deepCopyOfObject[i].title,
+        deepCopyOfObject[i].link,
+        deepCopyOfObject[i].first_name,
+        deepCopyOfObject[i].last_name,
+        deepCopyOfObject[i].genre,
+        deepCopyOfObject[i].description
+      );
+      list.push(val);
     }
+    setList([...featuredlist, ...list]);
+    console.log(featuredlist);
   };
   // useEffect(() => {
   //   onAuthStateChanged(auth, async (user) => {
