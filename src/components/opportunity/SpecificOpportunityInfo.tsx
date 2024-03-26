@@ -88,16 +88,10 @@ export const SpecificOpportunityInfo = ({
         {opportunity?.genre && (
           <Tooltip label="Genre" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
-              <Badge
-                leftSection={<img src={genreIcon} width={"20px"} />}
-                color="gray"
-                sx={{
-                  height: "25px",
-                  margin: "3px 5px 3px 0px",
-                }}
-              >
+              <IconCategory size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
                 {opportunity?.genre}
-              </Badge>
+              </span>
             </Flex>
           </Tooltip>
         )}
@@ -260,16 +254,10 @@ export const SpecificOpportunityInfo = ({
         {opportunity?.genre && (
           <Tooltip label="Genre" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
-              <Badge
-                leftSection={<img src={genreIcon} width={"20px"} />}
-                color="gray"
-                sx={{
-                  height: "25px",
-                  margin: "3px 5px 3px 0px",
-                }}
-              >
+              <IconCategory size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
                 {opportunity?.genre}
-              </Badge>
+              </span>
             </Flex>
           </Tooltip>
         )}
@@ -354,16 +342,10 @@ export const SpecificOpportunityInfo = ({
         {opportunity?.genre && (
           <Tooltip label="Genre" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
-              <Badge
-                leftSection={<img src={genreIcon} width={"20px"} />}
-                color="gray"
-                sx={{
-                  height: "25px",
-                  margin: "3px 5px 3px 0px",
-                }}
-              >
+              <IconCategory size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
                 {opportunity?.genre}
-              </Badge>
+              </span>
             </Flex>
           </Tooltip>
         )}
