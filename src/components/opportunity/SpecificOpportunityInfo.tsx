@@ -232,6 +232,16 @@ export const SpecificOpportunityInfo = ({
   if (opportunityType === "festivals") {
     return (
       <Flex direction="column" align="flex-start">
+        {opportunity?.genre && (
+          <Tooltip label="Genre" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconCategory size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                {opportunity?.genre}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
@@ -248,16 +258,6 @@ export const SpecificOpportunityInfo = ({
                   : `${opportunity.city},
               ${opportunity.state}`}
               </CityState>
-            </Flex>
-          </Tooltip>
-        )}
-        {opportunity?.genre && (
-          <Tooltip label="Genre" position="top-start">
-            <Flex align="center" sx={{ maxWidth: "100%" }}>
-              <IconCategory size={30} color="#40C057" />
-              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-                {opportunity?.genre}
-              </span>
             </Flex>
           </Tooltip>
         )}
