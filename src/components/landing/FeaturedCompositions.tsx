@@ -6,6 +6,7 @@ import {
     Badge,
 } from "@mantine/core";
 import { IconExternalLink, IconScubaMask } from "@tabler/icons";
+// @ts-ignore
 import { useWindowSize } from "@uidotdev/usehooks";
 
 import React from "react";
