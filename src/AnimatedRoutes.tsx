@@ -24,6 +24,7 @@ import { Blog } from "./pages/Blog";
 import {CreateBlogOpportunityPage} from "./pages/CreateBlogOpportunityPage";
 import { ScrapedPostApproval } from "./pages/adminView/ScrapedPostApproval";
 import {NewsOpportunity} from "./components/opportunity/NewsOpportunity";
+import { ScrapedLinks } from "./pages/adminView/ScrapedLinks";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -43,6 +44,7 @@ export default function AnimatedRoutes() {
         <Route path="/concerts" element={<Concerts />} />
         <Route path="/compositions" element={<Compositions />} />
         <Route path="/admin/scrapedPosts" element={<ScrapedPostApproval />} />
+        <Route path="/admin/scrapedLinks" element={<ScrapedLinks />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/create-opportunity" element={<CreateOpportunityPage />} />
         <Route path="/admin/recent-posts" element={<RecentPosts />} />
