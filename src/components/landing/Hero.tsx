@@ -11,7 +11,8 @@ import {
 import { Teeter } from "../animations/AnimateOnHover";
 import { IconExternalLink, IconScubaMask } from "@tabler/icons";
 import { motion } from "framer-motion";
-// import { useWindowSize } from "@uidotdev/usehooks";
+// @ts-ignore
+import { useWindowSize } from "@uidotdev/usehooks";
 import ScubaMask from "../../images/scuba-mask.png";
 import Eyes from "../../images/eyes.png";
 

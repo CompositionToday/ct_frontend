@@ -6,7 +6,9 @@ import {
     Badge,
 } from "@mantine/core";
 import { IconExternalLink, IconScubaMask } from "@tabler/icons";
-// import { useWindowSize } from "@uidotdev/usehooks";
+
+// @ts-ignore
+import { useWindowSize } from "@uidotdev/usehooks";
 
 import React from "react";
 import { FeaturedComposition } from "../../FeaturedComposition";
@@ -231,8 +233,8 @@ export function FeaturedCompositions() {
                                 slideSize="100%"
                                 slideGap="xl"
                                 // @ts-ignore
-                                // controlSize={Math.min(windowSize.width/25,50)}
-                                controlSize={20}
+                                controlSize={Math.min(windowSize.width/25,40)}
+                                // controlSize={20}
                             >
                                 {featuredlist.map((featuredList) => (
                                     <Carousel.Slide
