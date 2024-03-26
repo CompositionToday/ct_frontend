@@ -6,7 +6,7 @@ import {
     Badge,
 } from "@mantine/core";
 import { IconExternalLink, IconScubaMask } from "@tabler/icons";
-import { useWindowSize } from "@uidotdev/usehooks";
+// import { useWindowSize } from "@uidotdev/usehooks";
 
 import React from "react";
 import { FeaturedComposition } from "../../FeaturedComposition";
@@ -120,7 +120,7 @@ export function FeaturedCompositions() {
     const { classes } = useStyles();
     const [heroImageClick, setHeroImageClick] = useState(0);
     const [featuredlist, setList] = useState<FeaturedComposition[]>([]);
-    const windowSize = useWindowSize();
+    // const windowSize = useWindowSize();
 
 
     function angle(cx: number, cy: number, ex: number, ey: number) {
@@ -231,7 +231,8 @@ export function FeaturedCompositions() {
                                 slideSize="100%"
                                 slideGap="xl"
                                 // @ts-ignore
-                                controlSize={Math.min(windowSize.width/25,50)}
+                                // controlSize={Math.min(windowSize.width/25,50)}
+                                controlSize={20}
                             >
                                 {featuredlist.map((featuredList) => (
                                     <Carousel.Slide

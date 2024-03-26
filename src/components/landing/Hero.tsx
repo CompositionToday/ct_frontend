@@ -11,7 +11,7 @@ import {
 import { Teeter } from "../animations/AnimateOnHover";
 import { IconExternalLink, IconScubaMask } from "@tabler/icons";
 import { motion } from "framer-motion";
-import { useWindowSize } from "@uidotdev/usehooks";
+// import { useWindowSize } from "@uidotdev/usehooks";
 import ScubaMask from "../../images/scuba-mask.png";
 import Eyes from "../../images/eyes.png";
 
@@ -26,7 +26,7 @@ import genreIcon from "../../images/BigMusicNote.png";
 import {Carousel} from "@mantine/carousel";
 import {useColorScheme} from "@mantine/hooks";
 
-let firstPass = true;
+// let firstPass = true;
 const heroLogo = require("../../images/HeroLogo.png");
 const scubaLogo = require("../../images/scuba-mask.png");
 const appStoreButton = require("../../images/iosAppButton.png");
@@ -147,7 +147,7 @@ export function Hero() {
   const [displayEasterEgg, setDisplayEasterEgg] = useState(0);
   const [featuredlist, setList] = useState<FeaturedComposition[]>([]);
   const theme = useColorScheme();
-  const windowSize = useWindowSize();
+  // const windowSize = useWindowSize();
 
 
   function angle(cx: number, cy: number, ex: number, ey: number) {
