@@ -292,6 +292,46 @@ export function OpportunityFilterForm({
         value={tempSearchObj.genre ? tempSearchObj.genre : ""}
       />
       <DropdownCategory
+        label="Genre"
+        placeholder={`Select Genre`}
+        searchable
+        data={[
+          { value: "Alternative", label: "Alternative" },
+          { value: "Ballads/Romantic", label: "Ballads/Romantic" },
+          { value: "Blues", label: "Blues" },
+          { value: "Children's Music", label: "Children's Music" },
+          { value: "Classical", label: "Classical" },
+          { value: "Country", label: "Country" },
+          { value: "Electronic", label: "Dance/Electronic" },
+          { value: "Folk", label: "Folk" },
+          { value: "Hip-Hop", label: "Hip-Hop" },
+          { value: "Holiday", label: "Holiday" },
+          { value: "Jazz", label: "Jazz" },
+          { value: "Latin", label: "Latin" },
+          { value: "Medieval/Renaissance", label: "Medieval/Renaissance" },
+          { value: "Metal", label: "Metal" },
+          { value: "New Age", label: "New Age" },
+          { value: "Pop", label: "Pop" },
+          { value: "R&B", label: "R&B" },
+          { value: "Rap", label: "Rap" },
+          { value: "Reggae", label: "Reggae" },
+          { value: "Religious", label: "Religious" },
+          { value: "Rock", label: "Rock" },
+          { value: "World", label: "World" },
+          { value: "Other", label: "Other" },
+        ]}
+        allowDeselect
+        clearable
+        display={opportunityType === "concerts"}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            genre: e ? e : "",
+          })
+        }
+        value={tempSearchObj.genre ? tempSearchObj.genre : ""}
+      />
+      <DropdownCategory
         label="Composers"
         placeholder={`Select Composer`}
         searchable
