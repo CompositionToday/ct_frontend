@@ -17,9 +17,6 @@ import ScubaMask from "../../images/scuba-mask.png";
 import Eyes from "../../images/eyes.png";
 
 import React from "react";
-// import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 import { onAuthStateChanged } from "firebase/auth";
 import { FeaturedComposition } from "../../FeaturedComposition";
 import { auth } from "../../Firebase";
