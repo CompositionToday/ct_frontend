@@ -148,7 +148,7 @@ export function Hero() {
   const [displayEasterEgg, setDisplayEasterEgg] = useState(0);
   const [featuredlist, setList] = useState<FeaturedComposition[]>([]);
   const theme = useColorScheme();
-  // const windowSize = useWindowSize();
+  const windowSize = useWindowSize();
 
 
   function angle(cx: number, cy: number, ex: number, ey: number) {

@@ -122,7 +122,7 @@ export function FeaturedCompositions() {
     const { classes } = useStyles();
     const [heroImageClick, setHeroImageClick] = useState(0);
     const [featuredlist, setList] = useState<FeaturedComposition[]>([]);
-    // const windowSize = useWindowSize();
+    const windowSize = useWindowSize();
 
 
     function angle(cx: number, cy: number, ex: number, ey: number) {
