@@ -786,9 +786,11 @@ export function OpportunityForm({
             />
             <DropdownCategory
               label="Genre"
-              placeholder={`Select composition genre`}
+              placeholder={`Select genre`}
               withAsterisk
-              display={opportunityType === "compositions"}
+              display={opportunityType === "compositions" ||
+                        opportunityType === "festivals" ||
+                        opportunityType === "concerts"}
               searchable
               data={[
                 { value: "Alternative", label: "Alternative" },
@@ -797,9 +799,9 @@ export function OpportunityForm({
                 { value: "Children's Music", label: "Children's Music" },
                 { value: "Classical", label: "Classical" },
                 { value: "Country", label: "Country" },
-                { value: "Dance/Electronic", label: "Dance/Electronic" },
+                { value: "Electronic", label: "Electronic" },
                 { value: "Folk", label: "Folk" },
-                { value: "Hip-Hop/Rap", label: "Hip-Hop/Rap" },
+                { value: "Hip-Hop", label: "Hip-Hop" },
                 { value: "Holiday", label: "Holiday" },
                 { value: "Jazz", label: "Jazz" },
                 { value: "Latin", label: "Latin" },
@@ -808,6 +810,7 @@ export function OpportunityForm({
                 { value: "New Age", label: "New Age" },
                 { value: "Pop", label: "Pop" },
                 { value: "R&B", label: "R&B" },
+                { value: "Rap", label: "Rap" },
                 { value: "Reggae", label: "Reggae" },
                 { value: "Religious", label: "Religious" },
                 { value: "Rock", label: "Rock" },

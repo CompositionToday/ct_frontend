@@ -263,7 +263,7 @@ export function OpportunityFilterForm({
           { value: "Children's Music", label: "Children's Music" },
           { value: "Classical", label: "Classical" },
           { value: "Country", label: "Country" },
-          { value: "Electronic", label: "Dance/Electronic" },
+          { value: "Electronic", label: "Electronic" },
           { value: "Folk", label: "Folk" },
           { value: "Hip-Hop", label: "Hip-Hop" },
           { value: "Holiday", label: "Holiday" },
