@@ -85,6 +85,22 @@ export const SpecificOpportunityInfo = ({
   if (opportunityType === "concerts") {
     return (
       <Flex direction="column" align="flex-start">
+        {opportunity?.genre && (
+          <Tooltip label="Genre" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <Badge
+                leftSection={<img src={genreIcon} width={"20px"} />}
+                color="gray"
+                sx={{
+                  height: "25px",
+                  margin: "3px 5px 3px 0px",
+                }}
+              >
+                {opportunity?.genre}
+              </Badge>
+            </Flex>
+          </Tooltip>
+        )}
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
@@ -238,6 +254,22 @@ export const SpecificOpportunityInfo = ({
                   : `${opportunity.city},
               ${opportunity.state}`}
               </CityState>
+            </Flex>
+          </Tooltip>
+        )}
+        {opportunity?.genre && (
+          <Tooltip label="Genre" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <Badge
+                leftSection={<img src={genreIcon} width={"20px"} />}
+                color="gray"
+                sx={{
+                  height: "25px",
+                  margin: "3px 5px 3px 0px",
+                }}
+              >
+                {opportunity?.genre}
+              </Badge>
             </Flex>
           </Tooltip>
         )}

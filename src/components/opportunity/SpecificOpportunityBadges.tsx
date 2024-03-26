@@ -108,6 +108,27 @@ export const SpecificOpportunityBadges = ({
     // Return the date and time
     return (
       <>
+        {opportunity?.genre && (
+          <Tooltip label="Genre">
+            <Badge
+              leftSection={
+                // <IconBriefcase
+                //   size={18}
+                //   color="#40C057"
+                //   style={{ marginBottom: "-3px" }}
+                // />
+                <img src={genreIcon} width={"20px"} />
+              }
+              color="gray"
+              sx={{
+                height: "25px",
+                margin: "3px 5px 3px 0px",
+              }}
+            >
+              {opportunity?.genre}
+            </Badge>
+          </Tooltip>
+        )}
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location">
             <Badge
@@ -240,6 +261,27 @@ export const SpecificOpportunityBadges = ({
     // Return dates and times
     return (
       <>
+        {opportunity?.genre && (
+          <Tooltip label="Genre">
+            <Badge
+              leftSection={
+                // <IconBriefcase
+                //   size={18}
+                //   color="#40C057"
+                //   style={{ marginBottom: "-3px" }}
+                // />
+                <img src={genreIcon} width={"20px"} />
+              }
+              color="gray"
+              sx={{
+                height: "25px",
+                margin: "3px 5px 3px 0px",
+              }}
+            >
+              {opportunity?.genre}
+            </Badge>
+          </Tooltip>
+        )}
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location">
             <Badge
