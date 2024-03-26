@@ -7,13 +7,13 @@ import {
   Title,
   Text,
   Button,
-  SimpleGrid,
+  SimpleGrid, useMantineTheme,
 } from "@mantine/core";
 
 import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import Slider from "react-slick";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 import { FeaturedComposition } from "../../FeaturedComposition";
 
 import image from "../../images/SignUp.png";
@@ -43,7 +43,7 @@ const useStyles = createStyles((theme) => ({
     // color: "#454545",
     // color: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0],
     // color: "white",
-    color: theme.colorScheme === "dark" ? "#FFFFFF" :"#90CAF9",
+    color: theme.colorScheme === "dark" ? "#FFFFFF" :"#228be6",
     [theme.fn.smallerThan("sm")]: {
       fontSize: 22,
     },
@@ -125,8 +125,9 @@ export function RegisterCTA() {
               across.
             </Text>
             <Button
-              variant="outline"
+              variant = {useMantineTheme().colorScheme === "dark" ? "outline" : "filled"}
               size="xl"
+              radius={"lg"}
               mt="xl"
               className={classes.control}
               onClick={() => navigate("/register")}

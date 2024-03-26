@@ -88,7 +88,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-  color:
+      color:
       theme.colorScheme === "dark"
           ? theme.colors.gray[0]
           : "#454545",

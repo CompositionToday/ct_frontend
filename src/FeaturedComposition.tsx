@@ -7,6 +7,7 @@ export class FeaturedComposition {
   genre: string;
   description: string;
   awards?: string | null;
+  backgroundColor?: number | string | null;
   constructor(
     Title: string,
     Link: string,
@@ -14,7 +15,8 @@ export class FeaturedComposition {
     LastName: string,
     genre: string,
     Description: string,
-    awards?: string
+    awards?: string|null,
+    BackgroundColor?: number
   ) {
     this.title = Title;
     this.link = Link;
@@ -22,6 +24,7 @@ export class FeaturedComposition {
     this.lastName = LastName;
     this.genre = genre;
     this.description = Description;
+    this.backgroundColor = BackgroundColor;
     if (typeof awards !== "undefined") this.awards = awards;
   }
 }

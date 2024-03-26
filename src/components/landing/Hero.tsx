@@ -5,23 +5,26 @@ import {
   Title,
   Text,
   Image,
-  Button,
-  Badge, Group,
+  Button, Badge, Group, useMantineTheme, useMantineColorScheme,
+
 } from "@mantine/core";
 import { Teeter } from "../animations/AnimateOnHover";
 import { IconExternalLink, IconScubaMask } from "@tabler/icons";
 import { motion } from "framer-motion";
+import { useWindowSize } from "@uidotdev/usehooks";
 import ScubaMask from "../../images/scuba-mask.png";
 import Eyes from "../../images/eyes.png";
 
 import React from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import Slider from "react-slick";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 import { onAuthStateChanged } from "firebase/auth";
 import { FeaturedComposition } from "../../FeaturedComposition";
 import { auth } from "../../Firebase";
 import genreIcon from "../../images/BigMusicNote.png";
+import {Carousel} from "@mantine/carousel";
+import {useColorScheme} from "@mantine/hooks";
 
 let firstPass = true;
 const heroLogo = require("../../images/HeroLogo.png");
@@ -64,10 +67,21 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  card: {
+    color: theme.colorScheme === "dark" ? theme.white : "#454545",
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    borderRadius:"md",
+    textAlign:"center",
+  },
+
   control: {
     [theme.fn.smallerThan("xs")]: {
       flex: 1,
     },
+  },
+
+  carousel: {
+    backgroundColor:theme.colorScheme === "dark" ? theme.colors.gray[0] : "#454545"
   },
 
   image: {
@@ -132,6 +146,9 @@ export function Hero() {
   const [heroImageClick, setHeroImageClick] = useState(0);
   const [displayEasterEgg, setDisplayEasterEgg] = useState(0);
   const [featuredlist, setList] = useState<FeaturedComposition[]>([]);
+  const theme = useColorScheme();
+  const windowSize = useWindowSize();
+
 
   function angle(cx: number, cy: number, ex: number, ey: number) {
     const dy = ey - cy;
@@ -152,10 +169,6 @@ export function Hero() {
 
     const angleDeg = angle(mouseX, mouseY, anchorX, anchorY);
 
-    // const eyes = document.querySelectorAll<HTMLElement>(`.eye`);
-    // eyes.forEach((eye) => {
-    //   eye.style.transform! = `rotate(${90 + angleDeg}deg)`;
-    // });
     setRotateDegree(angleDeg);
     console.log("moving event mouse");
   };
@@ -167,53 +180,22 @@ export function Hero() {
     );
     let x = deepCopyOfObject.length;
     let list = new Array<FeaturedComposition>();
-    for (let i = 0; i < x; i++) {
-      let val = new FeaturedComposition(
-        deepCopyOfObject[i].title,
-        deepCopyOfObject[i].link,
-        deepCopyOfObject[i].first_name,
-        deepCopyOfObject[i].last_name,
-        deepCopyOfObject[i].genre,
-        deepCopyOfObject[i].description
-      );
-      list.push(val);
-    }
+      for (let i = 0; i < x; i++) {
+        let val = new FeaturedComposition(
+          deepCopyOfObject[i].title,
+          deepCopyOfObject[i].link,
+          deepCopyOfObject[i].first_name,
+          deepCopyOfObject[i].last_name,
+          deepCopyOfObject[i].genre,
+          deepCopyOfObject[i].description,
+  null,
+  i%2
+        );
+        list.push(val);
+      }
     setList([...featuredlist, ...list]);
-    console.log(featuredlist);
   };
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, async (user) => {
-  //     if (user) {
-  //       try {
-  //         let response = await fetch(`${url}/featuredcompositions`);
-  //         let responseJson = await response.json();
-  //         const deepCopyOfObject = JSON.parse(
-  //           JSON.stringify(responseJson.listOfObjects)
-  //         );
-  //         let x = deepCopyOfObject.length;
-  //         let list = new Array<FeaturedComposition>();
-  //         if (firstPass == true) {
-  //           for (let i = 0; i < x; i++) {
-  //             let val = new FeaturedComposition(
-  //               deepCopyOfObject[i].title,
-  //               deepCopyOfObject[i].link,
-  //               deepCopyOfObject[i].first_name,
-  //               deepCopyOfObject[i].last_name,
-  //               deepCopyOfObject[i].genre,
-  //               deepCopyOfObject[i].description
-  //             );
-  //             list.push(val);
-  //           }
-  //           firstPass = false;
-  //           setList([...featuredlist, ...list]);
-  //           console.log(featuredlist);
-  //         }
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     }
-  //   });
-  // }, []);
+
   useEffect(() => {
     getFeaturedList();
     document.addEventListener("mousemove", handleMouseMove);
@@ -221,33 +203,13 @@ export function Hero() {
       document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
-  // useEffect(() => {
-  //   document.addEventListener("mousemove", handleMouseMove);
 
-  //   return () => {
-  //     document.removeEventListener("mousemove", handleMouseMove);
-  //   };
-  // }, []);
   useEffect(() => {
     if (heroImageClick >= 23) {
       setDisplayEasterEgg(1);
     }
   }, [heroImageClick]);
-  var settings = {
-    dots: true,
-    dotsColor: "00000",
-    centerMode: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    centerPadding: "0px",
-    
-  };
-  const featuredListStyle = {
-    textalign: "center",
-    backgroundColor: "blue",
-  };
+
   return (
     <div>
       <Container className={classes.container}>
@@ -314,6 +276,7 @@ export function Hero() {
               <a
                   href={"https://play.google.com"}
                   className={classes.a}
+                  style={{paddingTop:"2%"}}
               >
                 <img
                     src={googleplayStoreButton}
@@ -325,6 +288,7 @@ export function Hero() {
               <a
                   href={"https://www.apple.com/app-store/"}
                   className={classes.a}
+                  style={{paddingTop:"2%"}}
               >
                 <img
                     src={appStoreButton}
@@ -387,7 +351,7 @@ export function Hero() {
             >
               <div
                 style={{
-                  background: "black",
+                  background: useMantineTheme().colorScheme === "dark" ? "white" : "black",
                   borderRadius: "10px",
                   padding: "0.45vw",
                 }}
@@ -408,7 +372,7 @@ export function Hero() {
             >
               <div
                 style={{
-                  background: "black",
+                  background: useMantineTheme().colorScheme === "dark" ? "white" : "black",
                   borderRadius: "10px",
                   padding: "0.45vw",
                 }}
@@ -416,75 +380,6 @@ export function Hero() {
               ></div>
             </div>
           </motion.div>
-        </div>
-        <div>
-          <h2 style={{ textAlign: "center" }} className={classes.title}>
-            Featured Compositions Of The Week
-          </h2>
-        </div>
-        <div>
-          <section className={classes.featuredList}>
-            <Slider {...settings}>
-              {featuredlist.map((featuredList) => (
-                <div key={featuredList.title}>
-                  <h1 className={classes.h3}>{featuredList.title}</h1>
-                  <br />
-                  <h3 className={classes.h3}>
-                    <Badge
-                      leftSection={
-                        // <IconBriefcase
-                        //   size={18}
-                        //   color="#40C057"
-                        //   style={{ marginBottom: "-3px" }}
-                        // />
-                        <img src={genreIcon} width={"20px"} />
-                      }
-                      color="gray"
-                      sx={{
-                        height: "25px",
-                        margin: "3px 5px 3px 0px",
-                      }}
-                    ></Badge>
-                    {featuredList.genre}
-                  </h3>
-                  <br />
-                  {featuredList.awards ? (
-                    <h3 className={classes.h3}>
-                      Award/s: {featuredList.awards}
-                    </h3>
-                  ) : null}
-                  <h3 style={{ height: "10px" }}>
-                    <a href={featuredList.link} target="blank">
-                      <Button
-                        radius="md"
-                        sx={{
-                          height: 30,
-                          alignSelf: "flex-start",
-                          margin: "15px 0px",
-                        }}
-                        size="sm"
-                        rightIcon={
-                          <IconExternalLink style={{ marginLeft: "-5px" }} />
-                        }
-                      >
-                        Link
-                      </Button>
-                    </a>
-                  </h3>
-                  <br />
-                  <h3 className={classes.h3}>
-                    by {featuredList.firstName} {featuredList.lastName}
-                  </h3>
-                  <br />
-                  <h3 className={classes.h3}>{featuredList.description}</h3>
-                </div>
-              ))}
-            </Slider>
-            <div style={{ width: "100px" }}>
-              <p style={{ color: "white" }}></p>
-              <br />
-            </div>
-          </section>
         </div>
       </Container>
     </div>
