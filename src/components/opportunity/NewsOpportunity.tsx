@@ -738,6 +738,7 @@ export function NewsOpportunity({ apiEndpoint }: OpportunityProp) {
                                                             {opportunity.title}
                                                         </OpportunityLinkTitle>
                                                     </OpportunityTitle>
+
                                                     <p
                                                         style={{
                                                             fontSize: "14px",
@@ -746,7 +747,14 @@ export function NewsOpportunity({ apiEndpoint }: OpportunityProp) {
                                                     >
                                                         {
                                                         (opportunity.writer !== null && opportunity.writer !== 'Unknown') ?
-                                                            opportunity.writer + " | " + opportunity.organization:
+
+                                                            new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(Number(opportunity.published_date))
+                                                            + "  |  " + opportunity.writer + "  |  " + opportunity.organization
+
+                                                            :
+
+                                                            new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(Number(opportunity.published_date))
+                                                            + " | " +
                                                             opportunity.organization
                                                         }
                                                         {/*{opportunity.link}*/}
