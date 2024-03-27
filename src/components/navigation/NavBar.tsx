@@ -235,6 +235,26 @@ export function NavBar({ links }: HeaderActionProps) {
   const DisplayBurger: React.FC = () => {
     return (
       <Menu.Dropdown>
+      <Menu.Item
+          className={cx(classes.menuLink, {
+              [classes.linkActive]: active === "/news",
+          })}
+          onClick={() => {
+              navigate("/news");
+          }}
+      >
+          News
+      </Menu.Item>
+      <Menu.Item
+          className={cx(classes.menuLink, {
+              [classes.linkActive]: active === "/blog",
+          })}
+          onClick={() => {
+              navigate("/blog");
+          }}
+      >
+          Blog
+      </Menu.Item>
         <Menu.Item
           className={cx(classes.menuLink, {
             [classes.linkActive]: active === "/jobs",
