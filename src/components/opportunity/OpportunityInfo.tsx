@@ -389,7 +389,11 @@ OpportunityInfoProp) {
               sx={{
                 height: 30,
                 alignSelf: "flex-start",
-                display: opportunityType === "compositions" ? "block" : "none",
+                display: opportunityType === "compositions" &&
+                  userUID !== null &&
+                  userUID !== ""
+                    ? "block"
+                    : "none",
               }}
               onLoad={() => {
                 if (userUID != "" && userUID != null) getLiked();
