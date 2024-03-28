@@ -1,7 +1,6 @@
 import { AnimateIn } from "../animations/AnimateOnScroll";
 import { Teeter } from "../animations/AnimateOnHover";
 
-
 import {
   createStyles,
   Title,
@@ -189,22 +188,24 @@ export function Features() {
 
   const features = mockdata.map((feature) => (
     <Container className={classes.feature}>
-      <Teeter rotation={5} timing={120}>
-        <Card
-            key={feature.title}
-            shadow="md"
-            className={classes.card}
-            p="xl"
-            onClick={() => navigate(feature.link)}
-        >
-          <Container className={classes.featureCards}>
+      <Card
+        key={feature.title}
+        shadow="md"
+        className={classes.card}
+        p="xl"
+        onClick={() => navigate(feature.link)}
+      >
+        <Container className={classes.featureCards}>
+
+          <Teeter rotation={10} timing={120}>
             <Image src={String(feature.icon)} className={classes.image} />
-            <Text className={classes.cardTitle} mt="md">
-              {feature.title}
-            </Text>
-          </Container>
-        </Card>
-      </Teeter>
+          </Teeter>
+
+          <Text className={classes.cardTitle} mt="md">
+            {feature.title}
+          </Text>
+        </Container>
+      </Card>
     </Container>
   ));
   return (
