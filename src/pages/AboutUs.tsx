@@ -17,6 +17,7 @@ import {
   Image,
   Group, Tabs, Menu,
 } from "@mantine/core";
+import {TeamMembers} from "../components/about/TeamMembers";
 
 const musicNoteIcon = require("../images/BigMusicNote.png");
 const greenTriangle = require("../images/GreenTriangle.png");
@@ -164,15 +165,11 @@ export function About() {
                       <TeamMembers teamMembers={V3TeamMembersInfo.teamMembers}/>
                     </AnimateIn>
                   </Tabs.Panel>
-
-
-
               </Tabs.List>
             </Tabs>
           </div>
         </div>
       </Container>
-      <TeamMembers teamMembers={teamMemberInfo.teamMembers} />
     </div>
   );
 }
