@@ -8,6 +8,7 @@ import {
   Title,
 } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
+import { IconBrandTwitter } from '@tabler/icons';
 
 const musicNoteIcon = require("../../images/BigMusicNote.png");
 const emailIcon = require("../../images/EmailIcon.png");
@@ -21,9 +22,15 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === "dark"
         ? theme.colors.dark[6]
         : theme.colors.gray[0],
-    borderTop: `1px solid ${
+    borderTop: `2px solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
+  },
+
+  serpLink: {
+    textDecoration:"none",
+    color:"#643dea",
+    fontWeight:700,
   },
 
   logo: {
@@ -131,6 +138,10 @@ const useStyles = createStyles((theme) => ({
   emailIcon: {
     maxWidth: 20,
   },
+
+  serpIcon: {
+    maxWidth: 20,
+  },
 }));
 
 interface FooterLinksProps {
@@ -201,6 +212,20 @@ export function Footer({ data }: FooterLinksProps) {
               className={classes.image}
               mt="xl"
             />
+            <a
+                target="_blank" href={"https://twitter.com/Composition2Day"}
+                style={{
+                  marginTop:"24px",
+                  marginLeft:"12px",
+                  textDecoration:"none",
+                  color:"#1da1f2",
+                  fontWeight:700,
+                }}
+            >
+              <IconBrandTwitter
+                  stroke={2}
+              />
+            </a>
           </Group>
           <Text size="sm" color="dimmed" className={classes.description}>
             An online hub for musicians to find jobs, competitions, festivals,
@@ -211,7 +236,14 @@ export function Footer({ data }: FooterLinksProps) {
       </Container>
       <Container className={classes.afterFooter}>
         <Text color="dimmed" size="sm">
-          © 2022 Composition Today. All rights reserved.
+          © 2024 Composition Today. All rights reserved.
+        </Text>
+
+        <Text color="dimmed" size="sm">
+            Resource for Event Listings:{" "}
+            <a href="https://serpapi.com" target="_blank" className={classes.serpLink}>
+              SerpAPI
+            </a>
         </Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>

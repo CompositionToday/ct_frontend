@@ -1,14 +1,35 @@
 import { useState, useRef, useEffect } from "react";
-import { createStyles, Container, Title, Text, Image } from "@mantine/core";
+import {
+  createStyles,
+  Container,
+  Title,
+  Text,
+  Image,
+  Button, Badge, Group, useMantineTheme, useMantineColorScheme,
+
+} from "@mantine/core";
 import { Teeter } from "../animations/AnimateOnHover";
-import { IconScubaMask } from "@tabler/icons";
+import { IconExternalLink, IconScubaMask } from "@tabler/icons";
 import { motion } from "framer-motion";
+// @ts-ignore
+import { useWindowSize } from "@uidotdev/usehooks";
 import ScubaMask from "../../images/scuba-mask.png";
 import Eyes from "../../images/eyes.png";
 
+import React from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { FeaturedComposition } from "../../FeaturedComposition";
+import { auth } from "../../Firebase";
+import genreIcon from "../../images/BigMusicNote.png";
+import {Carousel} from "@mantine/carousel";
+import {useColorScheme} from "@mantine/hooks";
+
+// let firstPass = true;
 const heroLogo = require("../../images/HeroLogo.png");
 const scubaLogo = require("../../images/scuba-mask.png");
-
+const appStoreButton = require("../../images/iosAppButton.png");
+const googleplayStoreButton = require("../../images/androidAppButton.png");
+const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
@@ -44,10 +65,21 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  card: {
+    color: theme.colorScheme === "dark" ? theme.white : "#454545",
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    borderRadius:"md",
+    textAlign:"center",
+  },
+
   control: {
     [theme.fn.smallerThan("xs")]: {
       flex: 1,
     },
+  },
+
+  carousel: {
+    backgroundColor:theme.colorScheme === "dark" ? theme.colors.gray[0] : "#454545"
   },
 
   image: {
@@ -74,6 +106,17 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 0,
   },
 
+  h3: {
+    height: "2px",
+    color: theme.colorScheme === "dark" ? "#909296" : "#454545",
+  },
+
+  a: {
+    // width:"200px",
+    width:"45%",
+    height:"52px",
+  },
+
   container: {
     maxWidth: "75vw",
 
@@ -89,6 +132,10 @@ const useStyles = createStyles((theme) => ({
       fontSize: 22,
     },
   },
+  featuredList: {
+    justifyContent: "center",
+    background: theme.colorScheme === "dark" ? theme.colors.dark[7] : "white",
+  },
 }));
 
 export function Hero() {
@@ -96,6 +143,10 @@ export function Hero() {
   const [rotateDegree, setRotateDegree] = useState(0);
   const [heroImageClick, setHeroImageClick] = useState(0);
   const [displayEasterEgg, setDisplayEasterEgg] = useState(0);
+  const [featuredlist, setList] = useState<FeaturedComposition[]>([]);
+  const theme = useColorScheme();
+  const windowSize = useWindowSize();
+
 
   function angle(cx: number, cy: number, ex: number, ey: number) {
     const dy = ey - cy;
@@ -116,17 +167,36 @@ export function Hero() {
 
     const angleDeg = angle(mouseX, mouseY, anchorX, anchorY);
 
-    // const eyes = document.querySelectorAll<HTMLElement>(`.eye`);
-    // eyes.forEach((eye) => {
-    //   eye.style.transform! = `rotate(${90 + angleDeg}deg)`;
-    // });
     setRotateDegree(angleDeg);
     console.log("moving event mouse");
   };
+  const getFeaturedList = async () => {
+    let response = await fetch(`${url}/featuredcompositions`);
+    let responseJson = await response.json();
+    const deepCopyOfObject = JSON.parse(
+      JSON.stringify(responseJson.listOfObjects)
+    );
+    let x = deepCopyOfObject.length;
+    let list = new Array<FeaturedComposition>();
+      for (let i = 0; i < x; i++) {
+        let val = new FeaturedComposition(
+          deepCopyOfObject[i].title,
+          deepCopyOfObject[i].link,
+          deepCopyOfObject[i].first_name,
+          deepCopyOfObject[i].last_name,
+          deepCopyOfObject[i].genre,
+          deepCopyOfObject[i].description,
+  null,
+  i%2
+        );
+        list.push(val);
+      }
+    setList([...featuredlist, ...list]);
+  };
 
   useEffect(() => {
+    getFeaturedList();
     document.addEventListener("mousemove", handleMouseMove);
-
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
     };
@@ -165,10 +235,68 @@ export function Hero() {
                 Opportunities
               </Text>
             </Title>
+
             <Text color="dimmed" mt="xl" className={classes.subheading}>
               An online hub for musicians to find jobs, competitions, festivals,
               and concerts.
             </Text>
+
+            <Text mt="xl" className={classes.subheading}>
+              Now available on {" "}
+
+              <Text
+                  span
+                  fw={800}
+                  className={classes.textHighlight}
+                  variant="gradient"
+                  gradient={{ from: 'teal', to: 'lime', deg: 45 }}
+              >
+                Android
+              </Text>
+
+
+              {" "} and {" "}
+
+              <Text
+                  span
+                  fw={800}
+                  className={classes.textHighlight}
+                  variant="gradient"
+                  gradient={{ from: 'grape', to: 'indigo', deg: 45 }}
+              >
+                iOS
+              </Text>
+              !
+            </Text>
+
+
+            <Group spacing={"xs"} className={classes.subheading}>
+              <a
+                  href={"https://play.google.com"}
+                  className={classes.a}
+                  style={{paddingTop:"2%"}}
+              >
+                <img
+                    src={googleplayStoreButton}
+                    height={"auto"}
+                    width={"100%"}
+                />
+              </a>
+
+              <a
+                  href={"https://www.apple.com/app-store/"}
+                  className={classes.a}
+                  style={{paddingTop:"2%"}}
+              >
+                <img
+                    src={appStoreButton}
+                    height={"auto"}
+                    width={"100%"}
+                />
+              </a>
+            </Group>
+
+
           </div>
           <div
             style={{
@@ -221,7 +349,7 @@ export function Hero() {
             >
               <div
                 style={{
-                  background: "black",
+                  background: useMantineTheme().colorScheme === "dark" ? "white" : "black",
                   borderRadius: "10px",
                   padding: "0.45vw",
                 }}
@@ -242,7 +370,7 @@ export function Hero() {
             >
               <div
                 style={{
-                  background: "black",
+                  background: useMantineTheme().colorScheme === "dark" ? "white" : "black",
                   borderRadius: "10px",
                   padding: "0.45vw",
                 }}

@@ -10,5 +10,8 @@ export const CreateOpportunityContainer = styled.div`
 export const FormHeader = styled.h1`
   text-align: center;
   font-size: 30px;
-  color: #373a40;
+  //color: #373a40;
+  color: {(useMantineTheme().colorScheme === "dark" ? useMantineTheme().colors.dark[4] : '#e2f0fe')}
+};
+  };
 `;

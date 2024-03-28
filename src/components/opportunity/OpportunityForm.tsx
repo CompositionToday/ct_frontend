@@ -16,7 +16,7 @@ import { Location } from "../filter/Location";
 import { auth } from "../../Firebase";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { Paper, Button, createStyles, Checkbox } from "@mantine/core";
+import {Paper, Button, createStyles, Checkbox, Group} from "@mantine/core";
 import { DateRangePickerValue, TimeInput } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
@@ -51,6 +51,9 @@ export function OpportunityForm({
   const [city, setCity] = useState(opportunity?.city ? opportunity.city : "");
   const [state, setState] = useState(
     opportunity?.state ? opportunity.state : ""
+  );
+  const [genre, setGenre] = useState(
+    opportunity?.genre ? opportunity.genre : ""
   );
   const [dateRange, setDateRange] = useState<DateRangePickerValue>([
     opportunity && opportunity?.start_date
@@ -103,6 +106,8 @@ export function OpportunityForm({
         : new Date(getCurrentDate()),
       city: city,
       state: state,
+      genre: opportunity?.genre || "",
+      awards: opportunity?.awards || "",
       end_date: opportunity?.end_date ? new Date(opportunity?.end_date) : null,
       salary: +(opportunity?.salary as number) || "",
       job_category: opportunity?.job_category || "",
@@ -129,7 +134,8 @@ export function OpportunityForm({
       organization: (value) =>
         value.trim() ||
         opportunityType === "festivals" ||
-        opportunityType === "concerts"
+        opportunityType === "concerts" ||
+        opportunityType === "compositions"
           ? value.trim().length <= 100
             ? null
             : "Please shorten the organization"
@@ -147,7 +153,8 @@ export function OpportunityForm({
             : "Please shorten the description"
           : "Please give a description",
       end_date: (value: Date | string) => {
-        if (opportunityType !== "festivals") {
+        if (opportunityType === "compositions") {
+        } else if (opportunityType !== "festivals") {
           if (value && (value.valueOf() as number) < getCurrentDate()) {
             return "Please choose today's or a future date";
           } else if (!value) {
@@ -237,6 +244,7 @@ export function OpportunityForm({
   const competitionOpportunityKey = ["winner", "competition_category", "fee"];
   const concertOpportunityKey = ["address", "start_time"];
   const festivalOpportunityKey = ["start_date", "address", "fee", "deadline"];
+  const compositionsOpportunityKey = ["genre", "awards"];
 
   // FIXME: When creating the request object, need to make sure that we use keyword
   // instead of explicitly using title and organization
@@ -285,6 +293,10 @@ export function OpportunityForm({
       opportunityKeys = essentialOpportunityKey.concat(concertOpportunityKey);
     } else if (opportunityType === "festivals") {
       opportunityKeys = essentialOpportunityKey.concat(festivalOpportunityKey);
+    } else if (opportunityType === "compositions") {
+      opportunityKeys = essentialOpportunityKey.concat(
+        compositionsOpportunityKey
+      );
     }
 
     let req: OpportunityItem = {};
@@ -351,7 +363,7 @@ export function OpportunityForm({
 
     req.date_posted = getCurrentDate();
     console.log("fee type:", req.fee, typeof req.fee, req);
-
+    console.log("test");
     handleSubmission(req);
   };
 
@@ -385,7 +397,10 @@ export function OpportunityForm({
   useEffect(() => {
     console.log(opportunityType);
 
-    if (opportunityType === "competitions") {
+    if (
+      opportunityType === "competitions" ||
+      opportunityType === "compositions"
+    ) {
       setCity("Remote");
       setState("Remote");
     } else if (pageLoaded) {
@@ -394,7 +409,9 @@ export function OpportunityForm({
     }
 
     setPageLoaded(true);
-    setDisplayLocationInput(opportunityType !== "competitions");
+    setDisplayLocationInput(
+      opportunityType !== "competitions" && opportunityType !== "compositions"
+    );
     setDisplayLocationError(false);
   }, [opportunityType]);
 
@@ -433,9 +450,9 @@ export function OpportunityForm({
                 {...form.getInputProps("title")}
               />
               <TextInputFullWidth
-                label="Organization"
+                label={opportunityType === 'blog' ? "Author" : "Organization"}
                 placeholder="Organization"
-                display
+                display={opportunityType !== 'blog' && opportunityType !== "compositions"}
                 withAsterisk={
                   opportunityType !== "festivals" &&
                   opportunityType !== "concerts"
@@ -458,8 +475,7 @@ export function OpportunityForm({
                 data={[
                   "Full-time",
                   "Part-time",
-                  "Contract",
-                  "Temporary",
+                  "Contractor and Temp work",
                   "Volunteer",
                   "Internship",
                 ]}
@@ -592,7 +608,7 @@ export function OpportunityForm({
                 opportunityType === "festivals" ||
                 opportunityType === "concerts"
               }
-              display={displayLocationInput}
+              display={displayLocationInput && opportunityType != 'blog'}
             />
             <StartTimeInput
               label="Start Time"
@@ -768,6 +784,41 @@ export function OpportunityForm({
               ]}
               {...form.getInputProps("competition_category")}
             />
+            <DropdownCategory
+              label="Genre"
+              placeholder={`Select genre`}
+              withAsterisk
+              display={opportunityType === "compositions" ||
+                        opportunityType === "festivals" ||
+                        opportunityType === "concerts"}
+              searchable
+              data={[
+                { value: "Alternative", label: "Alternative" },
+                { value: "Ballads/Romantic", label: "Ballads/Romantic" },
+                { value: "Blues", label: "Blues" },
+                { value: "Children's Music", label: "Children's Music" },
+                { value: "Classical", label: "Classical" },
+                { value: "Country", label: "Country" },
+                { value: "Electronic", label: "Electronic" },
+                { value: "Folk", label: "Folk" },
+                { value: "Hip-Hop", label: "Hip-Hop" },
+                { value: "Holiday", label: "Holiday" },
+                { value: "Jazz", label: "Jazz" },
+                { value: "Latin", label: "Latin" },
+                { value: "Medieval/Renaissance", label: "Medieval/Renaissance" },
+                { value: "Metal", label: "Metal" },
+                { value: "New Age", label: "New Age" },
+                { value: "Pop", label: "Pop" },
+                { value: "R&B", label: "R&B" },
+                { value: "Rap", label: "Rap" },
+                { value: "Reggae", label: "Reggae" },
+                { value: "Religious", label: "Religious" },
+                { value: "Rock", label: "Rock" },
+                { value: "World", label: "World" },
+                { value: "Other", label: "Other" },
+              ]}
+              {...form.getInputProps("genre")}
+            />
             <EndDateInput
               placeholder="Submission Deadline"
               label="Submission Deadline"
@@ -782,7 +833,11 @@ export function OpportunityForm({
               label={
                 opportunityType !== "concerts" ? "Application Deadline" : "Date"
               }
-              display={opportunityType !== "festivals"}
+              display={
+                opportunityType !== "festivals" &&
+                opportunityType !== "compositions" &&
+                opportunityType !== "blog"
+              }
               withAsterisk={opportunityType !== "jobs"}
               {...form.getInputProps("end_date")}
             />
@@ -804,9 +859,15 @@ export function OpportunityForm({
             <TextInputFullWidth
               label="Link"
               placeholder="Link"
-              display
+              display={opportunityType!=='blog'}
               withAsterisk
               {...form.getInputProps("link")}
+            />
+            <TextInputFullWidth
+              label="Awards (if any)"
+              placeholder="Awards"
+              display
+              {...form.getInputProps("awards")}
             />
             <DescriptionInput
               label="Description"
@@ -836,29 +897,51 @@ export function OpportunityForm({
                   ) {
                     setDisplayLocationError(true);
                   }
-                  setDisplayDateRangeError(true);
-                  setDisplayStartTimeError(true);
-                  console.log(form.isValid());
-                  console.log(form.isValid("title"));
-                  console.log(form.isValid("organization"));
-                  console.log(form.isValid("link"));
-                  console.log(form.isValid("description"));
-                  console.log(form.isValid("end_date"));
-                  console.log(form.isValid("salary"));
-                  console.log(form.isValid("job_category"));
-                  console.log(form.isValid("job_type"));
-                  console.log(form.isValid("job_type"));
-                  console.log(form.isValid("competition_category"));
-                  console.log(form.isValid("address"));
-                  console.log(form.isValid("fee"));
+                  if (opportunityType !== "compositions") {
+                    setDisplayDateRangeError(true);
+                    setDisplayStartTimeError(true);
+                  }
+                  console.log(
+                    "Is the org valid: " + form.isValid("organization")
+                  );
+                  console.log(
+                    "Is the end date valid: " + form.isValid("end_date")
+                  );
+                  console.log("Is the salary valid: " + form.isValid("salary"));
+                  console.log(
+                    "Is the job cat valid: " + form.isValid("job_category")
+                  );
+                  console.log(
+                    "Is the job type valid: " + form.isValid("job_type")
+                  );
+                  //console.log(form.isValid("job_type"));
+                  console.log(
+                    "Is the comp cat valid: " +
+                      form.isValid("competition_category")
+                  );
+                  console.log(
+                    "Is the address valid: " + form.isValid("address")
+                  );
+                  console.log("Is the fee valid: " + form.isValid("fee"));
+                  console.log("Is the form valid: " + form.isValid());
+                  console.log("Is the title valid: " + form.isValid("title"));
+                  if (opportunityType === "compositions")
+                    console.log("Is the genre valid: " + form.isValid("genre"));
+                  console.log("Is the link valid: " + form.isValid("link"));
+                  console.log(
+                    "Is the desc valid: " + form.isValid("description")
+                  );
+                  console.log(form.errors);
 
-                  console.log(displayLocationError);
+                  if (opportunityType !== "compositions")
+                    console.log(displayLocationError);
                   console.log(displayDateRangeError);
                 }}
               >
                 Submit
               </Button>
             </SubmitButtonContainer>
+
           </form>
         </OpportunityFormContentContainer>
       </Paper>

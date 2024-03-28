@@ -12,8 +12,9 @@ import {
   IconCurrencyDollar,
   IconAlarm,
 } from "@tabler/icons";
-import { Flex, Tooltip } from "@mantine/core";
+import { Badge, Flex, Tooltip } from "@mantine/core";
 import { useEffect } from "react";
+import genreIcon from "../../images/BigMusicNote.png";
 
 interface SpecificOpportunityInfoProp {
   opportunity: OpportunityItem;
@@ -24,6 +25,7 @@ export const SpecificOpportunityInfo = ({
   opportunity,
   opportunityType,
 }: SpecificOpportunityInfoProp) => {
+  console.log(opportunity?.genre);
   if (opportunityType === "competitions") {
     return (
       <Flex direction="column" align="flex-start">
@@ -66,16 +68,16 @@ export const SpecificOpportunityInfo = ({
             </Flex>
           </Tooltip>
         )}
-        <Tooltip label="Fee" position="top-start">
-          <Flex align="center" sx={{ maxWidth: "100%" }}>
-            <IconCurrencyDollar size={30} color="#40C057" />
-            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-              {opportunity?.fee
-                ? parseFloat(opportunity?.fee as string).toFixed(2)
-                : "Free"}
-            </span>
-          </Flex>
-        </Tooltip>
+        {/*<Tooltip label="Fee" position="top-start">*/}
+        {/*  <Flex align="center" sx={{ maxWidth: "100%" }}>*/}
+        {/*    <IconCurrencyDollar size={30} color="#40C057" />*/}
+        {/*    <span style={{ fontSize: "17px", marginLeft: "10px" }}>*/}
+        {/*      {opportunity?.fee*/}
+        {/*        ? parseFloat(opportunity?.fee as string).toFixed(2)*/}
+        {/*        : "N/A"}*/}
+        {/*    </span>*/}
+        {/*  </Flex>*/}
+        {/*</Tooltip>*/}
       </Flex>
     );
   }
@@ -83,6 +85,16 @@ export const SpecificOpportunityInfo = ({
   if (opportunityType === "concerts") {
     return (
       <Flex direction="column" align="flex-start">
+        {opportunity?.genre && (
+          <Tooltip label="Genre" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconCategory size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                {opportunity?.genre}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
@@ -220,6 +232,16 @@ export const SpecificOpportunityInfo = ({
   if (opportunityType === "festivals") {
     return (
       <Flex direction="column" align="flex-start">
+        {opportunity?.genre && (
+          <Tooltip label="Genre" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconCategory size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                {opportunity?.genre}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
         {opportunity?.city && opportunity?.state && (
           <Tooltip label="Location" position="top-start">
             <Flex align="center" sx={{ maxWidth: "100%" }}>
@@ -284,17 +306,65 @@ export const SpecificOpportunityInfo = ({
             </span>
           </Flex>
         </Tooltip>
-        <Tooltip label="Fee" position="top-start">
-          <Flex align="center" sx={{ maxWidth: "100%" }}>
-            <IconCurrencyDollar size={30} color="#40C057" />
-            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-              {/* {opportunity?.fee ? opportunity?.fee : "Free"} */}
-              {opportunity?.fee
-                ? parseFloat(opportunity?.fee as string).toFixed(2)
-                : "Free"}
-            </span>
-          </Flex>
-        </Tooltip>
+        {/*<Tooltip label="Fee" position="top-start">*/}
+        {/*  <Flex align="center" sx={{ maxWidth: "100%" }}>*/}
+        {/*    <IconCurrencyDollar size={30} color="#40C057" />*/}
+        {/*    <span style={{ fontSize: "17px", marginLeft: "10px" }}>*/}
+        {/*      /!* {opportunity?.fee ? opportunity?.fee : "Free"} *!/*/}
+        {/*      {opportunity?.fee*/}
+        {/*        ? parseFloat(opportunity?.fee as string).toFixed(2)*/}
+        {/*        : "N/A"}*/}
+        {/*    </span>*/}
+        {/*  </Flex>*/}
+        {/*</Tooltip>*/}
+      </Flex>
+    );
+  }
+  if (opportunityType === "composition") {
+    return (
+      <Flex direction="column" align="flex-start">
+        {opportunity?.title && (
+          <Tooltip label="Title" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconMapPin size={30} color="#40C057" />
+              <Badge
+                style={{
+                  display: "inline",
+                  fontSize: "17px",
+                  margin: "0px 0px 0px 10px",
+                }}
+              >
+                {opportunity?.title}
+              </Badge>
+            </Flex>
+          </Tooltip>
+        )}
+        {opportunity?.genre && (
+          <Tooltip label="Genre" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconCategory size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                {opportunity?.genre}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
+        {opportunity?.link && (
+          <Tooltip label="Link" position="top-start">
+            <Flex align="center" sx={{ maxWidth: "100%" }}>
+              <IconMap2 size={30} color="#40C057" style={{ flexShrink: 0 }} />
+              <span
+                style={{
+                  fontSize: "17px",
+                  marginLeft: "10px",
+                  width: "90%",
+                }}
+              >
+                {opportunity?.link}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
       </Flex>
     );
   }

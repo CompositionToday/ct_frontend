@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import { PaginationSearchObject } from "../pagination/PaginationNavbar";
 import { DateRangePickerValue } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
+import { Composer } from "../../FeaturedComposition";
 
 export interface OpportunityFilterFormProp {
   searchObj: PaginationSearchObject;
@@ -19,19 +20,24 @@ export interface OpportunityFilterFormProp {
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
-
+// For filtering
 export function OpportunityFilterForm({
   searchObj,
   setSearchObj,
   keyword,
   setKeyword,
 }: OpportunityFilterFormProp) {
+  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
+  // Declaration of the various search parameters
+  let [test, setTest] = useState([{ value: "", label: "" }]);
   const [city, setCity] = useState(searchObj.city ? searchObj.city : "");
   const [state, setState] = useState(searchObj.state ? searchObj.state : "");
+  const [composersList, setComposersList] = useState<Composer[]>([]);
   const [dateRange, setDateRange] = useState<DateRangePickerValue>([
     searchObj.start_date ? new Date(searchObj.start_date) : null,
     searchObj.end_date ? new Date(searchObj.end_date) : null,
   ]);
+  // Create a temporary obj to use for the search
   const [tempSearchObj, setTempSearchObj] = useState<PaginationSearchObject>({
     keyword: keyword ? keyword : "",
     salary: searchObj.salary,
@@ -52,8 +58,27 @@ export function OpportunityFilterForm({
   const opportunityType = useLocation().pathname.slice(1);
 
   useEffect(() => {
-    console.log("user effect is triggered: ", searchObj);
-    console.log(searchObj);
+    //console.log("user effect is triggered: ", searchObj);
+    //console.log(searchObj);
+    const getComposersList = async () => {
+      //console.log("in composers method");
+      let list = new Array<{ value: string; label: string }>();
+      let composers = await fetch(`${url}/getcomposers`);
+      let composersJson = await composers.json();
+      const deepCopyOfObject = JSON.parse(
+        JSON.stringify(composersJson.listOfObjects)
+      );
+      for (let i = 0; i < deepCopyOfObject.length; i++) {
+        let uid = deepCopyOfObject[i].UID.toString();
+        let firstName = deepCopyOfObject[i].first_name.toString();
+        let lastName = deepCopyOfObject[i].last_name.toString();
+        list.push({ value: uid, label: firstName + " " + lastName });
+        //testing.push({ value: val.UID, label: val.firstName + val.lastName });
+        //setTest([...test, { value: uid, label: firstName + " " + lastName }]);
+      }
+      setTest([...list]);
+    };
+    getComposersList();
   }, [searchObj]);
 
   const getLabel = () => {
@@ -227,6 +252,64 @@ export function OpportunityFilterForm({
             : ""
         }
       />
+      <DropdownCategory
+        label="Genre"
+        placeholder={`Select Genre`}
+        searchable
+        data={[
+          { value: "Alternative", label: "Alternative" },
+          { value: "Ballads/Romantic", label: "Ballads/Romantic" },
+          { value: "Blues", label: "Blues" },
+          { value: "Children's Music", label: "Children's Music" },
+          { value: "Classical", label: "Classical" },
+          { value: "Country", label: "Country" },
+          { value: "Electronic", label: "Electronic" },
+          { value: "Folk", label: "Folk" },
+          { value: "Hip-Hop", label: "Hip-Hop" },
+          { value: "Holiday", label: "Holiday" },
+          { value: "Jazz", label: "Jazz" },
+          { value: "Latin", label: "Latin" },
+          { value: "Medieval/Renaissance", label: "Medieval/Renaissance" },
+          { value: "Metal", label: "Metal" },
+          { value: "New Age", label: "New Age" },
+          { value: "Pop", label: "Pop" },
+          { value: "R&B", label: "R&B" },
+          { value: "Rap", label: "Rap" },
+          { value: "Reggae", label: "Reggae" },
+          { value: "Religious", label: "Religious" },
+          { value: "Rock", label: "Rock" },
+          { value: "World", label: "World" },
+          { value: "Other", label: "Other" },
+        ]}
+        allowDeselect
+        clearable
+        display={opportunityType === "compositions" ||
+                  opportunityType === "festivals" ||
+                  opportunityType === "concerts"}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            genre: e ? e : "",
+          })
+        }
+        value={tempSearchObj.genre ? tempSearchObj.genre : ""}
+      />
+      <DropdownCategory
+        label="Composers"
+        placeholder={`Select Composer`}
+        searchable
+        data={test}
+        allowDeselect
+        clearable
+        display={opportunityType === "compositions"}
+        onChange={(e) =>
+          setTempSearchObj({
+            ...tempSearchObj,
+            UID: e ? e : "",
+          })
+        }
+        value={tempSearchObj.UID ? tempSearchObj.UID : ""}
+      />
       {/* <DropdownCategory
         label="Winners"
         placeholder={`Select`}
@@ -320,8 +403,7 @@ export function OpportunityFilterForm({
         data={[
           "Full-time",
           "Part-time",
-          "Contract",
-          "Temporary",
+          "Contractor and Temp work",
           "Volunteer",
           "Internship",
         ]}
@@ -370,6 +452,7 @@ export function OpportunityFilterForm({
         display={
           opportunityType !== "competitions" &&
           opportunityType !== "admin/recent-posts" &&
+          opportunityType !== "compositions" &&
           opportunityType !== "my-posts"
         }
       />

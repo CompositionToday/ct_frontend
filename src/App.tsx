@@ -27,12 +27,24 @@ import { LoadingOverlay } from "@mantine/core";
 import AnimatedRoutes from "./AnimatedRoutes";
 
 import { BrowserRouter } from "react-router-dom";
+import {useColorScheme, useHotkeys} from "@mantine/hooks";
+import { ColorSchemeProvider, ColorScheme } from '@mantine/core';
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  setTimeout(() => {
+    const preferredColorScheme = useColorScheme();
+    const [colorScheme, setColorScheme] = useState<ColorScheme>(preferredColorScheme);
+    const toggleColorScheme = (value?: ColorScheme) =>
+        setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+    const [loading, setLoading] = useState(true);
+
+
+    useHotkeys([['mod+J', () => toggleColorScheme()]]);
+
+
+    setTimeout(() => {
     setLoading(false);
   }, 2500);
+
   return (
     <>
       <Modal
@@ -40,8 +52,6 @@ export default function App() {
         onClose={() => console.log("closing page load modal")}
         fullScreen
       >
-
-        {/* This is the loading screen when the website is first loaded */}
         <LoadingOverlay
           visible={loading}
           overlayOpacity={1}
@@ -52,24 +62,28 @@ export default function App() {
         />
       </Modal>
 
-      <MantineProvider>
-        <ModalsProvider>
-          <NotificationsProvider>
-            <HashRouter>
+        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+          <MantineProvider theme={{
+              colorScheme: colorScheme,
+          }} withGlobalStyles withNormalizeCSS>
+            <ModalsProvider>
+              <NotificationsProvider>
+                <HashRouter>
 
-                {/* This is the Navbar at the top of every Page*/}
-              <NavBar links={navItems.links} />
+                    {/* This is the Navbar at the top of every Page*/}
+                  <NavBar links={navItems.links} />
 
-                {/*This is the Container with all the event Listings*/}
-              <AnimatedRoutes />
+                    {/*This is the Container with all the event Listings*/}
+                  <AnimatedRoutes />
 
-                {/*This is the footer at the bottom of the Webpage */}
-              <Footer data={footerInfo.data} />
+                    {/*This is the footer at the bottom of the Webpage */}
+                  <Footer data={footerInfo.data} />
 
-            </HashRouter>
-          </NotificationsProvider>
-        </ModalsProvider>
-      </MantineProvider>
+                </HashRouter>
+              </NotificationsProvider>
+            </ModalsProvider>
+          </MantineProvider>
+        </ColorSchemeProvider>
     </>
   );
 }

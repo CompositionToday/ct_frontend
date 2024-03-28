@@ -1,6 +1,5 @@
 export const navItems = {
   links: [
-
     {
       link: "/news",
       label: "News",
@@ -10,25 +9,25 @@ export const navItems = {
       link: "/blog",
       label: "Blog",
     },
-
     {
       link: "/jobs",
       label: "Jobs",
     },
-
     {
       link: "/competitions",
       label: "Competitions",
     },
-
     {
       link: "/festivals",
       label: "Festivals",
     },
-
     {
       link: "/concerts",
       label: "Concerts",
+    },
+    {
+      link: "/compositions",
+      label: "Compositions",
     },
   ],
 };

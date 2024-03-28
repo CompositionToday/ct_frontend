@@ -6,6 +6,7 @@ import { RegisterCTA } from "../components/landing/RegisterCTA";
 import { auth } from "../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { motion } from "framer-motion";
+import {FeaturedCompositions} from "../components/landing/FeaturedCompositions";
 
 export function Landing() {
   // useEffect(() => {
@@ -22,6 +23,8 @@ export function Landing() {
     >
       <Container fluid style={{ padding: 0, marginTop: 120 }}>
         <Hero />
+        <FeaturedCompositions/>
+
         <Container fluid style={{ backgroundColor: "#001E3C" }}>
           <Features />
         </Container>

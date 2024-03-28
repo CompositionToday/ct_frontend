@@ -54,6 +54,9 @@ export interface PaginationSearchObject {
   fee?: string | number;
   sort?: string | number;
   deadline?: Date | string | number;
+  genre?: string;
+  hasbeenfeatured?: boolean;
+  likecount?: number;
 }
 
 export function PaginationNavbar({
@@ -89,9 +92,12 @@ export function PaginationNavbar({
         }
 
         let responseCount = await fetch(countUrl);
-
+        console.log(responseCount);
         let responseCountJson = await responseCount.json();
-        console.log("number of posts count", responseCountJson.count);
+        console.log(
+          "number of " + apiEndpointExtension + " count",
+          responseCountJson.count
+        );
         let numberOfPage = Math.ceil(
           responseCountJson.count / numberOfItemsPerPage
         );

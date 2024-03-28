@@ -13,6 +13,7 @@ export interface OpportunityInfoProp {
   handleDeletePost?: () => void;
   handleBanPost?: () => void;
   handleFlagPost?: () => void;
+  handleLikeButton?: () => void;
   handleResetReportCount?: () => void;
   deleteComment: React.MutableRefObject<string>;
   // setHelperDeleteComment: React.Dispatch<React.SetStateAction<string>>;
@@ -31,6 +32,16 @@ export const OpportunityInfoContainer = styled.div`
 export const OpportunityTitle = styled.h1`
   color: #228be6;
   font-size: 20px;
+  // overflow-wrap: break-word;
+  word-wrap: break-word;
+  text-decoration: none;
+  text-underline: none;
+`;
+
+export const OpportunityLinkTitle = styled.a`
+  color: #228be6;
+  font-size: 20px;
+  text-decoration: none;
   // overflow-wrap: break-word;
   word-wrap: break-word;
 `;
