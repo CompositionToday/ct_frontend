@@ -84,7 +84,8 @@ export function OpportunityFilterForm({
   const getLabel = () => {
     if (opportunityType === "festivals") {
       return "Start Date";
-    } else if (opportunityType === "competitions") {
+    }
+    else if (opportunityType === "competitions") {
       return "Deadline";
     }
     return "Date";
@@ -118,13 +119,44 @@ export function OpportunityFilterForm({
         onChange={(e) =>
           setTempSearchObj({
             ...tempSearchObj,
-            sort: e && e !== "-1" ? e : "",
+            sort: e && e !== "-1" ? e : "0",
           })
         }
         value={
           (tempSearchObj.sort as string) ? (tempSearchObj.sort as string) : ""
         }
       />
+
+        <DropdownCategory
+            label="Sort By"
+            placeholder={`Select`}
+            allowDeselect
+            clearable
+            display={
+                opportunityType === "news" ||
+                opportunityType === "blog"
+            }
+            data={[
+                {
+                    value: "0",
+                    label: "Newest",
+                },
+                {
+                    value: "1",
+                    label: "Oldest",
+                },
+            ]}
+            onChange={(e) =>
+                setTempSearchObj({
+                    ...tempSearchObj,
+                    sort: e && e !== "-1" ? e : "",
+                })
+            }
+            value={
+                (tempSearchObj.sort as string) ? (tempSearchObj.sort as string) : ""
+            }
+        />
+
       <DropdownCategory
         label="Competition Category"
         placeholder={`Select competition category`}
@@ -453,7 +485,9 @@ export function OpportunityFilterForm({
           opportunityType !== "competitions" &&
           opportunityType !== "admin/recent-posts" &&
           opportunityType !== "compositions" &&
-          opportunityType !== "my-posts"
+          opportunityType !== "my-posts" &&
+          opportunityType !== "blog" &&
+          opportunityType !== "news"
         }
       />
       <SalaryInput
