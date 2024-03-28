@@ -3,7 +3,7 @@ import {
     createStyles,
     Container,
     Button,
-    Badge,
+    Badge, ScrollArea,
 } from "@mantine/core";
 import { IconExternalLink, IconScubaMask } from "@tabler/icons";
 
@@ -97,6 +97,21 @@ const useStyles = createStyles((theme) => ({
         color: "#EEEEEE",
     },
 
+    link: {
+        color: "#90caf9",
+        textDecoration: "underline",
+        textDecorationColor:"#90caf9"
+    },
+
+    cardSubHeading:{
+        color:"#90caf9"
+    },
+
+    h4: {
+        height: "2px",
+        fontSize: 12
+    },
+
     container: {
         maxWidth: "75vw",
 
@@ -112,6 +127,7 @@ const useStyles = createStyles((theme) => ({
             fontSize: 22,
         },
     },
+
     featuredList: {
         justifyContent: "center",
         background: theme.colorScheme !== "dark" ? theme.colors.dark[7] : "white",
@@ -247,63 +263,80 @@ export function FeaturedCompositions() {
                                             // backgroundColor:featuredList.backgroundColor == 0 ? useMantineTheme().colors.dark[6] : useMantineTheme().colors.dark[7],
                                         }}
                                     >
-                                        <div key={featuredList.title} className={classes.card}>
+                                        <ScrollArea
+                                            h={250}
+                                            scrollbarSize={4}
+                                            type="hover"
+                                            scrollHideDelay={100}
+                                            styles={{
+                                                scrollbar: {
+                                                    color:"#EEEEEE",
+                                                    thumbColor:"#EEEEEE",
+                                                    '&[data-orientation="vertical"] .mantine-ScrollArea-thumb': {
+                                                        backgroundColor: "#90caf9",
+                                                    },
+                                                    '&[data-orientation="horizontal"] .mantine-ScrollArea-thumb': {
+                                                        backgroundColor: "transparent",
+                                                    },
+                                                },
+                                            }}
+                                        >
+                                            <div key={featuredList.title} className={classes.card}>
 
-                                            {/*<p>{featuredList.backgroundColor}</p>*/}
-                                            <h1 className={classes.h3}>{featuredList.title}</h1>
-                                            <br/>
-
-                                            <h3 className={classes.h3}>
-                                                <Badge
-                                                    leftSection={
-                                                        <img src={genreIcon} width={"20px"} />
-                                                    }
-                                                    color="gray"
-                                                    sx={{
-                                                        height: "25px",
-                                                        margin: "3px 5px 3px 0px",
-                                                    }}
-                                                ></Badge>
-                                                {featuredList.genre}
-                                            </h3>
-
-                                            <br/>
-
-                                            {featuredList.awards ? (
-                                                <h3 className={classes.h3}>
-                                                    Award/s: {featuredList.awards}
-                                                </h3>
-                                            ) : null }
-
-                                            <h3 style={{ height: "10px" }}>
-                                                <a href={featuredList.link} target="blank">
-                                                    <Button
-                                                        radius="md"
-                                                        sx={{
-                                                            height: 30,
-                                                            alignSelf: "flex-start",
-                                                            margin: "15px 0px",
-                                                        }}
-                                                        size="sm"
-                                                        rightIcon={
-                                                            <IconExternalLink style={{ marginLeft: "-5px" }} />
-                                                        }
-                                                    >
-                                                        Link
-                                                    </Button>
+                                                <a href={featuredList.link} className={classes.link}>
+                                                    <h1 className={classes.cardSubHeading}>{featuredList.title}</h1>
                                                 </a>
-                                            </h3>
 
-                                            <br />
-                                            <h3 className={classes.h3}>
-                                                by {featuredList.firstName} {featuredList.lastName}
-                                            </h3>
+                                                {/*<h3 className={classes.h3}>*/}
+                                                {/*    <Badge*/}
+                                                {/*        leftSection={*/}
+                                                {/*            <img src={genreIcon} width={"20px"} />*/}
+                                                {/*        }*/}
+                                                {/*        color="gray"*/}
+                                                {/*        sx={{*/}
+                                                {/*            height: "25px",*/}
+                                                {/*            margin: "3px 5px 3px 0px",*/}
+                                                {/*        }}*/}
+                                                {/*    ></Badge>*/}
+                                                {/*    {featuredList.genre}*/}
+                                                {/*</h3>*/}
 
-                                            <br />
-                                            <h3 className={classes.h3}>{featuredList.description}</h3>
+                                                {featuredList.awards ? (
+                                                    <h3 className={classes.h3}>
+                                                        Award/s: {featuredList.awards}
+                                                    </h3>
+                                                ) : null }
 
-                                        </div>
-                                    </Carousel.Slide>))}
+                                                {/*<h3 style={{ height: "10px" }}>*/}
+                                                {/*    <a href={featuredList.link} target="blank">*/}
+                                                {/*        <Button*/}
+                                                {/*            radius="md"*/}
+                                                {/*            sx={{*/}
+                                                {/*                height: 30,*/}
+                                                {/*                alignSelf: "flex-start",*/}
+                                                {/*                margin: "15px 0px",*/}
+                                                {/*            }}*/}
+                                                {/*            size="sm"*/}
+                                                {/*            rightIcon={*/}
+                                                {/*                <IconExternalLink style={{ marginLeft: "-5px" }} />*/}
+                                                {/*            }*/}
+                                                {/*        >*/}
+                                                {/*            Link*/}
+                                                {/*        </Button>*/}
+                                                {/*    </a>*/}
+                                                {/*</h3>*/}
+
+                                                <br />
+                                                <h3 className={classes.h3}>
+                                                    by {featuredList.firstName} {featuredList.lastName}
+                                                </h3>
+
+                                                <br />
+                                                <h3 className={classes.h4}>{featuredList.description}</h3>
+
+                                            </div>
+                                        </ScrollArea>
+                                </Carousel.Slide>))}
                             </Carousel>
                         </div>
                     </AnimateIn>
