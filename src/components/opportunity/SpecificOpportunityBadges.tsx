@@ -117,7 +117,7 @@ export const SpecificOpportunityBadges = ({
                 //   color="#40C057"
                 //   style={{ marginBottom: "-3px" }}
                 // />
-                <img src={genreIcon} width={"20px"} />
+                <img src={genreIcon} width={"20px"} alt={"Genre"}/>
               }
               color="gray"
               sx={{
@@ -270,7 +270,7 @@ export const SpecificOpportunityBadges = ({
                 //   color="#40C057"
                 //   style={{ marginBottom: "-3px" }}
                 // />
-                <img src={genreIcon} width={"20px"} />
+                <img src={genreIcon} width={"20px"} alt={"Genre"}/>
               }
               color="gray"
               sx={{
@@ -377,7 +377,7 @@ export const SpecificOpportunityBadges = ({
                 //   color="#40C057"
                 //   style={{ marginBottom: "-3px" }}
                 // />
-                <img src={genreIcon} width={"20px"} />
+                <img src={genreIcon} width={"20px"} alt={"Genre"} />
               }
               color="gray"
               sx={{
