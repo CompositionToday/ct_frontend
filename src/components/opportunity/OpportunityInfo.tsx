@@ -44,6 +44,7 @@ import heart from "./likeButton.png";
 import filledHeart from "./filledLike.png";
 import { openComposerModal } from "./modals/ComposerInfoModal";
 import { FeaturedComposition } from "../../FeaturedComposition";
+import infoicon from "../../../src/images/info-square.png";
 const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
@@ -517,7 +518,7 @@ OpportunityInfoProp) {
                 //opportunity?.title ? opportunity.title : "",
               }}
             >
-              <IconSquareNumber0 />
+              <img src={infoicon} height={"25px"} width={"25px"}/>
             </ActionIcon>
           </Tooltip>
         </div>
