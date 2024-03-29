@@ -280,6 +280,7 @@ export function Hero() {
                     src={googleplayStoreButton}
                     height={"auto"}
                     width={"100%"}
+                    alt={"Google Playstore Button"}
                 />
               </a>
 
@@ -292,6 +293,7 @@ export function Hero() {
                     src={appStoreButton}
                     height={"auto"}
                     width={"100%"}
+                    alt={"Apple Store Button"}
                 />
               </a>
             </Group>
