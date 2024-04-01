@@ -94,7 +94,7 @@ export function OpportunityFilterForm({
   const smallerScreen = useMediaQuery("(max-width: 992px)");
 
   return (
-    <Container sx={{ padding: smallerScreen ? "20px" : "20px 40px" }}>
+    <Container>
       <FormHeader>Filters</FormHeader>
       <DropdownCategory
         label="Sort By"

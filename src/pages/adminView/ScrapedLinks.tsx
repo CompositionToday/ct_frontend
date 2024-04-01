@@ -133,7 +133,7 @@ export function ScrapedLinks() {
         {selectedOption === "News" && (
           <>
             <Container
-              style={{ textAlign: "center", paddingTop: "5%" }}
+              style={{ textAlign: "center" }}
             >
               <h1 style={{ color: "#228be6", fontSize: "36px" }}>
                 News
@@ -145,7 +145,7 @@ export function ScrapedLinks() {
         {selectedOption === "Jobs" && (
           <>
             <Container
-              style={{ textAlign: "center", paddingTop: "5%" }}
+              style={{ textAlign: "center" }}
             >
               <h1 style={{ color: "#228be6", fontSize: "36px" }}>
                 Jobs
@@ -157,7 +157,7 @@ export function ScrapedLinks() {
         {selectedOption === "Competitions" && (
           <>
             <Container
-              style={{ textAlign: "center", paddingTop: "5%" }}
+              style={{ textAlign: "center" }}
             >
               <h1 style={{ color: "#228be6", fontSize: "36px" }}>
                 Competitions
@@ -169,7 +169,7 @@ export function ScrapedLinks() {
         {selectedOption === "Festivals" && (
           <>
             <Container
-              style={{ textAlign: "center", paddingTop: "5%" }}
+              style={{ textAlign: "center" }}
             >
               <h1 style={{ color: "#228be6", fontSize: "36px" }}>
                 Festivals
@@ -181,7 +181,7 @@ export function ScrapedLinks() {
         {selectedOption === "Concerts" && (
           <>
             <Container
-              style={{ textAlign: "center", paddingTop: "5%" }}
+              style={{ textAlign: "center" }}
             >
               <h1 style={{ color: "#228be6", fontSize: "36px" }}>
                 Concerts
