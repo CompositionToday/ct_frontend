@@ -506,7 +506,21 @@ export function NewLinks({ apiEndpoint }: linkProp) {
                   </th>
                   )}
                   
-                  <th></th>
+                  {!mobileScreen && (
+                  <th style={{textAlign: "center"}}>
+                    {loading ? (
+                      <Skeleton
+                        height={12}
+                        width="10%"
+                        radius="xl"
+                        sx={{ margin: "8px 0px" }}
+                        
+                      />
+                    ) : (
+                      "Published Date"
+                    )}
+                  </th>
+                  )}
                 </tr>
               </thead>
               <tbody>{loading ? loadingRows : rows}</tbody>
