@@ -106,12 +106,15 @@ const useStyles = createStyles((theme) => ({
   table: {
     maxWidth: "100%",
     flexBasis: "100%",
+    textAlign: "center",
 
     [theme.fn.smallerThan("md")]: {
       maxHeight: "90vh",
       padding: "0px",
+      textAlign: "left",
     },
   },
+
 
   bold: {
     fontWeight: 700,
@@ -326,7 +329,7 @@ export function NewLinks({ apiEndpoint }: linkProp) {
       </td>
       {!mobileScreen && (
         <td>
-          <Container style={{ width: 100 }}>
+          <Container style={{ width: 200 }}>
           <a href={item.link} target='_blank'  color="dimmed" style={{ overflowWrap: 'break-word' }}>
           {item.link}
           </a>
