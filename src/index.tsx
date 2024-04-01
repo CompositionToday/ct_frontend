@@ -1,9 +1,7 @@
 import React from "react";
-import { hydrateRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { MantineProvider } from "@mantine/core";
 import ReactDOM from "react-dom";
 
 const container = document.getElementById("root");
