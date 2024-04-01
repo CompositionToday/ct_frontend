@@ -103,16 +103,19 @@ const useStyles = createStyles((theme) => ({
       height: "5vh",
     },
   },
-
+  
   table: {
     maxWidth: "100%",
     flexBasis: "100%",
+    textAlign: "center",
 
     [theme.fn.smallerThan("md")]: {
       maxHeight: "90vh",
       padding: "0px",
+      textAlign: "left",
     },
   },
+
 
   bold: {
     fontWeight: 700,

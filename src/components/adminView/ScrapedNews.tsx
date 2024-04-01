@@ -105,10 +105,12 @@ const useStyles = createStyles((theme) => ({
   table: {
     maxWidth: "100%",
     flexBasis: "100%",
+    textAlign: "center",
 
     [theme.fn.smallerThan("md")]: {
       maxHeight: "90vh",
       padding: "0px",
+      textAlign: "left",
     },
   },
 
@@ -384,9 +386,19 @@ export function ScrapedNews() {
     >
       
       <td>
-        <Text size="sm" weight={500}>
+        
+        {!mobileScreen && (
+          <Text size="sm" weight={500}>
+        <Container style={{ width: 200 }}>
           {item.title}
+          </Container>
         </Text>
+        )}
+        {mobileScreen && (
+          <Text size="sm" weight={500}>
+            {item.title}
+          </Text>
+        )}
         {mobileScreen && (
           <Text size="xs" color="dimmed">
             {item.link}
@@ -417,7 +429,7 @@ export function ScrapedNews() {
       )}
       {!mobileScreen && (
         <td>
-          <Container style={{ width: 100 }}>
+          <Container style={{ width: 200 }}>
           <a href={item.link} target='_blank'  color="dimmed" style={{ overflowWrap: 'break-word' }}>
           {item.link}
           </a>
