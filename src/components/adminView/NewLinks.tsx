@@ -514,17 +514,33 @@ export function NewLinks({ apiEndpoint }: linkProp) {
           </Container>
         </ScrollArea>
         )}
-        <Container sx={{ display: "flex", justifyContent: "", alignItems: "center", marginTop: "30px"}}>
+
+        { rawLinksList.length === 0 ? (
+            <Container sx={{display: "none", justifyContent: "", alignItems: "center"}}>
+            
+            <PaginationNavbarLinks
+              apiEndpointExtension={apiEndpoint}
+              setListOfObjects={setRawLinksList}
+              searchFilterObject={searchParams}
+              setLoading={setLoading}
+              recall={recall}
+              //curPage = {CurrentPage}
+            />
+            </Container>
+          ) : (
+            <Container sx={{ display: "flex", justifyContent: "", alignItems: "center", marginTop: "30px"}}>
           
-        <PaginationNavbarLinks
-          apiEndpointExtension={apiEndpoint}
-          setListOfObjects={setRawLinksList}
-          searchFilterObject={searchParams}
-          setLoading={setLoading}
-          recall={recall}
-          //curPage = {CurrentPage}
-        />
-        </Container>
+            <PaginationNavbarLinks
+              apiEndpointExtension={apiEndpoint}
+              setListOfObjects={setRawLinksList}
+              searchFilterObject={searchParams}
+              setLoading={setLoading}
+              recall={recall}
+              //curPage = {CurrentPage}
+            />
+            </Container>
+        )}
+        
         
         
       </Paper>
