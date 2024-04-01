@@ -305,7 +305,8 @@ export function FeaturedCompositions() {
                                                     <h3 className={classes.h3}>
                                                         Award/s: {featuredList.awards}
                                                     </h3>
-                                                ) : null }
+                                                )
+                                                    : null }
 
                                                 {/*<h3 style={{ height: "10px" }}>*/}
                                                 {/*    <a href={featuredList.link} target="blank">*/}

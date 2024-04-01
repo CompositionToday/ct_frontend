@@ -4,18 +4,25 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MantineProvider } from "@mantine/core";
+import ReactDOM from "react-dom";
 
 const container = document.getElementById("root");
 
-if (container) {
-  hydrateRoot(container,
-    //<MantineProvider theme={{ colorScheme: 'dark' }}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    //</MantineProvider>
-  );
-} else {
+if (container)
+{
+    ReactDOM.render(<App />, container);
+
+    if (container.hasChildNodes()) {
+        ReactDOM.hydrate(<React.StrictMode><App /></React.StrictMode>,container);
+    }
+    else {
+        ReactDOM.render(<React.StrictMode><App /></React.StrictMode>,container);
+    }
+
+}
+
+else
+{
   console.error('Failed to find the root container. Make sure your HTML includes a div with id="root".');
 }
 // If you want to start measuring performance in your app, pass a function
