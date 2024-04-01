@@ -327,7 +327,8 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
-        <Tooltip label="Application Deadline">
+        
+        {/*<Tooltip label="Application Deadline">
           <Badge
             leftSection={
               <IconAlarm
@@ -344,7 +345,8 @@ export const SpecificOpportunityBadges = ({
               { year: "numeric", month: "short", day: "numeric" }
             )}
           </Badge>
-        </Tooltip>
+        </Tooltip>*/}
+
         {/*<Tooltip label="Fee">*/}
         {/*  <Badge*/}
         {/*    leftSection={*/}
