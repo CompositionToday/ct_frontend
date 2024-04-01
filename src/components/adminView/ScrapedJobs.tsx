@@ -754,7 +754,19 @@ export function ScrapedJobs() {
           </Container>
         </ScrollArea>
         )}
-        {
+        {rawJobList.length === 0 ? (
+          <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <PaginationNavbarScraper
+            apiEndpointExtension={"jobs"}
+            numberOfItemsPerPage={10}
+            setListOfObjects={setRawJobList}
+            searchFilterObject={searchParams}
+            setLoading={setLoading}
+            recall={recall}
+            //curPage = {CurrentPage}
+          />
+          </Container>
+        ) : ( 
           <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "30px" }}>
           <PaginationNavbarScraper
             apiEndpointExtension={"jobs"}
@@ -764,11 +776,9 @@ export function ScrapedJobs() {
             setLoading={setLoading}
             recall={recall}
             //curPage = {CurrentPage}
-            
           />
-          
           </Container>
-        }
+        )}
       </Paper>
       <Modal
         opened={displayOpportunityEditModal}

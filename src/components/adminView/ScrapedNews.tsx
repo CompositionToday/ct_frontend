@@ -687,19 +687,31 @@ export function ScrapedNews() {
           </Container>
         </ScrollArea>
         )}
-        <Container sx={{ display: "flex", justifyContent: "", alignItems: "center", marginTop: "30px"}}>
-          
-        <PaginationNavbarScraper
-          apiEndpointExtension={"news"}
-          numberOfItemsPerPage={10}
-          setListOfObjects={setRawNewsList}
-          searchFilterObject={searchParams}
-          setLoading={setLoading}
-          recall={recall}
-          //curPage = {CurrentPage}
-        />
-        </Container>
-        
+        { rawNewsList.length === 0 ? (
+          <Container sx={{ display: "flex", justifyContent: "", alignItems: "center"}}>
+          <PaginationNavbarScraper
+            apiEndpointExtension={"news"}
+            numberOfItemsPerPage={10}
+            setListOfObjects={setRawNewsList}
+            searchFilterObject={searchParams}
+            setLoading={setLoading}
+            recall={recall}
+            //curPage = {CurrentPage}
+          />
+          </Container>
+        ) : (
+          <Container sx={{ display: "flex", justifyContent: "", alignItems: "center", marginTop: "30px"}}>
+            <PaginationNavbarScraper
+              apiEndpointExtension={"news"}
+              numberOfItemsPerPage={10}
+              setListOfObjects={setRawNewsList}
+              searchFilterObject={searchParams}
+              setLoading={setLoading}
+              recall={recall}
+              //curPage = {CurrentPage}
+            />
+          </Container>
+        )} 
         
       </Paper>
       <Modal

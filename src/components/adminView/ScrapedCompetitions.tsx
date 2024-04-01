@@ -756,8 +756,9 @@ export function ScrapedCompetitions() {
           </Container>
         </ScrollArea>
         )}
-        {
-          <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "30px"}}>
+
+        {rawCompetitionList.length === 0 ? (
+          <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <PaginationNavbarScraper
             apiEndpointExtension={"competitions"}
             numberOfItemsPerPage={10}
@@ -767,9 +768,20 @@ export function ScrapedCompetitions() {
             recall={recall}
             //curPage = {CurrentPage}
           />
-          
           </Container>
-        }
+        ) : ( 
+          <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "30px" }}>
+          <PaginationNavbarScraper
+            apiEndpointExtension={"competitions"}
+            numberOfItemsPerPage={10}
+            setListOfObjects={setRawCompetitionList}
+            searchFilterObject={searchParams}
+            setLoading={setLoading}
+            recall={recall}
+            //curPage = {CurrentPage}
+          />
+          </Container>
+        )}
       </Paper>
       <Modal
         opened={displayOpportunityEditModal}

@@ -832,7 +832,20 @@ export function ScrapedConcerts() {
           </Container>
         </ScrollArea>
         )}
-        {
+
+        {rawConcertList.length === 0 ? (
+          <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <PaginationNavbarScraper
+            apiEndpointExtension={"concerts"}
+            numberOfItemsPerPage={10}
+            setListOfObjects={setRawConcertList}
+            searchFilterObject={searchParams}
+            setLoading={setLoading}
+            recall={recall}
+            //curPage = {CurrentPage}
+          />
+          </Container>
+        ) : ( 
           <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "30px" }}>
           <PaginationNavbarScraper
             apiEndpointExtension={"concerts"}
@@ -843,9 +856,10 @@ export function ScrapedConcerts() {
             recall={recall}
             //curPage = {CurrentPage}
           />
-          
           </Container>
-        }
+        )}
+
+
       </Paper>
       <Modal
         opened={displayOpportunityEditModal}

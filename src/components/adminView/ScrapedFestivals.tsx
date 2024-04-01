@@ -863,7 +863,20 @@ export function ScrapedFestivals() {
           </Container>
         </ScrollArea>
 )}
-        {
+
+        {rawFestivalList.length === 0 ? (
+          <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <PaginationNavbarScraper
+            apiEndpointExtension={"festivals"}
+            numberOfItemsPerPage={10}
+            setListOfObjects={setRawFestivalList}
+            searchFilterObject={searchParams}
+            setLoading={setLoading}
+            recall={recall}
+            //curPage = {CurrentPage}
+          />
+          </Container>
+        ) : ( 
           <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "30px" }}>
           <PaginationNavbarScraper
             apiEndpointExtension={"festivals"}
@@ -874,9 +887,9 @@ export function ScrapedFestivals() {
             recall={recall}
             //curPage = {CurrentPage}
           />
-          
           </Container>
-        }
+        )}
+
       </Paper>
       <Modal
         opened={displayOpportunityEditModal}
