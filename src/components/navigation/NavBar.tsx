@@ -523,24 +523,20 @@ export function NavBar({ links }: HeaderActionProps) {
         style={{ visibility: userBanned ? "hidden" : "visible" }}
       >
         <Container className={classes.inner} fluid>
-          <Group>
-            <Group spacing="xs" className={classes.logoGroup}>
-              <a
-                className={classes.title}
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                COMPOSITION:
-                <span className={classes.blueText}>TODAY</span>
-              </a>
+        <Group>
+          <Group spacing="xs" className={classes.logoGroup}>
+            <Link to="/" className={classes.title}>
+              COMPOSITION:
+              <span className={classes.blueText}>TODAY</span>
+            </Link>
+            <Link to="/"> {}
               <Image
                 src={String(musicNoteIcon)}
                 className={classes.image}
-                onClick={() => navigate("/")}
               />
-            </Group>
+            </Link>
           </Group>
+        </Group>
           <Group spacing={5} className={classes.links}>
             {items}
           </Group>
