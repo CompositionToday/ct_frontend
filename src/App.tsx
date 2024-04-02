@@ -68,7 +68,7 @@ export default function App() {
           }} withGlobalStyles withNormalizeCSS>
             <ModalsProvider>
               <NotificationsProvider>
-                <HashRouter>
+                <BrowserRouter>
 
                     {/* This is the Navbar at the top of every Page*/}
                   <NavBar links={navItems.links} />
@@ -79,7 +79,7 @@ export default function App() {
                     {/*This is the footer at the bottom of the Webpage */}
                   <Footer data={footerInfo.data} />
 
-                </HashRouter>
+                </BrowserRouter>
               </NotificationsProvider>
             </ModalsProvider>
           </MantineProvider>
