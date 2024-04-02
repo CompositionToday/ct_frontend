@@ -168,7 +168,7 @@ export function Hero() {
     const angleDeg = angle(mouseX, mouseY, anchorX, anchorY);
 
     setRotateDegree(angleDeg);
-    console.log("moving event mouse");
+    // console.log("moving event mouse");
   };
   const getFeaturedList = async () => {
     let response = await fetch(`${url}/featuredcompositions`);

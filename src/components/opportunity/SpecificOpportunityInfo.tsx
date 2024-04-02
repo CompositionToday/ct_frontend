@@ -25,7 +25,7 @@ export const SpecificOpportunityInfo = ({
   opportunity,
   opportunityType,
 }: SpecificOpportunityInfoProp) => {
-  console.log(opportunity?.genre);
+  // console.log(opportunity?.genre);
   if (opportunityType === "competitions") {
     return (
       <Flex direction="column" align="flex-start">
