@@ -79,7 +79,8 @@
     "@types/node": "^18.11.18",
     "prettier": "2.7.1",
     "webpack": "^5.91.0",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "react-snap": "^1.23.0"
   }
   
 }

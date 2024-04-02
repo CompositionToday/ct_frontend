@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MantineProvider } from "@mantine/core";
 import { BrowserRouter as Router } from 'react-router-dom';
+import ReactDOM from "react-dom";
 
 const container = document.getElementById("root");
 
