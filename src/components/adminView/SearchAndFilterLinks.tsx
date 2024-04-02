@@ -69,7 +69,7 @@ const createSearchObj = (
     keyword: searchKeyword,
   };
 
-  console.log(searchObj);
+  // console.log(searchObj);
 
   setSearchObjs(searchObj);
 };
@@ -108,7 +108,7 @@ export function SearchAndFilterLinks({
 
   const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log("loading set to true");
+      // console.log("loading set to true");
       createSearchObj(
         setSearchObjs,
         searchKeyword,        
@@ -141,7 +141,7 @@ export function SearchAndFilterLinks({
         }
       }*/
 
-      console.log("formatted edit body:", opportunity);
+      // console.log("formatted edit body:", opportunity);
       let temp = opportunity.expiration_date;
       opportunity.expiration_date = new Date(temp ? temp: "").getTime();
       
@@ -160,11 +160,11 @@ export function SearchAndFilterLinks({
       let responseJson = await response.json();
 
       let editedOpportunity = responseJson.listOfObjects[0];
-      console.log("edited body:" + editedOpportunity);
+      // console.log("edited body:" + editedOpportunity);
 
       return editedOpportunity;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -178,7 +178,7 @@ export function SearchAndFilterLinks({
       opportunity.expiration_date = opportunity.expiration_date?.toString();
 
       let editedOpportunity = await editFunction(opportunity);
-      console.log("Edited Op "+ editedOpportunity);
+      // console.log("Edited Op "+ editedOpportunity);
 
       /*for (let i = 0; i < rawLinksList.length; i++) {
         if (rawLinksList[i].linkID === editedOpportunity.idposts) {
@@ -196,7 +196,7 @@ export function SearchAndFilterLinks({
       });
       setDisplayOpportunityEditModal(false);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       showNotification({
         title: "Error",
         message: "There was a problem, please try again later",

@@ -188,7 +188,7 @@ export function ScrapedNews() {
   }, [rawNewsList, searchParams]);
 
   useEffect(() => {
-    console.log("loading changed to:", loading);
+    // console.log("loading changed to:", loading);
   }, [loading]);
 
   const convertRawNewsDataToTableData = () => {
@@ -301,7 +301,7 @@ export function ScrapedNews() {
         }
       }
 
-      console.log("formatted edit body:", opportunity);
+      // console.log("formatted edit body:", opportunity);
       let temp = opportunity.published_date;
       opportunity.published_date = new Date(temp ? temp: "").getTime();
       
@@ -320,11 +320,11 @@ export function ScrapedNews() {
       let responseJson = await response.json();
 
       let editedOpportunity = responseJson.listOfObjects[0];
-      console.log("edited body:" + editedOpportunity);
+      // console.log("edited body:" + editedOpportunity);
 
       return editedOpportunity;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -343,7 +343,7 @@ export function ScrapedNews() {
       opportunity.published_date = opportunity.published_date?.toString();
 
       let editedOpportunity = await editFunction(opportunity);
-      console.log("Edited Op "+ editedOpportunity);
+      // console.log("Edited Op "+ editedOpportunity);
 
       for (let i = 0; i < rawNewsList.length; i++) {
         if (rawNewsList[i].idposts === editedOpportunity.idposts) {
@@ -361,7 +361,7 @@ export function ScrapedNews() {
       });
       setDisplayOpportunityEditModal(false);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       showNotification({
         title: "Error",
         message: "There was a problem, please try again later",
