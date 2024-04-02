@@ -45,6 +45,13 @@ export default function App() {
     setLoading(false);
   }, 2500);
 
+    if (process.env.NODE_ENV !== "development") {
+        console.log = () => {};
+        console.debug = () => {};
+        console.info = () => {};
+        console.warn = () => {};
+    }
+
   return (
     <>
       <Modal
