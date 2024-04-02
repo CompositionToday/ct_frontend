@@ -7,7 +7,7 @@ import {
   Image,
   Title,
 } from "@mantine/core";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { IconBrandTwitter } from '@tabler/icons';
 
 const musicNoteIcon = require("../../images/BigMusicNote.png");
@@ -179,15 +179,15 @@ export function Footer({ data }: FooterLinksProps) {
 
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
-      <a
-        key={index}
+      <Link 
+        to={link.link} 
+        key={index} 
         className={classes.link}
-        onClick={() => navigate(link.link)}
       >
         {link.label}
-      </a>
+      </Link>
     ));
-
+  
     return (
       <div className={classes.wrapper} key={group.title}>
         <Text className={classes.title}>{group.title}</Text>
@@ -195,7 +195,6 @@ export function Footer({ data }: FooterLinksProps) {
       </div>
     );
   });
-
   return (
     <footer
       className={classes.footer}
