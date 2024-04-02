@@ -50,7 +50,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:server": "webpack --config webpack.server.js",
+    "start:ssr": "node server-build/index.js"
   },
   "babel": {
     "presets": [
@@ -79,6 +81,8 @@
   "devDependencies": {
     "@types/node": "^18.11.18",
     "prettier": "2.7.1",
-    "react-snap": "^1.23.0"
+    "react-snap": "^1.23.0",
+    "webpack": "^5.91.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }
