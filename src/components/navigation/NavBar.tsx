@@ -226,6 +226,19 @@ export function NavBar({ links }: HeaderActionProps) {
     setActive(location.pathname);
   }, [location.pathname]);
 
+  useEffect(() => {
+    // Logic to remove and re-add the Statcounter script goes here
+    // This is conceptual and may require adjustments
+    const existingScript = document.getElementById('statcounterScript');
+    existingScript?.parentNode?.removeChild(existingScript);
+
+    const script = document.createElement('script');
+    script.id = 'statcounterScript';
+    script.src = "//www.statcounter.com/counter/counter.js";
+    script.async = true;
+    document.head.appendChild(script);
+  }, [location]); // Triggered by route change
+
   const displayBurger = useMediaQuery("(max-width: 992px)");
 
   const [opened, setOpened] = useState(false);
