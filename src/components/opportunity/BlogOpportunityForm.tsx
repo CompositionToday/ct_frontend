@@ -51,7 +51,7 @@ export function BlogOpportunityForm({
 }: OpportunityFormProp) {
   const [city, setCity] = useState(opportunity?.city ? opportunity.city : "");
   const [state, setState] = useState(
-      opportunity?.state ? opportunity.state : ""
+    opportunity?.state ? opportunity.state : ""
   );
   // const [dateRange, setDateRange] = useState<DateRangePickerValue>([
   //   opportunity && opportunity?.start_date
@@ -62,7 +62,7 @@ export function BlogOpportunityForm({
   //     : null,
   // ]);
   const [startTime, setStartTime] = useState<Date | null>(
-      opportunity?.start_time ? new Date(opportunity?.start_time) : null
+    opportunity?.start_time ? new Date(opportunity?.start_time) : null
   );
   const [displayLocationError, setDisplayLocationError] = useState(false);
   const [displayDateRangeError, setDisplayDateRangeError] = useState(false);
@@ -72,7 +72,7 @@ export function BlogOpportunityForm({
   const [userUID, setUserUID] = useState("");
   const [isFee, setIsFee] = useState(opportunity?.fee === 0);
   const medianScreen = useMediaQuery("(max-width: 992px)");
-  const {classes} = useStyles();
+  const { classes } = useStyles();
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   const [authorName, setAuthorName] = useState("N/A");
 
@@ -92,7 +92,7 @@ export function BlogOpportunityForm({
 
   function validateUrl(value: string) {
     return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(
-        value
+      value
     );
   }
 
@@ -102,22 +102,22 @@ export function BlogOpportunityForm({
       title: opportunity?.title || "",
       description: opportunity?.description || "",
       date_posted: opportunity?.date_posted
-          ? new Date(opportunity?.date_posted)
-          : new Date(getCurrentDate()),
+        ? new Date(opportunity?.date_posted)
+        : new Date(getCurrentDate()),
     },
     validate: {
       title: (value) =>
-          value.trim()
-              ? value.trim().length <= 100
-                  ? null
-                  : "Please shorten the title"
-              : "Please give a title",
+        value.trim()
+          ? value.trim().length <= 100
+            ? null
+            : "Please shorten the title"
+          : "Please give a title",
       description: (value) =>
-          value.trim()
-              ? value.trim().length
-                  ? null
-                  : "Please shorten the description"
-              : "Please give a description",
+        value.trim()
+          ? value.trim().length
+            ? null
+            : "Please shorten the description"
+          : "Please give a description",
     },
   });
 
@@ -208,7 +208,7 @@ export function BlogOpportunityForm({
     };
 
     const date = new Date();
-    const formatter = new Intl.DateTimeFormat('en-US', {dateStyle: 'short'});
+    const formatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'short' });
     const formattedDate = formatter.format(date);
     // console.log(formattedDate);
 
@@ -258,7 +258,9 @@ export function BlogOpportunityForm({
     if (opportunityType === "competitions") {
       setCity("Remote");
       setState("Remote");
-    } else if (pageLoaded) {
+    }
+    else if (pageLoaded)
+    {
       setCity("");
       setState("");
     }
@@ -280,85 +282,85 @@ export function BlogOpportunityForm({
 
 
   return (
-      <OpportunityFormContainer>
-        <Paper
-            shadow="sm"
-            withBorder={!edit}
-            className={edit ? classes.noShadow : classes.shadow}
-            radius="lg"
-            sx={{padding: smallerScreen ? "20px" : "20px 40px"}}
-        >
-          <OpportunityFormContentContainer>
-            <form
-                onSubmit={form.onSubmit((values) => handleFormSubmission(values))}
+    <OpportunityFormContainer>
+      <Paper
+        shadow="sm"
+        withBorder={!edit}
+        className={edit ? classes.noShadow : classes.shadow}
+        radius="lg"
+        sx={{ padding: smallerScreen ? "20px" : "20px 40px" }}
+      >
+        <OpportunityFormContentContainer>
+          <form
+            onSubmit={form.onSubmit((values) => handleFormSubmission(values))}
+          >
+            {/*ROW 1 FORM FIELDS*/}
+            <MultipleInputRow
+              justify="space-around"
+              gap="md"
+              display
+              direction={medianScreen ? "column" : "row"}
             >
-              {/*ROW 1 FORM FIELDS*/}
-              <MultipleInputRow
-                  justify="space-around"
-                  gap="md"
-                  display
-                  direction={medianScreen ? "column" : "row"}
-              >
-                {/*TITLE FORM FIELD*/}
-                <TextInputFullWidth
-                    label="Title"
-                    placeholder="Title"
-                    display
-                    withAsterisk
-                    {...form.getInputProps("title")}
-                />
-
-              </MultipleInputRow>
-
-              <DescriptionInput
-                  label="Description"
-                  placeholder="Description"
-                  autosize
-                  withAsterisk
-                  minRows={5}
-                  {...form.getInputProps("description")}
+              {/*TITLE FORM FIELD*/}
+              <TextInputFullWidth
+                label="Title"
+                placeholder="Title"
+                display
+                withAsterisk
+                {...form.getInputProps("title")}
               />
 
-              <SubmitButtonContainer
-                  justify="center"
-                  sx={{marginBottom: "20px"}}
+            </MultipleInputRow>
+
+            <DescriptionInput
+              label="Description"
+              placeholder="Description"
+              autosize
+              withAsterisk
+              minRows={5}
+              {...form.getInputProps("description")}
+            />
+
+            <SubmitButtonContainer
+              justify="center"
+              sx={{ marginBottom: "20px" }}
+            >
+              <Button
+                type="submit"
+                onClick={() => {
+                  if (
+                    opportunityType === "concerts" ||
+                    opportunityType === "festivals"
+                  ) {
+                    setDisplayLocationError(true);
+                  }
+                  setDisplayDateRangeError(true);
+                  setDisplayStartTimeError(true);
+                  // console.log(form.isValid());
+                  // console.log(form.isValid("title"));
+                  // console.log(form.isValid("organization"));
+                  // console.log(form.isValid("link"));
+                  // console.log(form.isValid("description"));
+                  // console.log(form.isValid("end_date"));
+                  // console.log(form.isValid("salary"));
+                  // console.log(form.isValid("job_category"));
+                  // console.log(form.isValid("job_type"));
+                  // console.log(form.isValid("job_type"));
+                  // console.log(form.isValid("competition_category"));
+                  // console.log(form.isValid("address"));
+                  // console.log(form.isValid("fee"));
+
+                  // console.log(displayLocationError);
+                  // console.log(displayDateRangeError);
+                }}
               >
-                <Button
-                    type="submit"
-                    onClick={() => {
-                      if (
-                          opportunityType === "concerts" ||
-                          opportunityType === "festivals"
-                      ) {
-                        setDisplayLocationError(true);
-                      }
-                      setDisplayDateRangeError(true);
-                      setDisplayStartTimeError(true);
-                      // console.log(form.isValid());
-                      // console.log(form.isValid("title"));
-                      // console.log(form.isValid("organization"));
-                      // console.log(form.isValid("link"));
-                      // console.log(form.isValid("description"));
-                      // console.log(form.isValid("end_date"));
-                      // console.log(form.isValid("salary"));
-                      // console.log(form.isValid("job_category"));
-                      // console.log(form.isValid("job_type"));
-                      // console.log(form.isValid("job_type"));
-                      // console.log(form.isValid("competition_category"));
-                      // console.log(form.isValid("address"));
-                      // console.log(form.isValid("fee"));
+                Submit
+              </Button>
+            </SubmitButtonContainer>
 
-                      // console.log(displayLocationError);
-                      // console.log(displayDateRangeError);
-                    }}
-                >
-                  Submit
-                </Button>
-              </SubmitButtonContainer>
-
-            </form>
-          </OpportunityFormContentContainer>
-        </Paper>
-      </OpportunityFormContainer>
+          </form>
+        </OpportunityFormContentContainer>
+      </Paper>
+    </OpportunityFormContainer>
   );
 }
