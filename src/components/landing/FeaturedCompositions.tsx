@@ -253,7 +253,7 @@ export function FeaturedCompositions() {
                                 // controlSize={20}
                             >
                                 {featuredlist.map((featuredList) => (
-                                    <Carousel.Slide
+                                    <Carousel.Slide key={featuredList.title}
                                         sx={{
                                             width: "33.333%",
                                             height: "100%",
@@ -281,7 +281,7 @@ export function FeaturedCompositions() {
                                                 },
                                             }}
                                         >
-                                            <div key={featuredList.title} className={classes.card}>
+                                            <div className={classes.card}>
 
                                                 <a href={featuredList.link} className={classes.link}>
                                                     <h1 className={classes.cardSubHeading}>{featuredList.title}</h1>

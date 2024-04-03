@@ -187,9 +187,8 @@ export function Features() {
   const theme = useMantineTheme();
 
   const features = mockdata.map((feature) => (
-    <Container className={classes.feature}>
+    <Container key={feature.title} className={classes.feature}>
       <Card
-        key={feature.title}
         shadow="md"
         className={classes.card}
         p="xl"
