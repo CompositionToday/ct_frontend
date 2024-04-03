@@ -152,20 +152,18 @@ export function OpportunityForm({
             ? null
             : "Please shorten the description"
           : "Please give a description",
-      end_date: (value: Date | string) => {
-        if (opportunityType === "compositions") {
-        } else if (opportunityType !== "festivals") {
-          if (value && (value.valueOf() as number) < getCurrentDate()) {
+      end_date: (value: Date | string | null) => {
+        // Convert string to Date if necessary
+        const dateValue = typeof value === 'string' ? new Date(value) : value;
+      
+        if (opportunityType !== "compositions" && opportunityType !== "festivals") {
+          if (dateValue && dateValue < new Date()) {
             return "Please choose today's or a future date";
-          } else if (!value) {
-            if (opportunityType !== "jobs" && opportunityType !== "festivals") {
-              return opportunityType !== "concerts"
-                ? "Please give an application deadline"
-                : "Please give a date";
-            }
+          } else if (!dateValue && opportunityType !== "jobs" && opportunityType !== "concerts") {
+            return "Please give an application deadline";
           }
         }
-
+      
         return null;
       },
       // (value && value.valueOf >= getCurrentDate.valueOf()) ||
@@ -215,16 +213,21 @@ export function OpportunityForm({
         (opportunityType !== "competitions" && opportunityType !== "festivals")
           ? null
           : "Please give a fee amount",
-      deadline: (value: Date | string) => {
-        if (value && (value.valueOf() as number) < getCurrentDate()) {
-          return "Please choose today's or a future date";
-        } else if (!value) {
-          if (opportunityType === "festivals") {
-            return "Please give an submission date";
+      deadline: (value: Date | string | null) => {
+        let dateValue = value;
+        if (typeof value === 'string') {
+          dateValue = new Date(value);
+          if (isNaN(dateValue.getTime())) {
+            return "Please provide a valid date";
           }
         }
-
-        return null;
+        if (dateValue instanceof Date && !isNaN(dateValue.getTime()) && dateValue < new Date()) {
+          return "Please choose today's or a future date";
+        }
+        if (!value && (opportunityType === "festivals")) {
+          return "Please give an submission date";
+        }
+        return null; 
       },
     },
   });
