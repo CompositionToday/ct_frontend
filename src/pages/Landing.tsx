@@ -7,7 +7,7 @@ import { auth } from "../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { motion } from "framer-motion";
 import {FeaturedCompositions} from "../components/landing/FeaturedCompositions";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export function Landing() {
   // useEffect(() => {
