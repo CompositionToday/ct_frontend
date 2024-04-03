@@ -45,6 +45,8 @@ import filledHeart from "./filledLike.png";
 import { openComposerModal } from "./modals/ComposerInfoModal";
 import { FeaturedComposition } from "../../FeaturedComposition";
 import infoicon from "../../../src/images/info-square.png";
+import ShareButtons from "./shareButtons";
+
 const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
@@ -169,7 +171,7 @@ OpportunityInfoProp) {
       : new Date()
   );
   const getLiked = async () => {
-    console.log("called getliked");
+    // console.log("called getliked");
     let request1 = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -182,10 +184,10 @@ OpportunityInfoProp) {
     const deepCopyOfObject = JSON.parse(
       JSON.stringify(jsonLiked.listOfObjects)
     );
-    console.log(deepCopyOfObject.length);
+    // console.log(deepCopyOfObject.length);
     if (deepCopyOfObject.length == 1) setLiked(true);
     else setLiked(false);
-    console.log(liked);
+    // console.log(liked);
   };
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   useEffect(() => {
@@ -213,7 +215,7 @@ OpportunityInfoProp) {
           //   setIsAdmin(true);
           // }
         } catch (err) {
-          console.log(err);
+          // console.log(err);
         }
       }
     });
@@ -230,14 +232,14 @@ OpportunityInfoProp) {
     );
   }, []);
   useEffect(() => {
-    console.log("Users Uid: ", userUID);
-    console.log("isAdmin: ", isAdmin);
+    // console.log("Users Uid: ", userUID);
+    // console.log("isAdmin: ", isAdmin);
   }, [userUID, isAdmin]);
   useEffect(() => {
-    console.log("start: ", startDate);
-    console.log("end: ", endDate);
-    console.log(opportunity);
-    console.log(typeof opportunity?.end_date);
+    // console.log("start: ", startDate);
+    // console.log("end: ", endDate);
+    // console.log(opportunity);
+    // console.log(typeof opportunity?.end_date);
     if (userUID != "" && userUID != null) getLiked();
   }, [endDate, startDate, opportunity]);
   if (!opportunity) {
@@ -398,12 +400,12 @@ OpportunityInfoProp) {
               }}
               onLoad={() => {
                 if (userUID != "" && userUID != null) getLiked();
-                console.log("onLoad called, liked = " + liked);
+                // console.log("onLoad called, liked = " + liked);
               }}
               disabled={userUID == "" || userUID == null}
               onClick={async () => {
-                console.log("clicked like button");
-                console.log(liked);
+                // console.log("clicked like button");
+                // console.log(liked);
                 openLikePostModal(
                   opportunity?.title ? opportunity.title : "",
                   handleLikeButton
@@ -505,7 +507,7 @@ OpportunityInfoProp) {
                 let link = infoObj[0].link;
                 if (bio == "") bio = null;
                 if (link == "") link = null;
-                console.log("Bio: " + bio + ", Link: " + link);
+                // console.log("Bio: " + bio + ", Link: " + link);
                 // Open the modal
                 openComposerModal(
                   opportunity?.UID,
@@ -520,6 +522,17 @@ OpportunityInfoProp) {
             >
               <img src={infoicon} height={"25px"} width={"25px"}/>
             </ActionIcon>
+          </Tooltip>
+        </div>
+        <div>
+          <Tooltip
+            label="Share"
+            sx={{
+              alignSelf: "flex-start",
+              verticalAlign: "top",
+            }}
+          >
+            <ShareButtons value={opportunity} userUID={userUID}></ShareButtons>
           </Tooltip>
         </div>
       </ButtonsContainer>

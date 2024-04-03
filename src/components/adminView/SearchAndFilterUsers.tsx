@@ -55,7 +55,7 @@ const createSearchObj = (
     is_regular: regularChecked ? "1" : "0",
   };
 
-  console.log(searchObj);
+  // console.log(searchObj);
 
   setSearchObj(searchObj);
 };
@@ -108,7 +108,7 @@ export function SearchAndFilterUsers({
 
   const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log("loading set to true");
+      // console.log("loading set to true");
       createSearchObj(
         setSearchObj,
         searchKeyword,

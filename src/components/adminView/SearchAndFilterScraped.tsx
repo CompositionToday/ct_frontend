@@ -63,7 +63,7 @@ const createSearchObj = (
     keyword: searchKeyword,
   };
 
-  console.log(searchObj);
+  // console.log(searchObj);
 
   setSearchObjs(searchObj);
 };
@@ -97,7 +97,7 @@ export function SearchAndFilterScraped({
 
   const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log("loading set to true");
+      // console.log("loading set to true");
       createSearchObj(
         setSearchObjs,
         searchKeyword,        
@@ -147,7 +147,7 @@ export function SearchAndFilterScraped({
   
 
   const handleApprove = async () => {
-    console.log("Approved rows:", selectedRows);
+    // console.log("Approved rows:", selectedRows);
     // Implement your approval logic here
     try {
       for (let i = 0; i < selectedRows.length; i++) {
@@ -175,7 +175,7 @@ export function SearchAndFilterScraped({
       onUpdate();
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       showNotification({
         title: "Error",
         message: "There was a problem, please try again later",
@@ -195,7 +195,7 @@ export function SearchAndFilterScraped({
         break;
       }
     }
-    console.log(selectAll);
+    // console.log(selectAll);
   }
 
 

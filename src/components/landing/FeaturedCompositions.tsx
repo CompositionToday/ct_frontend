@@ -160,7 +160,7 @@ export function FeaturedCompositions() {
 
         const angleDeg = angle(mouseX, mouseY, anchorX, anchorY);
 
-        console.log("moving event mouse");
+        // console.log("moving event mouse");
     };
     const getFeaturedList = async () => {
         let response = await fetch(`${url}/featuredcompositions`);
@@ -182,13 +182,13 @@ export function FeaturedCompositions() {
                 null,
                 i%2
             );
-            console.log(val)
+            // console.log(val)
             list.push(val);
             
             setList([...featuredlist, ...list]);
         }
-        console.log(featuredlist);
-        console.log(featuredlist.length);
+        // console.log(featuredlist);
+        // console.log(featuredlist.length);
     };
 
     useEffect(() => {

@@ -88,7 +88,7 @@ export function PaginationNavbarScraper({
     const getPageCount = async () => {
       try {
         setLoading(true);
-        console.log("searchFilterObj", searchFilterObject);
+        // console.log("searchFilterObj", searchFilterObject);
         const countUrl = new URL(`${url}/${apiEndpointExtension}/count?get_posts_to_review=`);
         if (searchFilterObject) {
           for (const [key, value] of Object.entries(searchFilterObject)) {
@@ -99,20 +99,20 @@ export function PaginationNavbarScraper({
         let responseCount = await fetch(countUrl);
 
         let responseCountJson = await responseCount.json();
-        console.log("number of posts count", responseCountJson.count);
+        // console.log("number of posts count", responseCountJson.count);
         let numberOfPage = Math.ceil(
           responseCountJson.count / numberOfItemsPerPage
         );
         setPageCount(numberOfPage);
-        console.log("number of pages", numberOfPage);
+        // console.log("number of pages", numberOfPage);
         setTimeout(() => {
           setLoading(false);
         }, timeOut);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       } finally {
         setCurrentPage(1);
-        console.log(recall);
+        // console.log(recall);
       }
     };
     getPageCount();
@@ -132,7 +132,7 @@ export function PaginationNavbarScraper({
         //curPage = currentPage;
 
         getUrl.searchParams.set("page_number", String(currentPage));
-        console.log("geturl: ", getUrl.toString());
+        // console.log("geturl: ", getUrl.toString());
         let response = await fetch(getUrl);
 
         let responseJson = await response.json();
@@ -140,9 +140,9 @@ export function PaginationNavbarScraper({
         setTimeout(() => {
           setLoading(false);
         }, timeOut);
-        console.log("res", responseJson);
+        // console.log("res", responseJson);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 

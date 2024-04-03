@@ -1,19 +1,13 @@
-import { openConfirmationModal } from "../../modal/ConfirmationModal";
 import { openModal } from "@mantine/modals";
 import { FeaturedComposition } from "../../../FeaturedComposition";
-import { IconExternalLink } from "@tabler/icons";
+import {IconArrowLeft, IconExternalLink, IconTrophy} from "@tabler/icons";
 
 import {
   createStyles,
   Container,
-  Title,
-  Text,
-  Image,
-  Button,
-  Badge,
+  Button, useMantineTheme, useMantineColorScheme,
 } from "@mantine/core";
 
-import MantineTheme from "@mantine/core";
 import React from "react";
 import {Carousel} from "@mantine/carousel";
 
@@ -29,7 +23,7 @@ export function openComposerModal(
   const useStyles = createStyles((theme) => ({
     inner: {
       display: "flex",
-      justifyContent: "space-between",
+      justifyContent: "center",
       // paddingTop: theme.spacing.xl,
       paddingBottom: theme.spacing.xl * 6,
     },
@@ -79,11 +73,13 @@ export function openComposerModal(
     },
 
     modalTitle: {
-      justifyContent:"center"
+      justifyContent:"center",
+      textAlign:"center",
     },
 
     modalHeader: {
-      justifyContent:"center"
+      justifyContent:"center",
+      textAlign:"center",
     },
 
 
@@ -151,7 +147,6 @@ export function openComposerModal(
     },
   }));
 
-  const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   function createTable() {
     if (awards != null && awards.length > 0) {
       return awards.map((song) => {
@@ -163,32 +158,65 @@ export function openComposerModal(
                   justifyContent:"center",
                   marginRight:"0px",
                   paddingRight:"0px"
-                  // paddingLeft:"10%",
-                  // paddingRight:"10%",
                 }}
             >
               <div key={song.link} style={{textAlign:"center"}}>
-                <div>
+                <a
+                    href={song.link}
+                    style={{
+                      textDecoration: "none",
+                      textDecorationColor:"#90caf9",
+                      color:"inherit"
+                    }}
+                >
                   {song.awards ?
-                      (<p>{song.title}, awards: {song.awards}</p>) :
+                        <p
+                          style={{
+                            fontSize:14,
+                            fontStyle:"italic",
+                            fontWeight:400,
+                          }}
+                        >
+                          {song.title}
+                          <Button
+                              rightIcon={<IconTrophy />}
+                              variant="light"
+                              color={"yellow"}
+                              style={{
+                                marginTop:"0.25rem",
+                              }}
+                          >
+                            {song.awards}
+                          </Button>
+                        </p>
+                      :
+
                       (<div>
-                          <h4>{song.title}</h4>
+                      <p
+                          style={{
+                            fontSize:14,
+                            fontStyle:"italic",
+                            fontWeight:400,
+                          }}
+                        >
+                          {song.title}
+                        </p>
                       </div>)
                   }
-                </div>
+                </a>
                 <a href={song.link} target="blank">
-                  <Button
-                      radius="md"
-                      sx={{
-                        height: 30,
-                        alignSelf: "flex-start",
-                        margin: "15px 0px",
-                      }}
-                      size="md"
-                      rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
-                  >
-                    Link
-                  </Button>
+                  {/*<Button*/}
+                  {/*    radius="md"*/}
+                  {/*    sx={{*/}
+                  {/*      height: 30,*/}
+                  {/*      alignSelf: "flex-end",*/}
+                  {/*      margin: "15px 0px",*/}
+                  {/*    }}*/}
+                  {/*    size="md"*/}
+                  {/*    rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}*/}
+                  {/*>*/}
+                  {/*  Link*/}
+                  {/*</Button>*/}
                 </a>
               </div>
             </Carousel.Slide>
@@ -205,7 +233,13 @@ export function openComposerModal(
         <Container>
           <div>
             {awards ? (
-              <p className={classes.subheading}>
+              <p
+                  className={classes.subheading}
+                  style={{
+                    fontWeight:"500",
+                    marginBlockEnd: "0rem"
+                  }}
+              >
                 Compositions:
                 <br />
               </p>
@@ -215,7 +249,6 @@ export function openComposerModal(
 
             <Carousel
                 mx="auto"
-                withIndicators
                 height={350}
                 align={"start"}
                 slideSize="25%"
@@ -224,26 +257,43 @@ export function openComposerModal(
                 sx={{
                   width: "100%",
                   height:"100%",
-                  // paddingBottom: "6%",
+                }}
+                styles={{
+                  container:{marginRight:"0px"},
+                  root:{carouselHeight:"100px"},
+                  viewport:{height:"140px"},
+                  // slide:{borderStyle:"solid",borderColor:"black",borderWidth:2}
                 }}
             >
               {awardsSection}
             </Carousel>
 
-            <br />
             {bio ? (
               <div>
-                <p className={classes.subheading}>
-                  Biography: <br />
+                <p
+                    className={classes.subheading}
+                    style={{
+                      fontWeight:"500",
+                    }}
+                >
+                  Bio: <br />
                 </p>
                 {bio}
               </div>
-            ) : (
+            )
+                :
+            (
               <div />
             )}
             {link ? (
               <div>
-                <p className={classes.subheading}>
+                <p
+                    className={classes.subheading}
+                    style={{
+                      fontWeight:"500",
+                      marginBlockEnd: "0.5rem"
+                    }}
+                >
                   Website link: <br />
                 </p>
                 <a href={link} target="blank">
@@ -253,6 +303,7 @@ export function openComposerModal(
                       height: 30,
                       alignSelf: "flex-start",
                       margin: "15px 0px",
+                      marginBlockStart: "0rem"
                     }}
                     size="md"
                     rightIcon={
@@ -273,7 +324,23 @@ export function openComposerModal(
     );
   };
 
-  const title = fullName;
+  const createTitle = () => {
+    return (
+        <h2
+            className={classes.link}
+            style={{
+              color: "#228be6",
+              textDecoration: "none",
+              fontWeight: "700",
+              textDecorationColor:"#228be6",
+            }}
+        >
+          {fullName}
+        </h2>
+    );
+  };
+
+  const title = createTitle();
   const confirmLabel = "Close";
   const cancelLabel = "";
   const color = "blue";
@@ -284,10 +351,10 @@ export function openComposerModal(
     children,
     color,
     closeButtonLabel: "Close",
-    size: "auto",
-    classNames: {
-      title:classes.modalTitle,
-      header:classes.modalHeader,
+    size: "lg",
+    styles:{
+      header:{ justifyContent:"center", marginBottom:"-25px" }
+
     }
   });
 }

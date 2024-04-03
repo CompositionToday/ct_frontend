@@ -12,6 +12,7 @@ import { OpportunityItem } from "./OpportunityHelper";
 import { useNavigate } from "react-router-dom";
 import { showNotification } from "@mantine/notifications";
 import { useMediaQuery } from "@mantine/hooks";
+import {wait} from "@testing-library/user-event/dist/utils";
 
 export function CreateOpportunity() {
   const [opportunityType, setOpportunityType] = useState("Jobs");
@@ -25,7 +26,7 @@ export function CreateOpportunity() {
 
   const handleSubmission = async (opportunity: OpportunityItem) => {
     try {
-      console.log("handling submission");
+      // console.log("handling submission");
       if (opportunityType !== "compositions")
         opportunity.end_date = opportunity.end_date?.toString();
       if (opportunityType !== "compositions")
@@ -36,7 +37,7 @@ export function CreateOpportunity() {
       if (opportunityType !== "compositions")
         opportunity.deadline = opportunity.deadline?.toString();
 
-      console.log("create post body:", opportunity);
+      // console.log("create post body:", opportunity);
       let requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -56,7 +57,7 @@ export function CreateOpportunity() {
         color: "green",
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       showNotification({
         title: "Error",
         message: "Something went wrong, please try again later",
@@ -76,7 +77,7 @@ export function CreateOpportunity() {
   }, []);
 
   useEffect(() => {
-    console.log(opportunityType);
+    // console.log(opportunityType);
   }, [opportunityType]);
 
   const smallerScreen = useMediaQuery("(max-width: 992px)");
@@ -102,7 +103,8 @@ export function CreateOpportunity() {
       <Modal
         opened={displaySuccessModal}
         withCloseButton={false}
-        onClose={() => console.log("closing unicorn modal")}
+        // onClose={() => console.log("closing unicorn modal")}
+        onClose={() => console.log(".")}
         size="80%"
       >
         <FormHeader>Post Created!</FormHeader>

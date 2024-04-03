@@ -191,7 +191,7 @@ export function NewLinks({ apiEndpoint }: linkProp) {
   }, [rawLinksList, searchParams]);
 
   useEffect(() => {
-    console.log("loading changed to:", loading);
+    // console.log("loading changed to:", loading);
   }, [loading]);
 
   const convertRawLinksDataToTableData = () => {
@@ -240,13 +240,13 @@ export function NewLinks({ apiEndpoint }: linkProp) {
         }
       }*/
 
-      console.log("formatted edit body:", opportunity);
+      // console.log("formatted edit body:", opportunity);
       let temp = opportunity.expiration_date;
     
       //opportunity.expiration_date = new Date(temp ? temp: "").getTime();
       opportunity.expiration_date = Number(opportunity.expiration_date);
       opportunity.linkID = idpost;
-      console.log(JSON.stringify(opportunity));
+      // console.log(JSON.stringify(opportunity));
 
       let requestOptions = {
         method: "PUT",
@@ -262,11 +262,11 @@ export function NewLinks({ apiEndpoint }: linkProp) {
       let responseJson = await response.json();
 
       let editedOpportunity = responseJson.listOfObjects[0];
-      console.log("edited body:" + editedOpportunity);
+      // console.log("edited body:" + editedOpportunity);
 
       return editedOpportunity;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -280,7 +280,7 @@ export function NewLinks({ apiEndpoint }: linkProp) {
       opportunity.expiration_date = opportunity.expiration_date?.toString();
 
       let editedOpportunity = await editFunction(opportunity);
-      console.log("Edited Op "+ editedOpportunity);
+      // console.log("Edited Op "+ editedOpportunity);
 
       for (let i = 0; i < rawLinksList.length; i++) {
         if (rawLinksList[i].linkID === editedOpportunity.linkID) {
@@ -298,7 +298,7 @@ export function NewLinks({ apiEndpoint }: linkProp) {
       });
       setDisplayOpportunityEditModal(false);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       showNotification({
         title: "Error",
         message: "There was a problem, please try again later",
@@ -348,7 +348,7 @@ export function NewLinks({ apiEndpoint }: linkProp) {
         variant="outline" 
         size="sm" 
         onClick={() => {
-          console.log(rawLinksList[index]);
+          // console.log(rawLinksList[index]);
           setDisplayOpportunityEditModal(true);
           setCurrentOpportunity(rawLinksList[index]); 
         }}

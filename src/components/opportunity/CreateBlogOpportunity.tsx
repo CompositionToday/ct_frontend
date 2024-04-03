@@ -33,7 +33,7 @@ export function CreateBlogOpportunity() {
       opportunity.deadline = opportunity.deadline?.toString();
       opportunity.published_date = opportunity.published_date?.toString();
 
-      console.log("create post body:", opportunity);
+      // console.log("create post body:", opportunity);
       let requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -53,7 +53,7 @@ export function CreateBlogOpportunity() {
         color: "green",
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       showNotification({
         title: "Error",
         message: "Something went wrong, please try again later",
@@ -73,7 +73,7 @@ export function CreateBlogOpportunity() {
   }, []);
 
   useEffect(() => {
-    console.log(opportunityType);
+    // console.log(opportunityType);
   }, [opportunityType]);
 
   const smallerScreen = useMediaQuery("(max-width: 992px)");
@@ -99,7 +99,8 @@ export function CreateBlogOpportunity() {
       <Modal
         opened={displaySuccessModal}
         withCloseButton={false}
-        onClose={() => console.log("closing unicorn modal")}
+        // onClose={() => console.log("closing unicorn modal")}
+        onClose={() => console.log(".")}
         size="80%"
       >
         <FormHeader>Post Created!</FormHeader>

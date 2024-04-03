@@ -16,10 +16,10 @@ export function MyPosts() {
         if (!user.emailVerified) {
           navigate("/verify");
         }
-        console.log('auth = ' + auth.toString());
-        console.log('user = ' + user.toString());
+        // console.log('auth = ' + auth.toString());
+        // console.log('user = ' + user.toString());
         let temp = 'posts/'+user.uid;
-        console.log("HERE!");
+        // console.log("HERE!");
         setPathName(temp);
       } else {
         navigate("/");
@@ -28,7 +28,7 @@ export function MyPosts() {
   }, []);
 
   useEffect(() => {
-    console.log("pathname: ", pathName);
+    // console.log("pathname: ", pathName);
   }, [pathName]);
 
   return (

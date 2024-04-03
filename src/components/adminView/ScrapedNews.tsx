@@ -188,7 +188,7 @@ export function ScrapedNews() {
   }, [rawNewsList, searchParams]);
 
   useEffect(() => {
-    console.log("loading changed to:", loading);
+    // console.log("loading changed to:", loading);
   }, [loading]);
 
   const convertRawNewsDataToTableData = () => {
@@ -301,7 +301,7 @@ export function ScrapedNews() {
         }
       }
 
-      console.log("formatted edit body:", opportunity);
+      // console.log("formatted edit body:", opportunity);
       let temp = opportunity.published_date;
       opportunity.published_date = new Date(temp ? temp: "").getTime();
       
@@ -320,11 +320,11 @@ export function ScrapedNews() {
       let responseJson = await response.json();
 
       let editedOpportunity = responseJson.listOfObjects[0];
-      console.log("edited body:" + editedOpportunity);
+      // console.log("edited body:" + editedOpportunity);
 
       return editedOpportunity;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -343,7 +343,7 @@ export function ScrapedNews() {
       opportunity.published_date = opportunity.published_date?.toString();
 
       let editedOpportunity = await editFunction(opportunity);
-      console.log("Edited Op "+ editedOpportunity);
+      // console.log("Edited Op "+ editedOpportunity);
 
       for (let i = 0; i < rawNewsList.length; i++) {
         if (rawNewsList[i].idposts === editedOpportunity.idposts) {
@@ -361,7 +361,7 @@ export function ScrapedNews() {
       });
       setDisplayOpportunityEditModal(false);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       showNotification({
         title: "Error",
         message: "There was a problem, please try again later",
@@ -370,6 +370,24 @@ export function ScrapedNews() {
     }
   };
   
+  function shortenUrl(url: string | undefined, maxLength: number): string {
+    if(url == undefined || url == null) return "";
+    if (url.length <= maxLength) {
+        return url;
+    } else {
+        const ellipsis = '...';
+        const match = url.match(/:\/\/(.[^/]+)/);
+        if (match) {
+            const domain = match[1];
+            const domainLength = domain.length;
+            const remainingLength = maxLength - ellipsis.length;
+            const shortenedDomain = domain.slice(0, Math.min(remainingLength, domainLength));
+            return shortenedDomain + ellipsis;
+        } else {
+            return url.slice(0, maxLength) + ellipsis;
+        }
+    }
+  }
 
   const rows = NewsList?.map((item, index) => (
     <tr 
@@ -431,7 +449,7 @@ export function ScrapedNews() {
         <td>
           <Container style={{ width: 200 }}>
           <a href={item.link} target='_blank'  color="dimmed" style={{ overflowWrap: 'break-word' }}>
-          {item.link}
+          {shortenUrl(item.link, 30)}
           </a>
           </Container>
         </td>
