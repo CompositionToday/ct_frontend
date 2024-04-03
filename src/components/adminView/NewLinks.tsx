@@ -45,6 +45,7 @@ import { OpportunityForm } from "../opportunity/OpportunityForm";
 import { EditLinkForm } from "./EditLinkForm";
 import { SearchAndFilterLinks } from "./SearchAndFilterLinks";
 import { PaginationLinksSearchObject, PaginationNavbarLinks } from "../pagination/PaginationNavbarLinks";
+import { openDeleteLinkModal } from "./modals/DeleteLinkModal";
 
 interface LinksTableData {
   linkID?: string;
@@ -109,12 +110,11 @@ const useStyles = createStyles((theme) => ({
     textAlign: "center",
 
     [theme.fn.smallerThan("md")]: {
+      textAlign: "left",
       maxHeight: "90vh",
       padding: "0px",
-      textAlign: "left",
     },
   },
-
 
   bold: {
     fontWeight: 700,
@@ -307,6 +307,7 @@ export function NewLinks({ apiEndpoint }: linkProp) {
     }
   };
   
+  
 
   const rows = LinksList?.map((item, index) => (
     <tr   
@@ -354,6 +355,15 @@ export function NewLinks({ apiEndpoint }: linkProp) {
         }}
       >
         Edit
+      </Button>
+      <Button 
+        style={{marginLeft: '5%', backgroundColor: "#fa5252"}}
+        size="sm" 
+        onClick={() => {
+          openDeleteLinkModal(rawLinksList[index]); // Call handleDeleteButton with the opportunity to delete
+        }}
+      >
+        Delete
       </Button>
     </td>      
     </tr>
@@ -508,7 +518,6 @@ export function NewLinks({ apiEndpoint }: linkProp) {
                     )}
                   </th>
                   )}
-                  
                   {!mobileScreen && (
                   <th style={{textAlign: "center"}}>
                     {loading ? (
@@ -520,10 +529,12 @@ export function NewLinks({ apiEndpoint }: linkProp) {
                         
                       />
                     ) : (
-                      "Published Date"
+                      "Expiration Date"
                     )}
                   </th>
                   )}
+                  
+                  <th></th>
                 </tr>
               </thead>
               <tbody>{loading ? loadingRows : rows}</tbody>
@@ -531,33 +542,17 @@ export function NewLinks({ apiEndpoint }: linkProp) {
           </Container>
         </ScrollArea>
         )}
-
-        { rawLinksList.length === 0 ? (
-            <Container sx={{display: "none", justifyContent: "", alignItems: "center"}}>
-            
-            <PaginationNavbarLinks
-              apiEndpointExtension={apiEndpoint}
-              setListOfObjects={setRawLinksList}
-              searchFilterObject={searchParams}
-              setLoading={setLoading}
-              recall={recall}
-              //curPage = {CurrentPage}
-            />
-            </Container>
-          ) : (
-            <Container sx={{ display: "flex", justifyContent: "", alignItems: "center", marginTop: "30px"}}>
+        <Container sx={{ display: "flex", justifyContent: "", alignItems: "center", marginTop: "30px"}}>
           
-            <PaginationNavbarLinks
-              apiEndpointExtension={apiEndpoint}
-              setListOfObjects={setRawLinksList}
-              searchFilterObject={searchParams}
-              setLoading={setLoading}
-              recall={recall}
-              //curPage = {CurrentPage}
-            />
-            </Container>
-        )}
-        
+        <PaginationNavbarLinks
+          apiEndpointExtension={apiEndpoint}
+          setListOfObjects={setRawLinksList}
+          searchFilterObject={searchParams}
+          setLoading={setLoading}
+          recall={recall}
+          //curPage = {CurrentPage}
+        />
+        </Container>
         
         
       </Paper>
