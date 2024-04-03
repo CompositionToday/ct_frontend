@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Helmet } from "react-helmet-async";
 import {
     GridContainer,
     OpportunityGrid,
@@ -573,6 +574,11 @@ export function NewsOpportunity({ apiEndpoint }: OpportunityProp) {
     // const formattedDate = formatter.format(Number(date));
 
     return (
+        <>
+        <Helmet>
+            <title>News | Composition Today</title>
+            <meta name="description" content="The News page for Composition Today!"/>
+        </Helmet>
         <OpportunityPageContainer>
             <MediaQuery smallerThan="md" styles={{ display: "none" }}>
                 <Image
@@ -909,5 +915,6 @@ export function NewsOpportunity({ apiEndpoint }: OpportunityProp) {
                 />
             </Modal>
         </OpportunityPageContainer>
+        </>
     );
 }
