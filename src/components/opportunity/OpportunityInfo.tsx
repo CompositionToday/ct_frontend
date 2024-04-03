@@ -45,6 +45,8 @@ import filledHeart from "./filledLike.png";
 import { openComposerModal } from "./modals/ComposerInfoModal";
 import { FeaturedComposition } from "../../FeaturedComposition";
 import infoicon from "../../../src/images/info-square.png";
+import ShareButtons from "./shareButtons";
+
 const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
@@ -520,6 +522,17 @@ OpportunityInfoProp) {
             >
               <img src={infoicon} height={"25px"} width={"25px"}/>
             </ActionIcon>
+          </Tooltip>
+        </div>
+        <div>
+          <Tooltip
+            label="Share"
+            sx={{
+              alignSelf: "flex-start",
+              verticalAlign: "top",
+            }}
+          >
+            <ShareButtons value={opportunity} userUID={userUID}></ShareButtons>
           </Tooltip>
         </div>
       </ButtonsContainer>
