@@ -1,31 +1,13 @@
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import { HashRouter, Route, Routes } from "react-router-dom";
-import { Landing } from "./pages/Landing";
-import { About } from "./pages/AboutUs";
-import { NotFound } from "./pages/NotFound";
-import { ForgotPassword } from "./pages/ForgotPassword";
-import { Jobs } from "./pages/Jobs";
-import { Competitions } from "./pages/Competitions";
 import { NavBar } from "./components/navigation/NavBar";
 import { navItems } from "./components/navigation/NavItems";
-import { Users } from "./pages/adminView/Users";
-import { Festivals } from "./pages/Festivals";
-import { CreateOpportunityPage } from "./pages/CreateOpportunityPage";
-import { Concerts } from "./pages/Concerts";
-import { BannedUser } from "./pages/BannedUser";
 import { NotificationsProvider } from "@mantine/notifications";
 import { MantineProvider, Modal } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
-import { RecentPosts } from "./pages/adminView/RecentPosts";
-import { MyPosts } from "./pages/MyPosts";
 import { Footer } from "./components/footer/Footer";
 import { footerInfo } from "./components/footer/FooterInfo";
 import { useState } from "react";
-
 import { LoadingOverlay } from "@mantine/core";
 import AnimatedRoutes from "./AnimatedRoutes";
-
 import { BrowserRouter } from "react-router-dom";
 import {useColorScheme, useHotkeys} from "@mantine/hooks";
 import { ColorSchemeProvider, ColorScheme } from '@mantine/core';
@@ -68,7 +50,7 @@ export default function App() {
           }} withGlobalStyles withNormalizeCSS>
             <ModalsProvider>
               <NotificationsProvider>
-                <HashRouter>
+                <BrowserRouter>
 
                     {/* This is the Navbar at the top of every Page*/}
                   <NavBar links={navItems.links} />
@@ -79,7 +61,7 @@ export default function App() {
                     {/*This is the footer at the bottom of the Webpage */}
                   <Footer data={footerInfo.data} />
 
-                </HashRouter>
+                </BrowserRouter>
               </NotificationsProvider>
             </ModalsProvider>
           </MantineProvider>

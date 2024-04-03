@@ -249,26 +249,26 @@ export function OpportunityForm({
   // FIXME: When creating the request object, need to make sure that we use keyword
   // instead of explicitly using title and organization
   const handleFormSubmission = (values: OpportunityItem) => {
-    console.log("these are the values: ", values);
+    // console.log("these are the values: ", values);
     if (
       opportunityType === "festivals" &&
       (!dateRange || !dateRange[0] || !dateRange[1])
     ) {
-      console.log(
-        "There is no date range given for a festival, returning out of function"
-      );
+      // console.log(
+      //   "There is no date range given for a festival, returning out of function"
+      // );
       return;
     } else if (
       opportunityType === "festivals" &&
       ((dateRange[0] && dateRange[0].valueOf() < getCurrentDate()) ||
         (dateRange[1] && dateRange[1].valueOf() < getCurrentDate()))
     ) {
-      console.log("One of the date in the date range is in the past");
+      // console.log("One of the date in the date range is in the past");
       return;
     }
 
     if (opportunityType === "concerts" && !startTime) {
-      console.log("There is no start time given, returning out of function");
+      // console.log("There is no start time given, returning out of function");
       return;
     }
 
@@ -276,9 +276,9 @@ export function OpportunityForm({
       (opportunityType === "concerts" || opportunityType === "festivals") &&
       (!city || !state)
     ) {
-      console.log(
-        "there is no location that was selected, now returning out of function"
-      );
+      // console.log(
+      //   "there is no location that was selected, now returning out of function"
+      // );
       return;
     }
 
@@ -333,11 +333,11 @@ export function OpportunityForm({
         return tempDate.valueOf();
       };
       req.end_date = getSixMonthFromToday();
-      console.log(
-        "getting 6 month from today",
-        req.end_date,
-        new Date(req.end_date)
-      );
+      // console.log(
+      //   "getting 6 month from today",
+      //   req.end_date,
+      //   new Date(req.end_date)
+      // );
     } else {
       req.end_date = getCurrentDate(
         values.end_date instanceof Date ? values.end_date?.valueOf() : undefined
@@ -362,8 +362,8 @@ export function OpportunityForm({
     req.UID = userUID;
 
     req.date_posted = getCurrentDate();
-    console.log("fee type:", req.fee, typeof req.fee, req);
-    console.log("test");
+    // console.log("fee type:", req.fee, typeof req.fee, req);
+    // console.log("test");
     handleSubmission(req);
   };
 
@@ -388,14 +388,14 @@ export function OpportunityForm({
       }
     });
 
-    console.log("Here is the opportunity passed into the form: ", opportunity);
+    // console.log("Here is the opportunity passed into the form: ", opportunity);
     let sal = opportunity?.salary as number;
-    console.log(+sal);
-    console.log(sal);
+    // console.log(+sal);
+    // console.log(sal);
   }, []);
 
   useEffect(() => {
-    console.log(opportunityType);
+    // console.log(opportunityType);
 
     if (
       opportunityType === "competitions" ||
@@ -617,7 +617,7 @@ export function OpportunityForm({
               clearable
               display={opportunityType === "concerts"}
               onChange={(e) => {
-                console.log("timeinput: ", e);
+                // console.log("timeinput: ", e);
                 setStartTime(e);
                 setDisplayStartTimeError(false);
               }}
@@ -848,7 +848,7 @@ export function OpportunityForm({
               withAsterisk
               value={dateRange}
               onChange={(e) => {
-                console.log(e);
+                // console.log(e);
                 setDateRange(e);
                 setDisplayDateRangeError(false);
               }}
@@ -901,41 +901,41 @@ export function OpportunityForm({
                     setDisplayDateRangeError(true);
                     setDisplayStartTimeError(true);
                   }
-                  console.log(
-                    "Is the org valid: " + form.isValid("organization")
-                  );
-                  console.log(
-                    "Is the end date valid: " + form.isValid("end_date")
-                  );
-                  console.log("Is the salary valid: " + form.isValid("salary"));
-                  console.log(
-                    "Is the job cat valid: " + form.isValid("job_category")
-                  );
-                  console.log(
-                    "Is the job type valid: " + form.isValid("job_type")
-                  );
-                  //console.log(form.isValid("job_type"));
-                  console.log(
-                    "Is the comp cat valid: " +
-                      form.isValid("competition_category")
-                  );
-                  console.log(
-                    "Is the address valid: " + form.isValid("address")
-                  );
-                  console.log("Is the fee valid: " + form.isValid("fee"));
-                  console.log("Is the form valid: " + form.isValid());
-                  console.log("Is the title valid: " + form.isValid("title"));
-                  if (opportunityType === "compositions")
-                    console.log("Is the genre valid: " + form.isValid("genre"));
-                  console.log("Is the link valid: " + form.isValid("link"));
-                  console.log(
-                    "Is the desc valid: " + form.isValid("description")
-                  );
-                  console.log(form.errors);
+                  // console.log(
+                  //   "Is the org valid: " + form.isValid("organization")
+                  // );
+                  // console.log(
+                  //   "Is the end date valid: " + form.isValid("end_date")
+                  // );
+                  // console.log("Is the salary valid: " + form.isValid("salary"));
+                  // console.log(
+                  //   "Is the job cat valid: " + form.isValid("job_category")
+                  // );
+                  // console.log(
+                  //   "Is the job type valid: " + form.isValid("job_type")
+                  // );
+                  // //console.log(form.isValid("job_type"));
+                  // console.log(
+                  //   "Is the comp cat valid: " +
+                  //     form.isValid("competition_category")
+                  // );
+                  // console.log(
+                  //   "Is the address valid: " + form.isValid("address")
+                  // );
+                  // console.log("Is the fee valid: " + form.isValid("fee"));
+                  // console.log("Is the form valid: " + form.isValid());
+                  // console.log("Is the title valid: " + form.isValid("title"));
+                  // if (opportunityType === "compositions")
+                  //   console.log("Is the genre valid: " + form.isValid("genre"));
+                  // console.log("Is the link valid: " + form.isValid("link"));
+                  // console.log(
+                  //   "Is the desc valid: " + form.isValid("description")
+                  // );
+                  // console.log(form.errors);
 
-                  if (opportunityType !== "compositions")
-                    console.log(displayLocationError);
-                  console.log(displayDateRangeError);
+                  // if (opportunityType !== "compositions")
+                  //   console.log(displayLocationError);
+                  // console.log(displayDateRangeError);
                 }}
               >
                 Submit

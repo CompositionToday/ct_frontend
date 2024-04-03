@@ -103,7 +103,7 @@ export function EditLinkForm({
       doesCurrenPostsUseClassName: opportunity?.doesCurrentPostsUseClassName || 0,
       postType: opportunity?.postType || "",
       morePostsXpath: opportunity?.morePostsXpath || "",
-      currentPostsStartIndex: opportunity?.currentPostsStartIndex || 0,
+      currentPostsStartIndex: opportunity?.currentPostsStartIndex || 1,
     },
     validate: {
       title: (value) =>

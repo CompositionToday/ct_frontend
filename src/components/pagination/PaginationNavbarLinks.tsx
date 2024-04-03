@@ -65,7 +65,7 @@ export function PaginationNavbarLinks({
         setLoading(false);
         //console.log(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
         setLoading(false);
       }
     };
@@ -76,7 +76,7 @@ export function PaginationNavbarLinks({
     const getPageCount = () => {
       const numberOfPages = Math.ceil(setListOfObjects.length / numberOfItemsPerPage);
       setPageCount(numberOfPages);
-      console.log(numberOfPages);
+      // console.log(numberOfPages);
     };
     getPageCount();
     
@@ -85,7 +85,7 @@ export function PaginationNavbarLinks({
   useEffect(() => {
     const getCurrentPage = () => {
       setListOfObjects(list);
-      console.log(list);
+      // console.log(list);
       const startIndex = (currentPage - 1) * numberOfItemsPerPage;
       const endIndex = startIndex + numberOfItemsPerPage;
       if (endIndex<=list.length){
@@ -94,7 +94,7 @@ export function PaginationNavbarLinks({
       }
       else{
         const currentObjects = list.slice(startIndex, endIndex);
-        console.log(currentObjects);
+        // console.log(currentObjects);
         setListOfObjects(list);
       }
       

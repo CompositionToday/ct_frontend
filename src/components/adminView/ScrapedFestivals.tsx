@@ -369,6 +369,25 @@ export function ScrapedFestivals() {
       });
     }
   };
+
+  function shortenUrl(url: string | undefined, maxLength: number): string {
+    if(url == undefined || url == null) return "";
+    if (url.length <= maxLength) {
+        return url;
+    } else {
+        const ellipsis = '...';
+        const match = url.match(/:\/\/(.[^/]+)/);
+        if (match) {
+            const domain = match[1];
+            const domainLength = domain.length;
+            const remainingLength = maxLength - ellipsis.length;
+            const shortenedDomain = domain.slice(0, Math.min(remainingLength, domainLength));
+            return shortenedDomain + ellipsis;
+        } else {
+            return url.slice(0, maxLength) + ellipsis;
+        }
+    }
+  }
   
 
   const rows = FestivalList?.map((item, index) => (
@@ -437,7 +456,7 @@ export function ScrapedFestivals() {
       </td>
       {!mobileScreen && (
         <td>
-          <Container style={{ width: 400 }}>
+          <Container style={{ width: 200 }}>
           <Text size="sm" color="dimmed">
             {item.description}
           </Text>
@@ -453,9 +472,9 @@ export function ScrapedFestivals() {
       )}
       {!mobileScreen && (
         <td>
-          <Container style={{ width: 100 }}>
+          <Container style={{ width: 150 }}>
           <a href={item.link} target='_blank'  color="dimmed" style={{ overflowWrap: 'break-word' }}>
-          {item.link}
+          {shortenUrl(item.link, 30)}
           </a>
           </Container>
         </td>

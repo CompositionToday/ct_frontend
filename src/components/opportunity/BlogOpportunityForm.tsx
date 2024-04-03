@@ -143,7 +143,7 @@ export function BlogOpportunityForm({
 
   // instead of explicitly using title and organization
   const handleFormSubmission = async (values: OpportunityItem) => {
-    console.log("these are the values: ", values);
+    // console.log("these are the values: ", values);
     // if (
     //   opportunityType === "festivals" &&
     //   (!dateRange || !dateRange[0] || !dateRange[1])
@@ -162,7 +162,7 @@ export function BlogOpportunityForm({
     // }
 
     if (opportunityType === "concerts" && !startTime) {
-      console.log("There is no start time given, returning out of function");
+      // console.log("There is no start time given, returning out of function");
       return;
     }
 
@@ -171,15 +171,15 @@ export function BlogOpportunityForm({
         (opportunityType === "concerts" || opportunityType === "festivals") &&
         (!city || !state)
     ) {
-      console.log(
-          "there is no location that was selected, now returning out of function"
-      );
+      // console.log(
+      //     "there is no location that was selected, now returning out of function"
+      // );
       return;
     }
 
 
     let opportunityKeys: string[] = [...essentialOpportunityKey];
-    console.log("oppurtnuityKeys = " + opportunityKeys);
+    // console.log("oppurtnuityKeys = " + opportunityKeys);
     if (opportunityType === "jobs") {
       opportunityKeys = essentialOpportunityKey.concat(jobOpportunityKey);
     }
@@ -210,17 +210,17 @@ export function BlogOpportunityForm({
     const date = new Date();
     const formatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'short' });
     const formattedDate = formatter.format(date);
-    console.log(formattedDate);
+    // console.log(formattedDate);
 
     let response = await fetch(`${url}/users/${userUID}`);
     let responseJson = await response.json();
 
     let userData = responseJson.listOfObjects[0];
-    console.log(userData);
+    // console.log(userData);
 
     // this line of code does not work without the redundant pair of parenthesis (do not remove)
     setAuthorName(userData.first_name + ' ' + userData.last_name);
-    console.log(authorName)
+    // console.log(authorName)
 
     req.title = req.title + " - " + formattedDate;
     req.UID = userUID;
@@ -232,7 +232,7 @@ export function BlogOpportunityForm({
 
     req.date_posted = getCurrentDate();
     // console.log("fee type:", req.fee, typeof req.fee, req);
-    console.log(req);
+    // console.log(req);
 
     handleSubmission(req);
   };
@@ -240,20 +240,20 @@ export function BlogOpportunityForm({
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log(user)
+        // console.log(user)
         setUserUID(user.uid);
       }
     });
 
-    console.log("Here is the opportunity passed into the form: ", opportunity);
+    // console.log("Here is the opportunity passed into the form: ", opportunity);
     let sal = opportunity?.salary as number;
-    console.log(+sal);
-    console.log(sal);
+    // console.log(+sal);
+    // console.log(sal);
   }, []);
 
 
   useEffect(() => {
-    console.log(opportunityType);
+    // console.log(opportunityType);
 
     if (opportunityType === "competitions") {
       setCity("Remote");
@@ -336,22 +336,22 @@ export function BlogOpportunityForm({
                   }
                   setDisplayDateRangeError(true);
                   setDisplayStartTimeError(true);
-                  console.log(form.isValid());
-                  console.log(form.isValid("title"));
-                  console.log(form.isValid("organization"));
-                  console.log(form.isValid("link"));
-                  console.log(form.isValid("description"));
-                  console.log(form.isValid("end_date"));
-                  console.log(form.isValid("salary"));
-                  console.log(form.isValid("job_category"));
-                  console.log(form.isValid("job_type"));
-                  console.log(form.isValid("job_type"));
-                  console.log(form.isValid("competition_category"));
-                  console.log(form.isValid("address"));
-                  console.log(form.isValid("fee"));
+                  // console.log(form.isValid());
+                  // console.log(form.isValid("title"));
+                  // console.log(form.isValid("organization"));
+                  // console.log(form.isValid("link"));
+                  // console.log(form.isValid("description"));
+                  // console.log(form.isValid("end_date"));
+                  // console.log(form.isValid("salary"));
+                  // console.log(form.isValid("job_category"));
+                  // console.log(form.isValid("job_type"));
+                  // console.log(form.isValid("job_type"));
+                  // console.log(form.isValid("competition_category"));
+                  // console.log(form.isValid("address"));
+                  // console.log(form.isValid("fee"));
 
-                  console.log(displayLocationError);
-                  console.log(displayDateRangeError);
+                  // console.log(displayLocationError);
+                  // console.log(displayDateRangeError);
                 }}
               >
                 Submit

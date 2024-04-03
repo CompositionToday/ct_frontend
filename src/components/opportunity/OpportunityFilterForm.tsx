@@ -149,7 +149,7 @@ export function OpportunityFilterForm({
             onChange={(e) =>
                 setTempSearchObj({
                     ...tempSearchObj,
-                    sort: e && e !== "-1" ? e : "",
+                    sort: e && e !== "-1" ? e : "0",
                 })
             }
             value={

@@ -11,11 +11,11 @@ import {
     Image,
     Menu, Grid,
 } from "@mantine/core";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { IconUserCircle } from "@tabler/icons";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMantineTheme } from '@mantine/core';
-import { ToggleThemeButton } from '../button/ToogleThemeButton'
+import { ToggleThemeButton } from '../button/ToogleThemeButton';
 
 const musicNoteIcon = require("../../images/MusicNote.png");
 
@@ -167,17 +167,15 @@ export function NavBar({ links }: HeaderActionProps) {
 
   const items = links.map((link) => {
     return (
-      <a
+      <Link
+        to={link.link}
         key={link.label}
         className={cx(classes.link, {
           [classes.linkActive]: active === link.link,
         })}
-        onClick={() => {
-          navigate(link.link);
-        }}
       >
         {link.label}
-      </a>
+      </Link>
     );
   });
 
@@ -525,24 +523,20 @@ export function NavBar({ links }: HeaderActionProps) {
         style={{ visibility: userBanned ? "hidden" : "visible" }}
       >
         <Container className={classes.inner} fluid>
-          <Group>
-            <Group spacing="xs" className={classes.logoGroup}>
-              <a
-                className={classes.title}
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                COMPOSITION:
-                <span className={classes.blueText}>TODAY</span>
-              </a>
+        <Group>
+          <Group spacing="xs" className={classes.logoGroup}>
+            <Link to="/" className={classes.title}>
+              COMPOSITION:
+              <span className={classes.blueText}>TODAY</span>
+            </Link>
+            <Link to="/"> {}
               <Image
                 src={String(musicNoteIcon)}
                 className={classes.image}
-                onClick={() => navigate("/")}
               />
-            </Group>
+            </Link>
           </Group>
+        </Group>
           <Group spacing={5} className={classes.links}>
             {items}
           </Group>

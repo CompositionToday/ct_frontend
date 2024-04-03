@@ -160,7 +160,7 @@ export function FeaturedCompositions() {
 
         const angleDeg = angle(mouseX, mouseY, anchorX, anchorY);
 
-        console.log("moving event mouse");
+        // console.log("moving event mouse");
     };
     const getFeaturedList = async () => {
         let response = await fetch(`${url}/featuredcompositions`);
@@ -182,13 +182,13 @@ export function FeaturedCompositions() {
                 null,
                 i%2
             );
-            console.log(val)
+            // console.log(val)
             list.push(val);
             
             setList([...featuredlist, ...list]);
         }
-        console.log(featuredlist);
-        console.log(featuredlist.length);
+        // console.log(featuredlist);
+        // console.log(featuredlist.length);
     };
 
     useEffect(() => {
@@ -253,7 +253,7 @@ export function FeaturedCompositions() {
                                 // controlSize={20}
                             >
                                 {featuredlist.map((featuredList) => (
-                                    <Carousel.Slide
+                                    <Carousel.Slide key={featuredList.title}
                                         sx={{
                                             width: "33.333%",
                                             height: "100%",
@@ -281,7 +281,7 @@ export function FeaturedCompositions() {
                                                 },
                                             }}
                                         >
-                                            <div key={featuredList.title} className={classes.card}>
+                                            <div className={classes.card}>
 
                                                 <a href={featuredList.link} className={classes.link}>
                                                     <h1 className={classes.cardSubHeading}>{featuredList.title}</h1>
