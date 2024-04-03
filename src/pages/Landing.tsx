@@ -7,6 +7,7 @@ import { auth } from "../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { motion } from "framer-motion";
 import {FeaturedCompositions} from "../components/landing/FeaturedCompositions";
+import { Helmet } from "react-helmet";
 
 export function Landing() {
   // useEffect(() => {
@@ -16,6 +17,11 @@ export function Landing() {
   // });
 
   return (
+  <>
+    <Helmet>
+          <title>Composition Today</title>
+          <meta name="description" content="The front page of Composition Today!"/>
+      </Helmet>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -31,5 +37,6 @@ export function Landing() {
         <RegisterCTA />
       </Container>
     </motion.div>
+  </>
   );
 }

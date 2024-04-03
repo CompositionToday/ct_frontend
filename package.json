@@ -35,6 +35,8 @@
     "framer-motion": "^10.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-helmet-async": "^2.0.4",
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
@@ -81,6 +83,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
+    "@types/react-helmet": "^6.1.11",
     "prettier": "2.7.1",
     "react-snap": "^1.23.0",
     "webpack": "^5.91.0",
