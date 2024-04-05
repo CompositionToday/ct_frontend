@@ -170,6 +170,7 @@ OpportunityInfoProp) {
       ? new Date(opportunity?.start_date)
       : new Date()
   );
+  const [composerName, setComposerName] = useState("");
   const getLiked = async () => {
     // console.log("called getliked");
     let request1 = {
@@ -188,6 +189,16 @@ OpportunityInfoProp) {
     if (deepCopyOfObject.length == 1) setLiked(true);
     else setLiked(false);
     // console.log(liked);
+    // Get the composer information
+    let response = await fetch(`${url}/getcomposer/${opportunity?.UID}`);
+    let responseJson = await response.json();
+    // Store the information in a parsed object
+    const deepCopyOfObject2 = JSON.parse(
+      JSON.stringify(responseJson.listOfObjects)
+    );
+    // Get the necessary info
+    let fullName = deepCopyOfObject2[0].first_name + " " + deepCopyOfObject2[0].last_name;
+    setComposerName(fullName);
   };
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   useEffect(() => {
@@ -579,6 +590,7 @@ OpportunityInfoProp) {
         </Badge>
       ) : null}
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
+      <MoreInfoOpportunityTitle style={{display: opportunityType === "compositions" ? "block" : "none",}}>{composerName}</MoreInfoOpportunityTitle>
       {opportunity.organization && (
         <Text mb={15}>{opportunity.organization}</Text>
       )}
