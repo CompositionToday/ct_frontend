@@ -467,15 +467,6 @@ OpportunityInfoProp) {
                 display: opportunityType === "compositions" ? "block" : "none",
               }}
               onClick={async () => {
-                // Get the composer information
-                let response = await fetch(
-                  `${url}/getcomposer/${opportunity?.UID}`
-                );
-                let responseJson = await response.json();
-                // Store the information in a parsed object
-                const deepCopyOfObject = JSON.parse(
-                  JSON.stringify(responseJson.listOfObjects)
-                );
                 // Get the list of awards from the composer's submitted songs
                 let awardsresponse = await fetch(
                   `${url}/getawards/${opportunity?.UID}`
@@ -499,11 +490,6 @@ OpportunityInfoProp) {
                     )
                   );
                 }
-                // Get the necessary info
-                let fullName =
-                  deepCopyOfObject[0].first_name +
-                  " " +
-                  deepCopyOfObject[0].last_name;
                 // Get the bio and link of the composer
                 // Get the list of awards from the composer's submitted songs
                 let inforesponse = await fetch(
@@ -522,7 +508,7 @@ OpportunityInfoProp) {
                 // Open the modal
                 openComposerModal(
                   opportunity?.UID,
-                  fullName,
+                  composerName,
                   awards,
                   bio,
                   link,
