@@ -170,7 +170,6 @@ OpportunityInfoProp) {
       ? new Date(opportunity?.start_date)
       : new Date()
   );
-  const [composerName, setComposerName] = useState("");
   const getLiked = async () => {
     // console.log("called getliked");
     let request1 = {
@@ -189,16 +188,6 @@ OpportunityInfoProp) {
     if (deepCopyOfObject.length == 1) setLiked(true);
     else setLiked(false);
     // console.log(liked);
-    // Get the composer information
-    let response = await fetch(`${url}/getcomposer/${opportunity?.UID}`);
-    let responseJson = await response.json();
-    // Store the information in a parsed object
-    const deepCopyOfObject2 = JSON.parse(
-      JSON.stringify(responseJson.listOfObjects)
-    );
-    // Get the necessary info
-    let fullName = deepCopyOfObject2[0].first_name + " " + deepCopyOfObject2[0].last_name;
-    setComposerName(fullName);
   };
   const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
   useEffect(() => {
@@ -506,6 +495,7 @@ OpportunityInfoProp) {
                 if (link == "") link = null;
                 // console.log("Bio: " + bio + ", Link: " + link);
                 // Open the modal
+                let composerName = opportunity?.first_name + " " + opportunity.last_name;
                 openComposerModal(
                   opportunity?.UID,
                   composerName,
@@ -576,7 +566,7 @@ OpportunityInfoProp) {
         </Badge>
       ) : null}
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
-      <MoreInfoOpportunityTitle style={{display: opportunityType === "compositions" ? "block" : "none",}}>{composerName}</MoreInfoOpportunityTitle>
+      {/*<MoreInfoOpportunityTitle style={{display: opportunityType === "compositions" ? "block" : "none",}}>{composerName}</MoreInfoOpportunityTitle>*/}
       {opportunity.organization && (
         <Text mb={15}>{opportunity.organization}</Text>
       )}
@@ -596,8 +586,9 @@ OpportunityInfoProp) {
           <Flex align="center">
             <IconUser size={30} color="#40C057" />
             <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-              {opportunity?.first_name} {opportunity?.last_name}:{" "}
-              {opportunity?.email}
+              {opportunity?.first_name} {opportunity?.last_name}
+              {/*:{" "}*/}
+              {/*{opportunity?.email}*/}
             </span>
           </Flex>
         </Tooltip>
