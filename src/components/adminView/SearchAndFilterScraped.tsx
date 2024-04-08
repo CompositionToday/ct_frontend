@@ -17,6 +17,7 @@ import { showNotification } from "@mantine/notifications";
 import { openConfirmationModal } from "../modal/ConfirmationModal";
 import { openDenyModal } from "./modals/DenyModal";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import {update} from "react-spring";
 
 
 interface SearchAndFilterScrapedProp {
@@ -94,6 +95,10 @@ export function SearchAndFilterScraped({
       searchKeyword,
     );
   }, [adminChecked, bannedChecked, regularChecked]);
+
+  // useEffect(() => {
+  //   onUpdate();
+  // }, [selectedRows]);
 
   const isFilterEnabled = () => {
     return adminChecked || bannedChecked || regularChecked;
@@ -231,7 +236,7 @@ export function SearchAndFilterScraped({
     if (selectedRows.length == 0)
     {
       return(
-          <Button onClick={() => openDenyModal(selectedRows, onUpdateSelectedRows)}
+          <Button onClick={() => openDenyModal(selectedRows, onUpdateSelectedRows, onUpdate)}
               style={{marginRight: '20%'}}
               disabled
           >
@@ -241,7 +246,8 @@ export function SearchAndFilterScraped({
 
     }
     return(
-        <Button onClick={() => openDenyModal(selectedRows, onUpdateSelectedRows)}
+
+        <Button onClick={() => openDenyModal(selectedRows, onUpdateSelectedRows, onUpdate)}
             style={{marginRight: '20%', backgroundColor: "#fa5252"}}
         >
           Deny

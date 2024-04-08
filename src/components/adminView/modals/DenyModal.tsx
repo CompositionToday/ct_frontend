@@ -2,10 +2,12 @@ import { Text } from "@mantine/core";
 import React from "react";
 import { openConfirmationModal } from "../../modal/ConfirmationModal";
 import { showNotification } from "@mantine/notifications";
+import {wait} from "@testing-library/user-event/dist/utils";
 
 export const openDenyModal = (
   selectedRows: number[],
-  onUpdateSelectedRows: (updatedRows: number[]) => void 
+  onUpdateSelectedRows: (updatedRows: number[]) => void,
+  onUpdate: () => void
 ) => {
   const DenyPosts = async () => {
     try {
@@ -14,7 +16,7 @@ export const openDenyModal = (
           method: "PUT",
           headers: { "Content-Type": "application/json" },
         };
-  
+
         let response = await fetch(
           `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/webscraping/deny/${selectedRows[i]}`,
           requestOptions
@@ -23,7 +25,7 @@ export const openDenyModal = (
 
       }
 
-    
+
     showNotification({
       title: "Posts Denied",
       message: "Scraped posts have been denied",
@@ -31,7 +33,9 @@ export const openDenyModal = (
     });
 
     onUpdateSelectedRows([]);
-    
+    onUpdate();
+
+
     } catch (err) {
       console.log(err);
       showNotification({
@@ -50,7 +54,7 @@ export const openDenyModal = (
     return (
       <Text size="sm">
         Are you sure you want to{" "}
-        <span style={{ fontWeight: 700 }}>deny these posts</span>?
+        <span style={{ fontWeight: 700 }}>Deny These Posts</span>?
       </Text>
     );
   };
