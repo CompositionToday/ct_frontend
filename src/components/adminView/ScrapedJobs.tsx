@@ -473,13 +473,6 @@ export function ScrapedJobs() {
           </Text>
         </td>
       )}
-      {!mobileScreen && (
-        <td>
-          <Text size="sm" color="dimmed">
-            {item.cityState}
-          </Text>
-        </td>
-      )}
       <td>
         <Text
             size="lg"
