@@ -1,15 +1,17 @@
 import { openModal } from "@mantine/modals";
 import { FeaturedComposition } from "../../../FeaturedComposition";
-import {IconArrowLeft, IconExternalLink, IconTrophy} from "@tabler/icons";
+import { IconArrowLeft, IconExternalLink, IconTrophy } from "@tabler/icons";
 
 import {
   createStyles,
   Container,
-  Button, useMantineTheme, useMantineColorScheme,
+  Button,
+  useMantineTheme,
+  useMantineColorScheme,
 } from "@mantine/core";
 
 import React from "react";
-import {Carousel} from "@mantine/carousel";
+import { Carousel } from "@mantine/carousel";
 
 export function openComposerModal(
   UID: string | undefined,
@@ -18,8 +20,7 @@ export function openComposerModal(
   bio: string | null,
   link: string | null,
   classes: any
-)
-{
+) {
   const useStyles = createStyles((theme) => ({
     inner: {
       display: "flex",
@@ -44,7 +45,7 @@ export function openComposerModal(
     },
 
     title: {
-      color: 'White',
+      color: "White",
       fontFamily: `Greycliff CF, ${theme.fontFamily}`,
       fontSize: 25,
       // lineHeight: 1.2,
@@ -58,8 +59,8 @@ export function openComposerModal(
     card: {
       color: theme.white,
       fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-      borderRadius:"md",
-      textAlign:"center",
+      borderRadius: "md",
+      textAlign: "center",
     },
 
     control: {
@@ -69,20 +70,19 @@ export function openComposerModal(
     },
 
     carousel: {
-      backgroundColor:theme.colorScheme !== "dark" ? theme.colors.gray[0] : "#454545"
+      backgroundColor:
+        theme.colorScheme !== "dark" ? theme.colors.gray[0] : "#454545",
     },
 
     modalTitle: {
-      justifyContent:"center",
-      textAlign:"center",
+      justifyContent: "center",
+      textAlign: "center",
     },
 
     modalHeader: {
-      justifyContent:"center",
-      textAlign:"center",
+      justifyContent: "center",
+      textAlign: "center",
     },
-
-
 
     image: {
       flex: 1,
@@ -113,16 +113,16 @@ export function openComposerModal(
     link: {
       color: "#90caf9",
       textDecoration: "underline",
-      textDecorationColor:"#90caf9"
+      textDecorationColor: "#90caf9",
     },
 
-    cardSubHeading:{
-      color:"#90caf9"
+    cardSubHeading: {
+      color: "#90caf9",
     },
 
     h4: {
       height: "2px",
-      fontSize: 12
+      fontSize: 12,
     },
 
     container: {
@@ -151,76 +151,108 @@ export function openComposerModal(
     if (awards != null && awards.length > 0) {
       return awards.map((song) => {
         return (
-            <Carousel.Slide
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  justifyContent:"center",
-                  marginRight:"0px",
-                  paddingRight:"0px"
-                }}
-            >
-              <div key={song.link} style={{textAlign:"center"}}>
-                <a
+          <Carousel.Slide
+            sx={{
+              width: "33.333%",
+              height: "100%",
+              //justifyContent: "center",
+              paddingLeft: "20%",
+              paddingRight: "20%",
+            }}
+          >
+            <div key={song.link} style={{ textAlign: "center" }}>
+              {song.awards ? (
+                <p
+                  style={{
+                    fontSize: 14,
+                    //fontStyle: "italic",
+                    fontWeight: 400,
+                  }}
+                >
+                  <a
                     href={song.link}
                     style={{
                       textDecoration: "none",
-                      textDecorationColor:"#90caf9",
-                      color:"inherit"
+                      textDecorationColor: "#90caf9",
+                      color: "inherit",
                     }}
-                >
-                  {song.awards ?
-                        <p
-                          style={{
-                            fontSize:14,
-                            fontStyle:"italic",
-                            fontWeight:400,
-                          }}
-                        >
-                          {song.title}
-                          <Button
-                              rightIcon={<IconTrophy />}
-                              variant="light"
-                              color={"yellow"}
-                              style={{
-                                marginTop:"0.25rem",
-                              }}
-                          >
-                            {song.awards}
-                          </Button>
-                        </p>
-                      :
-
-                      (<div>
-                      <p
-                          style={{
-                            fontSize:14,
-                            fontStyle:"italic",
-                            fontWeight:400,
-                          }}
-                        >
-                          {song.title}
-                        </p>
-                      </div>)
-                  }
-                </a>
-                <a href={song.link} target="blank">
-                  {/*<Button*/}
-                  {/*    radius="md"*/}
-                  {/*    sx={{*/}
-                  {/*      height: 30,*/}
-                  {/*      alignSelf: "flex-end",*/}
-                  {/*      margin: "15px 0px",*/}
-                  {/*    }}*/}
-                  {/*    size="md"*/}
-                  {/*    rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}*/}
-                  {/*>*/}
-                  {/*  Link*/}
-                  {/*</Button>*/}
-                </a>
-              </div>
-            </Carousel.Slide>
-
+                  >
+                    <span
+                      style={{
+                        fontStyle: "italic",
+                        fontSize: "25px",
+                        color: "blue",
+                      }}
+                    >
+                      {song.title}
+                    </span>
+                  </a>
+                  <br />
+                  <Button
+                    rightIcon={<IconTrophy />}
+                    variant="light"
+                    color={"yellow"}
+                    style={{
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {song.awards}
+                  </Button>
+                  <br />
+                  {song.genre}
+                  <br />
+                  {song.description}
+                </p>
+              ) : (
+                <div>
+                  <p
+                    style={{
+                      fontSize: 14,
+                      //fontStyle: "italic",
+                      fontWeight: 400,
+                    }}
+                  >
+                    <a
+                      href={song.link}
+                      style={{
+                        textDecoration: "none",
+                        textDecorationColor: "#90caf9",
+                        color: "inherit",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontStyle: "italic",
+                          fontSize: "25px",
+                          color: "blue",
+                        }}
+                      >
+                        {song.title}
+                      </span>
+                    </a>
+                    <br />
+                    {song.genre}
+                    <br />
+                    {song.description}
+                  </p>
+                </div>
+              )}
+              <a href={song.link} target="blank">
+                {/*<Button*/}
+                {/*    radius="md"*/}
+                {/*    sx={{*/}
+                {/*      height: 30,*/}
+                {/*      alignSelf: "flex-end",*/}
+                {/*      margin: "15px 0px",*/}
+                {/*    }}*/}
+                {/*    size="md"*/}
+                {/*    rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}*/}
+                {/*>*/}
+                {/*  Link*/}
+                {/*</Button>*/}
+              </a>
+            </div>
+          </Carousel.Slide>
         );
       });
     } else return <div></div>;
@@ -234,11 +266,11 @@ export function openComposerModal(
           <div>
             {awards ? (
               <p
-                  className={classes.subheading}
-                  style={{
-                    fontWeight:"500",
-                    marginBlockEnd: "0rem"
-                  }}
+                className={classes.subheading}
+                style={{
+                  fontWeight: "500",
+                  marginBlockEnd: "0rem",
+                }}
               >
                 Compositions:
                 <br />
@@ -248,22 +280,38 @@ export function openComposerModal(
             )}
 
             <Carousel
-                mx="auto"
-                height={350}
-                align={"start"}
-                slideSize="25%"
-                slideGap="xl"
-                slidesToScroll={4}
-                sx={{
-                  width: "100%",
-                  height:"100%",
-                }}
-                styles={{
-                  container:{marginRight:"0px"},
-                  root:{carouselHeight:"100px"},
-                  viewport:{height:"140px"},
-                  // slide:{borderStyle:"solid",borderColor:"black",borderWidth:2}
-                }}
+              mx="auto"
+              height={"auto"}
+              align={"start"}
+              slideSize="100%"
+              slideGap={"xl"}
+              slidesToScroll={1}
+              sx={{
+                //width: "100%",
+                width: "100%",
+                height: "100%",
+              }}
+              styles={{
+                control: {
+                  "&[data-inactive]": {
+                    opacity: 0,
+                    cursor: "default",
+                  },
+                  // eslint-disable-next-line react-hooks/rules-of-hooks
+                  color: "black",
+                  // backgroundColor: "gray"
+                  // eslint-disable-next-line react-hooks/rules-of-hooks
+                  backgroundColor: "white",
+                },
+                container: { margin: "0px" },
+                //root: { carouselHeight: "auto", carouselWidth: "auto" },
+                viewport: { height: "auto" },
+                slide: {
+                  border: "1px",
+                  borderStyle: "solid",
+                  borderColor: "black",
+                },
+              }}
             >
               {awardsSection}
             </Carousel>
@@ -271,28 +319,26 @@ export function openComposerModal(
             {bio ? (
               <div>
                 <p
-                    className={classes.subheading}
-                    style={{
-                      fontWeight:"500",
-                    }}
+                  className={classes.subheading}
+                  style={{
+                    fontWeight: "500",
+                  }}
                 >
                   Bio: <br />
                 </p>
                 {bio}
               </div>
-            )
-                :
-            (
+            ) : (
               <div />
             )}
             {link ? (
               <div>
                 <p
-                    className={classes.subheading}
-                    style={{
-                      fontWeight:"500",
-                      marginBlockEnd: "0.5rem"
-                    }}
+                  className={classes.subheading}
+                  style={{
+                    fontWeight: "500",
+                    marginBlockEnd: "0.5rem",
+                  }}
                 >
                   Website link: <br />
                 </p>
@@ -303,7 +349,7 @@ export function openComposerModal(
                       height: 30,
                       alignSelf: "flex-start",
                       margin: "15px 0px",
-                      marginBlockStart: "0rem"
+                      marginBlockStart: "0rem",
                     }}
                     size="md"
                     rightIcon={
@@ -326,17 +372,17 @@ export function openComposerModal(
 
   const createTitle = () => {
     return (
-        <h2
-            className={classes.link}
-            style={{
-              color: "#228be6",
-              textDecoration: "none",
-              fontWeight: "700",
-              textDecorationColor:"#228be6",
-            }}
-        >
-          {fullName}
-        </h2>
+      <h2
+        className={classes.link}
+        style={{
+          color: "#228be6",
+          textDecoration: "none",
+          fontWeight: "700",
+          textDecorationColor: "#228be6",
+        }}
+      >
+        {fullName}
+      </h2>
     );
   };
 
@@ -352,9 +398,8 @@ export function openComposerModal(
     color,
     closeButtonLabel: "Close",
     size: "lg",
-    styles:{
-      header:{ justifyContent:"center", marginBottom:"-25px" }
-
-    }
+    styles: {
+      header: { justifyContent: "center", marginBottom: "-25px" },
+    },
   });
 }
