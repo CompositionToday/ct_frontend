@@ -581,7 +581,7 @@ OpportunityInfoProp) {
             </Flex>
           </Tooltip>
         )} */}
-      {opportunity?.first_name && opportunity?.last_name && opportunity?.email && (
+      {opportunity?.first_name && opportunity?.last_name && opportunity?.email && opportunityType == "compositions" && (
         <Tooltip label="Author" position="top-start">
           <Flex align="center">
             <IconUser size={30} color="#40C057" />
