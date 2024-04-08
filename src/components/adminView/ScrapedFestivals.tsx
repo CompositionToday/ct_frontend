@@ -94,7 +94,7 @@ const useStyles = createStyles((theme) => ({
   noDataContainer: {
     display: "flex",
     justifyContent: "center", // Center horizontally
-  alignItems: "center",
+    alignItems: "center",
     position: "relative",
     zIndex: 1,
     borderColor: "#939393",
@@ -522,17 +522,18 @@ export function ScrapedFestivals() {
         </td>
       )}
       <td>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={() => {
-          setDisplayOpportunityEditModal(true);
-          setCurrentOpportunity(rawFestivalList[index]);
-        }}
-      >
-        Edit
-      </Button>
-    </td>      
+        <Text
+            size="lg"
+            color="blue"
+            style={{fontWeight:600}}
+            onClick={() => {
+              setDisplayOpportunityEditModal(true);
+              setCurrentOpportunity(rawFestivalList[index]);
+            }}
+        >
+          Edit
+        </Text>
+      </td>
     </tr>
     
   ));
@@ -762,7 +763,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -777,7 +779,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -792,7 +795,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -807,7 +811,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                        
@@ -822,7 +827,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -837,7 +843,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -852,7 +859,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -867,7 +875,7 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -882,13 +890,13 @@ export function ScrapedFestivals() {
                         {loading ? (
                             <Skeleton
                                 height={12}
-                                width="10%"
+                                width="9.1%"
                                 radius="xl"
                                 sx={{ margin: "8px 0px" }}
 
                             />
                         ) : (
-                            ""
+                            "Edit"
                         )}
                       </th>
                   )}
