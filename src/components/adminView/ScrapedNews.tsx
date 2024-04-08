@@ -469,16 +469,17 @@ export function ScrapedNews() {
         </td>
       )}
       <td>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={() => {
-          setDisplayOpportunityEditModal(true);
-          setCurrentOpportunity(rawNewsList[index]);
-        }}
-      >
-        Edit
-      </Button>
+        <Text
+            size="lg"
+            color="blue"
+            style={{fontWeight:600}}
+            onClick={() => {
+              setDisplayOpportunityEditModal(true);
+              setCurrentOpportunity(rawNewsList[index]);
+            }}
+        >
+          Edit
+        </Text>
     </td>      
     </tr>
     
@@ -720,7 +721,7 @@ export function ScrapedNews() {
 
                             />
                         ) : (
-                            ""
+                            "Edit"
                         )}
                       </th>
                   )}

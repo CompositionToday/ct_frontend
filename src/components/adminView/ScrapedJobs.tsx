@@ -481,16 +481,17 @@ export function ScrapedJobs() {
         </td>
       )}
       <td>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={() => {
-          setDisplayOpportunityEditModal(true);
-          setCurrentOpportunity(rawJobList[index]);
-        }}
-      >
-        Edit
-      </Button>
+        <Text
+            size="lg"
+            color="blue"
+            style={{fontWeight:600}}
+            onClick={() => {
+              setDisplayOpportunityEditModal(true);
+              setCurrentOpportunity(rawJobList[index]);
+            }}
+        >
+          Edit
+        </Text>
     </td>      
     </tr>
     
@@ -779,7 +780,7 @@ export function ScrapedJobs() {
 
                             />
                         ) : (
-                            ""
+                            "Edit"
                         )}
                       </th>
                   )}

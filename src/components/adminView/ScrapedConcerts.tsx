@@ -505,17 +505,17 @@ export function ScrapedConcerts() {
         </td>
       )}
       <td>
-      <Button 
-        variant="outline" 
-        size="sm"
-
-        onClick={() => {
-          setDisplayOpportunityEditModal(true);
-          setCurrentOpportunity(rawConcertList[index]);
-        }}
-      >
-        Edit
-      </Button>
+        <Text
+            size="lg"
+            color="blue"
+            style={{fontWeight:600}}
+            onClick={() => {
+              setDisplayOpportunityEditModal(true);
+              setCurrentOpportunity(rawConcertList[index]);
+            }}
+        >
+          Edit
+        </Text>
     </td>      
     </tr>
     

@@ -472,16 +472,17 @@ export function ScrapedCompetitions() {
       )}
       
       <td>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={() => {
-          setDisplayOpportunityEditModal(true);
-          setCurrentOpportunity(rawCompetitionList[index]);
-        }}
-      >
-        Edit
-      </Button>
+        <Text
+            size="lg"
+            color="blue"
+            style={{fontWeight:600}}
+            onClick={() => {
+              setDisplayOpportunityEditModal(true);
+              setCurrentOpportunity(rawCompetitionList[index]);
+            }}
+        >
+          Edit
+        </Text>
     </td>      
     </tr>
     
@@ -779,7 +780,7 @@ export function ScrapedCompetitions() {
 
                             />
                         ) : (
-                            ""
+                            "Edit"
                         )}
                       </th>
                   )}
