@@ -10,7 +10,7 @@ import {
   IconUser,
   IconAlarm,
 } from "@tabler/icons";
-import { Tooltip, Badge } from "@mantine/core";
+import {Tooltip, Badge, Group} from "@mantine/core";
 import { Opportunity } from "./Opportunity";
 import genreIcon from "../../images/BigMusicNote.png";
 
@@ -370,16 +370,11 @@ export const SpecificOpportunityBadges = ({
   }
   if (opportunityType === "compositions") {
     return (
-      <>
+      <Group>
         {opportunity?.genre && (
           <Tooltip label="Genre">
             <Badge
               leftSection={
-                // <IconBriefcase
-                //   size={18}
-                //   color="#40C057"
-                //   style={{ marginBottom: "-3px" }}
-                // />
                 <img src={genreIcon} width={"20px"} alt={"Genre"} />
               }
               color="gray"
@@ -439,7 +434,7 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )} */}
-      </>
+      </Group>
     );
   }
   return null;
