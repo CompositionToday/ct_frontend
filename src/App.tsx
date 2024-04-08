@@ -40,6 +40,7 @@ export default function App() {
           overlayBlur={1}
           transitionDuration={400}
           loaderProps={{ variant: "bars" }}
+
           zIndex={2}
         />
       </Modal>

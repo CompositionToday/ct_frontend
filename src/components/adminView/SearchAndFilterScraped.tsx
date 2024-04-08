@@ -198,6 +198,52 @@ export function SearchAndFilterScraped({
     // console.log(selectAll);
   }
 
+  function ApproveButton(){
+    if (selectedRows.length == 0)
+    {
+      return(
+        <Button onClick={handleApprove}
+                style={{marginRight: '5%'}}
+                disabled>
+          Approve
+        </Button>
+      );
+
+    }
+    return(
+      <Button onClick={handleApprove}
+              style={{marginRight: '5%'}}
+              color="green"
+      >
+        Approve
+      </Button>
+    )
+
+  }
+
+  function DenyButton(){
+    if (selectedRows.length == 0)
+    {
+      return(
+          <Button onClick={() => openDenyModal(selectedRows, onUpdateSelectedRows)}
+              style={{marginRight: '20%'}}
+              disabled
+          >
+            Deny
+          </Button>
+      );
+
+    }
+    return(
+        <Button onClick={() => openDenyModal(selectedRows, onUpdateSelectedRows)}
+            style={{marginRight: '20%', backgroundColor: "#fa5252"}}
+        >
+          Deny
+        </Button>
+    )
+
+  }
+
 
   return (
     <Flex className={classes.container}>
@@ -218,14 +264,20 @@ export function SearchAndFilterScraped({
           {selectAll ? 'Deselect Page' : 'Select Page'}
           </Button>
         <Flex className={classes.buttonsContainer}>
-          <Button onClick={handleApprove} style={{marginRight: '5%'}}>
-            Approve
-          </Button>
-          <Button onClick={() =>
-            openDenyModal(selectedRows, onUpdateSelectedRows)
-            } style={{marginRight: '20%', backgroundColor: "#fa5252"}}>
-            Deny
-          </Button>
+
+
+          {/*<Button onClick={handleApprove} style={{marginRight: '5%'}}>*/}
+          {/*  Approve*/}
+          {/*</Button>*/}
+          <ApproveButton></ApproveButton>
+          <DenyButton></DenyButton>
+
+          {/*<Button onClick={() =>*/}
+          {/*  openDenyModal(selectedRows, onUpdateSelectedRows)*/}
+          {/*  } style={{marginRight: '20%', backgroundColor: "#fa5252"}}>*/}
+          {/*  Deny*/}
+          {/*</Button>*/}
+
         </Flex>
       </Flex>
     
