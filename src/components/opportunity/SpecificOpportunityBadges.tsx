@@ -391,6 +391,17 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
+        {opportunity?.first_name && opportunity?.last_name && (
+          <Tooltip label="Author" position="top-start">
+            <Badge
+              leftSection={<IconUser size={20} color="#40C057" />}
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {opportunity?.first_name} {opportunity?.last_name}
+            </Badge>
+          </Tooltip>
+        )}
         {/* {opportunity?.link && (
           <Tooltip label="Link">
             <Badge
