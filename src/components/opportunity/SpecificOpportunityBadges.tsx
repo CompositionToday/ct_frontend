@@ -113,12 +113,12 @@ export const SpecificOpportunityBadges = ({
           <Tooltip label="Genre">
             <Badge
               leftSection={
-                // <IconBriefcase
-                //   size={18}
-                //   color="#40C057"
-                //   style={{ marginBottom: "-3px" }}
-                // />
-                <img src={genreIcon} width={"20px"} alt={"Genre"}/>
+                <IconCategory
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+                //<img src={genreIcon} width={"20px"} alt={"Genre"}/>
               }
               color="gray"
               sx={{
@@ -266,12 +266,12 @@ export const SpecificOpportunityBadges = ({
           <Tooltip label="Genre">
             <Badge
               leftSection={
-                // <IconBriefcase
-                //   size={18}
-                //   color="#40C057"
-                //   style={{ marginBottom: "-3px" }}
-                // />
-                <img src={genreIcon} width={"20px"} alt={"Genre"}/>
+                <IconCategory
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+                //<img src={genreIcon} width={"20px"} alt={"Genre"}/>
               }
               color="gray"
               sx={{
@@ -370,12 +370,16 @@ export const SpecificOpportunityBadges = ({
   }
   if (opportunityType === "compositions") {
     return (
-      <Group>
+      <>
         {opportunity?.genre && (
           <Tooltip label="Genre">
             <Badge
               leftSection={
-                <img src={genreIcon} width={"20px"} alt={"Genre"} />
+                <IconCategory
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
               }
               color="gray"
               sx={{
@@ -387,10 +391,18 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
+        
+
         {opportunity?.first_name && opportunity?.last_name && (
-          <Tooltip label="Author" position="top-start">
+          <Tooltip label="Author">
             <Badge
-              leftSection={<IconUser size={20} color="#40C057" />}
+              leftSection={
+                <IconUser
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
               color="gray"
               sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
             >
@@ -434,7 +446,7 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )} */}
-      </Group>
+      </>
     );
   }
   return null;
