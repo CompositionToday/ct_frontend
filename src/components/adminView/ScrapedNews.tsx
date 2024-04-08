@@ -709,6 +709,21 @@ export function ScrapedNews() {
                     )}
                   </th>
                   )}
+                  {!mobileScreen && (
+                      <th style={{textAlign: "center"}}>
+                        {loading ? (
+                            <Skeleton
+                                height={12}
+                                width="10%"
+                                radius="xl"
+                                sx={{ margin: "8px 0px" }}
+
+                            />
+                        ) : (
+                            ""
+                        )}
+                      </th>
+                  )}
                   <th></th>
                 </tr>
               </thead>

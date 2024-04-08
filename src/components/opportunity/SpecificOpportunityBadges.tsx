@@ -7,6 +7,7 @@ import {
   IconTrophy,
   IconMapPin,
   IconCurrencyDollar,
+  IconUser,
   IconAlarm,
 } from "@tabler/icons";
 import { Tooltip, Badge } from "@mantine/core";

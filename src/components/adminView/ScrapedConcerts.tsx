@@ -507,7 +507,8 @@ export function ScrapedConcerts() {
       <td>
       <Button 
         variant="outline" 
-        size="sm" 
+        size="sm"
+
         onClick={() => {
           setDisplayOpportunityEditModal(true);
           setCurrentOpportunity(rawConcertList[index]);
@@ -845,6 +846,21 @@ export function ScrapedConcerts() {
                     )}
                   </th>
                   )}
+                  {!mobileScreen && (
+                      <th style={{textAlign: "center"}}>
+                        {loading ? (
+                            <Skeleton
+                                height={12}
+                                width="10%"
+                                radius="xl"
+                                sx={{ margin: "8px 0px" }}
+
+                            />
+                        ) : (
+                            "Edit"
+                        )}
+                      </th>
+                  )}
                   <th></th>
                 </tr>
               </thead>
@@ -893,9 +909,7 @@ export function ScrapedConcerts() {
         <FormHeader>Edit Post</FormHeader>
         <ScrapedPostForm
           edit={true}
-          opportunityType={
-            "concerts"
-          }
+          opportunityType={"concerts"}
           opportunity={currentOpportunity ? currentOpportunity : undefined}
           displayWinnerInput
           handleSubmission={handleEditButton}
