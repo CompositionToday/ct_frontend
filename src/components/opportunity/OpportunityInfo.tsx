@@ -587,8 +587,6 @@ OpportunityInfoProp) {
             <IconUser size={30} color="#40C057" />
             <span style={{ fontSize: "17px", marginLeft: "10px" }}>
               {opportunity?.first_name} {opportunity?.last_name}
-              {/*:{" "}*/}
-              {/*{opportunity?.email}*/}
             </span>
           </Flex>
         </Tooltip>
