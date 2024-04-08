@@ -16,6 +16,8 @@ import { ScrapedPost } from "./ScrapedPostHelper";
 import { showNotification } from "@mantine/notifications";
 import { openConfirmationModal } from "../modal/ConfirmationModal";
 import { openDenyModal } from "./modals/DenyModal";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+
 
 interface SearchAndFilterScrapedProp {
   setSearchObjs: React.Dispatch<React.SetStateAction<PaginationScrapedSearchObject>>;
@@ -83,6 +85,8 @@ export function SearchAndFilterScraped({
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectAll, setSelectAll] = useState(false);
   const [selectedPages, setselectedPages] = useState<number[]>([]);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     createSearchObj(
@@ -164,7 +168,6 @@ export function SearchAndFilterScraped({
 
       }
 
-    
       showNotification({
         title: "Posts Approved",
         message: "Scraped posts have been added to the site",
@@ -173,6 +176,7 @@ export function SearchAndFilterScraped({
 
       onUpdateSelectedRows([]);
       onUpdate();
+      // window.location.reload();
       
     } catch (err) {
       // console.log(err);
@@ -202,8 +206,8 @@ export function SearchAndFilterScraped({
     if (selectedRows.length == 0)
     {
       return(
-        <Button onClick={handleApprove}
-                style={{marginRight: '5%'}}
+        <Button onClick={handleApprove} 
+                style={{marginRight: '5%'}} 
                 disabled>
           Approve
         </Button>
@@ -211,7 +215,7 @@ export function SearchAndFilterScraped({
 
     }
     return(
-      <Button onClick={handleApprove}
+      <Button onClick={handleApprove} 
               style={{marginRight: '5%'}}
               color="green"
       >
@@ -220,6 +224,8 @@ export function SearchAndFilterScraped({
     )
 
   }
+
+
 
   function DenyButton(){
     if (selectedRows.length == 0)
@@ -241,7 +247,6 @@ export function SearchAndFilterScraped({
           Deny
         </Button>
     )
-
   }
 
 
@@ -265,18 +270,8 @@ export function SearchAndFilterScraped({
           </Button>
         <Flex className={classes.buttonsContainer}>
 
-
-          {/*<Button onClick={handleApprove} style={{marginRight: '5%'}}>*/}
-          {/*  Approve*/}
-          {/*</Button>*/}
           <ApproveButton></ApproveButton>
           <DenyButton></DenyButton>
-
-          {/*<Button onClick={() =>*/}
-          {/*  openDenyModal(selectedRows, onUpdateSelectedRows)*/}
-          {/*  } style={{marginRight: '20%', backgroundColor: "#fa5252"}}>*/}
-          {/*  Deny*/}
-          {/*</Button>*/}
 
         </Flex>
       </Flex>
