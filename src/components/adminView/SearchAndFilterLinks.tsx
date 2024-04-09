@@ -143,7 +143,8 @@ export function SearchAndFilterLinks({
 
       // console.log("formatted edit body:", opportunity);
       let temp = opportunity.expiration_date;
-      opportunity.expiration_date = new Date(temp ? temp: "").getTime();
+      //opportunity.expiration_date = new Date(temp ? temp: "").getTime();
+      opportunity.expiration_date = Number(opportunity.expiration_date);
       
 
       let requestOptions = {
