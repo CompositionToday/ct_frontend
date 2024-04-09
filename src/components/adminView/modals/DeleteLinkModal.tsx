@@ -53,8 +53,8 @@ export const openDeleteLinkModal = (
     );
   };
 
-  const title = "Delete User";
-  const confirmLabel = "Delete user";
+  const title = "Delete Link";
+  const confirmLabel = "Delete Link";
   const cancelLabel = "Cancel";
   const color = "red";
   const children = createChildren();
