@@ -522,17 +522,16 @@ export function ScrapedFestivals() {
         </td>
       )}
       <td>
-        <Text
-            size="lg"
-            color="blue"
-            style={{fontWeight:600}}
-            onClick={() => {
-              setDisplayOpportunityEditModal(true);
-              setCurrentOpportunity(rawFestivalList[index]);
-            }}
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => {
+            setDisplayOpportunityEditModal(true);
+            setCurrentOpportunity(rawFestivalList[index]);
+          }}
         >
           Edit
-        </Text>
+        </Button>
       </td>
     </tr>
     
@@ -727,6 +726,7 @@ export function ScrapedFestivals() {
                 className={cx(classes.header, {
                   [classes.scrolled]: scrolled,
                 })}
+                style={{zIndex: "10000000"}}
               >
                 <tr>
                   
@@ -896,7 +896,7 @@ export function ScrapedFestivals() {
 
                             />
                         ) : (
-                            "Edit"
+                            ""
                         )}
                       </th>
                   )}

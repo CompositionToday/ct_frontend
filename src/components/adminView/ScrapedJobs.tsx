@@ -428,13 +428,13 @@ export function ScrapedJobs() {
         )}
       </td>
       
-        <td>
-          <Container style={{ width: 400 }}>
-          <Text size="sm" color="dimmed">
-            {item.description}
-          </Text>
-          </Container>
-        </td>
+      <td>
+        <Container style={{ width: 400 }}>
+        <Text size="sm" color="dimmed">
+          {item.description}
+        </Text>
+        </Container>
+      </td>
       
       {!mobileScreen && (
         <td>
@@ -474,18 +474,17 @@ export function ScrapedJobs() {
         </td>
       )}
       <td>
-        <Text
-            size="lg"
-            color="blue"
-            style={{fontWeight:600}}
-            onClick={() => {
-              setDisplayOpportunityEditModal(true);
-              setCurrentOpportunity(rawJobList[index]);
-            }}
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => {
+            setDisplayOpportunityEditModal(true);
+            setCurrentOpportunity(rawJobList[index]);
+          }}
         >
           Edit
-        </Text>
-    </td>      
+        </Button>
+      </td>      
     </tr>
     
   ));
@@ -657,6 +656,7 @@ export function ScrapedJobs() {
                 className={cx(classes.header, {
                   [classes.scrolled]: scrolled,
                 })}
+               style={{zIndex: "10000000"}}
               >
                 <tr>
                   
@@ -773,7 +773,7 @@ export function ScrapedJobs() {
 
                             />
                         ) : (
-                            "Edit"
+                            ""
                         )}
                       </th>
                   )}

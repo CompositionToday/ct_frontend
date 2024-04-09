@@ -469,17 +469,16 @@ export function ScrapedNews() {
         </td>
       )}
       <td>
-        <Text
-            size="lg"
-            color="blue"
-            style={{fontWeight:600}}
-            onClick={() => {
-              setDisplayOpportunityEditModal(true);
-              setCurrentOpportunity(rawNewsList[index]);
-            }}
-        >
-          Edit
-        </Text>
+    <Button 
+      variant="outline" 
+      size="sm" 
+      onClick={() => {
+        setDisplayOpportunityEditModal(true);
+        setCurrentOpportunity(rawNewsList[index]);
+      }}
+    >
+      Edit
+    </Button>
     </td>      
     </tr>
     
@@ -618,6 +617,7 @@ export function ScrapedNews() {
                 className={cx(classes.header, {
                   [classes.scrolled]: scrolled,
                 })}
+                style={{zIndex: "10000000"}}
               >
                 <tr>
                 {mobileScreen && (
@@ -721,7 +721,7 @@ export function ScrapedNews() {
 
                             />
                         ) : (
-                            "Edit"
+                            ""
                         )}
                       </th>
                   )}

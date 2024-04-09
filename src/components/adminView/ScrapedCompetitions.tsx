@@ -472,17 +472,16 @@ export function ScrapedCompetitions() {
       )}
       
       <td>
-        <Text
-            size="lg"
-            color="blue"
-            style={{fontWeight:600}}
-            onClick={() => {
-              setDisplayOpportunityEditModal(true);
-              setCurrentOpportunity(rawCompetitionList[index]);
-            }}
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => {
+            setDisplayOpportunityEditModal(true);
+            setCurrentOpportunity(rawCompetitionList[index]);
+          }}
         >
           Edit
-        </Text>
+        </Button>
     </td>      
     </tr>
     
@@ -677,6 +676,7 @@ export function ScrapedCompetitions() {
                 className={cx(classes.header, {
                   [classes.scrolled]: scrolled,
                 })}
+                style={{zIndex: "10000000"}}
               >
                 <tr>
                   
@@ -780,7 +780,7 @@ export function ScrapedCompetitions() {
 
                             />
                         ) : (
-                            "Edit"
+                            ""
                         )}
                       </th>
                   )}
