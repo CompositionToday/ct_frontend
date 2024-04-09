@@ -160,8 +160,8 @@ export function openComposerModal(
               height: "100%",
               paddingLeft:"10%",
               paddingRight:"10%",
-              borderWidth:"1px",
-              borderStyle:"solid",
+              // borderWidth:"1px",
+              // borderStyle:"solid",
             }}
           >
             <div key={song.link} style={{ textAlign: "center" }}>
