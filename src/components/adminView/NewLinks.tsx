@@ -29,7 +29,7 @@ import {
 } from "@tabler/icons";
 import { auth } from "../../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { showNotification } from "@mantine/notifications";
 import { openAdminModal } from "./modals/AdminModal";
 import { openDeleteModal } from "./modals/DeleteModal";
@@ -39,13 +39,14 @@ import {
   PaginationSearchObject,
 } from "../pagination/PaginationNavbar";
 import { useMediaQuery } from "@mantine/hooks";
-import { PaginationNavbarScraper } from "../pagination/PaginationNavbarScraper";
+import {PaginationNavbarScraper, PaginationScrapedSearchObject} from "../pagination/PaginationNavbarScraper";
 import { SearchAndFilterScraped } from "./SearchAndFilterScraped";
 import { OpportunityForm } from "../opportunity/OpportunityForm";
 import { EditLinkForm } from "./EditLinkForm";
 import { SearchAndFilterLinks } from "./SearchAndFilterLinks";
 import { PaginationLinksSearchObject, PaginationNavbarLinks } from "../pagination/PaginationNavbarLinks";
 import { openDeleteLinkModal } from "./modals/DeleteLinkModal";
+import {ScrapedPost} from "./ScrapedPostHelper";
 
 interface LinksTableData {
   linkID?: string;
@@ -55,6 +56,14 @@ interface LinksTableData {
 }
 interface linkProp {
   apiEndpoint: string;
+}
+
+interface SearchAndFilterScrapedProp {
+  setSearchObjs: React.Dispatch<React.SetStateAction<PaginationScrapedSearchObject>>;
+  selectedRows: number[];
+  onUpdateSelectedRows: (updatedRows: number[]) => void;
+  onUpdate: () => void;
+  rawData: ScrapedPost[];
 }
 
 const typeColors: Record<string, string> = {
@@ -297,6 +306,8 @@ export function NewLinks({ apiEndpoint }: linkProp) {
         color: "green",
       });
       setDisplayOpportunityEditModal(false);
+      window.location.reload();
+
     } catch (err) {
       // console.log(err);
       showNotification({
