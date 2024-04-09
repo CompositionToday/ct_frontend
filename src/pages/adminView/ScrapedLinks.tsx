@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
     paddingLeft: '5%',
     paddingRight: '5%',
     zIndex: 999,
-    background: "white",
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : "white",
     
 
     [theme.fn.smallerThan("md")]: {

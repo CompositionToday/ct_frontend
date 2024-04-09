@@ -94,7 +94,7 @@ const useStyles = createStyles((theme) => ({
   noDataContainer: {
     display: "flex",
     justifyContent: "center", // Center horizontally
-  alignItems: "center",
+    alignItems: "center",
     position: "relative",
     zIndex: 1,
     borderColor: "#939393",
@@ -522,17 +522,17 @@ export function ScrapedFestivals() {
         </td>
       )}
       <td>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={() => {
-          setDisplayOpportunityEditModal(true);
-          setCurrentOpportunity(rawFestivalList[index]);
-        }}
-      >
-        Edit
-      </Button>
-    </td>      
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => {
+            setDisplayOpportunityEditModal(true);
+            setCurrentOpportunity(rawFestivalList[index]);
+          }}
+        >
+          Edit
+        </Button>
+      </td>
     </tr>
     
   ));
@@ -726,6 +726,7 @@ export function ScrapedFestivals() {
                 className={cx(classes.header, {
                   [classes.scrolled]: scrolled,
                 })}
+                style={{zIndex: "10000000"}}
               >
                 <tr>
                   
@@ -762,7 +763,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -777,7 +779,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -792,7 +795,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -807,7 +811,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                        
@@ -822,7 +827,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -837,7 +843,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -852,7 +859,8 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
+
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -867,7 +875,7 @@ export function ScrapedFestivals() {
                     {loading ? (
                       <Skeleton
                         height={12}
-                        width="10%"
+                        width="9.1%"
                         radius="xl"
                         sx={{ margin: "8px 0px" }}
                         
@@ -876,6 +884,21 @@ export function ScrapedFestivals() {
                       "Genre"
                     )}
                   </th>
+                  )}
+                  {!mobileScreen && (
+                      <th style={{textAlign: "center"}}>
+                        {loading ? (
+                            <Skeleton
+                                height={12}
+                                width="9.1%"
+                                radius="xl"
+                                sx={{ margin: "8px 0px" }}
+
+                            />
+                        ) : (
+                            ""
+                        )}
+                      </th>
                   )}
                   <th></th>
                 </tr>

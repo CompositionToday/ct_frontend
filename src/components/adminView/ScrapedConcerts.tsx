@@ -505,16 +505,17 @@ export function ScrapedConcerts() {
         </td>
       )}
       <td>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={() => {
-          setDisplayOpportunityEditModal(true);
-          setCurrentOpportunity(rawConcertList[index]);
-        }}
-      >
-        Edit
-      </Button>
+        <Button 
+          variant="outline" 
+          size="sm"
+
+          onClick={() => {
+            setDisplayOpportunityEditModal(true);
+            setCurrentOpportunity(rawConcertList[index]);
+          }}
+        >
+          Edit
+        </Button>
     </td>      
     </tr>
     
@@ -709,6 +710,7 @@ export function ScrapedConcerts() {
                 className={cx(classes.header, {
                   [classes.scrolled]: scrolled,
                 })}
+                style={{zIndex: "10000000"}}
               >
                 <tr>
                   
@@ -845,6 +847,21 @@ export function ScrapedConcerts() {
                     )}
                   </th>
                   )}
+                  {!mobileScreen && (
+                      <th style={{textAlign: "center"}}>
+                        {loading ? (
+                            <Skeleton
+                                height={12}
+                                width="10%"
+                                radius="xl"
+                                sx={{ margin: "8px 0px" }}
+
+                            />
+                        ) : (
+                            ""
+                        )}
+                      </th>
+                  )}
                   <th></th>
                 </tr>
               </thead>
@@ -893,9 +910,7 @@ export function ScrapedConcerts() {
         <FormHeader>Edit Post</FormHeader>
         <ScrapedPostForm
           edit={true}
-          opportunityType={
-            "concerts"
-          }
+          opportunityType={"concerts"}
           opportunity={currentOpportunity ? currentOpportunity : undefined}
           displayWinnerInput
           handleSubmission={handleEditButton}

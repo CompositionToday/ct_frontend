@@ -3,6 +3,7 @@ import React from "react";
 import { RawUserData } from "../UsersList";
 import { openConfirmationModal } from "../../modal/ConfirmationModal";
 import { ScrapedLink } from "../ScrapedLinkHelper";
+import {showNotification} from "@mantine/notifications";
 
 export const openDeleteLinkModal = (
   link: ScrapedLink
@@ -28,13 +29,30 @@ export const openDeleteLinkModal = (
         `https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday/links/${idpost}`,
         requestOptions
       );
+
+      // onUpdate();
+      window.location.reload();
+
+
+      showNotification({
+        title: "Link Deleted",
+        message: "Your link has been added",
+        color: "green",
+      });
       
       // Handle response as needed
       // You may want to update state or display a notification
-    } catch (error) {
+    }
+
+    catch (error) {
       console.error('Error deleting opportunity:', error);
       // Handle error as needed
       // You may want to display an error message to the user
+      showNotification({
+        title: "Error",
+        message: "There was a problem, please try again later",
+        color: "red",
+      });
     }
   };
 
@@ -53,8 +71,8 @@ export const openDeleteLinkModal = (
     );
   };
 
-  const title = "Delete User";
-  const confirmLabel = "Delete user";
+  const title = "Delete Link";
+  const confirmLabel = "Delete Link";
   const cancelLabel = "Cancel";
   const color = "red";
   const children = createChildren();

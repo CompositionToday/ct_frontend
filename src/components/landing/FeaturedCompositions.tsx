@@ -9,6 +9,7 @@ import { IconExternalLink, IconScubaMask } from "@tabler/icons";
 
 // @ts-ignore
 import { useWindowSize } from "@uidotdev/usehooks";
+import { Text } from "@mantine/core"
 
 import React from "react";
 import { FeaturedComposition } from "../../FeaturedComposition";
@@ -94,6 +95,7 @@ const useStyles = createStyles((theme) => ({
 
     h3: {
         height: "2px",
+        fontSize: "30px",
         color: "#EEEEEE",
     },
 
@@ -109,7 +111,7 @@ const useStyles = createStyles((theme) => ({
 
     h4: {
         height: "2px",
-        fontSize: 12
+        fontSize: 18
     },
 
     container: {
@@ -264,7 +266,7 @@ export function FeaturedCompositions() {
                                         }}
                                     >
                                         <ScrollArea
-                                            h={250}
+                                            h={350}
                                             scrollbarSize={4}
                                             type="hover"
                                             scrollHideDelay={100}

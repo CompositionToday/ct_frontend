@@ -246,7 +246,9 @@ export function Footer({ data }: FooterLinksProps) {
         </Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
-          <Image src={String(emailIcon)} className={classes.emailIcon} />
+          <a href="mailto:composition2day@gmail.com">
+            <Image src={String(emailIcon)} className={classes.emailIcon} />
+          </a>
         </Group>
       </Container>
     </footer>

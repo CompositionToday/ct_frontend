@@ -176,7 +176,35 @@ export function SearchAndFilterLinks({
       
 
       // Format any keys of type number to be as type strings since the APIs only accept strings for the request body
-      opportunity.expiration_date = opportunity.expiration_date?.toString();
+      // opportunity.expiration_date = opportunity.expiration_date?.toString();
+      let currentDay = new Date()
+      // opportunity.expiration_date = currentDay.getFullYear().valueOf()+10;
+
+      const getCurrentDate = (time = new Date().valueOf()) => {
+        let tempDate: Date;
+
+        tempDate = new Date(time);
+
+        let day = tempDate.getDate();
+        let month = tempDate.getMonth();
+        let year = tempDate.getFullYear();
+        let currentDate = new Date(year, month, day, 0, 0, 0, 0);
+
+        return currentDate.valueOf();
+      };
+
+
+      const TenYearsFromToday = () => {
+        let tempDate: number | Date = getCurrentDate();
+        tempDate = new Date(tempDate);
+        tempDate.setMonth(tempDate.getMonth() + 120);
+        return tempDate.valueOf();
+      };
+
+      opportunity.expiration_date = TenYearsFromToday();
+
+      console.log(opportunity.expiration_date)
+      console.log(opportunity)
 
       let editedOpportunity = await editFunction(opportunity);
       // console.log("Edited Op "+ editedOpportunity);
@@ -190,11 +218,11 @@ export function SearchAndFilterLinks({
         }
       }*/
 
-      showNotification({
-        title: "Link Added",
-        message: "Your link has been added",
-        color: "green",
-      });
+
+      window.location.reload()
+      
+      //REFRESH TABLE CODE GOES HERE
+
       setDisplayOpportunityEditModal(false);
     } catch (err) {
       // console.log(err);

@@ -456,15 +456,6 @@ OpportunityInfoProp) {
                 display: opportunityType === "compositions" ? "block" : "none",
               }}
               onClick={async () => {
-                // Get the composer information
-                let response = await fetch(
-                  `${url}/getcomposer/${opportunity?.UID}`
-                );
-                let responseJson = await response.json();
-                // Store the information in a parsed object
-                const deepCopyOfObject = JSON.parse(
-                  JSON.stringify(responseJson.listOfObjects)
-                );
                 // Get the list of awards from the composer's submitted songs
                 let awardsresponse = await fetch(
                   `${url}/getawards/${opportunity?.UID}`
@@ -488,11 +479,6 @@ OpportunityInfoProp) {
                     )
                   );
                 }
-                // Get the necessary info
-                let fullName =
-                  deepCopyOfObject[0].first_name +
-                  " " +
-                  deepCopyOfObject[0].last_name;
                 // Get the bio and link of the composer
                 // Get the list of awards from the composer's submitted songs
                 let inforesponse = await fetch(
@@ -509,9 +495,10 @@ OpportunityInfoProp) {
                 if (link == "") link = null;
                 // console.log("Bio: " + bio + ", Link: " + link);
                 // Open the modal
+                let composerName = opportunity?.first_name + " " + opportunity.last_name;
                 openComposerModal(
                   opportunity?.UID,
-                  fullName,
+                  composerName,
                   awards,
                   bio,
                   link,
@@ -579,6 +566,7 @@ OpportunityInfoProp) {
         </Badge>
       ) : null}
       <MoreInfoOpportunityTitle>{opportunity.title}</MoreInfoOpportunityTitle>
+      {/*<MoreInfoOpportunityTitle style={{display: opportunityType === "compositions" ? "block" : "none",}}>{composerName}</MoreInfoOpportunityTitle>*/}
       {opportunity.organization && (
         <Text mb={15}>{opportunity.organization}</Text>
       )}
@@ -593,13 +581,12 @@ OpportunityInfoProp) {
             </Flex>
           </Tooltip>
         )} */}
-      {opportunity?.first_name && opportunity?.last_name && opportunity?.email && (
+      {opportunity?.first_name && opportunity?.last_name && opportunity?.email && opportunityType == "compositions" && (
         <Tooltip label="Author" position="top-start">
           <Flex align="center">
             <IconUser size={30} color="#40C057" />
             <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-              {opportunity?.first_name} {opportunity?.last_name}:{" "}
-              {opportunity?.email}
+              {opportunity?.first_name} {opportunity?.last_name}
             </span>
           </Flex>
         </Tooltip>

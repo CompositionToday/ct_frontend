@@ -428,13 +428,13 @@ export function ScrapedJobs() {
         )}
       </td>
       
-        <td>
-          <Container style={{ width: 400 }}>
-          <Text size="sm" color="dimmed">
-            {item.description}
-          </Text>
-          </Container>
-        </td>
+      <td>
+        <Container style={{ width: 400 }}>
+        <Text size="sm" color="dimmed">
+          {item.description}
+        </Text>
+        </Container>
+      </td>
       
       {!mobileScreen && (
         <td>
@@ -473,25 +473,18 @@ export function ScrapedJobs() {
           </Text>
         </td>
       )}
-      {!mobileScreen && (
-        <td>
-          <Text size="sm" color="dimmed">
-            {item.cityState}
-          </Text>
-        </td>
-      )}
       <td>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={() => {
-          setDisplayOpportunityEditModal(true);
-          setCurrentOpportunity(rawJobList[index]);
-        }}
-      >
-        Edit
-      </Button>
-    </td>      
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => {
+            setDisplayOpportunityEditModal(true);
+            setCurrentOpportunity(rawJobList[index]);
+          }}
+        >
+          Edit
+        </Button>
+      </td>      
     </tr>
     
   ));
@@ -663,6 +656,7 @@ export function ScrapedJobs() {
                 className={cx(classes.header, {
                   [classes.scrolled]: scrolled,
                 })}
+               style={{zIndex: "10000000"}}
               >
                 <tr>
                   
@@ -767,6 +761,21 @@ export function ScrapedJobs() {
                       "City/State"
                     )}
                   </th>
+                  )}
+                  {!mobileScreen && (
+                      <th style={{textAlign: "center"}}>
+                        {loading ? (
+                            <Skeleton
+                                height={12}
+                                width="10%"
+                                radius="xl"
+                                sx={{ margin: "8px 0px" }}
+
+                            />
+                        ) : (
+                            ""
+                        )}
+                      </th>
                   )}
                   <th></th>
                 </tr>

@@ -16,6 +16,9 @@ import { ScrapedPost } from "./ScrapedPostHelper";
 import { showNotification } from "@mantine/notifications";
 import { openConfirmationModal } from "../modal/ConfirmationModal";
 import { openDenyModal } from "./modals/DenyModal";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import {update} from "react-spring";
+
 
 interface SearchAndFilterScrapedProp {
   setSearchObjs: React.Dispatch<React.SetStateAction<PaginationScrapedSearchObject>>;
@@ -83,6 +86,8 @@ export function SearchAndFilterScraped({
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectAll, setSelectAll] = useState(false);
   const [selectedPages, setselectedPages] = useState<number[]>([]);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     createSearchObj(
@@ -90,6 +95,10 @@ export function SearchAndFilterScraped({
       searchKeyword,
     );
   }, [adminChecked, bannedChecked, regularChecked]);
+
+  // useEffect(() => {
+  //   onUpdate();
+  // }, [selectedRows]);
 
   const isFilterEnabled = () => {
     return adminChecked || bannedChecked || regularChecked;
@@ -164,7 +173,6 @@ export function SearchAndFilterScraped({
 
       }
 
-    
       showNotification({
         title: "Posts Approved",
         message: "Scraped posts have been added to the site",
@@ -173,6 +181,7 @@ export function SearchAndFilterScraped({
 
       onUpdateSelectedRows([]);
       onUpdate();
+      // window.location.reload();
       
     } catch (err) {
       // console.log(err);
@@ -198,6 +207,54 @@ export function SearchAndFilterScraped({
     // console.log(selectAll);
   }
 
+  function ApproveButton(){
+    if (selectedRows.length == 0)
+    {
+      return(
+        <Button onClick={handleApprove} 
+                style={{marginRight: '5%'}} 
+                disabled>
+          Approve
+        </Button>
+      );
+
+    }
+    return(
+      <Button onClick={handleApprove} 
+              style={{marginRight: '5%'}}
+              color="green"
+      >
+        Approve
+      </Button>
+    )
+
+  }
+
+
+
+  function DenyButton(){
+    if (selectedRows.length == 0)
+    {
+      return(
+          <Button onClick={() => openDenyModal(selectedRows, onUpdateSelectedRows, onUpdate)}
+              style={{marginRight: '20%'}}
+              disabled
+          >
+            Deny
+          </Button>
+      );
+
+    }
+    return(
+
+        <Button onClick={() => openDenyModal(selectedRows, onUpdateSelectedRows, onUpdate)}
+            style={{marginRight: '20%', backgroundColor: "#fa5252"}}
+        >
+          Deny
+        </Button>
+    )
+  }
+
 
   return (
     <Flex className={classes.container}>
@@ -218,14 +275,10 @@ export function SearchAndFilterScraped({
           {selectAll ? 'Deselect Page' : 'Select Page'}
           </Button>
         <Flex className={classes.buttonsContainer}>
-          <Button onClick={handleApprove} style={{marginRight: '5%'}}>
-            Approve
-          </Button>
-          <Button onClick={() =>
-            openDenyModal(selectedRows, onUpdateSelectedRows)
-            } style={{marginRight: '20%', backgroundColor: "#fa5252"}}>
-            Deny
-          </Button>
+
+          <ApproveButton></ApproveButton>
+          <DenyButton></DenyButton>
+
         </Flex>
       </Flex>
     

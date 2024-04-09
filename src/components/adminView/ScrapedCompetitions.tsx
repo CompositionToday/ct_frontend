@@ -472,16 +472,16 @@ export function ScrapedCompetitions() {
       )}
       
       <td>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={() => {
-          setDisplayOpportunityEditModal(true);
-          setCurrentOpportunity(rawCompetitionList[index]);
-        }}
-      >
-        Edit
-      </Button>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => {
+            setDisplayOpportunityEditModal(true);
+            setCurrentOpportunity(rawCompetitionList[index]);
+          }}
+        >
+          Edit
+        </Button>
     </td>      
     </tr>
     
@@ -676,6 +676,7 @@ export function ScrapedCompetitions() {
                 className={cx(classes.header, {
                   [classes.scrolled]: scrolled,
                 })}
+                style={{zIndex: "10000000"}}
               >
                 <tr>
                   
@@ -767,6 +768,21 @@ export function ScrapedCompetitions() {
                       "City/State"
                     )}
                   </th>
+                  )}
+                  {!mobileScreen && (
+                      <th style={{textAlign: "center"}}>
+                        {loading ? (
+                            <Skeleton
+                                height={12}
+                                width="10%"
+                                radius="xl"
+                                sx={{ margin: "8px 0px" }}
+
+                            />
+                        ) : (
+                            ""
+                        )}
+                      </th>
                   )}
                   
                   <th></th>
