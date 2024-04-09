@@ -306,11 +306,6 @@ export function openComposerModal(
                 container: { margin: "0px" },
                 //root: { carouselHeight: "auto", carouselWidth: "auto" },
                 viewport: { height: "auto" },
-                slide: {
-                  border: "1px",
-                  borderStyle: "solid",
-                  borderColor: "black",
-                },
               }}
             >
               {awardsSection}
