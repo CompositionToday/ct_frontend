@@ -10,8 +10,8 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 
-import React from "react";
-import { Carousel } from "@mantine/carousel";
+import React, {useState} from "react";
+import {Carousel, Embla, useAnimationOffsetEffect} from '@mantine/carousel';
 
 export function openComposerModal(
   UID: string | undefined,
@@ -147,17 +147,21 @@ export function openComposerModal(
     },
   }));
 
-  function createTable() {
+
+  function createTable()
+  {
+
     if (awards != null && awards.length > 0) {
       return awards.map((song) => {
         return (
           <Carousel.Slide
             sx={{
-              width: "33.333%",
+              width: "100%",
               height: "100%",
-              //justifyContent: "center",
-              paddingLeft: "20%",
-              paddingRight: "20%",
+              paddingLeft:"10%",
+              paddingRight:"10%",
+              borderWidth:"1px",
+              borderStyle:"solid",
             }}
           >
             <div key={song.link} style={{ textAlign: "center" }}>
@@ -260,6 +264,7 @@ export function openComposerModal(
 
   const awardsSection = createTable();
   const createChildren = () => {
+
     return (
       <div>
         <Container>
@@ -280,16 +285,20 @@ export function openComposerModal(
             )}
 
             <Carousel
-              mx="auto"
-              height={"auto"}
-              align={"start"}
-              slideSize="100%"
-              slideGap={"xl"}
-              slidesToScroll={1}
+                mx="auto"
+                withIndicators
+                // height={350}
+                align={"start"}
+                slideSize="100%"
+                slideGap="xl"
+                // includeGapInSize={false}
+              // slideGap={"xl"}
+              // slidesToScroll={1}
               sx={{
                 //width: "100%",
                 width: "100%",
                 height: "100%",
+                maxWidth: "720px",
               }}
               styles={{
                 control: {
@@ -354,6 +363,16 @@ export function openComposerModal(
                     Composer Website
                   </Button>
                 </a>
+                <Carousel
+                    sx={{ maxWidth: 320 }}
+                    mx="auto"
+                    withIndicators
+                    height={200}
+                    dragFree
+                    slideGap="md"
+                    align="start"
+                >
+                </Carousel>
               </div>
             ) : (
               <div />
