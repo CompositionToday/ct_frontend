@@ -2,8 +2,8 @@ export const V3TeamMembersInfo = {
     teamMembers: [
         {
             avatar: "michaelV3",
-            name: "Michael Ritcher",
-            role: "Michael was the Project Manager and Content Curator for the project.",
+            name: "Michael Richter",
+            role: "Michael was the Project Manager and Backend/Web Scraper Developer for the project.",
         },
         {
             avatar: "johnV3",
