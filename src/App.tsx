@@ -20,7 +20,7 @@ export default function App() {
     const [loading, setLoading] = useState(true);
 
 
-    useHotkeys([['mod+J', () => toggleColorScheme()]]);
+    // useHotkeys([['mod+J', () => toggleColorScheme()]]);
 
 
     setTimeout(() => {

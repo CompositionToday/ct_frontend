@@ -57,6 +57,15 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+
+  easterEggQuote: {
+    fontSize: 13,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: 10,
+    },
+  },
+
   control: {
     fontSize: 18,
   },
@@ -98,6 +107,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const musicBars = require("../../images/MusicBars.png");
+const quote = require("../../images/quote.png");
+const ucf = require("../../images/ucf.png");
 
 export function RegisterCTA() {
   const { classes } = useStyles();
@@ -167,13 +178,40 @@ export function RegisterCTA() {
                   display: displayEasterEgg ? "block" : "none",
                 }}
             >
-              <IconMoodSmile
-                  size="md"
-                  color="#359fec"
-                  className={classes.image}
-                  id="anchor"
-              />
+              {/*<IconMoodSmile*/}
+              {/*    size="md"*/}
+              {/*    color="#359fec"*/}
+              {/*    className={classes.image}*/}
+              {/*    id="anchor"*/}
+              {/*/>*/}
               {/*<p>FILLER EASTER EGG MESSAGE</p>*/}
+              <div style={{justifyContent: "center", display:"flex", flexDirection:"column"}}>
+                <Image
+                    src={String(ucf)}
+                    // width={"1000px"}
+                    style={{borderRadius:"100px"}}
+                    radius="xl"
+                    className={classes.image}>
+                </Image>
+                {/*<Image*/}
+                {/*    src={String(quote)}*/}
+                {/*    // width={"1000px"}*/}
+                {/*    // radius="1000px"*/}
+                {/*    style={{borderRadius:"100px"}}*/}
+                {/*    className={classes.image}>*/}
+                {/*</Image>*/}
+                <Text
+                  fw={900}
+                  variant="gradient"
+                  gradient={{
+                    from: useMantineTheme().colorScheme == 'dark' ? "white" : "grey",
+                    to: 'yellow',
+                    deg: 90 }}
+                  className={classes.easterEggQuote}
+                >
+                  "Another day in paradise here in Orlando, Florida" - Dr. Leinecker
+                </Text>
+              </div>
           </motion.div>
 
           </SimpleGrid>
