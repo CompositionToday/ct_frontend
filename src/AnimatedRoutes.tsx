@@ -25,6 +25,7 @@ import {CreateBlogOpportunityPage} from "./pages/CreateBlogOpportunityPage";
 import { ScrapedPostApproval } from "./pages/adminView/ScrapedPostApproval";
 import {NewsOpportunity} from "./components/opportunity/NewsOpportunity";
 import { ScrapedLinks } from "./pages/adminView/ScrapedLinks";
+import { UCF } from "./pages/UCF";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -54,6 +55,7 @@ export default function AnimatedRoutes() {
         <Route path="/verify" element={<VerifyEmail />} />
         <Route path="/news" element={<NewsOpportunity apiEndpoint={"news"}/>} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/anotherDay" element={<UCF />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
