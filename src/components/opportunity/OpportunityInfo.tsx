@@ -20,6 +20,7 @@ import {
   Text,
   Center,
   createStyles,
+  Container,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
@@ -33,6 +34,7 @@ import {
   IconAlertCircle,
   IconSquareNumber0,
   IconMoodSad,
+  IconTrophy,
 } from "@tabler/icons";
 import { SpecificOpportunityInfo } from "./SpecificOpportunityInfo";
 import { openDeletePostModal } from "./modals/DeletePostModal";
@@ -42,10 +44,12 @@ import { openResetFlagCountPostModal } from "./modals/ResetReportCountModal";
 import { openLikePostModal } from "./modals/LikePostModal";
 import heart from "./likeButton.png";
 import filledHeart from "./filledLike.png";
-import { openComposerModal } from "./modals/ComposerInfoModal";
+//import { OpenComposerModal } from "./modals/ComposerInfoModal";
 import { FeaturedComposition } from "../../FeaturedComposition";
 import infoicon from "../../../src/images/info-square.png";
 import ShareButtons from "./shareButtons";
+import { Carousel, Embla, useAnimationOffsetEffect } from "@mantine/carousel";
+import { openModal } from "@mantine/modals";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -155,6 +159,9 @@ export function OpportunityInfo({
   deleteComment,
 }: // setHelperDeleteComment,
 OpportunityInfoProp) {
+  const TRANSITION_DURATION = 200;
+  const [embla, setEmbla] = useState<Embla | null>(null);
+  useAnimationOffsetEffect(embla, TRANSITION_DURATION);
   const [userUID, setUserUID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [liked, setLiked] = useState(false);
@@ -392,7 +399,8 @@ OpportunityInfoProp) {
               sx={{
                 height: 30,
                 alignSelf: "flex-start",
-                display: opportunityType === "compositions" &&
+                display:
+                  opportunityType === "compositions" &&
                   userUID !== null &&
                   userUID !== ""
                     ? "block"
@@ -495,19 +503,313 @@ OpportunityInfoProp) {
                 if (link == "") link = null;
                 // console.log("Bio: " + bio + ", Link: " + link);
                 // Open the modal
-                let composerName = opportunity?.first_name + " " + opportunity.last_name;
-                openComposerModal(
-                  opportunity?.UID,
-                  composerName,
-                  awards,
-                  bio,
-                  link,
-                  classes
-                );
+                let composerName =
+                  opportunity?.first_name + " " + opportunity.last_name;
+                // OpenComposerModal(
+                //   opportunity?.UID,
+                //   composerName,
+                //   awards,
+                //   bio,
+                //   link,
+                //   classes,
+                //   embla,
+                //   TRANSITION_DURATION,
+                //   setEmbla
+                // );
+
+                function createTable() {
+                  if (awards != null && awards.length > 0) {
+                    return awards.map((song) => {
+                      return (
+                        <Carousel.Slide
+                          sx={{
+                            width: "33.333%",
+                            height: "100%",
+                            //justifyContent: "center",
+                            paddingLeft: "20%",
+                            paddingRight: "20%",
+                          }}
+                          key={song.link}
+                        >
+                          <div key={song.link} style={{ textAlign: "center" }}>
+                            {song.awards ? (
+                              <p
+                                style={{
+                                  fontSize: 14,
+                                  //fontStyle: "italic",
+                                  fontWeight: 400,
+                                }}
+                              >
+                                <a
+                                  href={song.link}
+                                  style={{
+                                    textDecoration: "none",
+                                    textDecorationColor: "#90caf9",
+                                    color: "inherit",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      fontStyle: "italic",
+                                      fontSize: "25px",
+                                      color: "blue",
+                                    }}
+                                  >
+                                    {song.title}
+                                  </span>
+                                </a>
+                                <br />
+                                <Button
+                                  rightIcon={<IconTrophy />}
+                                  variant="light"
+                                  color={"yellow"}
+                                  style={{
+                                    marginTop: "0.25rem",
+                                  }}
+                                >
+                                  {song.awards}
+                                </Button>
+                                <br />
+                                {song.genre}
+                                <br />
+                                {song.description}
+                              </p>
+                            ) : (
+                              <div>
+                                <p
+                                  style={{
+                                    fontSize: 14,
+                                    //fontStyle: "italic",
+                                    fontWeight: 400,
+                                  }}
+                                >
+                                  <a
+                                    href={song.link}
+                                    style={{
+                                      textDecoration: "none",
+                                      textDecorationColor: "#90caf9",
+                                      color: "inherit",
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        fontStyle: "italic",
+                                        fontSize: "25px",
+                                        color: "blue",
+                                      }}
+                                    >
+                                      {song.title}
+                                    </span>
+                                  </a>
+                                  <br />
+                                  {song.genre}
+                                  <br />
+                                  {song.description}
+                                </p>
+                              </div>
+                            )}
+                            <a href={song.link} target="blank">
+                              {/*<Button*/}
+                              {/*    radius="md"*/}
+                              {/*    sx={{*/}
+                              {/*      height: 30,*/}
+                              {/*      alignSelf: "flex-end",*/}
+                              {/*      margin: "15px 0px",*/}
+                              {/*    }}*/}
+                              {/*    size="md"*/}
+                              {/*    rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}*/}
+                              {/*>*/}
+                              {/*  Link*/}
+                              {/*</Button>*/}
+                            </a>
+                          </div>
+                        </Carousel.Slide>
+                      );
+                    });
+                  } else return <div></div>;
+                }
+
+                const awardsSection = createTable();
+                const createChildren = () => {
+                  return (
+                    <div>
+                      <Container>
+                        <div>
+                          {awards ? (
+                            <p
+                              className={classes.subheading}
+                              style={{
+                                fontWeight: "500",
+                                marginBlockEnd: "0rem",
+                              }}
+                            >
+                              Compositions:
+                              <br />
+                            </p>
+                          ) : (
+                            <div />
+                          )}
+
+                          <Carousel
+                            // mx="auto"
+                            // height={"auto"}
+                            // align={"start"}
+                            // slideSize="100%"
+                            // slideGap={"xl"}
+                            // slidesToScroll={1}
+                            // sx={{
+                            //   //width: "100%",
+                            //   width: "100%",
+                            //   height: "100%",
+                            // }}
+                            // styles={{
+                            //   control: {
+                            //     "&[data-inactive]": {
+                            //       opacity: 0,
+                            //       cursor: "default",
+                            //     },
+                            //     // eslint-disable-next-line react-hooks/rules-of-hooks
+                            //     color: "black",
+                            //     // backgroundColor: "gray"
+                            //     // eslint-disable-next-line react-hooks/rules-of-hooks
+                            //     backgroundColor: "white",
+                            //   },
+                            //   container: { margin: "0px" },
+                            //   //root: { carouselHeight: "auto", carouselWidth: "auto" },
+                            //   viewport: { height: "auto" },
+                            //   slide: {
+                            //     border: "1px",
+                            //     borderStyle: "solid",
+                            //     borderColor: "black",
+                            //   },
+                            // }}
+                            getEmblaApi={setEmbla}
+                            sx={{
+                              width: "100%",
+                              height: "100%",
+                              paddingBottom: "6%",
+                            }}
+                            styles={{
+                              control: {
+                                "&[data-inactive]": {
+                                  opacity: 0,
+                                  cursor: "default",
+                                },
+                                // eslint-disable-next-line react-hooks/rules-of-hooks
+                                color: "black",
+                                // backgroundColor: "gray"
+                                // eslint-disable-next-line react-hooks/rules-of-hooks
+                                backgroundColor: "white",
+                              },
+                              indicator: {
+                                // eslint-disable-next-line react-hooks/rules-of-hooks
+                                backgroundColor: "grey",
+                              },
+                            }}
+                            mx="auto"
+                            withIndicators
+                            height={"auto"}
+                            align={"start"}
+                            slideSize="100%"
+                            slideGap="xl"
+                            //getEmblaApi={setEmbla}
+                          >
+                            {awardsSection}
+                          </Carousel>
+
+                          {bio ? (
+                            <div>
+                              <p
+                                className={classes.subheading}
+                                style={{
+                                  fontWeight: "500",
+                                }}
+                              >
+                                Bio: <br />
+                              </p>
+                              {bio}
+                            </div>
+                          ) : (
+                            <div />
+                          )}
+                          {link ? (
+                            <div>
+                              <p
+                                className={classes.subheading}
+                                style={{
+                                  fontWeight: "500",
+                                  marginBlockEnd: "0.5rem",
+                                }}
+                              >
+                                Website link: <br />
+                              </p>
+                              <a href={link} target="blank">
+                                <Button
+                                  radius="md"
+                                  sx={{
+                                    height: 30,
+                                    alignSelf: "flex-start",
+                                    margin: "15px 0px",
+                                    marginBlockStart: "0rem",
+                                  }}
+                                  size="md"
+                                  rightIcon={
+                                    <IconExternalLink
+                                      style={{ marginLeft: "-5px" }}
+                                    />
+                                  }
+                                >
+                                  Composer Website
+                                </Button>
+                              </a>
+                            </div>
+                          ) : (
+                            <div />
+                          )}
+                          <br />
+                        </div>
+                      </Container>
+                    </div>
+                  );
+                };
+
+                const createTitle = () => {
+                  return (
+                    <h2
+                      //className={classes.link}
+                      style={{
+                        color: "#228be6",
+                        textDecoration: "none",
+                        fontWeight: "700",
+                        textDecorationColor: "#228be6",
+                      }}
+                    >
+                      {opportunity?.first_name + " " + opportunity?.last_name}
+                    </h2>
+                  );
+                };
+
+                const title = createTitle();
+                const confirmLabel = "Close";
+                const cancelLabel = "";
+                const color = "blue";
+                const children = createChildren();
+
+                openModal({
+                  title,
+                  children,
+                  color,
+                  closeButtonLabel: "Close",
+                  size: "lg",
+                  styles: {
+                    header: { justifyContent: "center", marginBottom: "-25px" },
+                  },
+                  transitionDuration: TRANSITION_DURATION,
+                });
                 //opportunity?.title ? opportunity.title : "",
               }}
             >
-              <img src={infoicon} height={"25px"} width={"25px"}/>
+              <img src={infoicon} height={"25px"} width={"25px"} />
             </ActionIcon>
           </Tooltip>
         </div>
@@ -581,37 +883,40 @@ OpportunityInfoProp) {
             </Flex>
           </Tooltip>
         )} */}
-      {opportunity?.first_name && opportunity?.last_name && opportunity?.email && opportunityType == "compositions" && (
-        <Tooltip label="Author" position="top-start">
-          <Flex align="center">
-            <IconUser size={30} color="#40C057" />
-            <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-              {opportunity?.first_name} {opportunity?.last_name}
-            </span>
-          </Flex>
-        </Tooltip>
-      )}
+      {opportunity?.first_name &&
+        opportunity?.last_name &&
+        opportunity?.email &&
+        opportunityType == "compositions" && (
+          <Tooltip label="Author" position="top-start">
+            <Flex align="center">
+              <IconUser size={30} color="#40C057" />
+              <span style={{ fontSize: "17px", marginLeft: "10px" }}>
+                {opportunity?.first_name} {opportunity?.last_name}
+              </span>
+            </Flex>
+          </Tooltip>
+        )}
       <SpecificOpportunityInfo
         opportunity={opportunity}
         opportunityType={opportunityType}
       />
       {/* </Flex> */}
-      {opportunityType !== 'blog' ?
-          <a href={opportunity.link} target="blank">
-
-            <Button
-                radius="md"
-                sx={{ height: 30, alignSelf: "flex-start", margin: "15px 0px" }}
-                size="md"
-                rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
-            >
-              {opportunityType === "competitions" || opportunityType === "jobs" ? "Apply" : "More Info"}
-            </Button>
-
-          </a>
-          :
-          <a></a>
-      }
+      {opportunityType !== "blog" ? (
+        <a href={opportunity.link} target="blank">
+          <Button
+            radius="md"
+            sx={{ height: 30, alignSelf: "flex-start", margin: "15px 0px" }}
+            size="md"
+            rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
+          >
+            {opportunityType === "competitions" || opportunityType === "jobs"
+              ? "Apply"
+              : "More Info"}
+          </Button>
+        </a>
+      ) : (
+        <a></a>
+      )}
       <DescriptionContainer>
         <Label>{opportunityType === "blog" ? "" : "Description:"}</Label>
         <DescriptionContent>{opportunity.description}</DescriptionContent>
