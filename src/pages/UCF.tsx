@@ -12,7 +12,7 @@ export function UCF() {
     const ucf = require("../images/ucf.png");
 
     return (
-    <div style={{justifyContent: "center", display:"flex", flexDirection:"column"}}>
+    <div style={{alignItems: "center", display:"flex", flexDirection:"column"}}>
         <Image src={String(quote)} width={"1000px"}></Image>
         <Image src={String(ucf)} width={"1000px"}></Image>
     </div>

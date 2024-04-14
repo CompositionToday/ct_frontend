@@ -241,7 +241,7 @@ export function Footer({ data }: FooterLinksProps) {
         <Text color="dimmed" size="sm">
             Resource for Event Listings:{" "}
             <a href="https://serpapi.com" target="_blank" className={classes.serpLink}>
-              SerpAPI
+              SerpApi
             </a>
         </Text>
 
