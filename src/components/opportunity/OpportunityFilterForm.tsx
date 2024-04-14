@@ -174,11 +174,7 @@ export function OpportunityFilterForm({
           { value: "Bassoon", label: "Bassoon", group: "Woodwind" },
           { value: "Saxophone", label: "Saxophone", group: "Woodwind" },
           { value: "Recorder", label: "Recorder", group: "Woodwind" },
-          {
-            value: "Other Woodwind",
-            label: "Other Woodwind",
-            group: "Woodwind",
-          },
+
 
           { value: "All Brass", label: "All Brass", group: "Brass" },
           { value: "French Horn", label: "French Horn", group: "Brass" },
@@ -186,7 +182,6 @@ export function OpportunityFilterForm({
           { value: "Trombone", label: "Trombone", group: "Brass" },
           { value: "Tuba", label: "Tuba", group: "Brass" },
           { value: "Euphonium", label: "Euphonium", group: "Brass" },
-          { value: "Other Brass", label: "Other Brass", group: "Brass" },
 
           { value: "All Strings", label: "All Strings", group: "Strings" },
           { value: "Violin", label: "Violin", group: "Strings" },
@@ -199,7 +194,6 @@ export function OpportunityFilterForm({
           { value: "Early Guitar", label: "Early Guitar", group: "Strings" },
           { value: "Lute", label: "Lute", group: "Strings" },
           { value: "Theorbo", label: "Theorbo", group: "Strings" },
-          { value: "Other Strings", label: "Other Strings", group: "Strings" },
 
           { value: "All Keyboard", label: "All Keyboard", group: "Keyboard" },
           { value: "Piano", label: "Piano", group: "Keyboard" },
@@ -211,11 +205,6 @@ export function OpportunityFilterForm({
           { value: "Organ", label: "Organ", group: "Keyboard" },
           { value: "Harpsichord", label: "Harpsichord", group: "Keyboard" },
           { value: "Accordian", label: "Accordian", group: "Keyboard" },
-          {
-            value: "Other Keyboard",
-            label: "Other Keyboard",
-            group: "Keyboard",
-          },
 
           { value: "Percussion", label: "Percussion", group: "Percussion" },
           { value: "Voice", label: "Voice", group: "Voice" },
@@ -252,11 +241,6 @@ export function OpportunityFilterForm({
           {
             value: "Piano Duo",
             label: "Piano Duo",
-            group: "Chamber Music",
-          },
-          {
-            value: "Other Chamber",
-            label: "Other Chamber",
             group: "Chamber Music",
           },
 
