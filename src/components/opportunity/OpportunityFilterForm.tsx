@@ -168,7 +168,6 @@ export function OpportunityFilterForm({
           },
           { value: "All Woodwind", label: "All Woodwind", group: "Woodwind" },
           { value: "Flute", label: "Flute", group: "Woodwind" },
-          { value: "Folk Flute", label: "Folk Flute", group: "Woodwind" },
           { value: "Oboe", label: "Oboe", group: "Woodwind" },
           { value: "Clarinet", label: "Clarinet", group: "Woodwind" },
           { value: "Bassoon", label: "Bassoon", group: "Woodwind" },
@@ -185,7 +184,6 @@ export function OpportunityFilterForm({
 
           { value: "All Strings", label: "All Strings", group: "Strings" },
           { value: "Violin", label: "Violin", group: "Strings" },
-          { value: "Folk Fiddle", label: "Folk Fiddle", group: "Strings" },
           { value: "Viola", label: "Viola", group: "Strings" },
           { value: "Cello", label: "Cello", group: "Strings" },
           { value: "Double Bass", label: "Double Bass", group: "Strings" },
@@ -204,7 +202,6 @@ export function OpportunityFilterForm({
           },
           { value: "Organ", label: "Organ", group: "Keyboard" },
           { value: "Harpsichord", label: "Harpsichord", group: "Keyboard" },
-          { value: "Accordian", label: "Accordian", group: "Keyboard" },
 
           { value: "Percussion", label: "Percussion", group: "Percussion" },
           { value: "Voice", label: "Voice", group: "Voice" },
@@ -226,16 +223,6 @@ export function OpportunityFilterForm({
           {
             value: "Brass Chamber",
             label: "Brass Chamber",
-            group: "Chamber Music",
-          },
-          {
-            value: "Mixed Chamber Ensemble",
-            label: "Mixed Chamber Ensemble",
-            group: "Chamber Music",
-          },
-          {
-            value: "Vocal Ensemble",
-            label: "Vocal Ensemble",
             group: "Chamber Music",
           },
           {
