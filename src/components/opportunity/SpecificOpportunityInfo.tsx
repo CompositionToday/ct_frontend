@@ -27,6 +27,10 @@ export const SpecificOpportunityInfo = ({
 }: SpecificOpportunityInfoProp) => {
   // console.log(opportunity?.genre);
   if (opportunityType === "competitions") {
+    let category = opportunity?.competition_category;
+    if(opportunity.competition_category?.substring(0,20) === "Multiple Categories:"){
+      category = "Multiple Categories";
+    }
     return (
       <Flex direction="column" align="flex-start">
         {opportunity?.winner && (
@@ -50,7 +54,7 @@ export const SpecificOpportunityInfo = ({
             <Flex align="center" sx={{ maxWidth: "100%" }}>
               <IconCategory size={30} color="#40C057" />
               <span style={{ fontSize: "17px", marginLeft: "10px" }}>
-                {opportunity?.competition_category}
+                {category}
               </span>
             </Flex>
           </Tooltip>

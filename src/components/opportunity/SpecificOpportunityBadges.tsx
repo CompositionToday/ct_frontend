@@ -25,59 +25,11 @@ export const SpecificOpportunityBadges = ({
   opportunityType,
 }: SpecificOpportunityInfoProp) => {
 
-  function CategoryButton (){
-    // console.log(opportunity.competition_category)
-    // console.log(opportunity.competition_category?.substring(0,20))
-    if (opportunity.competition_category?.substring(0,20) === "Multiple Categories:")
-    {
-      let categories=opportunity.competition_category.substring(21).split(", ")
-      // console.log(categories)
-      return categories.map((category) => {
-        return(
-            <Tooltip label="Category">
-              <Badge
-                  leftSection={
-                    <IconCategory
-                        size={18}
-                        color="#40C057"
-                        style={{ marginBottom: "-3px" }}
-                    />
-                  }
-                  color="gray"
-                  sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
-              >
-                {category}
-
-              </Badge>
-            </Tooltip>
-        );
-      });
-    }
-
-    return(
-        <Tooltip label="Category">
-          <Badge
-              leftSection={
-                <IconCategory
-                    size={18}
-                    color="#40C057"
-                    style={{ marginBottom: "-3px" }}
-                />
-              }
-              color="gray"
-              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
-          >
-            {/*<CategoryButton/>*/}
-            {opportunity?.competition_category}
-
-          </Badge>
-        </Tooltip>
-    )
-
-  }
-
   if (opportunityType === "competitions") {
-
+    let category = opportunity?.competition_category;
+    if(opportunity.competition_category?.substring(0,20) === "Multiple Categories:"){
+      category = "Multiple Categories";
+    }
     return (
       <>
         {opportunity?.winner && (
@@ -103,10 +55,22 @@ export const SpecificOpportunityBadges = ({
             </Badge>
           </Tooltip>
         )}
-        {opportunity?.competition_category &&
-        (
-            // @ts-ignore
-            <CategoryButton/>
+        {opportunity?.competition_category && (
+          <Tooltip label="Category">
+            <Badge
+              leftSection={
+                <IconCategory
+                  size={18}
+                  color="#40C057"
+                  style={{ marginBottom: "-3px" }}
+                />
+              }
+              color="gray"
+              sx={{ height: "25px", margin: "3px 5px 3px 0px" }}
+            >
+              {category}
+            </Badge>
+          </Tooltip>
         )}
         <Tooltip label="Application Deadline">
           <Badge
