@@ -8,6 +8,7 @@ import { AnimateIn } from "../components/animations/AnimateOnScroll";
 // V3: Fall 2023 - Spring 2024
 import { V2TeamMembersInfo } from "../components/about/V2TeamMembersInfo";
 import { V3TeamMembersInfo } from "../components/about/V3TeamMembersInfo";
+import { V4TeamMembersInfo } from "../components/about/V4TeamMembersInfo";
 import { teamMemberInfo } from "../components/about/TeamMemberInfo";
 import {
   createStyles,
@@ -154,6 +155,10 @@ export function About() {
                   CompositionToday V3 (2023-2024)
                 </Tabs.Tab>
 
+                <Tabs.Tab value="V4" className={classes.tabLabel}>
+                  CompositionToday V4 (2023-2025)
+                </Tabs.Tab>
+
                   <Tabs.Panel value="V2">
                     <AnimateIn>
                       <TeamMembers teamMembers={V2TeamMembersInfo.teamMembers}/>
@@ -163,6 +168,12 @@ export function About() {
                   <Tabs.Panel value="V3">
                     <AnimateIn>
                       <TeamMembers teamMembers={V3TeamMembersInfo.teamMembers}/>
+                    </AnimateIn>
+                  </Tabs.Panel>
+
+                  <Tabs.Panel value="V4">
+                    <AnimateIn>
+                      <TeamMembers teamMembers={V4TeamMembersInfo.teamMembers}/>
                     </AnimateIn>
                   </Tabs.Panel>
               </Tabs.List>
