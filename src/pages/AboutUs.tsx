@@ -156,7 +156,7 @@ export function About() {
                 </Tabs.Tab>
 
                 <Tabs.Tab value="V4" className={classes.tabLabel}>
-                  CompositionToday V4 (2023-2025)
+                  CompositionToday V4 (2024-2025)
                 </Tabs.Tab>
 
                   <Tabs.Panel value="V2">

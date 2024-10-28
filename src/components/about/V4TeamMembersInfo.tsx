@@ -3,7 +3,7 @@ export const V4TeamMembersInfo = {
       {
           avatar: "michaelV3",
           name: "Aintzane Perez Masache",
-          role: "Aintzane was the Front-End Website Developer for the project.",
+          role: "Aintzane was the Web Application Developer for the project.",
       },
       {
           avatar: "johnV3",
