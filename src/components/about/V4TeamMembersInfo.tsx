@@ -1,27 +1,27 @@
 export const V4TeamMembersInfo = {
   teamMembers: [
       {
-          avatar: "michaelV3",
+          avatar: "aintzaneV4",
           name: "Aintzane Perez Masache",
           role: "Aintzane was the Web Application Developer for the project.",
       },
       {
-          avatar: "johnV3",
+          avatar: "andyV4",
           name: "Andy Nguyen",
           role: "Andy was the Project Manager and a Web Scraper Developer for the project.",
       },
       {
-          avatar: "justinV3",
+          avatar: "justinV4",
           name: "Justin Almazan",
           role: "Justin was a Mobile Application Developer for the project.",
       },
       {
-          avatar: "treyV3",
+          avatar: "noahV4",
           name: "Noah Vaden",
           role: "Noah was a Web Scraper Developer for the project.",
       },
       {
-          avatar: "valentinoV3",
+          avatar: "romanV4",
           name: "Roman Di Cesare",
           role: "Roman was the Mobile Application Developer for the project.",
       },

@@ -83,6 +83,13 @@ const justinV3 = require("../../images/JustinV3.png");
 const treyV3 = require("../../images/TreyV3.png");
 const valentinoV3 = require("../../images/ValentinoV3.png");
 
+// CompositionToday V4 Team Members
+const romanV4 = require("../../images/RomanAvatarV4.png");
+const noahV4 = require("../../images/NoahAvatarV4.png");
+const justinV4 = require("../../images/JustinAvatarV4.png");
+const andyV4 = require("../../images/AndyAvatarV4.png");
+const aintzaneV4 = require("../../images/AintzaneAvatarV4.png");
+
 export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
   const { classes } = useStyles();
 
@@ -109,6 +116,16 @@ export function TeamMembers({ teamMembers }: UserInfoIconsProps) {
       photo = justinV3;
     } else if (member.avatar === "valentinoV3") {
       photo = valentinoV3;
+    } else if (member.avatar === "aintzaneV4"){
+      photo = aintzaneV4;
+    } else if (member.avatar === "andyV4"){
+      photo = andyV4;
+    } else if (member.avatar === "justinV4"){
+      photo = justinV4;
+    } else if (member.avatar === "romanV4"){
+      photo = romanV4;
+    } else if (member.avatar === "noahV4"){
+      photo = noahV4;
     }
 
     return (
