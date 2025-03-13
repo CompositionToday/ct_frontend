@@ -245,7 +245,8 @@ OpportunityInfoProp) {
   useEffect(() => {
     // console.log("start: ", startDate);
     // console.log("end: ", endDate);
-    // console.log(opportunity);
+    console.log(opportunity);
+    console.log(opportunityType);
     // console.log(typeof opportunity?.end_date);
     if (userUID != "" && userUID != null) getLiked();
   }, [endDate, startDate, opportunity]);
@@ -909,8 +910,8 @@ OpportunityInfoProp) {
             size="md"
             rightIcon={<IconExternalLink style={{ marginLeft: "-5px" }} />}
           >
-            {opportunityType === "competitions" || opportunityType === "jobs"
-              ? "Apply"
+            {(opportunityType === "competitions" && opportunity.organization?.includes("CompositionToday")) || opportunityType === "jobs"
+              ? "Submit Composition"
               : "More Info"}
           </Button>
         </a>
