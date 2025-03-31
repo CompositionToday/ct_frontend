@@ -316,6 +316,16 @@ export function NavBar({ links }: HeaderActionProps) {
         >
           Compositions
         </Menu.Item>
+        <Menu.Item
+          className={cx(classes.menuLink, {
+            [classes.linkActive]: active === "/researchpapers",
+          })}
+          onClick={() => {
+            navigate("/researchpapers");
+          }}
+        >
+          Compositions
+        </Menu.Item>
         <Menu.Divider />
 
         {signedIn ? (

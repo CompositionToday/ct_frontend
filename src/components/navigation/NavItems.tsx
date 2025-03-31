@@ -29,5 +29,9 @@ export const navItems = {
       link: "/compositions",
       label: "Compositions",
     },
+    {
+      link: "/researchpapers",
+      label: "Research Papers"
+    },
   ],
 };

@@ -15,6 +15,7 @@ import { ScrapedFestivals } from "../../components/adminView/ScrapedFestivals";
 import { ScrapedJobs } from "../../components/adminView/ScrapedJobs";
 import { ScrapedConcerts } from "../../components/adminView/ScrapedConcerts";
 import { ScrapedCompetitions } from "../../components/adminView/ScrapedCompetitions";
+import { ScrapedResearch } from "../../components/adminView/ScrapedResearch";
 
 const greenTriangle = require("../../images/GreenTriangle.png");
 const blueTriangle = require("../../images/BlueTriangle.png");
@@ -122,6 +123,7 @@ export function ScrapedPostApproval() {
             { value: "Competitions", label: "Competitions" },
             { value: "Festivals", label: "Festivals" },
             { value: "Concerts", label: "Concerts" },
+            { value: "Research", label:"Research Papers"},
           ]}
           value={selectedOption}
           onChange={handleSelectChange}
@@ -186,6 +188,18 @@ export function ScrapedPostApproval() {
               </h1>
             </Container>
             <ScrapedConcerts />
+          </>
+        )}
+        {selectedOption === "Research" && (
+          <>
+            <Container
+              style={{ textAlign: "center" }}
+            >
+              <h1 style={{ color: "#228be6", fontSize: "36px" }}>
+                Research Papers
+              </h1>
+            </Container>
+            <ScrapedResearch />
           </>
         )}
         </div>
