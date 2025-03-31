@@ -245,8 +245,8 @@ OpportunityInfoProp) {
   useEffect(() => {
     // console.log("start: ", startDate);
     // console.log("end: ", endDate);
-    console.log(opportunity);
-    console.log(opportunityType);
+    // console.log(opportunity);
+    // console.log(opportunityType);
     // console.log(typeof opportunity?.end_date);
     if (userUID != "" && userUID != null) getLiked();
   }, [endDate, startDate, opportunity]);

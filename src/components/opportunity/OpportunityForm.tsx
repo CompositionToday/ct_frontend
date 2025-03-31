@@ -127,6 +127,7 @@ export function OpportunityForm({
       job_type: opportunity?.job_type || "",
       winner: opportunity?.winner || "",
       competition_category: opportunity?.competition_category || "",
+      category: opportunity?.category || "test",
       address: opportunity?.address || "",
       start_date: opportunity?.start_date
         ? new Date(opportunity?.start_date)
@@ -376,19 +377,21 @@ export function OpportunityForm({
     req.city = city;
     req.state = state;
     req.UID = userUID;
+    req.category = values.competition_category;
+    
 
     req.date_posted = getCurrentDate();
     
-    // if(opportunityType === "compositions"){
-    //   req.organization = `This composition was submitted for ${selectedCompetition}.`;
-    // }
+    if(opportunityType === "competitions"){
+       req.category = req.competition_category;
+    }
     
     const updatedDescription = selectedCompetition ? `This composition was submitted for ${selectedCompetition}. ${values.description}` : values.description;
 
 
     req.description = updatedDescription;
 
-    console.log("final req: ", req);
+    // console.log("final req: ", req);
     // console.log("test");
     handleSubmission(req);
   };
@@ -530,7 +533,7 @@ export function OpportunityForm({
                   setSelectedCompetition(safeVal);
                   localStorage.setItem("selectedCompetitionTitle", safeVal);
 
-                  console.log("Stored in local: ", safeVal);
+                  // console.log("Stored in local: ", safeVal);
                 }}
               />
               )}
