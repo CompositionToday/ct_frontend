@@ -1,10 +1,12 @@
+import { link } from "fs";
+import { Label } from "../opportunity/OpportunityInfoHelper";
+
 export const navItems = {
   links: [
     {
       link: "/news",
       label: "News",
     },
-
     {
       link: "/blog",
       label: "Blog",

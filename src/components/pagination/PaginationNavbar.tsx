@@ -34,6 +34,7 @@ export interface PaginationSearchObject {
   winner?: string | null;
   job_category?: string;
   competition_category?: string;
+  //category?: string;
   address?: string;
   start_date?: Date | string | number;
   type?: string;
@@ -92,17 +93,17 @@ export function PaginationNavbar({
         }
 
         let responseCount = await fetch(countUrl);
-        // console.log(responseCount);
+        console.log(responseCount);
         let responseCountJson = await responseCount.json();
-        // console.log(
-        //   "number of " + apiEndpointExtension + " count",
-        //   responseCountJson.count
-        // );
+        console.log(
+         "number of " + apiEndpointExtension + " count",
+        responseCountJson.count
+        );
         let numberOfPage = Math.ceil(
           responseCountJson.count / numberOfItemsPerPage
         );
         setPageCount(numberOfPage);
-        // console.log("number of pages", numberOfPage);
+         console.log("number of pages", numberOfPage);
         setTimeout(() => {
           setLoading(false);
         }, timeOut);
@@ -128,7 +129,7 @@ export function PaginationNavbar({
         }
 
         getUrl.searchParams.set("page_number", String(currentPage));
-        // console.log("geturl: ", getUrl.toString());
+        console.log("geturl: ", getUrl.toString());
         let response = await fetch(getUrl);
 
         let responseJson = await response.json();

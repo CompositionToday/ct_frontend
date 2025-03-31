@@ -37,7 +37,7 @@ export function CreateOpportunity() {
       if (opportunityType !== "compositions")
         opportunity.deadline = opportunity.deadline?.toString();
 
-      // console.log("create post body:", opportunity);
+      console.log("create post body:", opportunity);
       let requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -47,6 +47,7 @@ export function CreateOpportunity() {
       let response = await fetch(`${url}/${opportunityType}`, requestOptions);
 
       let responseJson = await response.json();
+      console.log("API Response: ", responseJson);
 
       navigate("/my-posts");
       // setDisplaySuccessModal(true);
