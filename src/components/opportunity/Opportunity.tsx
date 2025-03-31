@@ -450,7 +450,7 @@ export function Opportunity({ apiEndpoint }: OpportunityProp) {
       setDisplayOpportunityArray(tempDisplayOpportunityArray);
       let Title = "";
       let Message = "";
-      liked ? (Title = "Composition Uniked") : (Title = "Composition Liked");
+      liked ? (Title = "Composition Unliked") : (Title = "Composition Liked");
       liked
         ? (Message = "You unliked this composition.")
         : (Message = "You Liked this composition!");
