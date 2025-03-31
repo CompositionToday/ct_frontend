@@ -28,7 +28,7 @@ import {useColorScheme} from "@mantine/hooks";
 const heroLogo = require("../../images/HeroLogo.png");
 const scubaLogo = require("../../images/scuba-mask.png");
 const appStoreButton = require("../../images/iosAppButtonDisabled.png");
-const googleplayStoreButton = require("../../images/androidAppButtonDisabled.png");
+const googleplayStoreButton = require("../../images/androidAppButton.png");
 const url = "https://oyster-app-7l5vz.ondigitalocean.app/compositiontoday";
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -242,7 +242,7 @@ export function Hero() {
             </Text>
 
             <Text mt="xl" className={classes.subheading}>
-              Coming soon to {" "}
+              Find it on {" "}
 
               <Text
                   span
@@ -254,7 +254,7 @@ export function Hero() {
                 Android
               </Text>
 
-              {" "} and {" "}
+              {" "} and coming soon to {" "}
 
               <Text
                   span
@@ -271,6 +271,7 @@ export function Hero() {
 
             <Group spacing={"xs"} className={classes.subheading}>
               <a
+                  href={"https://play.google.com/store/apps/details?id=com.paradise.compositiontodaymobile2&hl=en_US"}
                   className={classes.a}
                   style={{paddingTop:"2%"}}
               >
@@ -290,7 +291,7 @@ export function Hero() {
                     src={appStoreButton}
                     height={"auto"}
                     width={"100%"}
-                    alt={"Apple Store Button"}
+                    alt={"Apple Store Button Disabled"}
                 />
               </a>
             </Group>
